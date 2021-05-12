@@ -351,10 +351,26 @@
 
 <div class="viewcode-block" id="MultiHeadClassifier"><a class="viewcode-back" href="../../../../autoapi/avalanche/models/#avalanche.models.dynamic_modules.MultiHeadClassifier">[docs]</a><span class="k">class</span> <span class="nc">MultiHeadClassifier</span><span class="p">(</span><span class="n">MultiTaskModule</span><span class="p">,</span> <span class="n">DynamicModule</span><span class="p">):</span>
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">in_features</span><span class="p">,</span> <span class="n">initial_out_features</span><span class="o">=</span><span class="mi">2</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot; Multi-head classifier with separate classifiers for each task.</span>
+        <span class="sd">&quot;&quot;&quot; Multi-head classifier with separate heads for each task.</span>
 
 <span class="sd">        Typically used in task-incremental scenarios where task labels are</span>
 <span class="sd">        available and provided to the model.</span>
+
+<span class="sd">        .. note::</span>
+<span class="sd">            Each output head may have a different shape, and the number of</span>
+<span class="sd">            classes can be determined automatically.</span>
+
+<span class="sd">            However, since pytorch doest not support jagged tensors, when you</span>
+<span class="sd">            compute a minibatch&#39;s output you must ensure that each sample</span>
+<span class="sd">            has the same output size, otherwise the model will fail to</span>
+<span class="sd">            concatenate the samples together.</span>
+
+<span class="sd">            These can be easily ensured in two possible ways:</span>
+<span class="sd">            - each minibatch contains a single task, which is the case in most</span>
+<span class="sd">                common scenarios in Avalanche. Some exceptions to this setting</span>
+<span class="sd">                are multi-task replay or cumulative strategies.</span>
+<span class="sd">            - each head has the same size, which can be enforced by setting a</span>
+<span class="sd">                large enough `initial_out_features`.</span>
 
 <span class="sd">        :param in_features: number of input features.</span>
 <span class="sd">        :param initial_out_features: initial number of classes (can be</span>
@@ -367,7 +383,9 @@
 
         <span class="c1"># needs to create the first head because pytorch optimizers</span>
         <span class="c1"># fail when model.parameters() is empty.</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">classifiers</span><span class="p">[</span><span class="s1">&#39;0&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">IncrementalClassifier</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">in_features</span><span class="p">)</span>
+        <span class="n">first_head</span> <span class="o">=</span> <span class="n">IncrementalClassifier</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">in_features</span><span class="p">,</span>
+                                           <span class="bp">self</span><span class="o">.</span><span class="n">starting_out_features</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">classifiers</span><span class="p">[</span><span class="s1">&#39;0&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">first_head</span>
 
 <div class="viewcode-block" id="MultiHeadClassifier.adaptation"><a class="viewcode-back" href="../../../../autoapi/avalanche/models/#avalanche.models.dynamic_modules.MultiHeadClassifier.adaptation">[docs]</a>    <span class="k">def</span> <span class="nf">adaptation</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dataset</span><span class="p">:</span> <span class="n">AvalancheDataset</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot; If `dataset` contains new tasks, a new head is initialized.</span>
@@ -381,11 +399,12 @@
             <span class="n">task_labels</span> <span class="o">=</span> <span class="p">[</span><span class="n">task_labels</span><span class="p">[</span><span class="mi">0</span><span class="p">]]</span>
 
         <span class="k">for</span> <span class="n">tid</span> <span class="ow">in</span> <span class="nb">set</span><span class="p">(</span><span class="n">task_labels</span><span class="p">):</span>
+            <span class="n">tid</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">tid</span><span class="p">)</span>  <span class="c1"># need str keys</span>
             <span class="k">if</span> <span class="n">tid</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">classifiers</span><span class="p">:</span>
                 <span class="n">new_head</span> <span class="o">=</span> <span class="n">IncrementalClassifier</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">in_features</span><span class="p">,</span>
                                                  <span class="bp">self</span><span class="o">.</span><span class="n">starting_out_features</span><span class="p">)</span>
                 <span class="n">new_head</span><span class="o">.</span><span class="n">adaptation</span><span class="p">(</span><span class="n">dataset</span><span class="p">)</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">classifiers</span><span class="p">[</span><span class="nb">str</span><span class="p">(</span><span class="n">tid</span><span class="p">)]</span> <span class="o">=</span> <span class="n">new_head</span></div>
+                <span class="bp">self</span><span class="o">.</span><span class="n">classifiers</span><span class="p">[</span><span class="n">tid</span><span class="p">]</span> <span class="o">=</span> <span class="n">new_head</span></div>
 
 <div class="viewcode-block" id="MultiHeadClassifier.forward_single_task"><a class="viewcode-back" href="../../../../autoapi/avalanche/models/#avalanche.models.dynamic_modules.MultiHeadClassifier.forward_single_task">[docs]</a>    <span class="k">def</span> <span class="nf">forward_single_task</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">task_label</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot; compute the output given the input `x`. This module uses the task</span>

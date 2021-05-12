@@ -185,9 +185,9 @@
 
 <div class="viewcode-block" id="avalanche_forward"><a class="viewcode-back" href="../../../../autoapi/avalanche/models/utils/#avalanche.models.avalanche_forward">[docs]</a><span class="k">def</span> <span class="nf">avalanche_forward</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">task_labels</span><span class="p">):</span>
     <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">MultiTaskModule</span><span class="p">):</span>
-        <span class="k">return</span> <span class="n">model</span><span class="o">.</span><span class="n">forward</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">task_labels</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">model</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">task_labels</span><span class="p">)</span>
     <span class="k">else</span><span class="p">:</span>  <span class="c1"># no task labels</span>
-        <span class="k">return</span> <span class="n">model</span><span class="o">.</span><span class="n">forward</span><span class="p">(</span><span class="n">x</span><span class="p">)</span></div>
+        <span class="k">return</span> <span class="n">model</span><span class="p">(</span><span class="n">x</span><span class="p">)</span></div>
 
 
 <div class="viewcode-block" id="FeatureExtractorBackbone"><a class="viewcode-back" href="../../../../autoapi/avalanche/models/utils/#avalanche.models.FeatureExtractorBackbone">[docs]</a><span class="k">class</span> <span class="nc">FeatureExtractorBackbone</span><span class="p">(</span><span class="n">nn</span><span class="o">.</span><span class="n">Module</span><span class="p">):</span>

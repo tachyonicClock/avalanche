@@ -379,7 +379,7 @@
         <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">after_eval_iteration</span><span class="p">(</span><span class="n">strategy</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">eval_exp_id</span> <span class="o">=</span> <span class="n">strategy</span><span class="o">.</span><span class="n">experience</span><span class="o">.</span><span class="n">current_experience</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_current_accuracy</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">strategy</span><span class="o">.</span><span class="n">mb_y</span><span class="p">,</span>
-                                      <span class="n">strategy</span><span class="o">.</span><span class="n">logits</span><span class="p">)</span></div>
+                                      <span class="n">strategy</span><span class="o">.</span><span class="n">mb_output</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="ExperienceForgetting.after_eval_exp"><a class="viewcode-back" href="../../../../../autoapi/avalanche/evaluation/metrics/#avalanche.evaluation.metrics.forgetting.ExperienceForgetting.after_eval_exp">[docs]</a>    <span class="k">def</span> <span class="nf">after_eval_exp</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">strategy</span><span class="p">:</span> <span class="s1">&#39;BaseStrategy&#39;</span><span class="p">)</span> \
             <span class="o">-&gt;</span> <span class="n">MetricResult</span><span class="p">:</span>
@@ -528,7 +528,7 @@
         <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">after_eval_iteration</span><span class="p">(</span><span class="n">strategy</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">eval_exp_id</span> <span class="o">=</span> <span class="n">strategy</span><span class="o">.</span><span class="n">experience</span><span class="o">.</span><span class="n">current_experience</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_current_accuracy</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">strategy</span><span class="o">.</span><span class="n">mb_y</span><span class="p">,</span>
-                                      <span class="n">strategy</span><span class="o">.</span><span class="n">logits</span><span class="p">)</span></div>
+                                      <span class="n">strategy</span><span class="o">.</span><span class="n">mb_output</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="StreamForgetting.after_eval_exp"><a class="viewcode-back" href="../../../../../autoapi/avalanche/evaluation/metrics/#avalanche.evaluation.metrics.forgetting.StreamForgetting.after_eval_exp">[docs]</a>    <span class="k">def</span> <span class="nf">after_eval_exp</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">strategy</span><span class="p">:</span> <span class="s1">&#39;BaseStrategy&#39;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
         <span class="c1"># update experience on which training just ended</span>

@@ -287,11 +287,11 @@
             <span class="c1"># Forward</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">before_forward</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
             <span class="c1"># compute output on entire minibatch</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">logits</span><span class="p">,</span> <span class="n">feats</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">forward</span><span class="p">(</span><span class="n">return_features</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">mb_output</span><span class="p">,</span> <span class="n">feats</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">forward</span><span class="p">(</span><span class="n">return_features</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">after_forward</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
 
             <span class="c1"># Loss &amp; Backward</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">loss</span> <span class="o">+=</span> <span class="bp">self</span><span class="o">.</span><span class="n">criterion</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">logits</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">mb_y</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">loss</span> <span class="o">+=</span> <span class="bp">self</span><span class="o">.</span><span class="n">criterion</span><span class="p">()</span>
 
             <span class="c1"># Optimization step</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">before_update</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>

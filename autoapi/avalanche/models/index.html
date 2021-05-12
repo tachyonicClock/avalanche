@@ -753,9 +753,31 @@ parameters converted too when you call <code class="xref py py-meth docutils lit
 evaluation mode.</p>
 </dd>
 </dl>
-<p>Multi-head classifier with separate classifiers for each task.</p>
+<p>Multi-head classifier with separate heads for each task.</p>
 <p>Typically used in task-incremental scenarios where task labels are
 available and provided to the model.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Each output head may have a different shape, and the number of
+classes can be determined automatically.</p>
+<p>However, since pytorch doest not support jagged tensors, when you
+compute a minibatch’s output you must ensure that each sample
+has the same output size, otherwise the model will fail to
+concatenate the samples together.</p>
+<p>These can be easily ensured in two possible ways:
+- each minibatch contains a single task, which is the case in most</p>
+<blockquote>
+<div><p>common scenarios in Avalanche. Some exceptions to this setting
+are multi-task replay or cumulative strategies.</p>
+</div></blockquote>
+<ul class="simple">
+<li><dl class="simple">
+<dt>each head has the same size, which can be enforced by setting a</dt><dd><p>large enough <cite>initial_out_features</cite>.</p>
+</dd>
+</dl>
+</li>
+</ul>
+</div>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">

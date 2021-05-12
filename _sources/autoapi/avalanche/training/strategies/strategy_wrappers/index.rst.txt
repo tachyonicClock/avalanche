@@ -25,7 +25,7 @@ Classes
 
 
 
-.. py:class:: Naive(model: Module, optimizer: Optimizer, criterion, train_mb_size: int = 1, train_epochs: int = 1, eval_mb_size: int = None, device=None, plugins: Optional[List[StrategyPlugin]] = None, evaluator: EvaluationPlugin = default_logger, eval_every=-1)
+.. py:class:: Naive(model: Module, optimizer: Optimizer, criterion=CrossEntropyLoss(), train_mb_size: int = 1, train_epochs: int = 1, eval_mb_size: int = None, device=None, plugins: Optional[List[StrategyPlugin]] = None, evaluator: EvaluationPlugin = default_logger, eval_every=-1)
 
    Bases: :class:`avalanche.training.strategies.base_strategy.BaseStrategy`
 

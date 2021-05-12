@@ -13,6 +13,8 @@
   
   <link rel="stylesheet" href="../../../_static/css/mystyle.css" type="text/css" />
   <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/css/mystyle.css" type="text/css" />
   <link rel="stylesheet" href="../../../_static/graphviz.css" type="text/css" />
 
   
@@ -30,6 +32,7 @@
   
     
       <script type="text/javascript" id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
+        <script data-url_root="../../../" id="documentation_options" src="../../../_static/documentation_options.js"></script>
         <script src="../../../_static/jquery.js"></script>
         <script src="../../../_static/underscore.js"></script>
         <script src="../../../_static/doctools.js"></script>
@@ -195,6 +198,7 @@ the near future.</p>
 <li class="toctree-l1"><a class="reference internal" href="pytorchcv_wrapper/"><code class="xref py py-mod docutils literal notranslate"><span class="pre">avalanche.models.pytorchcv_wrapper</span></code></a></li>
 <li class="toctree-l1"><a class="reference internal" href="simple_cnn/"><code class="xref py py-mod docutils literal notranslate"><span class="pre">avalanche.models.simple_cnn</span></code></a></li>
 <li class="toctree-l1"><a class="reference internal" href="simple_mlp/"><code class="xref py py-mod docutils literal notranslate"><span class="pre">avalanche.models.simple_mlp</span></code></a></li>
+<li class="toctree-l1"><a class="reference internal" href="slda_resnet/"><code class="xref py py-mod docutils literal notranslate"><span class="pre">avalanche.models.slda_resnet</span></code></a></li>
 <li class="toctree-l1"><a class="reference internal" href="utils/"><code class="xref py py-mod docutils literal notranslate"><span class="pre">avalanche.models.utils</span></code></a></li>
 </ul>
 </div>
@@ -230,17 +234,40 @@ the near future.</p>
 <tr class="row-odd"><td><p><a class="reference internal" href="#avalanche.models.DynamicModule" title="avalanche.models.DynamicModule"><code class="xref py py-obj docutils literal notranslate"><span class="pre">DynamicModule</span></code></a></p></td>
 <td><p>Base class for all neural network modules.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#avalanche.models.IncrementalClassifier" title="avalanche.models.IncrementalClassifier"><code class="xref py py-obj docutils literal notranslate"><span class="pre">IncrementalClassifier</span></code></a></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#avalanche.models.MultiTaskModule" title="avalanche.models.MultiTaskModule"><code class="xref py py-obj docutils literal notranslate"><span class="pre">MultiTaskModule</span></code></a></p></td>
+<td><p>Multi-task modules are <a href="#id1"><span class="problematic" id="id2">`</span></a>torch.nn.Modules`s for multi-task</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#avalanche.models.IncrementalClassifier" title="avalanche.models.IncrementalClassifier"><code class="xref py py-obj docutils literal notranslate"><span class="pre">IncrementalClassifier</span></code></a></p></td>
 <td><p>Base class for all neural network modules.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#avalanche.models.MultiHeadClassifier" title="avalanche.models.MultiHeadClassifier"><code class="xref py py-obj docutils literal notranslate"><span class="pre">MultiHeadClassifier</span></code></a></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#avalanche.models.MultiHeadClassifier" title="avalanche.models.MultiHeadClassifier"><code class="xref py py-obj docutils literal notranslate"><span class="pre">MultiHeadClassifier</span></code></a></p></td>
 <td><p>Base class for all neural network modules.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#avalanche.models.FeatureExtractorBackbone" title="avalanche.models.FeatureExtractorBackbone"><code class="xref py py-obj docutils literal notranslate"><span class="pre">FeatureExtractorBackbone</span></code></a></p></td>
+<td><p>This PyTorch module allows us to extract features from a backbone network</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#avalanche.models.SLDAResNetModel" title="avalanche.models.SLDAResNetModel"><code class="xref py py-obj docutils literal notranslate"><span class="pre">SLDAResNetModel</span></code></a></p></td>
+<td><p>This is a model wrapper to reproduce experiments from the original</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="functions">
+<h3>Functions<a class="headerlink" href="#functions" title="Permalink to this headline">¶</a></h3>
+<table class="longtable docutils align-default">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 90%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="#avalanche.models.avalanche_forward" title="avalanche.models.avalanche_forward"><code class="xref py py-obj docutils literal notranslate"><span class="pre">avalanche_forward</span></code></a>(model, x, task_labels)</p></td>
+<td><p></p></td>
 </tr>
 </tbody>
 </table>
 <dl class="py class">
-<dt id="avalanche.models.SimpleCNN">
-<em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">avalanche.models.</span></code><code class="sig-name descname"><span class="pre">SimpleCNN</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">num_classes</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">10</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../_modules/avalanche/models/simple_cnn/#SimpleCNN"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.models.SimpleCNN" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="avalanche.models.SimpleCNN">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">avalanche.models.</span></span><span class="sig-name descname"><span class="pre">SimpleCNN</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">num_classes</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">10</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../_modules/avalanche/models/simple_cnn/#SimpleCNN"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.models.SimpleCNN" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">torch.nn.Module</span></code></p>
 <p>Base class for all neural network modules.</p>
 <p>Your models should also subclass this class.</p>
@@ -264,22 +291,22 @@ a tree structure. You can assign the submodules as regular attributes:</p>
 parameters converted too when you call <code class="xref py py-meth docutils literal notranslate"><span class="pre">to()</span></code>, etc.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Variables</dt>
-<dd class="field-odd"><p><a class="reference internal" href="../training/#module-avalanche.training" title="avalanche.training"><strong>training</strong></a> (<em>bool</em>) – Boolean represents whether this module is in training or
+<dd class="field-odd"><p><strong>training</strong> (<em>bool</em>) – Boolean represents whether this module is in training or
 evaluation mode.</p>
 </dd>
 </dl>
 <p>Initializes internal Module state, shared by both nn.Module and ScriptModule.</p>
 <dl class="py method">
-<dt id="avalanche.models.SimpleCNN.forward">
-<code class="sig-name descname"><span class="pre">forward</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">x</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../_modules/avalanche/models/simple_cnn/#SimpleCNN.forward"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.models.SimpleCNN.forward" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="avalanche.models.SimpleCNN.forward">
+<span class="sig-name descname"><span class="pre">forward</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">x</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../_modules/avalanche/models/simple_cnn/#SimpleCNN.forward"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.models.SimpleCNN.forward" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 </dd></dl>
 
 <dl class="py class">
-<dt id="avalanche.models.MTSimpleCNN">
-<em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">avalanche.models.</span></code><code class="sig-name descname"><span class="pre">MTSimpleCNN</span></code><a class="reference internal" href="../../../_modules/avalanche/models/simple_cnn/#MTSimpleCNN"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.models.MTSimpleCNN" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <a class="reference internal" href="simple_cnn/#avalanche.models.simple_cnn.SimpleCNN" title="avalanche.models.simple_cnn.SimpleCNN"><code class="xref py py-class docutils literal notranslate"><span class="pre">avalanche.models.simple_cnn.SimpleCNN</span></code></a>, <code class="xref py py-class docutils literal notranslate"><span class="pre">avalanche.models.dynamic_modules.MultiTaskModule</span></code></p>
+<dt class="sig sig-object py" id="avalanche.models.MTSimpleCNN">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">avalanche.models.</span></span><span class="sig-name descname"><span class="pre">MTSimpleCNN</span></span><a class="reference internal" href="../../../_modules/avalanche/models/simple_cnn/#MTSimpleCNN"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.models.MTSimpleCNN" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="simple_cnn/#avalanche.models.simple_cnn.SimpleCNN" title="avalanche.models.simple_cnn.SimpleCNN"><code class="xref py py-class docutils literal notranslate"><span class="pre">avalanche.models.simple_cnn.SimpleCNN</span></code></a>, <a class="reference internal" href="dynamic_modules/#avalanche.models.dynamic_modules.MultiTaskModule" title="avalanche.models.dynamic_modules.MultiTaskModule"><code class="xref py py-class docutils literal notranslate"><span class="pre">avalanche.models.dynamic_modules.MultiTaskModule</span></code></a></p>
 <p>Base class for all neural network modules.</p>
 <p>Your models should also subclass this class.</p>
 <p>Modules can also contain other Modules, allowing to nest them in
@@ -302,14 +329,14 @@ a tree structure. You can assign the submodules as regular attributes:</p>
 parameters converted too when you call <code class="xref py py-meth docutils literal notranslate"><span class="pre">to()</span></code>, etc.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Variables</dt>
-<dd class="field-odd"><p><a class="reference internal" href="../training/#module-avalanche.training" title="avalanche.training"><strong>training</strong></a> (<em>bool</em>) – Boolean represents whether this module is in training or
+<dd class="field-odd"><p><strong>training</strong> (<em>bool</em>) – Boolean represents whether this module is in training or
 evaluation mode.</p>
 </dd>
 </dl>
 <p>Multi-task CNN with multi-head classifier.</p>
 <dl class="py method">
-<dt id="avalanche.models.MTSimpleCNN.forward">
-<code class="sig-name descname"><span class="pre">forward</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">x</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">task_labels</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../_modules/avalanche/models/simple_cnn/#MTSimpleCNN.forward"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.models.MTSimpleCNN.forward" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="avalanche.models.MTSimpleCNN.forward">
+<span class="sig-name descname"><span class="pre">forward</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">x</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">task_labels</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../_modules/avalanche/models/simple_cnn/#MTSimpleCNN.forward"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.models.MTSimpleCNN.forward" title="Permalink to this definition">¶</a></dt>
 <dd><p>compute the output given the input <cite>x</cite> and task labels.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -327,8 +354,8 @@ evaluation mode.</p>
 </dd></dl>
 
 <dl class="py class">
-<dt id="avalanche.models.SimpleMLP">
-<em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">avalanche.models.</span></code><code class="sig-name descname"><span class="pre">SimpleMLP</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">num_classes</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">10</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">input_size</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">28</span> <span class="pre">*</span> <span class="pre">28</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">hidden_size</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">512</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">hidden_layers</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../_modules/avalanche/models/simple_mlp/#SimpleMLP"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.models.SimpleMLP" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="avalanche.models.SimpleMLP">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">avalanche.models.</span></span><span class="sig-name descname"><span class="pre">SimpleMLP</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">num_classes</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">10</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">input_size</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">28</span> <span class="pre">*</span> <span class="pre">28</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">hidden_size</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">512</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">hidden_layers</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../_modules/avalanche/models/simple_mlp/#SimpleMLP"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.models.SimpleMLP" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">torch.nn.Module</span></code></p>
 <p>Base class for all neural network modules.</p>
 <p>Your models should also subclass this class.</p>
@@ -352,22 +379,22 @@ a tree structure. You can assign the submodules as regular attributes:</p>
 parameters converted too when you call <code class="xref py py-meth docutils literal notranslate"><span class="pre">to()</span></code>, etc.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Variables</dt>
-<dd class="field-odd"><p><a class="reference internal" href="../training/#module-avalanche.training" title="avalanche.training"><strong>training</strong></a> (<em>bool</em>) – Boolean represents whether this module is in training or
+<dd class="field-odd"><p><strong>training</strong> (<em>bool</em>) – Boolean represents whether this module is in training or
 evaluation mode.</p>
 </dd>
 </dl>
 <p>Initializes internal Module state, shared by both nn.Module and ScriptModule.</p>
 <dl class="py method">
-<dt id="avalanche.models.SimpleMLP.forward">
-<code class="sig-name descname"><span class="pre">forward</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">x</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../_modules/avalanche/models/simple_mlp/#SimpleMLP.forward"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.models.SimpleMLP.forward" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="avalanche.models.SimpleMLP.forward">
+<span class="sig-name descname"><span class="pre">forward</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">x</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../_modules/avalanche/models/simple_mlp/#SimpleMLP.forward"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.models.SimpleMLP.forward" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 </dd></dl>
 
 <dl class="py class">
-<dt id="avalanche.models.MTSimpleMLP">
-<em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">avalanche.models.</span></code><code class="sig-name descname"><span class="pre">MTSimpleMLP</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">input_size</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">28</span> <span class="pre">*</span> <span class="pre">28</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">hidden_size</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">512</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../_modules/avalanche/models/simple_mlp/#MTSimpleMLP"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.models.MTSimpleMLP" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">torch.nn.Module</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">avalanche.models.dynamic_modules.MultiTaskModule</span></code></p>
+<dt class="sig sig-object py" id="avalanche.models.MTSimpleMLP">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">avalanche.models.</span></span><span class="sig-name descname"><span class="pre">MTSimpleMLP</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">input_size</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">28</span> <span class="pre">*</span> <span class="pre">28</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">hidden_size</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">512</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../_modules/avalanche/models/simple_mlp/#MTSimpleMLP"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.models.MTSimpleMLP" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">torch.nn.Module</span></code>, <a class="reference internal" href="dynamic_modules/#avalanche.models.dynamic_modules.MultiTaskModule" title="avalanche.models.dynamic_modules.MultiTaskModule"><code class="xref py py-class docutils literal notranslate"><span class="pre">avalanche.models.dynamic_modules.MultiTaskModule</span></code></a></p>
 <p>Base class for all neural network modules.</p>
 <p>Your models should also subclass this class.</p>
 <p>Modules can also contain other Modules, allowing to nest them in
@@ -390,14 +417,14 @@ a tree structure. You can assign the submodules as regular attributes:</p>
 parameters converted too when you call <code class="xref py py-meth docutils literal notranslate"><span class="pre">to()</span></code>, etc.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Variables</dt>
-<dd class="field-odd"><p><a class="reference internal" href="../training/#module-avalanche.training" title="avalanche.training"><strong>training</strong></a> (<em>bool</em>) – Boolean represents whether this module is in training or
+<dd class="field-odd"><p><strong>training</strong> (<em>bool</em>) – Boolean represents whether this module is in training or
 evaluation mode.</p>
 </dd>
 </dl>
 <p>Multi-task MLP with multi-head classifier.</p>
 <dl class="py method">
-<dt id="avalanche.models.MTSimpleMLP.forward">
-<code class="sig-name descname"><span class="pre">forward</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">x</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">task_labels</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../_modules/avalanche/models/simple_mlp/#MTSimpleMLP.forward"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.models.MTSimpleMLP.forward" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="avalanche.models.MTSimpleMLP.forward">
+<span class="sig-name descname"><span class="pre">forward</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">x</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">task_labels</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../_modules/avalanche/models/simple_mlp/#MTSimpleMLP.forward"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.models.MTSimpleMLP.forward" title="Permalink to this definition">¶</a></dt>
 <dd><p>compute the output given the input <cite>x</cite> and task labels.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -415,8 +442,8 @@ evaluation mode.</p>
 </dd></dl>
 
 <dl class="py class">
-<dt id="avalanche.models.SimpleMLP_TinyImageNet">
-<em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">avalanche.models.</span></code><code class="sig-name descname"><span class="pre">SimpleMLP_TinyImageNet</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">num_classes</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">200</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">num_channels</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">3</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../_modules/avalanche/models/mlp_tiny_imagenet/#SimpleMLP_TinyImageNet"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.models.SimpleMLP_TinyImageNet" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="avalanche.models.SimpleMLP_TinyImageNet">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">avalanche.models.</span></span><span class="sig-name descname"><span class="pre">SimpleMLP_TinyImageNet</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">num_classes</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">200</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">num_channels</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">3</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../_modules/avalanche/models/mlp_tiny_imagenet/#SimpleMLP_TinyImageNet"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.models.SimpleMLP_TinyImageNet" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">torch.nn.Module</span></code></p>
 <p>Base class for all neural network modules.</p>
 <p>Your models should also subclass this class.</p>
@@ -440,21 +467,21 @@ a tree structure. You can assign the submodules as regular attributes:</p>
 parameters converted too when you call <code class="xref py py-meth docutils literal notranslate"><span class="pre">to()</span></code>, etc.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Variables</dt>
-<dd class="field-odd"><p><a class="reference internal" href="../training/#module-avalanche.training" title="avalanche.training"><strong>training</strong></a> (<em>bool</em>) – Boolean represents whether this module is in training or
+<dd class="field-odd"><p><strong>training</strong> (<em>bool</em>) – Boolean represents whether this module is in training or
 evaluation mode.</p>
 </dd>
 </dl>
 <p>Initializes internal Module state, shared by both nn.Module and ScriptModule.</p>
 <dl class="py method">
-<dt id="avalanche.models.SimpleMLP_TinyImageNet.forward">
-<code class="sig-name descname"><span class="pre">forward</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">x</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../_modules/avalanche/models/mlp_tiny_imagenet/#SimpleMLP_TinyImageNet.forward"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.models.SimpleMLP_TinyImageNet.forward" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="avalanche.models.SimpleMLP_TinyImageNet.forward">
+<span class="sig-name descname"><span class="pre">forward</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">x</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../_modules/avalanche/models/mlp_tiny_imagenet/#SimpleMLP_TinyImageNet.forward"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.models.SimpleMLP_TinyImageNet.forward" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 </dd></dl>
 
 <dl class="py class">
-<dt id="avalanche.models.MobilenetV1">
-<em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">avalanche.models.</span></code><code class="sig-name descname"><span class="pre">MobilenetV1</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">pretrained</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">latent_layer_num</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">20</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../_modules/avalanche/models/mobilenetv1/#MobilenetV1"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.models.MobilenetV1" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="avalanche.models.MobilenetV1">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">avalanche.models.</span></span><span class="sig-name descname"><span class="pre">MobilenetV1</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">pretrained</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">latent_layer_num</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">20</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../_modules/avalanche/models/mobilenetv1/#MobilenetV1"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.models.MobilenetV1" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">torch.nn.Module</span></code></p>
 <p>Base class for all neural network modules.</p>
 <p>Your models should also subclass this class.</p>
@@ -478,21 +505,21 @@ a tree structure. You can assign the submodules as regular attributes:</p>
 parameters converted too when you call <code class="xref py py-meth docutils literal notranslate"><span class="pre">to()</span></code>, etc.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Variables</dt>
-<dd class="field-odd"><p><a class="reference internal" href="../training/#module-avalanche.training" title="avalanche.training"><strong>training</strong></a> (<em>bool</em>) – Boolean represents whether this module is in training or
+<dd class="field-odd"><p><strong>training</strong> (<em>bool</em>) – Boolean represents whether this module is in training or
 evaluation mode.</p>
 </dd>
 </dl>
 <p>Initializes internal Module state, shared by both nn.Module and ScriptModule.</p>
 <dl class="py method">
-<dt id="avalanche.models.MobilenetV1.forward">
-<code class="sig-name descname"><span class="pre">forward</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">x</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">latent_input</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">return_lat_acts</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../_modules/avalanche/models/mobilenetv1/#MobilenetV1.forward"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.models.MobilenetV1.forward" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="avalanche.models.MobilenetV1.forward">
+<span class="sig-name descname"><span class="pre">forward</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">x</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">latent_input</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">return_lat_acts</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../_modules/avalanche/models/mobilenetv1/#MobilenetV1.forward"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.models.MobilenetV1.forward" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 </dd></dl>
 
 <dl class="py class">
-<dt id="avalanche.models.DynamicModule">
-<em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">avalanche.models.</span></code><code class="sig-name descname"><span class="pre">DynamicModule</span></code><a class="reference internal" href="../../../_modules/avalanche/models/dynamic_modules/#DynamicModule"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.models.DynamicModule" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="avalanche.models.DynamicModule">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">avalanche.models.</span></span><span class="sig-name descname"><span class="pre">DynamicModule</span></span><a class="reference internal" href="../../../_modules/avalanche/models/dynamic_modules/#DynamicModule"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.models.DynamicModule" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">torch.nn.Module</span></code></p>
 <p>Base class for all neural network modules.</p>
 <p>Your models should also subclass this class.</p>
@@ -516,7 +543,7 @@ a tree structure. You can assign the submodules as regular attributes:</p>
 parameters converted too when you call <code class="xref py py-meth docutils literal notranslate"><span class="pre">to()</span></code>, etc.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Variables</dt>
-<dd class="field-odd"><p><a class="reference internal" href="../training/#module-avalanche.training" title="avalanche.training"><strong>training</strong></a> (<em>bool</em>) – Boolean represents whether this module is in training or
+<dd class="field-odd"><p><strong>training</strong> (<em>bool</em>) – Boolean represents whether this module is in training or
 evaluation mode.</p>
 </dd>
 </dl>
@@ -527,8 +554,8 @@ classifiers, progressive networks, …).</p>
 <cite>model_adaptation</cite>, which adapts the model given data from the
 current experience.</p>
 <dl class="py method">
-<dt id="avalanche.models.DynamicModule.adaptation">
-<code class="sig-name descname"><span class="pre">adaptation</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dataset</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">AvalancheDataset</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../_modules/avalanche/models/dynamic_modules/#DynamicModule.adaptation"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.models.DynamicModule.adaptation" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="avalanche.models.DynamicModule.adaptation">
+<span class="sig-name descname"><span class="pre">adaptation</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dataset</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">AvalancheDataset</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../_modules/avalanche/models/dynamic_modules/#DynamicModule.adaptation"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.models.DynamicModule.adaptation" title="Permalink to this definition">¶</a></dt>
 <dd><p>Adapt the module (freeze units, add units…) using the current
 data. Optimizers must be updated after the model adaptation.</p>
 <p>Avalanche strategies call this method to adapt the architecture
@@ -552,16 +579,16 @@ classes or tasks.</p>
 </dd></dl>
 
 <dl class="py method">
-<dt id="avalanche.models.DynamicModule.train_adaptation">
-<code class="sig-name descname"><span class="pre">train_adaptation</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dataset</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">AvalancheDataset</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../_modules/avalanche/models/dynamic_modules/#DynamicModule.train_adaptation"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.models.DynamicModule.train_adaptation" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="avalanche.models.DynamicModule.train_adaptation">
+<span class="sig-name descname"><span class="pre">train_adaptation</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dataset</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">AvalancheDataset</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../_modules/avalanche/models/dynamic_modules/#DynamicModule.train_adaptation"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.models.DynamicModule.train_adaptation" title="Permalink to this definition">¶</a></dt>
 <dd><p>Module’s adaptation at training time.</p>
 <p>Avalanche strategies automatically call this method <em>before</em> training
 on each experience.</p>
 </dd></dl>
 
 <dl class="py method">
-<dt id="avalanche.models.DynamicModule.eval_adaptation">
-<code class="sig-name descname"><span class="pre">eval_adaptation</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dataset</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">AvalancheDataset</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../_modules/avalanche/models/dynamic_modules/#DynamicModule.eval_adaptation"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.models.DynamicModule.eval_adaptation" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="avalanche.models.DynamicModule.eval_adaptation">
+<span class="sig-name descname"><span class="pre">eval_adaptation</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dataset</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">AvalancheDataset</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../_modules/avalanche/models/dynamic_modules/#DynamicModule.eval_adaptation"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.models.DynamicModule.eval_adaptation" title="Permalink to this definition">¶</a></dt>
 <dd><p>Module’s adaptation at evaluation time.</p>
 <p>Avalanche strategies automatically call this method <em>before</em> evaluating
 on each experience.</p>
@@ -578,8 +605,53 @@ use this data to <strong>train</strong> the module’s parameters.</p>
 </dd></dl>
 
 <dl class="py class">
-<dt id="avalanche.models.IncrementalClassifier">
-<em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">avalanche.models.</span></code><code class="sig-name descname"><span class="pre">IncrementalClassifier</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">in_features</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">initial_out_features</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">2</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../_modules/avalanche/models/dynamic_modules/#IncrementalClassifier"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.models.IncrementalClassifier" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="avalanche.models.MultiTaskModule">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">avalanche.models.</span></span><span class="sig-name descname"><span class="pre">MultiTaskModule</span></span><a class="reference internal" href="../../../_modules/avalanche/models/dynamic_modules/#MultiTaskModule"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.models.MultiTaskModule" title="Permalink to this definition">¶</a></dt>
+<dd><p>Multi-task modules are <cite>torch.nn.Modules`s for multi-task
+scenarios. The `forward</cite> method accepts task labels, one for
+each sample in the mini-batch.</p>
+<p>By default the <cite>forward</cite> method splits the mini-batch by task
+and calls <cite>forward_single_task</cite>. Subclasses must implement
+<cite>forward_single_task</cite> or override <a href="#id3"><span class="problematic" id="id4">`</span></a>forward.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="avalanche.models.MultiTaskModule.forward">
+<span class="sig-name descname"><span class="pre">forward</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">x</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">torch.Tensor</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">task_labels</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">torch.Tensor</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">torch.Tensor</span><a class="reference internal" href="../../../_modules/avalanche/models/dynamic_modules/#MultiTaskModule.forward"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.models.MultiTaskModule.forward" title="Permalink to this definition">¶</a></dt>
+<dd><p>compute the output given the input <cite>x</cite> and task labels.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>x</strong> – </p></li>
+<li><p><strong>task_labels</strong> – task labels for each sample.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="avalanche.models.MultiTaskModule.forward_single_task">
+<span class="sig-name descname"><span class="pre">forward_single_task</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">x</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">torch.Tensor</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">task_label</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">torch.Tensor</span><a class="reference internal" href="../../../_modules/avalanche/models/dynamic_modules/#MultiTaskModule.forward_single_task"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.models.MultiTaskModule.forward_single_task" title="Permalink to this definition">¶</a></dt>
+<dd><p>compute the output given the input <cite>x</cite> and task label.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>x</strong> – </p></li>
+<li><p><strong>task_label</strong> – a single task label.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p></p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="avalanche.models.IncrementalClassifier">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">avalanche.models.</span></span><span class="sig-name descname"><span class="pre">IncrementalClassifier</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">in_features</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">initial_out_features</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">2</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../_modules/avalanche/models/dynamic_modules/#IncrementalClassifier"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.models.IncrementalClassifier" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="dynamic_modules/#avalanche.models.dynamic_modules.DynamicModule" title="avalanche.models.dynamic_modules.DynamicModule"><code class="xref py py-class docutils literal notranslate"><span class="pre">avalanche.models.dynamic_modules.DynamicModule</span></code></a></p>
 <p>Base class for all neural network modules.</p>
 <p>Your models should also subclass this class.</p>
@@ -603,7 +675,7 @@ a tree structure. You can assign the submodules as regular attributes:</p>
 parameters converted too when you call <code class="xref py py-meth docutils literal notranslate"><span class="pre">to()</span></code>, etc.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Variables</dt>
-<dd class="field-odd"><p><a class="reference internal" href="../training/#module-avalanche.training" title="avalanche.training"><strong>training</strong></a> (<em>bool</em>) – Boolean represents whether this module is in training or
+<dd class="field-odd"><p><strong>training</strong> (<em>bool</em>) – Boolean represents whether this module is in training or
 evaluation mode.</p>
 </dd>
 </dl>
@@ -621,8 +693,8 @@ dynamically expanded).</p></li>
 </dd>
 </dl>
 <dl class="py method">
-<dt id="avalanche.models.IncrementalClassifier.adaptation">
-<code class="sig-name descname"><span class="pre">adaptation</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dataset</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">AvalancheDataset</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../_modules/avalanche/models/dynamic_modules/#IncrementalClassifier.adaptation"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.models.IncrementalClassifier.adaptation" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="avalanche.models.IncrementalClassifier.adaptation">
+<span class="sig-name descname"><span class="pre">adaptation</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dataset</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">AvalancheDataset</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../_modules/avalanche/models/dynamic_modules/#IncrementalClassifier.adaptation"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.models.IncrementalClassifier.adaptation" title="Permalink to this definition">¶</a></dt>
 <dd><p>If <cite>dataset</cite> contains unseen classes the classifier is expanded.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -635,8 +707,8 @@ dynamically expanded).</p></li>
 </dd></dl>
 
 <dl class="py method">
-<dt id="avalanche.models.IncrementalClassifier.forward">
-<code class="sig-name descname"><span class="pre">forward</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">x</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../_modules/avalanche/models/dynamic_modules/#IncrementalClassifier.forward"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.models.IncrementalClassifier.forward" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="avalanche.models.IncrementalClassifier.forward">
+<span class="sig-name descname"><span class="pre">forward</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">x</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../_modules/avalanche/models/dynamic_modules/#IncrementalClassifier.forward"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.models.IncrementalClassifier.forward" title="Permalink to this definition">¶</a></dt>
 <dd><p>compute the output given the input <cite>x</cite>. This module does not use
 the task label.</p>
 <dl class="field-list simple">
@@ -652,9 +724,9 @@ the task label.</p>
 </dd></dl>
 
 <dl class="py class">
-<dt id="avalanche.models.MultiHeadClassifier">
-<em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">avalanche.models.</span></code><code class="sig-name descname"><span class="pre">MultiHeadClassifier</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">in_features</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">initial_out_features</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">2</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../_modules/avalanche/models/dynamic_modules/#MultiHeadClassifier"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.models.MultiHeadClassifier" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">avalanche.models.dynamic_modules.MultiTaskModule</span></code>, <a class="reference internal" href="dynamic_modules/#avalanche.models.dynamic_modules.DynamicModule" title="avalanche.models.dynamic_modules.DynamicModule"><code class="xref py py-class docutils literal notranslate"><span class="pre">avalanche.models.dynamic_modules.DynamicModule</span></code></a></p>
+<dt class="sig sig-object py" id="avalanche.models.MultiHeadClassifier">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">avalanche.models.</span></span><span class="sig-name descname"><span class="pre">MultiHeadClassifier</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">in_features</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">initial_out_features</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">2</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../_modules/avalanche/models/dynamic_modules/#MultiHeadClassifier"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.models.MultiHeadClassifier" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="dynamic_modules/#avalanche.models.dynamic_modules.MultiTaskModule" title="avalanche.models.dynamic_modules.MultiTaskModule"><code class="xref py py-class docutils literal notranslate"><span class="pre">avalanche.models.dynamic_modules.MultiTaskModule</span></code></a>, <a class="reference internal" href="dynamic_modules/#avalanche.models.dynamic_modules.DynamicModule" title="avalanche.models.dynamic_modules.DynamicModule"><code class="xref py py-class docutils literal notranslate"><span class="pre">avalanche.models.dynamic_modules.DynamicModule</span></code></a></p>
 <p>Base class for all neural network modules.</p>
 <p>Your models should also subclass this class.</p>
 <p>Modules can also contain other Modules, allowing to nest them in
@@ -677,7 +749,7 @@ a tree structure. You can assign the submodules as regular attributes:</p>
 parameters converted too when you call <code class="xref py py-meth docutils literal notranslate"><span class="pre">to()</span></code>, etc.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Variables</dt>
-<dd class="field-odd"><p><a class="reference internal" href="../training/#module-avalanche.training" title="avalanche.training"><strong>training</strong></a> (<em>bool</em>) – Boolean represents whether this module is in training or
+<dd class="field-odd"><p><strong>training</strong> (<em>bool</em>) – Boolean represents whether this module is in training or
 evaluation mode.</p>
 </dd>
 </dl>
@@ -694,8 +766,8 @@ dynamically expanded).</p></li>
 </dd>
 </dl>
 <dl class="py method">
-<dt id="avalanche.models.MultiHeadClassifier.adaptation">
-<code class="sig-name descname"><span class="pre">adaptation</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dataset</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">AvalancheDataset</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../_modules/avalanche/models/dynamic_modules/#MultiHeadClassifier.adaptation"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.models.MultiHeadClassifier.adaptation" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="avalanche.models.MultiHeadClassifier.adaptation">
+<span class="sig-name descname"><span class="pre">adaptation</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dataset</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">AvalancheDataset</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../_modules/avalanche/models/dynamic_modules/#MultiHeadClassifier.adaptation"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.models.MultiHeadClassifier.adaptation" title="Permalink to this definition">¶</a></dt>
 <dd><p>If <cite>dataset</cite> contains new tasks, a new head is initialized.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -708,8 +780,8 @@ dynamically expanded).</p></li>
 </dd></dl>
 
 <dl class="py method">
-<dt id="avalanche.models.MultiHeadClassifier.forward_single_task">
-<code class="sig-name descname"><span class="pre">forward_single_task</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">x</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">task_label</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../_modules/avalanche/models/dynamic_modules/#MultiHeadClassifier.forward_single_task"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.models.MultiHeadClassifier.forward_single_task" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="avalanche.models.MultiHeadClassifier.forward_single_task">
+<span class="sig-name descname"><span class="pre">forward_single_task</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">x</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">task_label</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../_modules/avalanche/models/dynamic_modules/#MultiHeadClassifier.forward_single_task"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.models.MultiHeadClassifier.forward_single_task" title="Permalink to this definition">¶</a></dt>
 <dd><p>compute the output given the input <cite>x</cite>. This module uses the task
 label to activate the correct head.</p>
 <dl class="field-list simple">
@@ -721,6 +793,86 @@ label to activate the correct head.</p>
 </dd>
 <dt class="field-even">Returns</dt>
 <dd class="field-even"><p></p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="avalanche.models.avalanche_forward">
+<span class="sig-prename descclassname"><span class="pre">avalanche.models.</span></span><span class="sig-name descname"><span class="pre">avalanche_forward</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">model</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">x</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">task_labels</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../_modules/avalanche/models/utils/#avalanche_forward"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.models.avalanche_forward" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="avalanche.models.FeatureExtractorBackbone">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">avalanche.models.</span></span><span class="sig-name descname"><span class="pre">FeatureExtractorBackbone</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">model</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">output_layer_name</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../_modules/avalanche/models/utils/#FeatureExtractorBackbone"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.models.FeatureExtractorBackbone" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">torch.nn.Module</span></code></p>
+<p>This PyTorch module allows us to extract features from a backbone network
+given a layer name.</p>
+<p>Initializes internal Module state, shared by both nn.Module and ScriptModule.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="avalanche.models.FeatureExtractorBackbone.forward">
+<span class="sig-name descname"><span class="pre">forward</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">x</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../_modules/avalanche/models/utils/#FeatureExtractorBackbone.forward"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.models.FeatureExtractorBackbone.forward" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="avalanche.models.FeatureExtractorBackbone.get_name_to_module">
+<span class="sig-name descname"><span class="pre">get_name_to_module</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">model</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../_modules/avalanche/models/utils/#FeatureExtractorBackbone.get_name_to_module"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.models.FeatureExtractorBackbone.get_name_to_module" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="avalanche.models.FeatureExtractorBackbone.get_activation">
+<span class="sig-name descname"><span class="pre">get_activation</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../_modules/avalanche/models/utils/#FeatureExtractorBackbone.get_activation"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.models.FeatureExtractorBackbone.get_activation" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="avalanche.models.FeatureExtractorBackbone.add_hooks">
+<span class="sig-name descname"><span class="pre">add_hooks</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">model</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../_modules/avalanche/models/utils/#FeatureExtractorBackbone.add_hooks"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.models.FeatureExtractorBackbone.add_hooks" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>model</strong> – </p></li>
+<li><p><strong>outputs</strong> – Outputs from layers specified in <cite>output_layer_names</cite></p></li>
+</ul>
+</dd>
+</dl>
+<p>will be stored in <cite>output</cite> variable
+:param output_layer_names:
+:return:</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="avalanche.models.SLDAResNetModel">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">avalanche.models.</span></span><span class="sig-name descname"><span class="pre">SLDAResNetModel</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">arch</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'resnet18'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">output_layer_name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'layer4.1'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">imagenet_pretrained</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">device</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'cpu'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../_modules/avalanche/models/slda_resnet/#SLDAResNetModel"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.models.SLDAResNetModel" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">torch.nn.Module</span></code></p>
+<p>This is a model wrapper to reproduce experiments from the original
+paper of Deep Streaming Linear Discriminant Analysis by using
+a pretrained ResNet model.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>arch</strong> – backbone architecture (default is resnet-18, but others</p>
+</dd>
+</dl>
+<p>can be used by modifying layer for
+feature extraction in <a href="#id5"><span class="problematic" id="id6">`</span></a>self.feature_extraction_wrapper’
+:param imagenet_pretrained: True if initializing backbone with imagenet
+pre-trained weights else False
+:param output_layer_name: name of the layer from feature extractor
+:param device: cpu, gpu or other device</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="avalanche.models.SLDAResNetModel.pool_feat">
+<em class="property"><span class="pre">static</span> </em><span class="sig-name descname"><span class="pre">pool_feat</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">features</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../_modules/avalanche/models/slda_resnet/#SLDAResNetModel.pool_feat"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.models.SLDAResNetModel.pool_feat" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="avalanche.models.SLDAResNetModel.forward">
+<span class="sig-name descname"><span class="pre">forward</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">x</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../_modules/avalanche/models/slda_resnet/#SLDAResNetModel.forward"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.models.SLDAResNetModel.forward" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>x</strong> – raw x data</p>
 </dd>
 </dl>
 </dd></dl>

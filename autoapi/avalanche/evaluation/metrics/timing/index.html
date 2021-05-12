@@ -13,6 +13,8 @@
   
   <link rel="stylesheet" href="../../../../../_static/css/mystyle.css" type="text/css" />
   <link rel="stylesheet" href="../../../../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../../../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../../../../_static/css/mystyle.css" type="text/css" />
   <link rel="stylesheet" href="../../../../../_static/graphviz.css" type="text/css" />
 
   
@@ -30,6 +32,7 @@
   
     
       <script type="text/javascript" id="documentation_options" data-url_root="../../../../../" src="../../../../../_static/documentation_options.js"></script>
+        <script data-url_root="../../../../../" id="documentation_options" src="../../../../../_static/documentation_options.js"></script>
         <script src="../../../../../_static/jquery.js"></script>
         <script src="../../../../../_static/underscore.js"></script>
         <script src="../../../../../_static/doctools.js"></script>
@@ -224,8 +227,8 @@
 </tbody>
 </table>
 <dl class="py class">
-<dt id="avalanche.evaluation.metrics.timing.ElapsedTime">
-<em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">avalanche.evaluation.metrics.timing.</span></code><code class="sig-name descname"><span class="pre">ElapsedTime</span></code><a class="reference internal" href="../../../../../_modules/avalanche/evaluation/metrics/timing/#ElapsedTime"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.evaluation.metrics.timing.ElapsedTime" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="avalanche.evaluation.metrics.timing.ElapsedTime">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">avalanche.evaluation.metrics.timing.</span></span><span class="sig-name descname"><span class="pre">ElapsedTime</span></span><a class="reference internal" href="../../../../../_modules/avalanche/evaluation/metrics/timing/#ElapsedTime"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.evaluation.metrics.timing.ElapsedTime" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">Metric[float]</span></code></p>
 <p>The standalone Elapsed Time metric.</p>
 <p>Instances of this metric keep track of the time elapsed between calls to the
@@ -245,8 +248,8 @@ only once) will return an elapsed time of 0. The metric can be updated
 by using the <cite>update</cite> method while the running accuracy can be retrieved
 using the <cite>result</cite> method.</p>
 <dl class="py method">
-<dt id="avalanche.evaluation.metrics.timing.ElapsedTime.update">
-<code class="sig-name descname"><span class="pre">update</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">None</span><a class="reference internal" href="../../../../../_modules/avalanche/evaluation/metrics/timing/#ElapsedTime.update"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.evaluation.metrics.timing.ElapsedTime.update" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="avalanche.evaluation.metrics.timing.ElapsedTime.update">
+<span class="sig-name descname"><span class="pre">update</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">None</span><a class="reference internal" href="../../../../../_modules/avalanche/evaluation/metrics/timing/#ElapsedTime.update"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.evaluation.metrics.timing.ElapsedTime.update" title="Permalink to this definition">¶</a></dt>
 <dd><p>Update the elapsed time.</p>
 <p>For more info on how to set the initial time see the class description.</p>
 <dl class="field-list simple">
@@ -257,8 +260,8 @@ using the <cite>result</cite> method.</p>
 </dd></dl>
 
 <dl class="py method">
-<dt id="avalanche.evaluation.metrics.timing.ElapsedTime.result">
-<code class="sig-name descname"><span class="pre">result</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">float</span><a class="reference internal" href="../../../../../_modules/avalanche/evaluation/metrics/timing/#ElapsedTime.result"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.evaluation.metrics.timing.ElapsedTime.result" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="avalanche.evaluation.metrics.timing.ElapsedTime.result">
+<span class="sig-name descname"><span class="pre">result</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">float</span><a class="reference internal" href="../../../../../_modules/avalanche/evaluation/metrics/timing/#ElapsedTime.result"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.evaluation.metrics.timing.ElapsedTime.result" title="Permalink to this definition">¶</a></dt>
 <dd><p>Retrieves the elapsed time.</p>
 <p>Calling this method will not change the internal state of the metric.</p>
 <dl class="field-list simple">
@@ -269,8 +272,8 @@ using the <cite>result</cite> method.</p>
 </dd></dl>
 
 <dl class="py method">
-<dt id="avalanche.evaluation.metrics.timing.ElapsedTime.reset">
-<code class="sig-name descname"><span class="pre">reset</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">None</span><a class="reference internal" href="../../../../../_modules/avalanche/evaluation/metrics/timing/#ElapsedTime.reset"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.evaluation.metrics.timing.ElapsedTime.reset" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="avalanche.evaluation.metrics.timing.ElapsedTime.reset">
+<span class="sig-name descname"><span class="pre">reset</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">None</span><a class="reference internal" href="../../../../../_modules/avalanche/evaluation/metrics/timing/#ElapsedTime.reset"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.evaluation.metrics.timing.ElapsedTime.reset" title="Permalink to this definition">¶</a></dt>
 <dd><p>Resets the metric, including the initial time.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Returns</dt>
@@ -282,8 +285,8 @@ using the <cite>result</cite> method.</p>
 </dd></dl>
 
 <dl class="py class">
-<dt id="avalanche.evaluation.metrics.timing.MinibatchTime">
-<em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">avalanche.evaluation.metrics.timing.</span></code><code class="sig-name descname"><span class="pre">MinibatchTime</span></code><a class="reference internal" href="../../../../../_modules/avalanche/evaluation/metrics/timing/#MinibatchTime"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.evaluation.metrics.timing.MinibatchTime" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="avalanche.evaluation.metrics.timing.MinibatchTime">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">avalanche.evaluation.metrics.timing.</span></span><span class="sig-name descname"><span class="pre">MinibatchTime</span></span><a class="reference internal" href="../../../../../_modules/avalanche/evaluation/metrics/timing/#MinibatchTime"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.evaluation.metrics.timing.MinibatchTime" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">PluginMetric[float]</span></code></p>
 <p>The minibatch time metric.
 This plugin metric only works at training time.</p>
@@ -292,78 +295,78 @@ This plugin metric only works at training time.</p>
 <a class="reference internal" href="#avalanche.evaluation.metrics.timing.EpochTime" title="avalanche.evaluation.metrics.timing.EpochTime"><code class="xref py py-class docutils literal notranslate"><span class="pre">EpochTime</span></code></a>.</p>
 <p>Creates an instance of the minibatch time metric.</p>
 <dl class="py method">
-<dt id="avalanche.evaluation.metrics.timing.MinibatchTime.result">
-<code class="sig-name descname"><span class="pre">result</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">float</span><a class="reference internal" href="../../../../../_modules/avalanche/evaluation/metrics/timing/#MinibatchTime.result"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.evaluation.metrics.timing.MinibatchTime.result" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="avalanche.evaluation.metrics.timing.MinibatchTime.result">
+<span class="sig-name descname"><span class="pre">result</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">float</span><a class="reference internal" href="../../../../../_modules/avalanche/evaluation/metrics/timing/#MinibatchTime.result"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.evaluation.metrics.timing.MinibatchTime.result" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
-<dt id="avalanche.evaluation.metrics.timing.MinibatchTime.reset">
-<code class="sig-name descname"><span class="pre">reset</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">None</span><a class="reference internal" href="../../../../../_modules/avalanche/evaluation/metrics/timing/#MinibatchTime.reset"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.evaluation.metrics.timing.MinibatchTime.reset" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="avalanche.evaluation.metrics.timing.MinibatchTime.reset">
+<span class="sig-name descname"><span class="pre">reset</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">None</span><a class="reference internal" href="../../../../../_modules/avalanche/evaluation/metrics/timing/#MinibatchTime.reset"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.evaluation.metrics.timing.MinibatchTime.reset" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
-<dt id="avalanche.evaluation.metrics.timing.MinibatchTime.before_training_iteration">
-<code class="sig-name descname"><span class="pre">before_training_iteration</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">strategy</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">MetricResult</span><a class="reference internal" href="../../../../../_modules/avalanche/evaluation/metrics/timing/#MinibatchTime.before_training_iteration"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.evaluation.metrics.timing.MinibatchTime.before_training_iteration" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="avalanche.evaluation.metrics.timing.MinibatchTime.before_training_iteration">
+<span class="sig-name descname"><span class="pre">before_training_iteration</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">strategy</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">MetricResult</span><a class="reference internal" href="../../../../../_modules/avalanche/evaluation/metrics/timing/#MinibatchTime.before_training_iteration"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.evaluation.metrics.timing.MinibatchTime.before_training_iteration" title="Permalink to this definition">¶</a></dt>
 <dd><p>Called before the start of a training iteration by the
 <cite>BaseStrategy</cite>.</p>
 </dd></dl>
 
 <dl class="py method">
-<dt id="avalanche.evaluation.metrics.timing.MinibatchTime.after_training_iteration">
-<code class="sig-name descname"><span class="pre">after_training_iteration</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">strategy</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">BaseStrategy</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">MetricResult</span><a class="reference internal" href="../../../../../_modules/avalanche/evaluation/metrics/timing/#MinibatchTime.after_training_iteration"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.evaluation.metrics.timing.MinibatchTime.after_training_iteration" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="avalanche.evaluation.metrics.timing.MinibatchTime.after_training_iteration">
+<span class="sig-name descname"><span class="pre">after_training_iteration</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">strategy</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">BaseStrategy</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">MetricResult</span><a class="reference internal" href="../../../../../_modules/avalanche/evaluation/metrics/timing/#MinibatchTime.after_training_iteration"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.evaluation.metrics.timing.MinibatchTime.after_training_iteration" title="Permalink to this definition">¶</a></dt>
 <dd><p>Called after the end of a training iteration by the
 <cite>BaseStrategy</cite>.</p>
 </dd></dl>
 
 <dl class="py method">
-<dt id="avalanche.evaluation.metrics.timing.MinibatchTime.__str__">
-<code class="sig-name descname"><span class="pre">__str__</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../_modules/avalanche/evaluation/metrics/timing/#MinibatchTime.__str__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.evaluation.metrics.timing.MinibatchTime.__str__" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="avalanche.evaluation.metrics.timing.MinibatchTime.__str__">
+<span class="sig-name descname"><span class="pre">__str__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../_modules/avalanche/evaluation/metrics/timing/#MinibatchTime.__str__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.evaluation.metrics.timing.MinibatchTime.__str__" title="Permalink to this definition">¶</a></dt>
 <dd><p>Return str(self).</p>
 </dd></dl>
 
 </dd></dl>
 
 <dl class="py class">
-<dt id="avalanche.evaluation.metrics.timing.EpochTime">
-<em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">avalanche.evaluation.metrics.timing.</span></code><code class="sig-name descname"><span class="pre">EpochTime</span></code><a class="reference internal" href="../../../../../_modules/avalanche/evaluation/metrics/timing/#EpochTime"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.evaluation.metrics.timing.EpochTime" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="avalanche.evaluation.metrics.timing.EpochTime">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">avalanche.evaluation.metrics.timing.</span></span><span class="sig-name descname"><span class="pre">EpochTime</span></span><a class="reference internal" href="../../../../../_modules/avalanche/evaluation/metrics/timing/#EpochTime"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.evaluation.metrics.timing.EpochTime" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">PluginMetric[float]</span></code></p>
 <p>The epoch elapsed time metric.
 This plugin metric only works at training time.</p>
 <p>The elapsed time will be logged after each epoch.</p>
 <p>Creates an instance of the epoch time metric.</p>
 <dl class="py method">
-<dt id="avalanche.evaluation.metrics.timing.EpochTime.before_training_epoch">
-<code class="sig-name descname"><span class="pre">before_training_epoch</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">strategy</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">MetricResult</span><a class="reference internal" href="../../../../../_modules/avalanche/evaluation/metrics/timing/#EpochTime.before_training_epoch"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.evaluation.metrics.timing.EpochTime.before_training_epoch" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="avalanche.evaluation.metrics.timing.EpochTime.before_training_epoch">
+<span class="sig-name descname"><span class="pre">before_training_epoch</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">strategy</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">MetricResult</span><a class="reference internal" href="../../../../../_modules/avalanche/evaluation/metrics/timing/#EpochTime.before_training_epoch"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.evaluation.metrics.timing.EpochTime.before_training_epoch" title="Permalink to this definition">¶</a></dt>
 <dd><p>Called before <cite>train_epoch</cite> by the <cite>BaseStrategy</cite>.</p>
 </dd></dl>
 
 <dl class="py method">
-<dt id="avalanche.evaluation.metrics.timing.EpochTime.after_training_epoch">
-<code class="sig-name descname"><span class="pre">after_training_epoch</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">strategy</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">BaseStrategy</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">MetricResult</span><a class="reference internal" href="../../../../../_modules/avalanche/evaluation/metrics/timing/#EpochTime.after_training_epoch"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.evaluation.metrics.timing.EpochTime.after_training_epoch" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="avalanche.evaluation.metrics.timing.EpochTime.after_training_epoch">
+<span class="sig-name descname"><span class="pre">after_training_epoch</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">strategy</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">BaseStrategy</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">MetricResult</span><a class="reference internal" href="../../../../../_modules/avalanche/evaluation/metrics/timing/#EpochTime.after_training_epoch"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.evaluation.metrics.timing.EpochTime.after_training_epoch" title="Permalink to this definition">¶</a></dt>
 <dd><p>Called after <cite>train_epoch</cite> by the <cite>BaseStrategy</cite>.</p>
 </dd></dl>
 
 <dl class="py method">
-<dt id="avalanche.evaluation.metrics.timing.EpochTime.reset">
-<code class="sig-name descname"><span class="pre">reset</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">None</span><a class="reference internal" href="../../../../../_modules/avalanche/evaluation/metrics/timing/#EpochTime.reset"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.evaluation.metrics.timing.EpochTime.reset" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="avalanche.evaluation.metrics.timing.EpochTime.reset">
+<span class="sig-name descname"><span class="pre">reset</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">None</span><a class="reference internal" href="../../../../../_modules/avalanche/evaluation/metrics/timing/#EpochTime.reset"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.evaluation.metrics.timing.EpochTime.reset" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
-<dt id="avalanche.evaluation.metrics.timing.EpochTime.result">
-<code class="sig-name descname"><span class="pre">result</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">float</span><a class="reference internal" href="../../../../../_modules/avalanche/evaluation/metrics/timing/#EpochTime.result"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.evaluation.metrics.timing.EpochTime.result" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="avalanche.evaluation.metrics.timing.EpochTime.result">
+<span class="sig-name descname"><span class="pre">result</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">float</span><a class="reference internal" href="../../../../../_modules/avalanche/evaluation/metrics/timing/#EpochTime.result"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.evaluation.metrics.timing.EpochTime.result" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
-<dt id="avalanche.evaluation.metrics.timing.EpochTime.__str__">
-<code class="sig-name descname"><span class="pre">__str__</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../_modules/avalanche/evaluation/metrics/timing/#EpochTime.__str__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.evaluation.metrics.timing.EpochTime.__str__" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="avalanche.evaluation.metrics.timing.EpochTime.__str__">
+<span class="sig-name descname"><span class="pre">__str__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../_modules/avalanche/evaluation/metrics/timing/#EpochTime.__str__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.evaluation.metrics.timing.EpochTime.__str__" title="Permalink to this definition">¶</a></dt>
 <dd><p>Return str(self).</p>
 </dd></dl>
 
 </dd></dl>
 
 <dl class="py class">
-<dt id="avalanche.evaluation.metrics.timing.RunningEpochTime">
-<em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">avalanche.evaluation.metrics.timing.</span></code><code class="sig-name descname"><span class="pre">RunningEpochTime</span></code><a class="reference internal" href="../../../../../_modules/avalanche/evaluation/metrics/timing/#RunningEpochTime"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.evaluation.metrics.timing.RunningEpochTime" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="avalanche.evaluation.metrics.timing.RunningEpochTime">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">avalanche.evaluation.metrics.timing.</span></span><span class="sig-name descname"><span class="pre">RunningEpochTime</span></span><a class="reference internal" href="../../../../../_modules/avalanche/evaluation/metrics/timing/#RunningEpochTime"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.evaluation.metrics.timing.RunningEpochTime" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">PluginMetric[float]</span></code></p>
 <p>The running epoch time metric.
 This plugin metric only works at training time.</p>
@@ -372,46 +375,46 @@ between the start of the
 epoch and the current iteration.</p>
 <p>Creates an instance of the running epoch time metric..</p>
 <dl class="py method">
-<dt id="avalanche.evaluation.metrics.timing.RunningEpochTime.before_training_epoch">
-<code class="sig-name descname"><span class="pre">before_training_epoch</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">strategy</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">MetricResult</span><a class="reference internal" href="../../../../../_modules/avalanche/evaluation/metrics/timing/#RunningEpochTime.before_training_epoch"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.evaluation.metrics.timing.RunningEpochTime.before_training_epoch" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="avalanche.evaluation.metrics.timing.RunningEpochTime.before_training_epoch">
+<span class="sig-name descname"><span class="pre">before_training_epoch</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">strategy</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">MetricResult</span><a class="reference internal" href="../../../../../_modules/avalanche/evaluation/metrics/timing/#RunningEpochTime.before_training_epoch"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.evaluation.metrics.timing.RunningEpochTime.before_training_epoch" title="Permalink to this definition">¶</a></dt>
 <dd><p>Called before <cite>train_epoch</cite> by the <cite>BaseStrategy</cite>.</p>
 </dd></dl>
 
 <dl class="py method">
-<dt id="avalanche.evaluation.metrics.timing.RunningEpochTime.before_training_iteration">
-<code class="sig-name descname"><span class="pre">before_training_iteration</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">strategy</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">BaseStrategy</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">None</span><a class="reference internal" href="../../../../../_modules/avalanche/evaluation/metrics/timing/#RunningEpochTime.before_training_iteration"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.evaluation.metrics.timing.RunningEpochTime.before_training_iteration" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="avalanche.evaluation.metrics.timing.RunningEpochTime.before_training_iteration">
+<span class="sig-name descname"><span class="pre">before_training_iteration</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">strategy</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">BaseStrategy</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">None</span><a class="reference internal" href="../../../../../_modules/avalanche/evaluation/metrics/timing/#RunningEpochTime.before_training_iteration"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.evaluation.metrics.timing.RunningEpochTime.before_training_iteration" title="Permalink to this definition">¶</a></dt>
 <dd><p>Called before the start of a training iteration by the
 <cite>BaseStrategy</cite>.</p>
 </dd></dl>
 
 <dl class="py method">
-<dt id="avalanche.evaluation.metrics.timing.RunningEpochTime.after_training_iteration">
-<code class="sig-name descname"><span class="pre">after_training_iteration</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">strategy</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">BaseStrategy</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">MetricResult</span><a class="reference internal" href="../../../../../_modules/avalanche/evaluation/metrics/timing/#RunningEpochTime.after_training_iteration"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.evaluation.metrics.timing.RunningEpochTime.after_training_iteration" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="avalanche.evaluation.metrics.timing.RunningEpochTime.after_training_iteration">
+<span class="sig-name descname"><span class="pre">after_training_iteration</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">strategy</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">BaseStrategy</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">MetricResult</span><a class="reference internal" href="../../../../../_modules/avalanche/evaluation/metrics/timing/#RunningEpochTime.after_training_iteration"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.evaluation.metrics.timing.RunningEpochTime.after_training_iteration" title="Permalink to this definition">¶</a></dt>
 <dd><p>Called after the end of a training iteration by the
 <cite>BaseStrategy</cite>.</p>
 </dd></dl>
 
 <dl class="py method">
-<dt id="avalanche.evaluation.metrics.timing.RunningEpochTime.reset">
-<code class="sig-name descname"><span class="pre">reset</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">None</span><a class="reference internal" href="../../../../../_modules/avalanche/evaluation/metrics/timing/#RunningEpochTime.reset"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.evaluation.metrics.timing.RunningEpochTime.reset" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="avalanche.evaluation.metrics.timing.RunningEpochTime.reset">
+<span class="sig-name descname"><span class="pre">reset</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">None</span><a class="reference internal" href="../../../../../_modules/avalanche/evaluation/metrics/timing/#RunningEpochTime.reset"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.evaluation.metrics.timing.RunningEpochTime.reset" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
-<dt id="avalanche.evaluation.metrics.timing.RunningEpochTime.result">
-<code class="sig-name descname"><span class="pre">result</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">float</span><a class="reference internal" href="../../../../../_modules/avalanche/evaluation/metrics/timing/#RunningEpochTime.result"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.evaluation.metrics.timing.RunningEpochTime.result" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="avalanche.evaluation.metrics.timing.RunningEpochTime.result">
+<span class="sig-name descname"><span class="pre">result</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">float</span><a class="reference internal" href="../../../../../_modules/avalanche/evaluation/metrics/timing/#RunningEpochTime.result"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.evaluation.metrics.timing.RunningEpochTime.result" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
-<dt id="avalanche.evaluation.metrics.timing.RunningEpochTime.__str__">
-<code class="sig-name descname"><span class="pre">__str__</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../_modules/avalanche/evaluation/metrics/timing/#RunningEpochTime.__str__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.evaluation.metrics.timing.RunningEpochTime.__str__" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="avalanche.evaluation.metrics.timing.RunningEpochTime.__str__">
+<span class="sig-name descname"><span class="pre">__str__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../_modules/avalanche/evaluation/metrics/timing/#RunningEpochTime.__str__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.evaluation.metrics.timing.RunningEpochTime.__str__" title="Permalink to this definition">¶</a></dt>
 <dd><p>Return str(self).</p>
 </dd></dl>
 
 </dd></dl>
 
 <dl class="py class">
-<dt id="avalanche.evaluation.metrics.timing.ExperienceTime">
-<em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">avalanche.evaluation.metrics.timing.</span></code><code class="sig-name descname"><span class="pre">ExperienceTime</span></code><a class="reference internal" href="../../../../../_modules/avalanche/evaluation/metrics/timing/#ExperienceTime"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.evaluation.metrics.timing.ExperienceTime" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="avalanche.evaluation.metrics.timing.ExperienceTime">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">avalanche.evaluation.metrics.timing.</span></span><span class="sig-name descname"><span class="pre">ExperienceTime</span></span><a class="reference internal" href="../../../../../_modules/avalanche/evaluation/metrics/timing/#ExperienceTime"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.evaluation.metrics.timing.ExperienceTime" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">PluginMetric[float]</span></code></p>
 <p>The experience time metric.
 This plugin metric only works at eval time.</p>
@@ -419,38 +422,38 @@ This plugin metric only works at eval time.</p>
 experience.</p>
 <p>Creates an instance of the experience time metric.</p>
 <dl class="py method">
-<dt id="avalanche.evaluation.metrics.timing.ExperienceTime.before_eval_exp">
-<code class="sig-name descname"><span class="pre">before_eval_exp</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">strategy</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">BaseStrategy</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">MetricResult</span><a class="reference internal" href="../../../../../_modules/avalanche/evaluation/metrics/timing/#ExperienceTime.before_eval_exp"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.evaluation.metrics.timing.ExperienceTime.before_eval_exp" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="avalanche.evaluation.metrics.timing.ExperienceTime.before_eval_exp">
+<span class="sig-name descname"><span class="pre">before_eval_exp</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">strategy</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">BaseStrategy</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">MetricResult</span><a class="reference internal" href="../../../../../_modules/avalanche/evaluation/metrics/timing/#ExperienceTime.before_eval_exp"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.evaluation.metrics.timing.ExperienceTime.before_eval_exp" title="Permalink to this definition">¶</a></dt>
 <dd><p>Called before <cite>eval_exp</cite> by the <cite>BaseStrategy</cite>.</p>
 </dd></dl>
 
 <dl class="py method">
-<dt id="avalanche.evaluation.metrics.timing.ExperienceTime.after_eval_exp">
-<code class="sig-name descname"><span class="pre">after_eval_exp</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">strategy</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">BaseStrategy</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">MetricResult</span><a class="reference internal" href="../../../../../_modules/avalanche/evaluation/metrics/timing/#ExperienceTime.after_eval_exp"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.evaluation.metrics.timing.ExperienceTime.after_eval_exp" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="avalanche.evaluation.metrics.timing.ExperienceTime.after_eval_exp">
+<span class="sig-name descname"><span class="pre">after_eval_exp</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">strategy</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">BaseStrategy</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">MetricResult</span><a class="reference internal" href="../../../../../_modules/avalanche/evaluation/metrics/timing/#ExperienceTime.after_eval_exp"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.evaluation.metrics.timing.ExperienceTime.after_eval_exp" title="Permalink to this definition">¶</a></dt>
 <dd><p>Called after <cite>eval_exp</cite> by the <cite>BaseStrategy</cite>.</p>
 </dd></dl>
 
 <dl class="py method">
-<dt id="avalanche.evaluation.metrics.timing.ExperienceTime.reset">
-<code class="sig-name descname"><span class="pre">reset</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">None</span><a class="reference internal" href="../../../../../_modules/avalanche/evaluation/metrics/timing/#ExperienceTime.reset"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.evaluation.metrics.timing.ExperienceTime.reset" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="avalanche.evaluation.metrics.timing.ExperienceTime.reset">
+<span class="sig-name descname"><span class="pre">reset</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">None</span><a class="reference internal" href="../../../../../_modules/avalanche/evaluation/metrics/timing/#ExperienceTime.reset"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.evaluation.metrics.timing.ExperienceTime.reset" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
-<dt id="avalanche.evaluation.metrics.timing.ExperienceTime.result">
-<code class="sig-name descname"><span class="pre">result</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">float</span><a class="reference internal" href="../../../../../_modules/avalanche/evaluation/metrics/timing/#ExperienceTime.result"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.evaluation.metrics.timing.ExperienceTime.result" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="avalanche.evaluation.metrics.timing.ExperienceTime.result">
+<span class="sig-name descname"><span class="pre">result</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">float</span><a class="reference internal" href="../../../../../_modules/avalanche/evaluation/metrics/timing/#ExperienceTime.result"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.evaluation.metrics.timing.ExperienceTime.result" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
-<dt id="avalanche.evaluation.metrics.timing.ExperienceTime.__str__">
-<code class="sig-name descname"><span class="pre">__str__</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../_modules/avalanche/evaluation/metrics/timing/#ExperienceTime.__str__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.evaluation.metrics.timing.ExperienceTime.__str__" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="avalanche.evaluation.metrics.timing.ExperienceTime.__str__">
+<span class="sig-name descname"><span class="pre">__str__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../_modules/avalanche/evaluation/metrics/timing/#ExperienceTime.__str__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.evaluation.metrics.timing.ExperienceTime.__str__" title="Permalink to this definition">¶</a></dt>
 <dd><p>Return str(self).</p>
 </dd></dl>
 
 </dd></dl>
 
 <dl class="py class">
-<dt id="avalanche.evaluation.metrics.timing.StreamTime">
-<em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">avalanche.evaluation.metrics.timing.</span></code><code class="sig-name descname"><span class="pre">StreamTime</span></code><a class="reference internal" href="../../../../../_modules/avalanche/evaluation/metrics/timing/#StreamTime"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.evaluation.metrics.timing.StreamTime" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="avalanche.evaluation.metrics.timing.StreamTime">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">avalanche.evaluation.metrics.timing.</span></span><span class="sig-name descname"><span class="pre">StreamTime</span></span><a class="reference internal" href="../../../../../_modules/avalanche/evaluation/metrics/timing/#StreamTime"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.evaluation.metrics.timing.StreamTime" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">PluginMetric[float]</span></code></p>
 <p>The stream time metric.
 This metric only works at eval time.</p>
@@ -458,38 +461,38 @@ This metric only works at eval time.</p>
 this plugin metric emits the average time of that stream.</p>
 <p>Creates an instance of the stream time metric.</p>
 <dl class="py method">
-<dt id="avalanche.evaluation.metrics.timing.StreamTime.before_eval">
-<code class="sig-name descname"><span class="pre">before_eval</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">strategy</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">BaseStrategy</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">MetricResult</span><a class="reference internal" href="../../../../../_modules/avalanche/evaluation/metrics/timing/#StreamTime.before_eval"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.evaluation.metrics.timing.StreamTime.before_eval" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="avalanche.evaluation.metrics.timing.StreamTime.before_eval">
+<span class="sig-name descname"><span class="pre">before_eval</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">strategy</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">BaseStrategy</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">MetricResult</span><a class="reference internal" href="../../../../../_modules/avalanche/evaluation/metrics/timing/#StreamTime.before_eval"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.evaluation.metrics.timing.StreamTime.before_eval" title="Permalink to this definition">¶</a></dt>
 <dd><p>Called before <cite>eval</cite> by the <cite>BaseStrategy</cite>.</p>
 </dd></dl>
 
 <dl class="py method">
-<dt id="avalanche.evaluation.metrics.timing.StreamTime.after_eval">
-<code class="sig-name descname"><span class="pre">after_eval</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">strategy</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">BaseStrategy</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">MetricResult</span><a class="reference internal" href="../../../../../_modules/avalanche/evaluation/metrics/timing/#StreamTime.after_eval"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.evaluation.metrics.timing.StreamTime.after_eval" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="avalanche.evaluation.metrics.timing.StreamTime.after_eval">
+<span class="sig-name descname"><span class="pre">after_eval</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">strategy</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">BaseStrategy</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">MetricResult</span><a class="reference internal" href="../../../../../_modules/avalanche/evaluation/metrics/timing/#StreamTime.after_eval"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.evaluation.metrics.timing.StreamTime.after_eval" title="Permalink to this definition">¶</a></dt>
 <dd><p>Called after <cite>eval</cite> by the <cite>BaseStrategy</cite>.</p>
 </dd></dl>
 
 <dl class="py method">
-<dt id="avalanche.evaluation.metrics.timing.StreamTime.reset">
-<code class="sig-name descname"><span class="pre">reset</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">None</span><a class="reference internal" href="../../../../../_modules/avalanche/evaluation/metrics/timing/#StreamTime.reset"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.evaluation.metrics.timing.StreamTime.reset" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="avalanche.evaluation.metrics.timing.StreamTime.reset">
+<span class="sig-name descname"><span class="pre">reset</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">None</span><a class="reference internal" href="../../../../../_modules/avalanche/evaluation/metrics/timing/#StreamTime.reset"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.evaluation.metrics.timing.StreamTime.reset" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
-<dt id="avalanche.evaluation.metrics.timing.StreamTime.result">
-<code class="sig-name descname"><span class="pre">result</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">float</span><a class="reference internal" href="../../../../../_modules/avalanche/evaluation/metrics/timing/#StreamTime.result"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.evaluation.metrics.timing.StreamTime.result" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="avalanche.evaluation.metrics.timing.StreamTime.result">
+<span class="sig-name descname"><span class="pre">result</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">float</span><a class="reference internal" href="../../../../../_modules/avalanche/evaluation/metrics/timing/#StreamTime.result"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.evaluation.metrics.timing.StreamTime.result" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
-<dt id="avalanche.evaluation.metrics.timing.StreamTime.__str__">
-<code class="sig-name descname"><span class="pre">__str__</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../_modules/avalanche/evaluation/metrics/timing/#StreamTime.__str__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.evaluation.metrics.timing.StreamTime.__str__" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="avalanche.evaluation.metrics.timing.StreamTime.__str__">
+<span class="sig-name descname"><span class="pre">__str__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../_modules/avalanche/evaluation/metrics/timing/#StreamTime.__str__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.evaluation.metrics.timing.StreamTime.__str__" title="Permalink to this definition">¶</a></dt>
 <dd><p>Return str(self).</p>
 </dd></dl>
 
 </dd></dl>
 
 <dl class="py function">
-<dt id="avalanche.evaluation.metrics.timing.timing_metrics">
-<code class="sig-prename descclassname"><span class="pre">avalanche.evaluation.metrics.timing.</span></code><code class="sig-name descname"><span class="pre">timing_metrics</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">minibatch</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">epoch</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">epoch_running</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">experience</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">stream</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">PluginMetric</span><span class="p"><span class="pre">]</span></span><a class="reference internal" href="../../../../../_modules/avalanche/evaluation/metrics/timing/#timing_metrics"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.evaluation.metrics.timing.timing_metrics" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="avalanche.evaluation.metrics.timing.timing_metrics">
+<span class="sig-prename descclassname"><span class="pre">avalanche.evaluation.metrics.timing.</span></span><span class="sig-name descname"><span class="pre">timing_metrics</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">minibatch</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">epoch</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">epoch_running</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">experience</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">stream</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">PluginMetric</span><span class="p"><span class="pre">]</span></span><a class="reference internal" href="../../../../../_modules/avalanche/evaluation/metrics/timing/#timing_metrics"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.evaluation.metrics.timing.timing_metrics" title="Permalink to this definition">¶</a></dt>
 <dd><p>Helper method that can be used to obtain the desired set of
 plugin metrics.</p>
 <dl class="field-list simple">

@@ -13,6 +13,8 @@
   
   <link rel="stylesheet" href="../../../../../_static/css/mystyle.css" type="text/css" />
   <link rel="stylesheet" href="../../../../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../../../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../../../../_static/css/mystyle.css" type="text/css" />
   <link rel="stylesheet" href="../../../../../_static/graphviz.css" type="text/css" />
 
   
@@ -30,6 +32,7 @@
   
     
       <script type="text/javascript" id="documentation_options" data-url_root="../../../../../" src="../../../../../_static/documentation_options.js"></script>
+        <script data-url_root="../../../../../" id="documentation_options" src="../../../../../_static/documentation_options.js"></script>
         <script src="../../../../../_static/jquery.js"></script>
         <script src="../../../../../_static/underscore.js"></script>
         <script src="../../../../../_static/doctools.js"></script>
@@ -221,8 +224,8 @@
 </tbody>
 </table>
 <dl class="py class">
-<dt id="avalanche.evaluation.metrics.gpu_usage.MaxGPU">
-<em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">avalanche.evaluation.metrics.gpu_usage.</span></code><code class="sig-name descname"><span class="pre">MaxGPU</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">gpu_id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">every</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.5</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../_modules/avalanche/evaluation/metrics/gpu_usage/#MaxGPU"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.evaluation.metrics.gpu_usage.MaxGPU" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="avalanche.evaluation.metrics.gpu_usage.MaxGPU">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">avalanche.evaluation.metrics.gpu_usage.</span></span><span class="sig-name descname"><span class="pre">MaxGPU</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">gpu_id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">every</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.5</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../_modules/avalanche/evaluation/metrics/gpu_usage/#MaxGPU"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.evaluation.metrics.gpu_usage.MaxGPU" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">Metric[float]</span></code></p>
 <p>The standalone GPU usage metric.
 Important: this metric approximates the real maximum GPU percentage</p>
@@ -246,36 +249,36 @@ usage</p></li>
 </dd>
 </dl>
 <dl class="py attribute">
-<dt id="avalanche.evaluation.metrics.gpu_usage.MaxGPU.thread">
-<code class="sig-name descname"><span class="pre">thread</span></code><a class="headerlink" href="#avalanche.evaluation.metrics.gpu_usage.MaxGPU.thread" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="avalanche.evaluation.metrics.gpu_usage.MaxGPU.thread">
+<span class="sig-name descname"><span class="pre">thread</span></span><a class="headerlink" href="#avalanche.evaluation.metrics.gpu_usage.MaxGPU.thread" title="Permalink to this definition">¶</a></dt>
 <dd><p>Thread executing GPU monitoring code</p>
 </dd></dl>
 
 <dl class="py attribute">
-<dt id="avalanche.evaluation.metrics.gpu_usage.MaxGPU.stop_f">
-<code class="sig-name descname"><span class="pre">stop_f</span></code><em class="property"> <span class="pre">=</span> <span class="pre">False</span></em><a class="headerlink" href="#avalanche.evaluation.metrics.gpu_usage.MaxGPU.stop_f" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="avalanche.evaluation.metrics.gpu_usage.MaxGPU.stop_f">
+<span class="sig-name descname"><span class="pre">stop_f</span></span><em class="property"> <span class="pre">=</span> <span class="pre">False</span></em><a class="headerlink" href="#avalanche.evaluation.metrics.gpu_usage.MaxGPU.stop_f" title="Permalink to this definition">¶</a></dt>
 <dd><p>Flag to stop the thread</p>
 </dd></dl>
 
 <dl class="py attribute">
-<dt id="avalanche.evaluation.metrics.gpu_usage.MaxGPU.max_usage">
-<code class="sig-name descname"><span class="pre">max_usage</span></code><em class="property"> <span class="pre">=</span> <span class="pre">0</span></em><a class="headerlink" href="#avalanche.evaluation.metrics.gpu_usage.MaxGPU.max_usage" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="avalanche.evaluation.metrics.gpu_usage.MaxGPU.max_usage">
+<span class="sig-name descname"><span class="pre">max_usage</span></span><em class="property"> <span class="pre">=</span> <span class="pre">0</span></em><a class="headerlink" href="#avalanche.evaluation.metrics.gpu_usage.MaxGPU.max_usage" title="Permalink to this definition">¶</a></dt>
 <dd><p>Main metric result. Max GPU usage.</p>
 </dd></dl>
 
 <dl class="py method">
-<dt id="avalanche.evaluation.metrics.gpu_usage.MaxGPU.start_thread">
-<code class="sig-name descname"><span class="pre">start_thread</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../_modules/avalanche/evaluation/metrics/gpu_usage/#MaxGPU.start_thread"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.evaluation.metrics.gpu_usage.MaxGPU.start_thread" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="avalanche.evaluation.metrics.gpu_usage.MaxGPU.start_thread">
+<span class="sig-name descname"><span class="pre">start_thread</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../_modules/avalanche/evaluation/metrics/gpu_usage/#MaxGPU.start_thread"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.evaluation.metrics.gpu_usage.MaxGPU.start_thread" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
-<dt id="avalanche.evaluation.metrics.gpu_usage.MaxGPU.stop_thread">
-<code class="sig-name descname"><span class="pre">stop_thread</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../_modules/avalanche/evaluation/metrics/gpu_usage/#MaxGPU.stop_thread"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.evaluation.metrics.gpu_usage.MaxGPU.stop_thread" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="avalanche.evaluation.metrics.gpu_usage.MaxGPU.stop_thread">
+<span class="sig-name descname"><span class="pre">stop_thread</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../_modules/avalanche/evaluation/metrics/gpu_usage/#MaxGPU.stop_thread"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.evaluation.metrics.gpu_usage.MaxGPU.stop_thread" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
-<dt id="avalanche.evaluation.metrics.gpu_usage.MaxGPU.reset">
-<code class="sig-name descname"><span class="pre">reset</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">None</span><a class="reference internal" href="../../../../../_modules/avalanche/evaluation/metrics/gpu_usage/#MaxGPU.reset"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.evaluation.metrics.gpu_usage.MaxGPU.reset" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="avalanche.evaluation.metrics.gpu_usage.MaxGPU.reset">
+<span class="sig-name descname"><span class="pre">reset</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">None</span><a class="reference internal" href="../../../../../_modules/avalanche/evaluation/metrics/gpu_usage/#MaxGPU.reset"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.evaluation.metrics.gpu_usage.MaxGPU.reset" title="Permalink to this definition">¶</a></dt>
 <dd><p>Resets the metric.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Returns</dt>
@@ -285,8 +288,8 @@ usage</p></li>
 </dd></dl>
 
 <dl class="py method">
-<dt id="avalanche.evaluation.metrics.gpu_usage.MaxGPU.result">
-<code class="sig-name descname"><span class="pre">result</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">]</span></span><a class="reference internal" href="../../../../../_modules/avalanche/evaluation/metrics/gpu_usage/#MaxGPU.result"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.evaluation.metrics.gpu_usage.MaxGPU.result" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="avalanche.evaluation.metrics.gpu_usage.MaxGPU.result">
+<span class="sig-name descname"><span class="pre">result</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">]</span></span><a class="reference internal" href="../../../../../_modules/avalanche/evaluation/metrics/gpu_usage/#MaxGPU.result"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.evaluation.metrics.gpu_usage.MaxGPU.result" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns the max GPU percentage value.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Returns</dt>
@@ -298,8 +301,8 @@ usage</p></li>
 </dd></dl>
 
 <dl class="py class">
-<dt id="avalanche.evaluation.metrics.gpu_usage.MinibatchMaxGPU">
-<em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">avalanche.evaluation.metrics.gpu_usage.</span></code><code class="sig-name descname"><span class="pre">MinibatchMaxGPU</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">gpu_id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">every</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.5</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../_modules/avalanche/evaluation/metrics/gpu_usage/#MinibatchMaxGPU"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.evaluation.metrics.gpu_usage.MinibatchMaxGPU" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="avalanche.evaluation.metrics.gpu_usage.MinibatchMaxGPU">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">avalanche.evaluation.metrics.gpu_usage.</span></span><span class="sig-name descname"><span class="pre">MinibatchMaxGPU</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">gpu_id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">every</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.5</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../_modules/avalanche/evaluation/metrics/gpu_usage/#MinibatchMaxGPU"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.evaluation.metrics.gpu_usage.MinibatchMaxGPU" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">PluginMetric[float]</span></code></p>
 <p>The Minibatch Max GPU metric.
 This plugin metric only works at training time.</p>
@@ -314,52 +317,52 @@ usage</p></li>
 </dd>
 </dl>
 <dl class="py method">
-<dt id="avalanche.evaluation.metrics.gpu_usage.MinibatchMaxGPU.before_training">
-<code class="sig-name descname"><span class="pre">before_training</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">strategy</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">BaseStrategy</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">None</span><a class="reference internal" href="../../../../../_modules/avalanche/evaluation/metrics/gpu_usage/#MinibatchMaxGPU.before_training"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.evaluation.metrics.gpu_usage.MinibatchMaxGPU.before_training" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="avalanche.evaluation.metrics.gpu_usage.MinibatchMaxGPU.before_training">
+<span class="sig-name descname"><span class="pre">before_training</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">strategy</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">BaseStrategy</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">None</span><a class="reference internal" href="../../../../../_modules/avalanche/evaluation/metrics/gpu_usage/#MinibatchMaxGPU.before_training"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.evaluation.metrics.gpu_usage.MinibatchMaxGPU.before_training" title="Permalink to this definition">¶</a></dt>
 <dd><p>Called before <cite>train</cite> by the <cite>BaseStrategy</cite>.</p>
 </dd></dl>
 
 <dl class="py method">
-<dt id="avalanche.evaluation.metrics.gpu_usage.MinibatchMaxGPU.before_training_iteration">
-<code class="sig-name descname"><span class="pre">before_training_iteration</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">strategy</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">BaseStrategy</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">None</span><a class="reference internal" href="../../../../../_modules/avalanche/evaluation/metrics/gpu_usage/#MinibatchMaxGPU.before_training_iteration"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.evaluation.metrics.gpu_usage.MinibatchMaxGPU.before_training_iteration" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="avalanche.evaluation.metrics.gpu_usage.MinibatchMaxGPU.before_training_iteration">
+<span class="sig-name descname"><span class="pre">before_training_iteration</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">strategy</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">BaseStrategy</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">None</span><a class="reference internal" href="../../../../../_modules/avalanche/evaluation/metrics/gpu_usage/#MinibatchMaxGPU.before_training_iteration"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.evaluation.metrics.gpu_usage.MinibatchMaxGPU.before_training_iteration" title="Permalink to this definition">¶</a></dt>
 <dd><p>Called before the start of a training iteration by the
 <cite>BaseStrategy</cite>.</p>
 </dd></dl>
 
 <dl class="py method">
-<dt id="avalanche.evaluation.metrics.gpu_usage.MinibatchMaxGPU.after_training_iteration">
-<code class="sig-name descname"><span class="pre">after_training_iteration</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">strategy</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">BaseStrategy</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">MetricResult</span><a class="reference internal" href="../../../../../_modules/avalanche/evaluation/metrics/gpu_usage/#MinibatchMaxGPU.after_training_iteration"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.evaluation.metrics.gpu_usage.MinibatchMaxGPU.after_training_iteration" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="avalanche.evaluation.metrics.gpu_usage.MinibatchMaxGPU.after_training_iteration">
+<span class="sig-name descname"><span class="pre">after_training_iteration</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">strategy</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">BaseStrategy</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">MetricResult</span><a class="reference internal" href="../../../../../_modules/avalanche/evaluation/metrics/gpu_usage/#MinibatchMaxGPU.after_training_iteration"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.evaluation.metrics.gpu_usage.MinibatchMaxGPU.after_training_iteration" title="Permalink to this definition">¶</a></dt>
 <dd><p>Called after the end of a training iteration by the
 <cite>BaseStrategy</cite>.</p>
 </dd></dl>
 
 <dl class="py method">
-<dt id="avalanche.evaluation.metrics.gpu_usage.MinibatchMaxGPU.after_training">
-<code class="sig-name descname"><span class="pre">after_training</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">strategy</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">BaseStrategy</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">None</span><a class="reference internal" href="../../../../../_modules/avalanche/evaluation/metrics/gpu_usage/#MinibatchMaxGPU.after_training"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.evaluation.metrics.gpu_usage.MinibatchMaxGPU.after_training" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="avalanche.evaluation.metrics.gpu_usage.MinibatchMaxGPU.after_training">
+<span class="sig-name descname"><span class="pre">after_training</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">strategy</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">BaseStrategy</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">None</span><a class="reference internal" href="../../../../../_modules/avalanche/evaluation/metrics/gpu_usage/#MinibatchMaxGPU.after_training"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.evaluation.metrics.gpu_usage.MinibatchMaxGPU.after_training" title="Permalink to this definition">¶</a></dt>
 <dd><p>Called after <cite>train</cite> by the <cite>BaseStrategy</cite>.</p>
 </dd></dl>
 
 <dl class="py method">
-<dt id="avalanche.evaluation.metrics.gpu_usage.MinibatchMaxGPU.reset">
-<code class="sig-name descname"><span class="pre">reset</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">None</span><a class="reference internal" href="../../../../../_modules/avalanche/evaluation/metrics/gpu_usage/#MinibatchMaxGPU.reset"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.evaluation.metrics.gpu_usage.MinibatchMaxGPU.reset" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="avalanche.evaluation.metrics.gpu_usage.MinibatchMaxGPU.reset">
+<span class="sig-name descname"><span class="pre">reset</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">None</span><a class="reference internal" href="../../../../../_modules/avalanche/evaluation/metrics/gpu_usage/#MinibatchMaxGPU.reset"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.evaluation.metrics.gpu_usage.MinibatchMaxGPU.reset" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
-<dt id="avalanche.evaluation.metrics.gpu_usage.MinibatchMaxGPU.result">
-<code class="sig-name descname"><span class="pre">result</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">float</span><a class="reference internal" href="../../../../../_modules/avalanche/evaluation/metrics/gpu_usage/#MinibatchMaxGPU.result"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.evaluation.metrics.gpu_usage.MinibatchMaxGPU.result" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="avalanche.evaluation.metrics.gpu_usage.MinibatchMaxGPU.result">
+<span class="sig-name descname"><span class="pre">result</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">float</span><a class="reference internal" href="../../../../../_modules/avalanche/evaluation/metrics/gpu_usage/#MinibatchMaxGPU.result"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.evaluation.metrics.gpu_usage.MinibatchMaxGPU.result" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
-<dt id="avalanche.evaluation.metrics.gpu_usage.MinibatchMaxGPU.__str__">
-<code class="sig-name descname"><span class="pre">__str__</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../_modules/avalanche/evaluation/metrics/gpu_usage/#MinibatchMaxGPU.__str__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.evaluation.metrics.gpu_usage.MinibatchMaxGPU.__str__" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="avalanche.evaluation.metrics.gpu_usage.MinibatchMaxGPU.__str__">
+<span class="sig-name descname"><span class="pre">__str__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../_modules/avalanche/evaluation/metrics/gpu_usage/#MinibatchMaxGPU.__str__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.evaluation.metrics.gpu_usage.MinibatchMaxGPU.__str__" title="Permalink to this definition">¶</a></dt>
 <dd><p>Return str(self).</p>
 </dd></dl>
 
 </dd></dl>
 
 <dl class="py class">
-<dt id="avalanche.evaluation.metrics.gpu_usage.EpochMaxGPU">
-<em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">avalanche.evaluation.metrics.gpu_usage.</span></code><code class="sig-name descname"><span class="pre">EpochMaxGPU</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">gpu_id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">every</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.5</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../_modules/avalanche/evaluation/metrics/gpu_usage/#EpochMaxGPU"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.evaluation.metrics.gpu_usage.EpochMaxGPU" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="avalanche.evaluation.metrics.gpu_usage.EpochMaxGPU">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">avalanche.evaluation.metrics.gpu_usage.</span></span><span class="sig-name descname"><span class="pre">EpochMaxGPU</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">gpu_id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">every</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.5</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../_modules/avalanche/evaluation/metrics/gpu_usage/#EpochMaxGPU"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.evaluation.metrics.gpu_usage.EpochMaxGPU" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">PluginMetric[float]</span></code></p>
 <p>The Epoch Max GPU metric.
 This plugin metric only works at training time.</p>
@@ -374,50 +377,50 @@ usage</p></li>
 </dd>
 </dl>
 <dl class="py method">
-<dt id="avalanche.evaluation.metrics.gpu_usage.EpochMaxGPU.before_training">
-<code class="sig-name descname"><span class="pre">before_training</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">strategy</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">BaseStrategy</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">None</span><a class="reference internal" href="../../../../../_modules/avalanche/evaluation/metrics/gpu_usage/#EpochMaxGPU.before_training"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.evaluation.metrics.gpu_usage.EpochMaxGPU.before_training" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="avalanche.evaluation.metrics.gpu_usage.EpochMaxGPU.before_training">
+<span class="sig-name descname"><span class="pre">before_training</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">strategy</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">BaseStrategy</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">None</span><a class="reference internal" href="../../../../../_modules/avalanche/evaluation/metrics/gpu_usage/#EpochMaxGPU.before_training"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.evaluation.metrics.gpu_usage.EpochMaxGPU.before_training" title="Permalink to this definition">¶</a></dt>
 <dd><p>Called before <cite>train</cite> by the <cite>BaseStrategy</cite>.</p>
 </dd></dl>
 
 <dl class="py method">
-<dt id="avalanche.evaluation.metrics.gpu_usage.EpochMaxGPU.before_training_epoch">
-<code class="sig-name descname"><span class="pre">before_training_epoch</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">strategy</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">MetricResult</span><a class="reference internal" href="../../../../../_modules/avalanche/evaluation/metrics/gpu_usage/#EpochMaxGPU.before_training_epoch"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.evaluation.metrics.gpu_usage.EpochMaxGPU.before_training_epoch" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="avalanche.evaluation.metrics.gpu_usage.EpochMaxGPU.before_training_epoch">
+<span class="sig-name descname"><span class="pre">before_training_epoch</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">strategy</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">MetricResult</span><a class="reference internal" href="../../../../../_modules/avalanche/evaluation/metrics/gpu_usage/#EpochMaxGPU.before_training_epoch"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.evaluation.metrics.gpu_usage.EpochMaxGPU.before_training_epoch" title="Permalink to this definition">¶</a></dt>
 <dd><p>Called before <cite>train_epoch</cite> by the <cite>BaseStrategy</cite>.</p>
 </dd></dl>
 
 <dl class="py method">
-<dt id="avalanche.evaluation.metrics.gpu_usage.EpochMaxGPU.after_training_epoch">
-<code class="sig-name descname"><span class="pre">after_training_epoch</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">strategy</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">BaseStrategy</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">MetricResult</span><a class="reference internal" href="../../../../../_modules/avalanche/evaluation/metrics/gpu_usage/#EpochMaxGPU.after_training_epoch"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.evaluation.metrics.gpu_usage.EpochMaxGPU.after_training_epoch" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="avalanche.evaluation.metrics.gpu_usage.EpochMaxGPU.after_training_epoch">
+<span class="sig-name descname"><span class="pre">after_training_epoch</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">strategy</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">BaseStrategy</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">MetricResult</span><a class="reference internal" href="../../../../../_modules/avalanche/evaluation/metrics/gpu_usage/#EpochMaxGPU.after_training_epoch"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.evaluation.metrics.gpu_usage.EpochMaxGPU.after_training_epoch" title="Permalink to this definition">¶</a></dt>
 <dd><p>Called after <cite>train_epoch</cite> by the <cite>BaseStrategy</cite>.</p>
 </dd></dl>
 
 <dl class="py method">
-<dt id="avalanche.evaluation.metrics.gpu_usage.EpochMaxGPU.after_training">
-<code class="sig-name descname"><span class="pre">after_training</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">strategy</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">BaseStrategy</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">None</span><a class="reference internal" href="../../../../../_modules/avalanche/evaluation/metrics/gpu_usage/#EpochMaxGPU.after_training"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.evaluation.metrics.gpu_usage.EpochMaxGPU.after_training" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="avalanche.evaluation.metrics.gpu_usage.EpochMaxGPU.after_training">
+<span class="sig-name descname"><span class="pre">after_training</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">strategy</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">BaseStrategy</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">None</span><a class="reference internal" href="../../../../../_modules/avalanche/evaluation/metrics/gpu_usage/#EpochMaxGPU.after_training"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.evaluation.metrics.gpu_usage.EpochMaxGPU.after_training" title="Permalink to this definition">¶</a></dt>
 <dd><p>Called after <cite>train</cite> by the <cite>BaseStrategy</cite>.</p>
 </dd></dl>
 
 <dl class="py method">
-<dt id="avalanche.evaluation.metrics.gpu_usage.EpochMaxGPU.reset">
-<code class="sig-name descname"><span class="pre">reset</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">None</span><a class="reference internal" href="../../../../../_modules/avalanche/evaluation/metrics/gpu_usage/#EpochMaxGPU.reset"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.evaluation.metrics.gpu_usage.EpochMaxGPU.reset" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="avalanche.evaluation.metrics.gpu_usage.EpochMaxGPU.reset">
+<span class="sig-name descname"><span class="pre">reset</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">None</span><a class="reference internal" href="../../../../../_modules/avalanche/evaluation/metrics/gpu_usage/#EpochMaxGPU.reset"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.evaluation.metrics.gpu_usage.EpochMaxGPU.reset" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
-<dt id="avalanche.evaluation.metrics.gpu_usage.EpochMaxGPU.result">
-<code class="sig-name descname"><span class="pre">result</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">float</span><a class="reference internal" href="../../../../../_modules/avalanche/evaluation/metrics/gpu_usage/#EpochMaxGPU.result"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.evaluation.metrics.gpu_usage.EpochMaxGPU.result" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="avalanche.evaluation.metrics.gpu_usage.EpochMaxGPU.result">
+<span class="sig-name descname"><span class="pre">result</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">float</span><a class="reference internal" href="../../../../../_modules/avalanche/evaluation/metrics/gpu_usage/#EpochMaxGPU.result"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.evaluation.metrics.gpu_usage.EpochMaxGPU.result" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
-<dt id="avalanche.evaluation.metrics.gpu_usage.EpochMaxGPU.__str__">
-<code class="sig-name descname"><span class="pre">__str__</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../_modules/avalanche/evaluation/metrics/gpu_usage/#EpochMaxGPU.__str__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.evaluation.metrics.gpu_usage.EpochMaxGPU.__str__" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="avalanche.evaluation.metrics.gpu_usage.EpochMaxGPU.__str__">
+<span class="sig-name descname"><span class="pre">__str__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../_modules/avalanche/evaluation/metrics/gpu_usage/#EpochMaxGPU.__str__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.evaluation.metrics.gpu_usage.EpochMaxGPU.__str__" title="Permalink to this definition">¶</a></dt>
 <dd><p>Return str(self).</p>
 </dd></dl>
 
 </dd></dl>
 
 <dl class="py class">
-<dt id="avalanche.evaluation.metrics.gpu_usage.ExperienceMaxGPU">
-<em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">avalanche.evaluation.metrics.gpu_usage.</span></code><code class="sig-name descname"><span class="pre">ExperienceMaxGPU</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">gpu_id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">every</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.5</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../_modules/avalanche/evaluation/metrics/gpu_usage/#ExperienceMaxGPU"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.evaluation.metrics.gpu_usage.ExperienceMaxGPU" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="avalanche.evaluation.metrics.gpu_usage.ExperienceMaxGPU">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">avalanche.evaluation.metrics.gpu_usage.</span></span><span class="sig-name descname"><span class="pre">ExperienceMaxGPU</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">gpu_id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">every</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.5</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../_modules/avalanche/evaluation/metrics/gpu_usage/#ExperienceMaxGPU"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.evaluation.metrics.gpu_usage.ExperienceMaxGPU" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">PluginMetric[float]</span></code></p>
 <p>The Experience Max GPU metric.
 This plugin metric only works at eval time.</p>
@@ -432,50 +435,50 @@ usage</p></li>
 </dd>
 </dl>
 <dl class="py method">
-<dt id="avalanche.evaluation.metrics.gpu_usage.ExperienceMaxGPU.before_eval">
-<code class="sig-name descname"><span class="pre">before_eval</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">strategy</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">BaseStrategy</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">None</span><a class="reference internal" href="../../../../../_modules/avalanche/evaluation/metrics/gpu_usage/#ExperienceMaxGPU.before_eval"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.evaluation.metrics.gpu_usage.ExperienceMaxGPU.before_eval" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="avalanche.evaluation.metrics.gpu_usage.ExperienceMaxGPU.before_eval">
+<span class="sig-name descname"><span class="pre">before_eval</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">strategy</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">BaseStrategy</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">None</span><a class="reference internal" href="../../../../../_modules/avalanche/evaluation/metrics/gpu_usage/#ExperienceMaxGPU.before_eval"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.evaluation.metrics.gpu_usage.ExperienceMaxGPU.before_eval" title="Permalink to this definition">¶</a></dt>
 <dd><p>Called before <cite>eval</cite> by the <cite>BaseStrategy</cite>.</p>
 </dd></dl>
 
 <dl class="py method">
-<dt id="avalanche.evaluation.metrics.gpu_usage.ExperienceMaxGPU.before_eval_exp">
-<code class="sig-name descname"><span class="pre">before_eval_exp</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">strategy</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">MetricResult</span><a class="reference internal" href="../../../../../_modules/avalanche/evaluation/metrics/gpu_usage/#ExperienceMaxGPU.before_eval_exp"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.evaluation.metrics.gpu_usage.ExperienceMaxGPU.before_eval_exp" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="avalanche.evaluation.metrics.gpu_usage.ExperienceMaxGPU.before_eval_exp">
+<span class="sig-name descname"><span class="pre">before_eval_exp</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">strategy</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">MetricResult</span><a class="reference internal" href="../../../../../_modules/avalanche/evaluation/metrics/gpu_usage/#ExperienceMaxGPU.before_eval_exp"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.evaluation.metrics.gpu_usage.ExperienceMaxGPU.before_eval_exp" title="Permalink to this definition">¶</a></dt>
 <dd><p>Called before <cite>eval_exp</cite> by the <cite>BaseStrategy</cite>.</p>
 </dd></dl>
 
 <dl class="py method">
-<dt id="avalanche.evaluation.metrics.gpu_usage.ExperienceMaxGPU.after_eval_exp">
-<code class="sig-name descname"><span class="pre">after_eval_exp</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">strategy</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">BaseStrategy</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">MetricResult</span><a class="reference internal" href="../../../../../_modules/avalanche/evaluation/metrics/gpu_usage/#ExperienceMaxGPU.after_eval_exp"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.evaluation.metrics.gpu_usage.ExperienceMaxGPU.after_eval_exp" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="avalanche.evaluation.metrics.gpu_usage.ExperienceMaxGPU.after_eval_exp">
+<span class="sig-name descname"><span class="pre">after_eval_exp</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">strategy</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">BaseStrategy</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">MetricResult</span><a class="reference internal" href="../../../../../_modules/avalanche/evaluation/metrics/gpu_usage/#ExperienceMaxGPU.after_eval_exp"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.evaluation.metrics.gpu_usage.ExperienceMaxGPU.after_eval_exp" title="Permalink to this definition">¶</a></dt>
 <dd><p>Called after <cite>eval_exp</cite> by the <cite>BaseStrategy</cite>.</p>
 </dd></dl>
 
 <dl class="py method">
-<dt id="avalanche.evaluation.metrics.gpu_usage.ExperienceMaxGPU.after_eval">
-<code class="sig-name descname"><span class="pre">after_eval</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">strategy</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">BaseStrategy</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">None</span><a class="reference internal" href="../../../../../_modules/avalanche/evaluation/metrics/gpu_usage/#ExperienceMaxGPU.after_eval"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.evaluation.metrics.gpu_usage.ExperienceMaxGPU.after_eval" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="avalanche.evaluation.metrics.gpu_usage.ExperienceMaxGPU.after_eval">
+<span class="sig-name descname"><span class="pre">after_eval</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">strategy</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">BaseStrategy</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">None</span><a class="reference internal" href="../../../../../_modules/avalanche/evaluation/metrics/gpu_usage/#ExperienceMaxGPU.after_eval"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.evaluation.metrics.gpu_usage.ExperienceMaxGPU.after_eval" title="Permalink to this definition">¶</a></dt>
 <dd><p>Called after <cite>eval</cite> by the <cite>BaseStrategy</cite>.</p>
 </dd></dl>
 
 <dl class="py method">
-<dt id="avalanche.evaluation.metrics.gpu_usage.ExperienceMaxGPU.reset">
-<code class="sig-name descname"><span class="pre">reset</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">None</span><a class="reference internal" href="../../../../../_modules/avalanche/evaluation/metrics/gpu_usage/#ExperienceMaxGPU.reset"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.evaluation.metrics.gpu_usage.ExperienceMaxGPU.reset" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="avalanche.evaluation.metrics.gpu_usage.ExperienceMaxGPU.reset">
+<span class="sig-name descname"><span class="pre">reset</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">None</span><a class="reference internal" href="../../../../../_modules/avalanche/evaluation/metrics/gpu_usage/#ExperienceMaxGPU.reset"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.evaluation.metrics.gpu_usage.ExperienceMaxGPU.reset" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
-<dt id="avalanche.evaluation.metrics.gpu_usage.ExperienceMaxGPU.result">
-<code class="sig-name descname"><span class="pre">result</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">float</span><a class="reference internal" href="../../../../../_modules/avalanche/evaluation/metrics/gpu_usage/#ExperienceMaxGPU.result"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.evaluation.metrics.gpu_usage.ExperienceMaxGPU.result" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="avalanche.evaluation.metrics.gpu_usage.ExperienceMaxGPU.result">
+<span class="sig-name descname"><span class="pre">result</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">float</span><a class="reference internal" href="../../../../../_modules/avalanche/evaluation/metrics/gpu_usage/#ExperienceMaxGPU.result"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.evaluation.metrics.gpu_usage.ExperienceMaxGPU.result" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
-<dt id="avalanche.evaluation.metrics.gpu_usage.ExperienceMaxGPU.__str__">
-<code class="sig-name descname"><span class="pre">__str__</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../_modules/avalanche/evaluation/metrics/gpu_usage/#ExperienceMaxGPU.__str__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.evaluation.metrics.gpu_usage.ExperienceMaxGPU.__str__" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="avalanche.evaluation.metrics.gpu_usage.ExperienceMaxGPU.__str__">
+<span class="sig-name descname"><span class="pre">__str__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../_modules/avalanche/evaluation/metrics/gpu_usage/#ExperienceMaxGPU.__str__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.evaluation.metrics.gpu_usage.ExperienceMaxGPU.__str__" title="Permalink to this definition">¶</a></dt>
 <dd><p>Return str(self).</p>
 </dd></dl>
 
 </dd></dl>
 
 <dl class="py class">
-<dt id="avalanche.evaluation.metrics.gpu_usage.StreamMaxGPU">
-<em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">avalanche.evaluation.metrics.gpu_usage.</span></code><code class="sig-name descname"><span class="pre">StreamMaxGPU</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">gpu_id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">every</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.5</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../_modules/avalanche/evaluation/metrics/gpu_usage/#StreamMaxGPU"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.evaluation.metrics.gpu_usage.StreamMaxGPU" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="avalanche.evaluation.metrics.gpu_usage.StreamMaxGPU">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">avalanche.evaluation.metrics.gpu_usage.</span></span><span class="sig-name descname"><span class="pre">StreamMaxGPU</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">gpu_id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">every</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.5</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../_modules/avalanche/evaluation/metrics/gpu_usage/#StreamMaxGPU"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.evaluation.metrics.gpu_usage.StreamMaxGPU" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">PluginMetric[float]</span></code></p>
 <p>The Stream Max GPU metric.
 This plugin metric only works at eval time.</p>
@@ -490,38 +493,38 @@ usage</p></li>
 </dd>
 </dl>
 <dl class="py method">
-<dt id="avalanche.evaluation.metrics.gpu_usage.StreamMaxGPU.before_eval">
-<code class="sig-name descname"><span class="pre">before_eval</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">strategy</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">MetricResult</span><a class="reference internal" href="../../../../../_modules/avalanche/evaluation/metrics/gpu_usage/#StreamMaxGPU.before_eval"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.evaluation.metrics.gpu_usage.StreamMaxGPU.before_eval" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="avalanche.evaluation.metrics.gpu_usage.StreamMaxGPU.before_eval">
+<span class="sig-name descname"><span class="pre">before_eval</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">strategy</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">MetricResult</span><a class="reference internal" href="../../../../../_modules/avalanche/evaluation/metrics/gpu_usage/#StreamMaxGPU.before_eval"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.evaluation.metrics.gpu_usage.StreamMaxGPU.before_eval" title="Permalink to this definition">¶</a></dt>
 <dd><p>Called before <cite>eval</cite> by the <cite>BaseStrategy</cite>.</p>
 </dd></dl>
 
 <dl class="py method">
-<dt id="avalanche.evaluation.metrics.gpu_usage.StreamMaxGPU.after_eval">
-<code class="sig-name descname"><span class="pre">after_eval</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">strategy</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">BaseStrategy</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">MetricResult</span><a class="reference internal" href="../../../../../_modules/avalanche/evaluation/metrics/gpu_usage/#StreamMaxGPU.after_eval"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.evaluation.metrics.gpu_usage.StreamMaxGPU.after_eval" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="avalanche.evaluation.metrics.gpu_usage.StreamMaxGPU.after_eval">
+<span class="sig-name descname"><span class="pre">after_eval</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">strategy</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">BaseStrategy</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">MetricResult</span><a class="reference internal" href="../../../../../_modules/avalanche/evaluation/metrics/gpu_usage/#StreamMaxGPU.after_eval"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.evaluation.metrics.gpu_usage.StreamMaxGPU.after_eval" title="Permalink to this definition">¶</a></dt>
 <dd><p>Called after <cite>eval</cite> by the <cite>BaseStrategy</cite>.</p>
 </dd></dl>
 
 <dl class="py method">
-<dt id="avalanche.evaluation.metrics.gpu_usage.StreamMaxGPU.reset">
-<code class="sig-name descname"><span class="pre">reset</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">None</span><a class="reference internal" href="../../../../../_modules/avalanche/evaluation/metrics/gpu_usage/#StreamMaxGPU.reset"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.evaluation.metrics.gpu_usage.StreamMaxGPU.reset" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="avalanche.evaluation.metrics.gpu_usage.StreamMaxGPU.reset">
+<span class="sig-name descname"><span class="pre">reset</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">None</span><a class="reference internal" href="../../../../../_modules/avalanche/evaluation/metrics/gpu_usage/#StreamMaxGPU.reset"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.evaluation.metrics.gpu_usage.StreamMaxGPU.reset" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
-<dt id="avalanche.evaluation.metrics.gpu_usage.StreamMaxGPU.result">
-<code class="sig-name descname"><span class="pre">result</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">float</span><a class="reference internal" href="../../../../../_modules/avalanche/evaluation/metrics/gpu_usage/#StreamMaxGPU.result"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.evaluation.metrics.gpu_usage.StreamMaxGPU.result" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="avalanche.evaluation.metrics.gpu_usage.StreamMaxGPU.result">
+<span class="sig-name descname"><span class="pre">result</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">float</span><a class="reference internal" href="../../../../../_modules/avalanche/evaluation/metrics/gpu_usage/#StreamMaxGPU.result"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.evaluation.metrics.gpu_usage.StreamMaxGPU.result" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
-<dt id="avalanche.evaluation.metrics.gpu_usage.StreamMaxGPU.__str__">
-<code class="sig-name descname"><span class="pre">__str__</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../_modules/avalanche/evaluation/metrics/gpu_usage/#StreamMaxGPU.__str__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.evaluation.metrics.gpu_usage.StreamMaxGPU.__str__" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="avalanche.evaluation.metrics.gpu_usage.StreamMaxGPU.__str__">
+<span class="sig-name descname"><span class="pre">__str__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../_modules/avalanche/evaluation/metrics/gpu_usage/#StreamMaxGPU.__str__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.evaluation.metrics.gpu_usage.StreamMaxGPU.__str__" title="Permalink to this definition">¶</a></dt>
 <dd><p>Return str(self).</p>
 </dd></dl>
 
 </dd></dl>
 
 <dl class="py function">
-<dt id="avalanche.evaluation.metrics.gpu_usage.gpu_usage_metrics">
-<code class="sig-prename descclassname"><span class="pre">avalanche.evaluation.metrics.gpu_usage.</span></code><code class="sig-name descname"><span class="pre">gpu_usage_metrics</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">gpu_id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">every</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.5</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">minibatch</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">epoch</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">experience</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">stream</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">PluginMetric</span><span class="p"><span class="pre">]</span></span><a class="reference internal" href="../../../../../_modules/avalanche/evaluation/metrics/gpu_usage/#gpu_usage_metrics"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.evaluation.metrics.gpu_usage.gpu_usage_metrics" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="avalanche.evaluation.metrics.gpu_usage.gpu_usage_metrics">
+<span class="sig-prename descclassname"><span class="pre">avalanche.evaluation.metrics.gpu_usage.</span></span><span class="sig-name descname"><span class="pre">gpu_usage_metrics</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">gpu_id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">every</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.5</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">minibatch</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">epoch</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">experience</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">stream</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">PluginMetric</span><span class="p"><span class="pre">]</span></span><a class="reference internal" href="../../../../../_modules/avalanche/evaluation/metrics/gpu_usage/#gpu_usage_metrics"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.evaluation.metrics.gpu_usage.gpu_usage_metrics" title="Permalink to this definition">¶</a></dt>
 <dd><p>Helper method that can be used to obtain the desired set of
 plugin metrics.</p>
 <dl class="field-list simple">

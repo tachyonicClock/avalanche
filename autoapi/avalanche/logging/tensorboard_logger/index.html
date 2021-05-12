@@ -13,6 +13,8 @@
   
   <link rel="stylesheet" href="../../../../_static/css/mystyle.css" type="text/css" />
   <link rel="stylesheet" href="../../../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../../../_static/css/mystyle.css" type="text/css" />
   <link rel="stylesheet" href="../../../../_static/graphviz.css" type="text/css" />
 
   
@@ -30,6 +32,7 @@
   
     
       <script type="text/javascript" id="documentation_options" data-url_root="../../../../" src="../../../../_static/documentation_options.js"></script>
+        <script data-url_root="../../../../" id="documentation_options" src="../../../../_static/documentation_options.js"></script>
         <script src="../../../../_static/jquery.js"></script>
         <script src="../../../../_static/underscore.js"></script>
         <script src="../../../../_static/doctools.js"></script>
@@ -197,8 +200,8 @@ Avalanche experiments.</p>
 </tbody>
 </table>
 <dl class="py class">
-<dt id="avalanche.logging.tensorboard_logger.TensorboardLogger">
-<em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">avalanche.logging.tensorboard_logger.</span></code><code class="sig-name descname"><span class="pre">TensorboardLogger</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">tb_log_dir</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'./tb_data'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">filename_suffix</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">''</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/avalanche/logging/tensorboard_logger/#TensorboardLogger"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.logging.tensorboard_logger.TensorboardLogger" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="avalanche.logging.tensorboard_logger.TensorboardLogger">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">avalanche.logging.tensorboard_logger.</span></span><span class="sig-name descname"><span class="pre">TensorboardLogger</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">tb_log_dir</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'./tb_data'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">filename_suffix</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">''</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/avalanche/logging/tensorboard_logger/#TensorboardLogger"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.logging.tensorboard_logger.TensorboardLogger" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="../#avalanche.logging.StrategyLogger" title="avalanche.logging.StrategyLogger"><code class="xref py py-class docutils literal notranslate"><span class="pre">avalanche.logging.StrategyLogger</span></code></a></p>
 <p>The <cite>TensorboardLogger</cite> provides an easy integration with
 Tensorboard logging. Each monitored metric is automatically
@@ -226,8 +229,8 @@ tensorboard log file. Default ‘’.</p></li>
 </dd>
 </dl>
 <dl class="py method">
-<dt id="avalanche.logging.tensorboard_logger.TensorboardLogger.log_metric">
-<code class="sig-name descname"><span class="pre">log_metric</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">metric_value</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">MetricValue</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">callback</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/avalanche/logging/tensorboard_logger/#TensorboardLogger.log_metric"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.logging.tensorboard_logger.TensorboardLogger.log_metric" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="avalanche.logging.tensorboard_logger.TensorboardLogger.log_metric">
+<span class="sig-name descname"><span class="pre">log_metric</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">metric_value</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">MetricValue</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">callback</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/avalanche/logging/tensorboard_logger/#TensorboardLogger.log_metric"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.logging.tensorboard_logger.TensorboardLogger.log_metric" title="Permalink to this definition">¶</a></dt>
 <dd><p>This abstract method will has to be implemented by child classes.
 This method will be invoked on each callback.
 The <cite>callback</cite> parameter describes the callback from which the metric

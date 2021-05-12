@@ -1,0 +1,462 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>avalanche.training.strategies.deep_slda &mdash; Avalanche 0.1 documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="../../../../../_static/css/mystyle.css" type="text/css" />
+  <link rel="stylesheet" href="../../../../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../../../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../../../../_static/css/mystyle.css" type="text/css" />
+  <link rel="stylesheet" href="../../../../../_static/graphviz.css" type="text/css" />
+
+  
+  
+
+  
+  
+
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../../../../" src="../../../../../_static/documentation_options.js"></script>
+        <script data-url_root="../../../../../" id="documentation_options" src="../../../../../_static/documentation_options.js"></script>
+        <script src="../../../../../_static/jquery.js"></script>
+        <script src="../../../../../_static/underscore.js"></script>
+        <script src="../../../../../_static/doctools.js"></script>
+    
+    <script type="text/javascript" src="../../../../../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="../../../../../genindex/" />
+    <link rel="search" title="Search" href="../../../../../search/" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../../../../">
+          
+
+          
+            
+            <img src="../../../../../_static/avalanche_logo.png" class="logo" alt="Logo"/>
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../../../search/" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Avalanche API:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../autoapi/">API Reference</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../autoapi/avalanche/"><code class="xref py py-mod docutils literal notranslate"><span class="pre">avalanche</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../../../autoapi/avalanche/#subpackages">Subpackages</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../../../autoapi/avalanche/benchmarks/"><code class="xref py py-mod docutils literal notranslate"><span class="pre">avalanche.benchmarks</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../../autoapi/avalanche/evaluation/"><code class="xref py py-mod docutils literal notranslate"><span class="pre">avalanche.evaluation</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../../autoapi/avalanche/logging/"><code class="xref py py-mod docutils literal notranslate"><span class="pre">avalanche.logging</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../../autoapi/avalanche/models/"><code class="xref py py-mod docutils literal notranslate"><span class="pre">avalanche.models</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../../autoapi/avalanche/training/"><code class="xref py py-mod docutils literal notranslate"><span class="pre">avalanche.training</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../../autoapi/avalanche/#submodules">Submodules</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../../../autoapi/avalanche/core/"><code class="xref py py-mod docutils literal notranslate"><span class="pre">avalanche.core</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../../autoapi/avalanche/#package-contents">Package Contents</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../../../autoapi/avalanche/#avalanche.__version__">__version__</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../../../">Avalanche</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../../../../" class="icon icon-home"></a> &raquo;</li>
+        
+          <li><a href="../../../../">Module code</a> &raquo;</li>
+        
+      <li>avalanche.training.strategies.deep_slda</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for avalanche.training.strategies.deep_slda</h1><div class="highlight"><pre>
+<span></span><span class="kn">import</span> <span class="nn">warnings</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Optional</span><span class="p">,</span> <span class="n">Sequence</span>
+
+<span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">import</span> <span class="nn">torch</span>
+
+<span class="kn">from</span> <span class="nn">avalanche.training.plugins</span> <span class="kn">import</span> <span class="n">StrategyPlugin</span>
+<span class="kn">from</span> <span class="nn">avalanche.training.strategies</span> <span class="kn">import</span> <span class="n">BaseStrategy</span>
+<span class="kn">from</span> <span class="nn">avalanche.training</span> <span class="kn">import</span> <span class="n">default_logger</span>
+<span class="kn">from</span> <span class="nn">avalanche.models.dynamic_modules</span> <span class="kn">import</span> <span class="n">MultiTaskModule</span>
+<span class="kn">from</span> <span class="nn">avalanche.models</span> <span class="kn">import</span> <span class="n">FeatureExtractorBackbone</span>
+
+
+<div class="viewcode-block" id="StreamingLDA"><a class="viewcode-back" href="../../../../../autoapi/avalanche/training/strategies/deep_slda/#avalanche.training.strategies.deep_slda.StreamingLDA">[docs]</a><span class="k">class</span> <span class="nc">StreamingLDA</span><span class="p">(</span><span class="n">BaseStrategy</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Deep Streaming Linear Discriminant Analysis.</span>
+<span class="sd">    This strategy does not use backpropagation.</span>
+<span class="sd">    Minibatches are first passed to the pretrained feature extractor.</span>
+<span class="sd">    The result is processed one element at a time to fit the</span>
+<span class="sd">    LDA.</span>
+<span class="sd">    Original paper:</span>
+<span class="sd">    &quot;Hayes et. al., Lifelong Machine Learning with Deep Streaming Linear</span>
+<span class="sd">    Discriminant Analysis, CVPR Workshop, 2020&quot;</span>
+<span class="sd">    https://openaccess.thecvf.com/content_CVPRW_2020/papers/w15/Hayes_Lifelong_Machine_Learning_With_Deep_Streaming_Linear_Discriminant_Analysis_CVPRW_2020_paper.pdf</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">slda_model</span><span class="p">,</span> <span class="n">criterion</span><span class="p">,</span>
+                 <span class="n">input_size</span><span class="p">,</span> <span class="n">num_classes</span><span class="p">,</span> <span class="n">output_layer_name</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                 <span class="n">shrinkage_param</span><span class="o">=</span><span class="mf">1e-4</span><span class="p">,</span> <span class="n">streaming_update_sigma</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+                 <span class="n">train_epochs</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span> <span class="n">train_mb_size</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span>
+                 <span class="n">eval_mb_size</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span> <span class="n">device</span><span class="o">=</span><span class="s1">&#39;cpu&#39;</span><span class="p">,</span>
+                 <span class="n">plugins</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Sequence</span><span class="p">[</span><span class="s1">&#39;StrategyPlugin&#39;</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+                 <span class="n">evaluator</span><span class="o">=</span><span class="n">default_logger</span><span class="p">,</span> <span class="n">eval_every</span><span class="o">=-</span><span class="mi">1</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Init function for the SLDA model.</span>
+<span class="sd">        :param slda_model: a PyTorch model</span>
+<span class="sd">        :param criterion: loss function</span>
+<span class="sd">        :param output_layer_name: if not None, wrap model to retrieve</span>
+<span class="sd">            only the `output_layer_name` output. If None, the strategy</span>
+<span class="sd">            assumes that the model already produces a valid output.</span>
+<span class="sd">            You can use `FeatureExtractorBackbone` class to create your custom</span>
+<span class="sd">            SLDA-compatible model.</span>
+<span class="sd">        :param input_size: feature dimension</span>
+<span class="sd">        :param num_classes: number of total classes in stream</span>
+<span class="sd">        :param train_mb_size: batch size for feature extractor during</span>
+<span class="sd">            training. Fit will be called on a single pattern at a time.</span>
+<span class="sd">        :param eval_mb_size: batch size for inference</span>
+<span class="sd">        :param shrinkage_param: value of the shrinkage parameter</span>
+<span class="sd">        :param streaming_update_sigma: True if sigma is plastic else False</span>
+<span class="sd">        feature extraction in `self.feature_extraction_wrapper&#39;</span>
+<span class="sd">        :param plugins: list of StrategyPlugins</span>
+<span class="sd">        :param evaluator: Evaluation Plugin instance</span>
+<span class="sd">        :param eval_every: run eval every `eval_every` epochs.</span>
+<span class="sd">            See `BaseStrategy` for details.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="k">if</span> <span class="n">plugins</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">plugins</span> <span class="o">=</span> <span class="p">[]</span>
+
+        <span class="n">slda_model</span> <span class="o">=</span> <span class="n">slda_model</span><span class="o">.</span><span class="n">eval</span><span class="p">()</span>
+        <span class="k">if</span> <span class="n">output_layer_name</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">slda_model</span> <span class="o">=</span> <span class="n">FeatureExtractorBackbone</span><span class="p">(</span><span class="n">slda_model</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="n">device</span><span class="p">),</span>
+                                                  <span class="n">output_layer_name</span><span class="p">)</span><span class="o">.</span><span class="n">eval</span><span class="p">()</span>
+
+        <span class="nb">super</span><span class="p">(</span><span class="n">StreamingLDA</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span>
+            <span class="n">slda_model</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="n">criterion</span><span class="p">,</span> <span class="n">train_mb_size</span><span class="p">,</span> <span class="n">train_epochs</span><span class="p">,</span>
+            <span class="n">eval_mb_size</span><span class="p">,</span> <span class="n">device</span><span class="o">=</span><span class="n">device</span><span class="p">,</span> <span class="n">plugins</span><span class="o">=</span><span class="n">plugins</span><span class="p">,</span> <span class="n">evaluator</span><span class="o">=</span><span class="n">evaluator</span><span class="p">,</span>
+            <span class="n">eval_every</span><span class="o">=</span><span class="n">eval_every</span><span class="p">)</span>
+
+        <span class="c1"># SLDA parameters</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">input_size</span> <span class="o">=</span> <span class="n">input_size</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">shrinkage_param</span> <span class="o">=</span> <span class="n">shrinkage_param</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">streaming_update_sigma</span> <span class="o">=</span> <span class="n">streaming_update_sigma</span>
+
+        <span class="c1"># setup weights for SLDA</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">muK</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">num_classes</span><span class="p">,</span> <span class="n">input_size</span><span class="p">))</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">device</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">cK</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">num_classes</span><span class="p">)</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">device</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">Sigma</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">ones</span><span class="p">((</span><span class="n">input_size</span><span class="p">,</span> <span class="n">input_size</span><span class="p">))</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">device</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">num_updates</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">Lambda</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">zeros_like</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">Sigma</span><span class="p">)</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">device</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">prev_num_updates</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span>
+
+<div class="viewcode-block" id="StreamingLDA.forward"><a class="viewcode-back" href="../../../../../autoapi/avalanche/training/strategies/deep_slda/#avalanche.training.strategies.deep_slda.StreamingLDA.forward">[docs]</a>    <span class="k">def</span> <span class="nf">forward</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">return_features</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">eval</span><span class="p">()</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="p">,</span> <span class="n">MultiTaskModule</span><span class="p">):</span>
+            <span class="n">feat</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">mb_x</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">mb_task_id</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>  <span class="c1"># no task labels</span>
+            <span class="n">feat</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">mb_x</span><span class="p">)</span>
+        <span class="n">out</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">feat</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">return_features</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">out</span><span class="p">,</span> <span class="n">feat</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">out</span></div>
+
+<div class="viewcode-block" id="StreamingLDA.training_epoch"><a class="viewcode-back" href="../../../../../autoapi/avalanche/training/strategies/deep_slda/#avalanche.training.strategies.deep_slda.StreamingLDA.training_epoch">[docs]</a>    <span class="k">def</span> <span class="nf">training_epoch</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Training epoch.</span>
+<span class="sd">        :param kwargs:</span>
+<span class="sd">        :return:</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">for</span> <span class="bp">self</span><span class="o">.</span><span class="n">mb_it</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">mbatch</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">dataloader</span><span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_unpack_minibatch</span><span class="p">()</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">before_training_iteration</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+
+            <span class="bp">self</span><span class="o">.</span><span class="n">loss</span> <span class="o">=</span> <span class="mi">0</span>
+
+            <span class="c1"># Forward</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">before_forward</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+            <span class="c1"># compute output on entire minibatch</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">logits</span><span class="p">,</span> <span class="n">feats</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">forward</span><span class="p">(</span><span class="n">return_features</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">after_forward</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+
+            <span class="c1"># Loss &amp; Backward</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">loss</span> <span class="o">+=</span> <span class="bp">self</span><span class="o">.</span><span class="n">criterion</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">logits</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">mb_y</span><span class="p">)</span>
+
+            <span class="c1"># Optimization step</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">before_update</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+            <span class="c1"># process one element at a time</span>
+            <span class="k">for</span> <span class="n">f</span><span class="p">,</span> <span class="n">y</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">feats</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">mb_y</span><span class="p">):</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">f</span><span class="o">.</span><span class="n">unsqueeze</span><span class="p">(</span><span class="mi">0</span><span class="p">),</span> <span class="n">y</span><span class="o">.</span><span class="n">unsqueeze</span><span class="p">(</span><span class="mi">0</span><span class="p">))</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">after_update</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+
+            <span class="bp">self</span><span class="o">.</span><span class="n">after_training_iteration</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="StreamingLDA.make_optimizer"><a class="viewcode-back" href="../../../../../autoapi/avalanche/training/strategies/deep_slda/#avalanche.training.strategies.deep_slda.StreamingLDA.make_optimizer">[docs]</a>    <span class="k">def</span> <span class="nf">make_optimizer</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">pass</span></div>
+
+<div class="viewcode-block" id="StreamingLDA.fit"><a class="viewcode-back" href="../../../../../autoapi/avalanche/training/strategies/deep_slda/#avalanche.training.strategies.deep_slda.StreamingLDA.fit">[docs]</a>    <span class="nd">@torch</span><span class="o">.</span><span class="n">no_grad</span><span class="p">()</span>
+    <span class="k">def</span> <span class="nf">fit</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Fit the SLDA model to a new sample (x,y).</span>
+<span class="sd">        :param x: a torch tensor of the input data (must be a vector)</span>
+<span class="sd">        :param y: a torch tensor of the input label</span>
+<span class="sd">        :return: None</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="c1"># covariance updates</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">streaming_update_sigma</span><span class="p">:</span>
+            <span class="n">x_minus_mu</span> <span class="o">=</span> <span class="p">(</span><span class="n">x</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">muK</span><span class="p">[</span><span class="n">y</span><span class="p">])</span>
+            <span class="n">mult</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">matmul</span><span class="p">(</span><span class="n">x_minus_mu</span><span class="o">.</span><span class="n">transpose</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span> <span class="n">x_minus_mu</span><span class="p">)</span>
+            <span class="n">delta</span> <span class="o">=</span> <span class="n">mult</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">num_updates</span> <span class="o">/</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">num_updates</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">Sigma</span> <span class="o">=</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">num_updates</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">Sigma</span> <span class="o">+</span> <span class="n">delta</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">num_updates</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
+
+        <span class="c1"># update class means</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">muK</span><span class="p">[</span><span class="n">y</span><span class="p">,</span> <span class="p">:]</span> <span class="o">+=</span> <span class="p">(</span><span class="n">x</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">muK</span><span class="p">[</span><span class="n">y</span><span class="p">,</span> <span class="p">:])</span> <span class="o">/</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">cK</span><span class="p">[</span><span class="n">y</span><span class="p">]</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">unsqueeze</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">cK</span><span class="p">[</span><span class="n">y</span><span class="p">]</span> <span class="o">+=</span> <span class="mi">1</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">num_updates</span> <span class="o">+=</span> <span class="mi">1</span></div>
+
+<div class="viewcode-block" id="StreamingLDA.predict"><a class="viewcode-back" href="../../../../../autoapi/avalanche/training/strategies/deep_slda/#avalanche.training.strategies.deep_slda.StreamingLDA.predict">[docs]</a>    <span class="nd">@torch</span><span class="o">.</span><span class="n">no_grad</span><span class="p">()</span>
+    <span class="k">def</span> <span class="nf">predict</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">X</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Make predictions on test data X.</span>
+<span class="sd">        :param X: a torch tensor that contains N data samples (N x d)</span>
+<span class="sd">        :param return_probas: True if the user would like probabilities instead</span>
+<span class="sd">        of predictions returned</span>
+<span class="sd">        :return: the test predictions or probabilities</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="c1"># compute/load Lambda matrix</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">prev_num_updates</span> <span class="o">!=</span> <span class="bp">self</span><span class="o">.</span><span class="n">num_updates</span><span class="p">:</span>
+            <span class="c1"># there have been updates to the model, compute Lambda</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">Lambda</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">pinverse</span><span class="p">(</span>
+                <span class="p">(</span>
+                        <span class="mi">1</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">shrinkage_param</span><span class="p">)</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">Sigma</span> <span class="o">+</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">shrinkage_param</span> <span class="o">*</span> <span class="n">torch</span><span class="o">.</span><span class="n">eye</span><span class="p">(</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">input_size</span><span class="p">,</span> <span class="n">device</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">device</span><span class="p">))</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">prev_num_updates</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">num_updates</span>
+
+        <span class="c1"># parameters for predictions</span>
+        <span class="n">M</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">muK</span><span class="o">.</span><span class="n">transpose</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+        <span class="n">W</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">matmul</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">Lambda</span><span class="p">,</span> <span class="n">M</span><span class="p">)</span>
+        <span class="n">c</span> <span class="o">=</span> <span class="mf">0.5</span> <span class="o">*</span> <span class="n">torch</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">M</span> <span class="o">*</span> <span class="n">W</span><span class="p">,</span> <span class="n">dim</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+
+        <span class="n">scores</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">matmul</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">W</span><span class="p">)</span> <span class="o">-</span> <span class="n">c</span>
+
+        <span class="c1"># return predictions or probabilities</span>
+        <span class="k">return</span> <span class="n">scores</span></div>
+
+<div class="viewcode-block" id="StreamingLDA.fit_base"><a class="viewcode-back" href="../../../../../autoapi/avalanche/training/strategies/deep_slda/#avalanche.training.strategies.deep_slda.StreamingLDA.fit_base">[docs]</a>    <span class="k">def</span> <span class="nf">fit_base</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Fit the SLDA model to the base data.</span>
+<span class="sd">        :param X: an Nxd torch tensor of base initialization data</span>
+<span class="sd">        :param y: an Nx1-dimensional torch tensor of the associated labels for X</span>
+<span class="sd">        :return: None</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">Fitting Base...&#39;</span><span class="p">)</span>
+
+        <span class="c1"># update class means</span>
+        <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="n">torch</span><span class="o">.</span><span class="n">unique</span><span class="p">(</span><span class="n">y</span><span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">muK</span><span class="p">[</span><span class="n">k</span><span class="p">]</span> <span class="o">=</span> <span class="n">X</span><span class="p">[</span><span class="n">y</span> <span class="o">==</span> <span class="n">k</span><span class="p">]</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">cK</span><span class="p">[</span><span class="n">k</span><span class="p">]</span> <span class="o">=</span> <span class="n">X</span><span class="p">[</span><span class="n">y</span> <span class="o">==</span> <span class="n">k</span><span class="p">]</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">num_updates</span> <span class="o">=</span> <span class="n">X</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+
+        <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">Estimating initial covariance matrix...&#39;</span><span class="p">)</span>
+        <span class="kn">from</span> <span class="nn">sklearn.covariance</span> <span class="kn">import</span> <span class="n">OAS</span>
+        <span class="n">cov_estimator</span> <span class="o">=</span> <span class="n">OAS</span><span class="p">(</span><span class="n">assume_centered</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+        <span class="n">cov_estimator</span><span class="o">.</span><span class="n">fit</span><span class="p">((</span><span class="n">X</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">muK</span><span class="p">[</span><span class="n">y</span><span class="p">])</span><span class="o">.</span><span class="n">cpu</span><span class="p">()</span><span class="o">.</span><span class="n">numpy</span><span class="p">())</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">Sigma</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">from_numpy</span><span class="p">(</span><span class="n">cov_estimator</span><span class="o">.</span><span class="n">covariance_</span><span class="p">)</span><span class="o">.</span><span class="n">float</span><span class="p">()</span><span class="o">.</span><span class="n">to</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">device</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="StreamingLDA.save_model"><a class="viewcode-back" href="../../../../../autoapi/avalanche/training/strategies/deep_slda/#avalanche.training.strategies.deep_slda.StreamingLDA.save_model">[docs]</a>    <span class="k">def</span> <span class="nf">save_model</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">save_path</span><span class="p">,</span> <span class="n">save_name</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Save the model parameters to a torch file.</span>
+<span class="sd">        :param save_path: the path where the model will be saved</span>
+<span class="sd">        :param save_name: the name for the saved file</span>
+<span class="sd">        :return:</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># grab parameters for saving</span>
+        <span class="n">d</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">()</span>
+        <span class="n">d</span><span class="p">[</span><span class="s1">&#39;muK&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">muK</span><span class="o">.</span><span class="n">cpu</span><span class="p">()</span>
+        <span class="n">d</span><span class="p">[</span><span class="s1">&#39;cK&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">cK</span><span class="o">.</span><span class="n">cpu</span><span class="p">()</span>
+        <span class="n">d</span><span class="p">[</span><span class="s1">&#39;Sigma&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">Sigma</span><span class="o">.</span><span class="n">cpu</span><span class="p">()</span>
+        <span class="n">d</span><span class="p">[</span><span class="s1">&#39;num_updates&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">num_updates</span>
+
+        <span class="c1"># save model out</span>
+        <span class="n">torch</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="n">d</span><span class="p">,</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">save_path</span><span class="p">,</span> <span class="n">save_name</span> <span class="o">+</span> <span class="s1">&#39;.pth&#39;</span><span class="p">))</span></div>
+
+<div class="viewcode-block" id="StreamingLDA.load_model"><a class="viewcode-back" href="../../../../../autoapi/avalanche/training/strategies/deep_slda/#avalanche.training.strategies.deep_slda.StreamingLDA.load_model">[docs]</a>    <span class="k">def</span> <span class="nf">load_model</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">save_path</span><span class="p">,</span> <span class="n">save_name</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Load the model parameters into StreamingLDA object.</span>
+<span class="sd">        :param save_path: the path where the model is saved</span>
+<span class="sd">        :param save_name: the name of the saved file</span>
+<span class="sd">        :return:</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># load parameters</span>
+        <span class="n">d</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">save_path</span><span class="p">,</span> <span class="n">save_name</span> <span class="o">+</span> <span class="s1">&#39;.pth&#39;</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">muK</span> <span class="o">=</span> <span class="n">d</span><span class="p">[</span><span class="s1">&#39;muK&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">device</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">cK</span> <span class="o">=</span> <span class="n">d</span><span class="p">[</span><span class="s1">&#39;cK&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">device</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">Sigma</span> <span class="o">=</span> <span class="n">d</span><span class="p">[</span><span class="s1">&#39;Sigma&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">device</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">num_updates</span> <span class="o">=</span> <span class="n">d</span><span class="p">[</span><span class="s1">&#39;num_updates&#39;</span><span class="p">]</span></div></div>
+
+
+<span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="s1">&#39;StreamingLDA&#39;</span>
+<span class="p">]</span>
+</pre></div>
+
+           </div>
+           
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &#169; Copyright 2021, ContinualAI.
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

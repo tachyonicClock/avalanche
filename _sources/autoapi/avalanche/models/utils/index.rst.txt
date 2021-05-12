@@ -7,6 +7,14 @@
 Module Contents
 ---------------
 
+Classes
+~~~~~~~
+
+.. autoapisummary::
+
+   avalanche.models.utils.FeatureExtractorBackbone
+
+
 
 Functions
 ~~~~~~~~~
@@ -17,5 +25,33 @@ Functions
 
 
 .. function:: avalanche_forward(model, x, task_labels)
+
+
+.. py:class:: FeatureExtractorBackbone(model, output_layer_name)
+
+   Bases: :class:`torch.nn.Module`
+
+   This PyTorch module allows us to extract features from a backbone network
+   given a layer name.
+
+   Initializes internal Module state, shared by both nn.Module and ScriptModule.
+
+   .. method:: forward(self, x)
+
+
+   .. method:: get_name_to_module(self, model)
+
+
+   .. method:: get_activation(self)
+
+
+   .. method:: add_hooks(self, model)
+
+      :param model:
+      :param outputs: Outputs from layers specified in `output_layer_names`
+      will be stored in `output` variable
+      :param output_layer_names:
+      :return:
+
 
 

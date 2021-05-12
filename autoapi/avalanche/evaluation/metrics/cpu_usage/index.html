@@ -13,6 +13,8 @@
   
   <link rel="stylesheet" href="../../../../../_static/css/mystyle.css" type="text/css" />
   <link rel="stylesheet" href="../../../../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../../../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../../../../_static/css/mystyle.css" type="text/css" />
   <link rel="stylesheet" href="../../../../../_static/graphviz.css" type="text/css" />
 
   
@@ -30,6 +32,7 @@
   
     
       <script type="text/javascript" id="documentation_options" data-url_root="../../../../../" src="../../../../../_static/documentation_options.js"></script>
+        <script data-url_root="../../../../../" id="documentation_options" src="../../../../../_static/documentation_options.js"></script>
         <script src="../../../../../_static/jquery.js"></script>
         <script src="../../../../../_static/underscore.js"></script>
         <script src="../../../../../_static/doctools.js"></script>
@@ -224,8 +227,8 @@
 </tbody>
 </table>
 <dl class="py class">
-<dt id="avalanche.evaluation.metrics.cpu_usage.CPUUsage">
-<em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">avalanche.evaluation.metrics.cpu_usage.</span></code><code class="sig-name descname"><span class="pre">CPUUsage</span></code><a class="reference internal" href="../../../../../_modules/avalanche/evaluation/metrics/cpu_usage/#CPUUsage"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.evaluation.metrics.cpu_usage.CPUUsage" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="avalanche.evaluation.metrics.cpu_usage.CPUUsage">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">avalanche.evaluation.metrics.cpu_usage.</span></span><span class="sig-name descname"><span class="pre">CPUUsage</span></span><a class="reference internal" href="../../../../../_modules/avalanche/evaluation/metrics/cpu_usage/#CPUUsage"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.evaluation.metrics.cpu_usage.CPUUsage" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">Metric[float]</span></code></p>
 <p>The standalone CPU usage metric.</p>
 <p>Instances of this metric compute the average CPU usage as a float value.
@@ -243,8 +246,8 @@ this metric in its initial state will return an usage value of 0.</p>
 value of 0. The metric can be updated by using the <cite>update</cite> method
 while the average CPU usage can be retrieved using the <cite>result</cite> method.</p>
 <dl class="py method">
-<dt id="avalanche.evaluation.metrics.cpu_usage.CPUUsage.update">
-<code class="sig-name descname"><span class="pre">update</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">None</span><a class="reference internal" href="../../../../../_modules/avalanche/evaluation/metrics/cpu_usage/#CPUUsage.update"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.evaluation.metrics.cpu_usage.CPUUsage.update" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="avalanche.evaluation.metrics.cpu_usage.CPUUsage.update">
+<span class="sig-name descname"><span class="pre">update</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">None</span><a class="reference internal" href="../../../../../_modules/avalanche/evaluation/metrics/cpu_usage/#CPUUsage.update"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.evaluation.metrics.cpu_usage.CPUUsage.update" title="Permalink to this definition">¶</a></dt>
 <dd><p>Update the running CPU usage.</p>
 <p>For more info on how to set the starting moment see the class
 description.</p>
@@ -256,8 +259,8 @@ description.</p>
 </dd></dl>
 
 <dl class="py method">
-<dt id="avalanche.evaluation.metrics.cpu_usage.CPUUsage.result">
-<code class="sig-name descname"><span class="pre">result</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">float</span><a class="reference internal" href="../../../../../_modules/avalanche/evaluation/metrics/cpu_usage/#CPUUsage.result"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.evaluation.metrics.cpu_usage.CPUUsage.result" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="avalanche.evaluation.metrics.cpu_usage.CPUUsage.result">
+<span class="sig-name descname"><span class="pre">result</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">float</span><a class="reference internal" href="../../../../../_modules/avalanche/evaluation/metrics/cpu_usage/#CPUUsage.result"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.evaluation.metrics.cpu_usage.CPUUsage.result" title="Permalink to this definition">¶</a></dt>
 <dd><p>Retrieves the average CPU usage.</p>
 <p>Calling this method will not change the internal state of the metric.</p>
 <dl class="field-list simple">
@@ -268,8 +271,8 @@ description.</p>
 </dd></dl>
 
 <dl class="py method">
-<dt id="avalanche.evaluation.metrics.cpu_usage.CPUUsage.reset">
-<code class="sig-name descname"><span class="pre">reset</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">None</span><a class="reference internal" href="../../../../../_modules/avalanche/evaluation/metrics/cpu_usage/#CPUUsage.reset"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.evaluation.metrics.cpu_usage.CPUUsage.reset" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="avalanche.evaluation.metrics.cpu_usage.CPUUsage.reset">
+<span class="sig-name descname"><span class="pre">reset</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">None</span><a class="reference internal" href="../../../../../_modules/avalanche/evaluation/metrics/cpu_usage/#CPUUsage.reset"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.evaluation.metrics.cpu_usage.CPUUsage.reset" title="Permalink to this definition">¶</a></dt>
 <dd><p>Resets the metric.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Returns</dt>
@@ -281,8 +284,8 @@ description.</p>
 </dd></dl>
 
 <dl class="py class">
-<dt id="avalanche.evaluation.metrics.cpu_usage.MinibatchCPUUsage">
-<em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">avalanche.evaluation.metrics.cpu_usage.</span></code><code class="sig-name descname"><span class="pre">MinibatchCPUUsage</span></code><a class="reference internal" href="../../../../../_modules/avalanche/evaluation/metrics/cpu_usage/#MinibatchCPUUsage"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.evaluation.metrics.cpu_usage.MinibatchCPUUsage" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="avalanche.evaluation.metrics.cpu_usage.MinibatchCPUUsage">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">avalanche.evaluation.metrics.cpu_usage.</span></span><span class="sig-name descname"><span class="pre">MinibatchCPUUsage</span></span><a class="reference internal" href="../../../../../_modules/avalanche/evaluation/metrics/cpu_usage/#MinibatchCPUUsage"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.evaluation.metrics.cpu_usage.MinibatchCPUUsage" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">PluginMetric[float]</span></code></p>
 <p>The minibatch CPU usage metric.
 This plugin metric only works at training time.</p>
@@ -291,78 +294,78 @@ This plugin metric only works at training time.</p>
 <a class="reference internal" href="#avalanche.evaluation.metrics.cpu_usage.EpochCPUUsage" title="avalanche.evaluation.metrics.cpu_usage.EpochCPUUsage"><code class="xref py py-class docutils literal notranslate"><span class="pre">EpochCPUUsage</span></code></a>.</p>
 <p>Creates an instance of the minibatch CPU usage metric.</p>
 <dl class="py method">
-<dt id="avalanche.evaluation.metrics.cpu_usage.MinibatchCPUUsage.result">
-<code class="sig-name descname"><span class="pre">result</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">float</span><a class="reference internal" href="../../../../../_modules/avalanche/evaluation/metrics/cpu_usage/#MinibatchCPUUsage.result"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.evaluation.metrics.cpu_usage.MinibatchCPUUsage.result" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="avalanche.evaluation.metrics.cpu_usage.MinibatchCPUUsage.result">
+<span class="sig-name descname"><span class="pre">result</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">float</span><a class="reference internal" href="../../../../../_modules/avalanche/evaluation/metrics/cpu_usage/#MinibatchCPUUsage.result"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.evaluation.metrics.cpu_usage.MinibatchCPUUsage.result" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
-<dt id="avalanche.evaluation.metrics.cpu_usage.MinibatchCPUUsage.reset">
-<code class="sig-name descname"><span class="pre">reset</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">None</span><a class="reference internal" href="../../../../../_modules/avalanche/evaluation/metrics/cpu_usage/#MinibatchCPUUsage.reset"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.evaluation.metrics.cpu_usage.MinibatchCPUUsage.reset" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="avalanche.evaluation.metrics.cpu_usage.MinibatchCPUUsage.reset">
+<span class="sig-name descname"><span class="pre">reset</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">None</span><a class="reference internal" href="../../../../../_modules/avalanche/evaluation/metrics/cpu_usage/#MinibatchCPUUsage.reset"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.evaluation.metrics.cpu_usage.MinibatchCPUUsage.reset" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
-<dt id="avalanche.evaluation.metrics.cpu_usage.MinibatchCPUUsage.before_training_iteration">
-<code class="sig-name descname"><span class="pre">before_training_iteration</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">strategy</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">MetricResult</span><a class="reference internal" href="../../../../../_modules/avalanche/evaluation/metrics/cpu_usage/#MinibatchCPUUsage.before_training_iteration"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.evaluation.metrics.cpu_usage.MinibatchCPUUsage.before_training_iteration" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="avalanche.evaluation.metrics.cpu_usage.MinibatchCPUUsage.before_training_iteration">
+<span class="sig-name descname"><span class="pre">before_training_iteration</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">strategy</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">MetricResult</span><a class="reference internal" href="../../../../../_modules/avalanche/evaluation/metrics/cpu_usage/#MinibatchCPUUsage.before_training_iteration"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.evaluation.metrics.cpu_usage.MinibatchCPUUsage.before_training_iteration" title="Permalink to this definition">¶</a></dt>
 <dd><p>Called before the start of a training iteration by the
 <cite>BaseStrategy</cite>.</p>
 </dd></dl>
 
 <dl class="py method">
-<dt id="avalanche.evaluation.metrics.cpu_usage.MinibatchCPUUsage.after_training_iteration">
-<code class="sig-name descname"><span class="pre">after_training_iteration</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">strategy</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">BaseStrategy</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">MetricResult</span><a class="reference internal" href="../../../../../_modules/avalanche/evaluation/metrics/cpu_usage/#MinibatchCPUUsage.after_training_iteration"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.evaluation.metrics.cpu_usage.MinibatchCPUUsage.after_training_iteration" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="avalanche.evaluation.metrics.cpu_usage.MinibatchCPUUsage.after_training_iteration">
+<span class="sig-name descname"><span class="pre">after_training_iteration</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">strategy</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">BaseStrategy</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">MetricResult</span><a class="reference internal" href="../../../../../_modules/avalanche/evaluation/metrics/cpu_usage/#MinibatchCPUUsage.after_training_iteration"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.evaluation.metrics.cpu_usage.MinibatchCPUUsage.after_training_iteration" title="Permalink to this definition">¶</a></dt>
 <dd><p>Called after the end of a training iteration by the
 <cite>BaseStrategy</cite>.</p>
 </dd></dl>
 
 <dl class="py method">
-<dt id="avalanche.evaluation.metrics.cpu_usage.MinibatchCPUUsage.__str__">
-<code class="sig-name descname"><span class="pre">__str__</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../_modules/avalanche/evaluation/metrics/cpu_usage/#MinibatchCPUUsage.__str__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.evaluation.metrics.cpu_usage.MinibatchCPUUsage.__str__" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="avalanche.evaluation.metrics.cpu_usage.MinibatchCPUUsage.__str__">
+<span class="sig-name descname"><span class="pre">__str__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../_modules/avalanche/evaluation/metrics/cpu_usage/#MinibatchCPUUsage.__str__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.evaluation.metrics.cpu_usage.MinibatchCPUUsage.__str__" title="Permalink to this definition">¶</a></dt>
 <dd><p>Return str(self).</p>
 </dd></dl>
 
 </dd></dl>
 
 <dl class="py class">
-<dt id="avalanche.evaluation.metrics.cpu_usage.EpochCPUUsage">
-<em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">avalanche.evaluation.metrics.cpu_usage.</span></code><code class="sig-name descname"><span class="pre">EpochCPUUsage</span></code><a class="reference internal" href="../../../../../_modules/avalanche/evaluation/metrics/cpu_usage/#EpochCPUUsage"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.evaluation.metrics.cpu_usage.EpochCPUUsage" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="avalanche.evaluation.metrics.cpu_usage.EpochCPUUsage">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">avalanche.evaluation.metrics.cpu_usage.</span></span><span class="sig-name descname"><span class="pre">EpochCPUUsage</span></span><a class="reference internal" href="../../../../../_modules/avalanche/evaluation/metrics/cpu_usage/#EpochCPUUsage"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.evaluation.metrics.cpu_usage.EpochCPUUsage" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">PluginMetric[float]</span></code></p>
 <p>The Epoch CPU usage metric.
 This plugin metric only works at training time.</p>
 <p>The average usage will be logged after each epoch.</p>
 <p>Creates an instance of the epoch CPU usage metric.</p>
 <dl class="py method">
-<dt id="avalanche.evaluation.metrics.cpu_usage.EpochCPUUsage.before_training_epoch">
-<code class="sig-name descname"><span class="pre">before_training_epoch</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">strategy</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">MetricResult</span><a class="reference internal" href="../../../../../_modules/avalanche/evaluation/metrics/cpu_usage/#EpochCPUUsage.before_training_epoch"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.evaluation.metrics.cpu_usage.EpochCPUUsage.before_training_epoch" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="avalanche.evaluation.metrics.cpu_usage.EpochCPUUsage.before_training_epoch">
+<span class="sig-name descname"><span class="pre">before_training_epoch</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">strategy</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">MetricResult</span><a class="reference internal" href="../../../../../_modules/avalanche/evaluation/metrics/cpu_usage/#EpochCPUUsage.before_training_epoch"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.evaluation.metrics.cpu_usage.EpochCPUUsage.before_training_epoch" title="Permalink to this definition">¶</a></dt>
 <dd><p>Called before <cite>train_epoch</cite> by the <cite>BaseStrategy</cite>.</p>
 </dd></dl>
 
 <dl class="py method">
-<dt id="avalanche.evaluation.metrics.cpu_usage.EpochCPUUsage.after_training_epoch">
-<code class="sig-name descname"><span class="pre">after_training_epoch</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">strategy</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">BaseStrategy</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">MetricResult</span><a class="reference internal" href="../../../../../_modules/avalanche/evaluation/metrics/cpu_usage/#EpochCPUUsage.after_training_epoch"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.evaluation.metrics.cpu_usage.EpochCPUUsage.after_training_epoch" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="avalanche.evaluation.metrics.cpu_usage.EpochCPUUsage.after_training_epoch">
+<span class="sig-name descname"><span class="pre">after_training_epoch</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">strategy</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">BaseStrategy</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">MetricResult</span><a class="reference internal" href="../../../../../_modules/avalanche/evaluation/metrics/cpu_usage/#EpochCPUUsage.after_training_epoch"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.evaluation.metrics.cpu_usage.EpochCPUUsage.after_training_epoch" title="Permalink to this definition">¶</a></dt>
 <dd><p>Called after <cite>train_epoch</cite> by the <cite>BaseStrategy</cite>.</p>
 </dd></dl>
 
 <dl class="py method">
-<dt id="avalanche.evaluation.metrics.cpu_usage.EpochCPUUsage.reset">
-<code class="sig-name descname"><span class="pre">reset</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">None</span><a class="reference internal" href="../../../../../_modules/avalanche/evaluation/metrics/cpu_usage/#EpochCPUUsage.reset"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.evaluation.metrics.cpu_usage.EpochCPUUsage.reset" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="avalanche.evaluation.metrics.cpu_usage.EpochCPUUsage.reset">
+<span class="sig-name descname"><span class="pre">reset</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">None</span><a class="reference internal" href="../../../../../_modules/avalanche/evaluation/metrics/cpu_usage/#EpochCPUUsage.reset"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.evaluation.metrics.cpu_usage.EpochCPUUsage.reset" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
-<dt id="avalanche.evaluation.metrics.cpu_usage.EpochCPUUsage.result">
-<code class="sig-name descname"><span class="pre">result</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">float</span><a class="reference internal" href="../../../../../_modules/avalanche/evaluation/metrics/cpu_usage/#EpochCPUUsage.result"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.evaluation.metrics.cpu_usage.EpochCPUUsage.result" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="avalanche.evaluation.metrics.cpu_usage.EpochCPUUsage.result">
+<span class="sig-name descname"><span class="pre">result</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">float</span><a class="reference internal" href="../../../../../_modules/avalanche/evaluation/metrics/cpu_usage/#EpochCPUUsage.result"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.evaluation.metrics.cpu_usage.EpochCPUUsage.result" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
-<dt id="avalanche.evaluation.metrics.cpu_usage.EpochCPUUsage.__str__">
-<code class="sig-name descname"><span class="pre">__str__</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../_modules/avalanche/evaluation/metrics/cpu_usage/#EpochCPUUsage.__str__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.evaluation.metrics.cpu_usage.EpochCPUUsage.__str__" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="avalanche.evaluation.metrics.cpu_usage.EpochCPUUsage.__str__">
+<span class="sig-name descname"><span class="pre">__str__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../_modules/avalanche/evaluation/metrics/cpu_usage/#EpochCPUUsage.__str__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.evaluation.metrics.cpu_usage.EpochCPUUsage.__str__" title="Permalink to this definition">¶</a></dt>
 <dd><p>Return str(self).</p>
 </dd></dl>
 
 </dd></dl>
 
 <dl class="py class">
-<dt id="avalanche.evaluation.metrics.cpu_usage.RunningEpochCPUUsage">
-<em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">avalanche.evaluation.metrics.cpu_usage.</span></code><code class="sig-name descname"><span class="pre">RunningEpochCPUUsage</span></code><a class="reference internal" href="../../../../../_modules/avalanche/evaluation/metrics/cpu_usage/#RunningEpochCPUUsage"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.evaluation.metrics.cpu_usage.RunningEpochCPUUsage" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="avalanche.evaluation.metrics.cpu_usage.RunningEpochCPUUsage">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">avalanche.evaluation.metrics.cpu_usage.</span></span><span class="sig-name descname"><span class="pre">RunningEpochCPUUsage</span></span><a class="reference internal" href="../../../../../_modules/avalanche/evaluation/metrics/cpu_usage/#RunningEpochCPUUsage"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.evaluation.metrics.cpu_usage.RunningEpochCPUUsage" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">PluginMetric[float]</span></code></p>
 <p>The running epoch CPU usage metric.
 This plugin metric only works at training time</p>
@@ -370,46 +373,46 @@ This plugin metric only works at training time</p>
 to the current epoch iteration.</p>
 <p>Creates an instance of the average epoch cpu usage metric.</p>
 <dl class="py method">
-<dt id="avalanche.evaluation.metrics.cpu_usage.RunningEpochCPUUsage.before_training_epoch">
-<code class="sig-name descname"><span class="pre">before_training_epoch</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">strategy</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">MetricResult</span><a class="reference internal" href="../../../../../_modules/avalanche/evaluation/metrics/cpu_usage/#RunningEpochCPUUsage.before_training_epoch"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.evaluation.metrics.cpu_usage.RunningEpochCPUUsage.before_training_epoch" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="avalanche.evaluation.metrics.cpu_usage.RunningEpochCPUUsage.before_training_epoch">
+<span class="sig-name descname"><span class="pre">before_training_epoch</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">strategy</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">MetricResult</span><a class="reference internal" href="../../../../../_modules/avalanche/evaluation/metrics/cpu_usage/#RunningEpochCPUUsage.before_training_epoch"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.evaluation.metrics.cpu_usage.RunningEpochCPUUsage.before_training_epoch" title="Permalink to this definition">¶</a></dt>
 <dd><p>Called before <cite>train_epoch</cite> by the <cite>BaseStrategy</cite>.</p>
 </dd></dl>
 
 <dl class="py method">
-<dt id="avalanche.evaluation.metrics.cpu_usage.RunningEpochCPUUsage.before_training_iteration">
-<code class="sig-name descname"><span class="pre">before_training_iteration</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">strategy</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">BaseStrategy</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">MetricResult</span><a class="reference internal" href="../../../../../_modules/avalanche/evaluation/metrics/cpu_usage/#RunningEpochCPUUsage.before_training_iteration"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.evaluation.metrics.cpu_usage.RunningEpochCPUUsage.before_training_iteration" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="avalanche.evaluation.metrics.cpu_usage.RunningEpochCPUUsage.before_training_iteration">
+<span class="sig-name descname"><span class="pre">before_training_iteration</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">strategy</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">BaseStrategy</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">MetricResult</span><a class="reference internal" href="../../../../../_modules/avalanche/evaluation/metrics/cpu_usage/#RunningEpochCPUUsage.before_training_iteration"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.evaluation.metrics.cpu_usage.RunningEpochCPUUsage.before_training_iteration" title="Permalink to this definition">¶</a></dt>
 <dd><p>Called before the start of a training iteration by the
 <cite>BaseStrategy</cite>.</p>
 </dd></dl>
 
 <dl class="py method">
-<dt id="avalanche.evaluation.metrics.cpu_usage.RunningEpochCPUUsage.after_training_iteration">
-<code class="sig-name descname"><span class="pre">after_training_iteration</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">strategy</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">BaseStrategy</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">None</span><a class="reference internal" href="../../../../../_modules/avalanche/evaluation/metrics/cpu_usage/#RunningEpochCPUUsage.after_training_iteration"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.evaluation.metrics.cpu_usage.RunningEpochCPUUsage.after_training_iteration" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="avalanche.evaluation.metrics.cpu_usage.RunningEpochCPUUsage.after_training_iteration">
+<span class="sig-name descname"><span class="pre">after_training_iteration</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">strategy</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">BaseStrategy</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">None</span><a class="reference internal" href="../../../../../_modules/avalanche/evaluation/metrics/cpu_usage/#RunningEpochCPUUsage.after_training_iteration"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.evaluation.metrics.cpu_usage.RunningEpochCPUUsage.after_training_iteration" title="Permalink to this definition">¶</a></dt>
 <dd><p>Called after the end of a training iteration by the
 <cite>BaseStrategy</cite>.</p>
 </dd></dl>
 
 <dl class="py method">
-<dt id="avalanche.evaluation.metrics.cpu_usage.RunningEpochCPUUsage.reset">
-<code class="sig-name descname"><span class="pre">reset</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">None</span><a class="reference internal" href="../../../../../_modules/avalanche/evaluation/metrics/cpu_usage/#RunningEpochCPUUsage.reset"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.evaluation.metrics.cpu_usage.RunningEpochCPUUsage.reset" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="avalanche.evaluation.metrics.cpu_usage.RunningEpochCPUUsage.reset">
+<span class="sig-name descname"><span class="pre">reset</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">None</span><a class="reference internal" href="../../../../../_modules/avalanche/evaluation/metrics/cpu_usage/#RunningEpochCPUUsage.reset"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.evaluation.metrics.cpu_usage.RunningEpochCPUUsage.reset" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
-<dt id="avalanche.evaluation.metrics.cpu_usage.RunningEpochCPUUsage.result">
-<code class="sig-name descname"><span class="pre">result</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">float</span><a class="reference internal" href="../../../../../_modules/avalanche/evaluation/metrics/cpu_usage/#RunningEpochCPUUsage.result"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.evaluation.metrics.cpu_usage.RunningEpochCPUUsage.result" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="avalanche.evaluation.metrics.cpu_usage.RunningEpochCPUUsage.result">
+<span class="sig-name descname"><span class="pre">result</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">float</span><a class="reference internal" href="../../../../../_modules/avalanche/evaluation/metrics/cpu_usage/#RunningEpochCPUUsage.result"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.evaluation.metrics.cpu_usage.RunningEpochCPUUsage.result" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
-<dt id="avalanche.evaluation.metrics.cpu_usage.RunningEpochCPUUsage.__str__">
-<code class="sig-name descname"><span class="pre">__str__</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../_modules/avalanche/evaluation/metrics/cpu_usage/#RunningEpochCPUUsage.__str__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.evaluation.metrics.cpu_usage.RunningEpochCPUUsage.__str__" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="avalanche.evaluation.metrics.cpu_usage.RunningEpochCPUUsage.__str__">
+<span class="sig-name descname"><span class="pre">__str__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../_modules/avalanche/evaluation/metrics/cpu_usage/#RunningEpochCPUUsage.__str__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.evaluation.metrics.cpu_usage.RunningEpochCPUUsage.__str__" title="Permalink to this definition">¶</a></dt>
 <dd><p>Return str(self).</p>
 </dd></dl>
 
 </dd></dl>
 
 <dl class="py class">
-<dt id="avalanche.evaluation.metrics.cpu_usage.ExperienceCPUUsage">
-<em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">avalanche.evaluation.metrics.cpu_usage.</span></code><code class="sig-name descname"><span class="pre">ExperienceCPUUsage</span></code><a class="reference internal" href="../../../../../_modules/avalanche/evaluation/metrics/cpu_usage/#ExperienceCPUUsage"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.evaluation.metrics.cpu_usage.ExperienceCPUUsage" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="avalanche.evaluation.metrics.cpu_usage.ExperienceCPUUsage">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">avalanche.evaluation.metrics.cpu_usage.</span></span><span class="sig-name descname"><span class="pre">ExperienceCPUUsage</span></span><a class="reference internal" href="../../../../../_modules/avalanche/evaluation/metrics/cpu_usage/#ExperienceCPUUsage"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.evaluation.metrics.cpu_usage.ExperienceCPUUsage" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">PluginMetric[float]</span></code></p>
 <p>The average experience CPU usage metric.
 This plugin metric works only at eval time.</p>
@@ -417,38 +420,38 @@ This plugin metric works only at eval time.</p>
 experienc.</p>
 <p>Creates an instance of the experience CPU usage metric.</p>
 <dl class="py method">
-<dt id="avalanche.evaluation.metrics.cpu_usage.ExperienceCPUUsage.before_eval_exp">
-<code class="sig-name descname"><span class="pre">before_eval_exp</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">strategy</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">BaseStrategy</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">None</span><a class="reference internal" href="../../../../../_modules/avalanche/evaluation/metrics/cpu_usage/#ExperienceCPUUsage.before_eval_exp"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.evaluation.metrics.cpu_usage.ExperienceCPUUsage.before_eval_exp" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="avalanche.evaluation.metrics.cpu_usage.ExperienceCPUUsage.before_eval_exp">
+<span class="sig-name descname"><span class="pre">before_eval_exp</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">strategy</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">BaseStrategy</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">None</span><a class="reference internal" href="../../../../../_modules/avalanche/evaluation/metrics/cpu_usage/#ExperienceCPUUsage.before_eval_exp"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.evaluation.metrics.cpu_usage.ExperienceCPUUsage.before_eval_exp" title="Permalink to this definition">¶</a></dt>
 <dd><p>Called before <cite>eval_exp</cite> by the <cite>BaseStrategy</cite>.</p>
 </dd></dl>
 
 <dl class="py method">
-<dt id="avalanche.evaluation.metrics.cpu_usage.ExperienceCPUUsage.after_eval_exp">
-<code class="sig-name descname"><span class="pre">after_eval_exp</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">strategy</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">BaseStrategy</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">MetricResult</span><a class="reference internal" href="../../../../../_modules/avalanche/evaluation/metrics/cpu_usage/#ExperienceCPUUsage.after_eval_exp"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.evaluation.metrics.cpu_usage.ExperienceCPUUsage.after_eval_exp" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="avalanche.evaluation.metrics.cpu_usage.ExperienceCPUUsage.after_eval_exp">
+<span class="sig-name descname"><span class="pre">after_eval_exp</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">strategy</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">BaseStrategy</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">MetricResult</span><a class="reference internal" href="../../../../../_modules/avalanche/evaluation/metrics/cpu_usage/#ExperienceCPUUsage.after_eval_exp"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.evaluation.metrics.cpu_usage.ExperienceCPUUsage.after_eval_exp" title="Permalink to this definition">¶</a></dt>
 <dd><p>Called after <cite>eval_exp</cite> by the <cite>BaseStrategy</cite>.</p>
 </dd></dl>
 
 <dl class="py method">
-<dt id="avalanche.evaluation.metrics.cpu_usage.ExperienceCPUUsage.reset">
-<code class="sig-name descname"><span class="pre">reset</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">None</span><a class="reference internal" href="../../../../../_modules/avalanche/evaluation/metrics/cpu_usage/#ExperienceCPUUsage.reset"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.evaluation.metrics.cpu_usage.ExperienceCPUUsage.reset" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="avalanche.evaluation.metrics.cpu_usage.ExperienceCPUUsage.reset">
+<span class="sig-name descname"><span class="pre">reset</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">None</span><a class="reference internal" href="../../../../../_modules/avalanche/evaluation/metrics/cpu_usage/#ExperienceCPUUsage.reset"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.evaluation.metrics.cpu_usage.ExperienceCPUUsage.reset" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
-<dt id="avalanche.evaluation.metrics.cpu_usage.ExperienceCPUUsage.result">
-<code class="sig-name descname"><span class="pre">result</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">float</span><a class="reference internal" href="../../../../../_modules/avalanche/evaluation/metrics/cpu_usage/#ExperienceCPUUsage.result"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.evaluation.metrics.cpu_usage.ExperienceCPUUsage.result" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="avalanche.evaluation.metrics.cpu_usage.ExperienceCPUUsage.result">
+<span class="sig-name descname"><span class="pre">result</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">float</span><a class="reference internal" href="../../../../../_modules/avalanche/evaluation/metrics/cpu_usage/#ExperienceCPUUsage.result"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.evaluation.metrics.cpu_usage.ExperienceCPUUsage.result" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
-<dt id="avalanche.evaluation.metrics.cpu_usage.ExperienceCPUUsage.__str__">
-<code class="sig-name descname"><span class="pre">__str__</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../_modules/avalanche/evaluation/metrics/cpu_usage/#ExperienceCPUUsage.__str__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.evaluation.metrics.cpu_usage.ExperienceCPUUsage.__str__" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="avalanche.evaluation.metrics.cpu_usage.ExperienceCPUUsage.__str__">
+<span class="sig-name descname"><span class="pre">__str__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../_modules/avalanche/evaluation/metrics/cpu_usage/#ExperienceCPUUsage.__str__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.evaluation.metrics.cpu_usage.ExperienceCPUUsage.__str__" title="Permalink to this definition">¶</a></dt>
 <dd><p>Return str(self).</p>
 </dd></dl>
 
 </dd></dl>
 
 <dl class="py class">
-<dt id="avalanche.evaluation.metrics.cpu_usage.StreamCPUUsage">
-<em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">avalanche.evaluation.metrics.cpu_usage.</span></code><code class="sig-name descname"><span class="pre">StreamCPUUsage</span></code><a class="reference internal" href="../../../../../_modules/avalanche/evaluation/metrics/cpu_usage/#StreamCPUUsage"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.evaluation.metrics.cpu_usage.StreamCPUUsage" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="avalanche.evaluation.metrics.cpu_usage.StreamCPUUsage">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">avalanche.evaluation.metrics.cpu_usage.</span></span><span class="sig-name descname"><span class="pre">StreamCPUUsage</span></span><a class="reference internal" href="../../../../../_modules/avalanche/evaluation/metrics/cpu_usage/#StreamCPUUsage"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.evaluation.metrics.cpu_usage.StreamCPUUsage" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">PluginMetric[float]</span></code></p>
 <p>The average stream CPU usage metric.
 This plugin metric works only at eval time.</p>
@@ -456,38 +459,38 @@ This plugin metric works only at eval time.</p>
 the average CPU usage on all experiences.</p>
 <p>Creates an instance of the stream CPU usage metric.</p>
 <dl class="py method">
-<dt id="avalanche.evaluation.metrics.cpu_usage.StreamCPUUsage.before_eval">
-<code class="sig-name descname"><span class="pre">before_eval</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">strategy</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">BaseStrategy</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">None</span><a class="reference internal" href="../../../../../_modules/avalanche/evaluation/metrics/cpu_usage/#StreamCPUUsage.before_eval"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.evaluation.metrics.cpu_usage.StreamCPUUsage.before_eval" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="avalanche.evaluation.metrics.cpu_usage.StreamCPUUsage.before_eval">
+<span class="sig-name descname"><span class="pre">before_eval</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">strategy</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">BaseStrategy</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">None</span><a class="reference internal" href="../../../../../_modules/avalanche/evaluation/metrics/cpu_usage/#StreamCPUUsage.before_eval"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.evaluation.metrics.cpu_usage.StreamCPUUsage.before_eval" title="Permalink to this definition">¶</a></dt>
 <dd><p>Called before <cite>eval</cite> by the <cite>BaseStrategy</cite>.</p>
 </dd></dl>
 
 <dl class="py method">
-<dt id="avalanche.evaluation.metrics.cpu_usage.StreamCPUUsage.after_eval">
-<code class="sig-name descname"><span class="pre">after_eval</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">strategy</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">BaseStrategy</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">MetricResult</span><a class="reference internal" href="../../../../../_modules/avalanche/evaluation/metrics/cpu_usage/#StreamCPUUsage.after_eval"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.evaluation.metrics.cpu_usage.StreamCPUUsage.after_eval" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="avalanche.evaluation.metrics.cpu_usage.StreamCPUUsage.after_eval">
+<span class="sig-name descname"><span class="pre">after_eval</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">strategy</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">BaseStrategy</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">MetricResult</span><a class="reference internal" href="../../../../../_modules/avalanche/evaluation/metrics/cpu_usage/#StreamCPUUsage.after_eval"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.evaluation.metrics.cpu_usage.StreamCPUUsage.after_eval" title="Permalink to this definition">¶</a></dt>
 <dd><p>Called after <cite>eval</cite> by the <cite>BaseStrategy</cite>.</p>
 </dd></dl>
 
 <dl class="py method">
-<dt id="avalanche.evaluation.metrics.cpu_usage.StreamCPUUsage.reset">
-<code class="sig-name descname"><span class="pre">reset</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">None</span><a class="reference internal" href="../../../../../_modules/avalanche/evaluation/metrics/cpu_usage/#StreamCPUUsage.reset"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.evaluation.metrics.cpu_usage.StreamCPUUsage.reset" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="avalanche.evaluation.metrics.cpu_usage.StreamCPUUsage.reset">
+<span class="sig-name descname"><span class="pre">reset</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">None</span><a class="reference internal" href="../../../../../_modules/avalanche/evaluation/metrics/cpu_usage/#StreamCPUUsage.reset"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.evaluation.metrics.cpu_usage.StreamCPUUsage.reset" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
-<dt id="avalanche.evaluation.metrics.cpu_usage.StreamCPUUsage.result">
-<code class="sig-name descname"><span class="pre">result</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">float</span><a class="reference internal" href="../../../../../_modules/avalanche/evaluation/metrics/cpu_usage/#StreamCPUUsage.result"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.evaluation.metrics.cpu_usage.StreamCPUUsage.result" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="avalanche.evaluation.metrics.cpu_usage.StreamCPUUsage.result">
+<span class="sig-name descname"><span class="pre">result</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">float</span><a class="reference internal" href="../../../../../_modules/avalanche/evaluation/metrics/cpu_usage/#StreamCPUUsage.result"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.evaluation.metrics.cpu_usage.StreamCPUUsage.result" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
-<dt id="avalanche.evaluation.metrics.cpu_usage.StreamCPUUsage.__str__">
-<code class="sig-name descname"><span class="pre">__str__</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../_modules/avalanche/evaluation/metrics/cpu_usage/#StreamCPUUsage.__str__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.evaluation.metrics.cpu_usage.StreamCPUUsage.__str__" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="avalanche.evaluation.metrics.cpu_usage.StreamCPUUsage.__str__">
+<span class="sig-name descname"><span class="pre">__str__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../_modules/avalanche/evaluation/metrics/cpu_usage/#StreamCPUUsage.__str__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.evaluation.metrics.cpu_usage.StreamCPUUsage.__str__" title="Permalink to this definition">¶</a></dt>
 <dd><p>Return str(self).</p>
 </dd></dl>
 
 </dd></dl>
 
 <dl class="py function">
-<dt id="avalanche.evaluation.metrics.cpu_usage.cpu_usage_metrics">
-<code class="sig-prename descclassname"><span class="pre">avalanche.evaluation.metrics.cpu_usage.</span></code><code class="sig-name descname"><span class="pre">cpu_usage_metrics</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">minibatch</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">epoch</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">epoch_running</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">experience</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">stream</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">PluginMetric</span><span class="p"><span class="pre">]</span></span><a class="reference internal" href="../../../../../_modules/avalanche/evaluation/metrics/cpu_usage/#cpu_usage_metrics"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.evaluation.metrics.cpu_usage.cpu_usage_metrics" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="avalanche.evaluation.metrics.cpu_usage.cpu_usage_metrics">
+<span class="sig-prename descclassname"><span class="pre">avalanche.evaluation.metrics.cpu_usage.</span></span><span class="sig-name descname"><span class="pre">cpu_usage_metrics</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">minibatch</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">epoch</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">epoch_running</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">experience</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">stream</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">PluginMetric</span><span class="p"><span class="pre">]</span></span><a class="reference internal" href="../../../../../_modules/avalanche/evaluation/metrics/cpu_usage/#cpu_usage_metrics"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.evaluation.metrics.cpu_usage.cpu_usage_metrics" title="Permalink to this definition">¶</a></dt>
 <dd><p>Helper method that can be used to obtain the desired set of
 plugin metrics.</p>
 <dl class="field-list simple">

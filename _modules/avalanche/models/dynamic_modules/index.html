@@ -13,6 +13,8 @@
   
   <link rel="stylesheet" href="../../../../_static/css/mystyle.css" type="text/css" />
   <link rel="stylesheet" href="../../../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../../../_static/css/mystyle.css" type="text/css" />
   <link rel="stylesheet" href="../../../../_static/graphviz.css" type="text/css" />
 
   
@@ -30,6 +32,7 @@
   
     
       <script type="text/javascript" id="documentation_options" data-url_root="../../../../" src="../../../../_static/documentation_options.js"></script>
+        <script data-url_root="../../../../" id="documentation_options" src="../../../../_static/documentation_options.js"></script>
         <script src="../../../../_static/jquery.js"></script>
         <script src="../../../../_static/underscore.js"></script>
         <script src="../../../../_static/doctools.js"></script>
@@ -257,7 +260,7 @@
         <span class="k">pass</span></div></div>
 
 
-<span class="k">class</span> <span class="nc">MultiTaskModule</span><span class="p">:</span>
+<div class="viewcode-block" id="MultiTaskModule"><a class="viewcode-back" href="../../../../autoapi/avalanche/models/#avalanche.models.dynamic_modules.MultiTaskModule">[docs]</a><span class="k">class</span> <span class="nc">MultiTaskModule</span><span class="p">:</span>
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">            Multi-task modules are `torch.nn.Modules`s for multi-task</span>
@@ -270,7 +273,7 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
 
-    <span class="k">def</span> <span class="nf">forward</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">:</span> <span class="n">torch</span><span class="o">.</span><span class="n">Tensor</span><span class="p">,</span> <span class="n">task_labels</span><span class="p">:</span> <span class="n">torch</span><span class="o">.</span><span class="n">Tensor</span><span class="p">)</span>\
+<div class="viewcode-block" id="MultiTaskModule.forward"><a class="viewcode-back" href="../../../../autoapi/avalanche/models/#avalanche.models.dynamic_modules.MultiTaskModule.forward">[docs]</a>    <span class="k">def</span> <span class="nf">forward</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">:</span> <span class="n">torch</span><span class="o">.</span><span class="n">Tensor</span><span class="p">,</span> <span class="n">task_labels</span><span class="p">:</span> <span class="n">torch</span><span class="o">.</span><span class="n">Tensor</span><span class="p">)</span>\
             <span class="o">-&gt;</span> <span class="n">torch</span><span class="o">.</span><span class="n">Tensor</span><span class="p">:</span>
         <span class="sd">&quot;&quot;&quot; compute the output given the input `x` and task labels.</span>
 
@@ -289,9 +292,9 @@
                 <span class="n">out</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">empty</span><span class="p">(</span><span class="n">x</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="o">*</span><span class="n">out_task</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">:],</span>
                                   <span class="n">device</span><span class="o">=</span><span class="n">out_task</span><span class="o">.</span><span class="n">device</span><span class="p">)</span>
             <span class="n">out</span><span class="p">[</span><span class="n">task_mask</span><span class="p">]</span> <span class="o">=</span> <span class="n">out_task</span>
-        <span class="k">return</span> <span class="n">out</span>
+        <span class="k">return</span> <span class="n">out</span></div>
 
-    <span class="k">def</span> <span class="nf">forward_single_task</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">:</span> <span class="n">torch</span><span class="o">.</span><span class="n">Tensor</span><span class="p">,</span> <span class="n">task_label</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span>\
+<div class="viewcode-block" id="MultiTaskModule.forward_single_task"><a class="viewcode-back" href="../../../../autoapi/avalanche/models/#avalanche.models.dynamic_modules.MultiTaskModule.forward_single_task">[docs]</a>    <span class="k">def</span> <span class="nf">forward_single_task</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">:</span> <span class="n">torch</span><span class="o">.</span><span class="n">Tensor</span><span class="p">,</span> <span class="n">task_label</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span>\
             <span class="o">-&gt;</span> <span class="n">torch</span><span class="o">.</span><span class="n">Tensor</span><span class="p">:</span>
         <span class="sd">&quot;&quot;&quot; compute the output given the input `x` and task label.</span>
 
@@ -299,7 +302,7 @@
 <span class="sd">        :param task_label: a single task label.</span>
 <span class="sd">        :return:</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">assert</span> <span class="ne">NotImplementedError</span><span class="p">()</span>
+        <span class="k">assert</span> <span class="ne">NotImplementedError</span><span class="p">()</span></div></div>
 
 
 <div class="viewcode-block" id="IncrementalClassifier"><a class="viewcode-back" href="../../../../autoapi/avalanche/models/#avalanche.models.dynamic_modules.IncrementalClassifier">[docs]</a><span class="k">class</span> <span class="nc">IncrementalClassifier</span><span class="p">(</span><span class="n">DynamicModule</span><span class="p">):</span>
@@ -397,6 +400,7 @@
 
 <span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span>
     <span class="s1">&#39;DynamicModule&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;MultiTaskModule&#39;</span><span class="p">,</span>
     <span class="s1">&#39;IncrementalClassifier&#39;</span><span class="p">,</span>
     <span class="s1">&#39;MultiHeadClassifier&#39;</span>
 <span class="p">]</span>

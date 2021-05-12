@@ -63,6 +63,7 @@ Classes
    avalanche.evaluation.metrics.StreamAccuracy
    avalanche.evaluation.metrics.ConfusionMatrix
    avalanche.evaluation.metrics.StreamConfusionMatrix
+   avalanche.evaluation.metrics.WandBStreamConfusionMatrix
    avalanche.evaluation.metrics.CPUUsage
    avalanche.evaluation.metrics.MinibatchCPUUsage
    avalanche.evaluation.metrics.EpochCPUUsage
@@ -112,6 +113,7 @@ Functions
 .. autoapisummary::
 
    avalanche.evaluation.metrics.accuracy_metrics
+   avalanche.evaluation.metrics.confusion_matrix_metrics
    avalanche.evaluation.metrics.cpu_usage_metrics
    avalanche.evaluation.metrics.disk_usage_metrics
    avalanche.evaluation.metrics.forgetting_metrics
@@ -615,6 +617,96 @@ Functions
 
       Return str(self).
 
+
+
+.. py:class:: WandBStreamConfusionMatrix(class_names=None)
+
+   Bases: :class:`avalanche.evaluation.PluginMetric`
+
+   Confusion Matrix metric compatible with Weights and Biases logger.
+   Differently from the `StreamConfusionMatrix`, this metric will use W&B
+   built-in functionalities to log the Confusion Matrix.
+
+   This metric may not produce meaningful outputs with other loggers.
+
+   https://docs.wandb.ai/guides/track/log#custom-charts
+
+   :param class_names: list of names for the classes.
+       E.g. ["cat", "dog"] if class 0 == "cat" and class 1 == "dog"
+       If None, no class names will be used. Default None.
+
+   .. method:: reset(self) -> None
+
+      Resets the metric internal state.
+
+      :return: None.
+
+
+   .. method:: before_eval(self, strategy) -> None
+
+      Called before `eval` by the `BaseStrategy`. 
+
+
+   .. method:: result(self)
+
+      Obtains the value of the metric.
+
+      :return: The value of the metric.
+
+
+   .. method:: update(self, output, target)
+
+
+   .. method:: after_eval_iteration(self, strategy: BaseStrategy)
+
+      Called after the end of an iteration by the
+      `BaseStrategy`. 
+
+
+   .. method:: after_eval(self, strategy: BaseStrategy) -> MetricResult
+
+      Called after `eval` by the `BaseStrategy`. 
+
+
+   .. method:: __str__(self)
+
+      Return str(self).
+
+
+
+.. function:: confusion_matrix_metrics(num_classes=None, normalize=None, save_image=True, image_creator=default_cm_image_creator, class_names=None, stream=False, wandb=False) -> List[PluginMetric]
+
+   Helper method that can be used to obtain the desired set of
+   plugin metrics.
+
+   :param num_classes: The number of classes. Defaults to None,
+       which means that the number of classes will be inferred from
+       ground truth and prediction Tensors (see class description for more
+       details). If not None, the confusion matrix will always be of size
+       `num_classes, num_classes` and only the first `num_classes` values
+       of output logits or target logits will be considered in the update.
+       If the output or targets are provided as numerical labels,
+       there can be no label greater than `num_classes`.
+   :param normalize: Normalizes confusion matrix over the true (rows),
+       predicted (columns) conditions or all the population. If None,
+       confusion matrix will not be normalized. Valid values are: 'true',
+       'pred' and 'all' or None.
+   :param save_image: If True, a graphical representation of the confusion
+       matrix will be logged, too. If False, only the Tensor representation
+       will be logged. Defaults to True.
+   :param image_creator: A callable that, given the tensor representation
+       of the confusion matrix, returns a graphical representation of the
+       matrix as a PIL Image. Defaults to `default_cm_image_creator`.
+   :param class_names: W&B only. List of names for the classes.
+       E.g. ["cat", "dog"] if class 0 == "cat" and class 1 == "dog"
+       If None, no class names will be used. Default None.
+   :param stream: If True, will return a metric able to log
+       the confusion matrix averaged over the entire evaluation stream
+       of experiences.
+   :param wandb: if True, will return a Weights and Biases confusion matrix
+       together with all the other confusion matrixes requested.
+
+   :return: A list of plugin metrics.
 
 
 .. py:class:: CPUUsage

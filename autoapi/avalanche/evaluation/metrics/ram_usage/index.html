@@ -13,6 +13,8 @@
   
   <link rel="stylesheet" href="../../../../../_static/css/mystyle.css" type="text/css" />
   <link rel="stylesheet" href="../../../../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../../../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../../../../_static/css/mystyle.css" type="text/css" />
   <link rel="stylesheet" href="../../../../../_static/graphviz.css" type="text/css" />
 
   
@@ -30,6 +32,7 @@
   
     
       <script type="text/javascript" id="documentation_options" data-url_root="../../../../../" src="../../../../../_static/documentation_options.js"></script>
+        <script data-url_root="../../../../../" id="documentation_options" src="../../../../../_static/documentation_options.js"></script>
         <script src="../../../../../_static/jquery.js"></script>
         <script src="../../../../../_static/underscore.js"></script>
         <script src="../../../../../_static/doctools.js"></script>
@@ -221,8 +224,8 @@
 </tbody>
 </table>
 <dl class="py class">
-<dt id="avalanche.evaluation.metrics.ram_usage.MaxRAM">
-<em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">avalanche.evaluation.metrics.ram_usage.</span></code><code class="sig-name descname"><span class="pre">MaxRAM</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">every</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../_modules/avalanche/evaluation/metrics/ram_usage/#MaxRAM"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.evaluation.metrics.ram_usage.MaxRAM" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="avalanche.evaluation.metrics.ram_usage.MaxRAM">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">avalanche.evaluation.metrics.ram_usage.</span></span><span class="sig-name descname"><span class="pre">MaxRAM</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">every</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../_modules/avalanche/evaluation/metrics/ram_usage/#MaxRAM"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.evaluation.metrics.ram_usage.MaxRAM" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">Metric[float]</span></code></p>
 <p>The standalone RAM usage metric.
 Important: this metric approximates the real maximum RAM usage since
@@ -239,26 +242,26 @@ this metric in its initial state will return an usage value of 0.</p>
 <div><p>usage</p>
 </div></blockquote>
 <dl class="py attribute">
-<dt id="avalanche.evaluation.metrics.ram_usage.MaxRAM.stop_f">
-<code class="sig-name descname"><span class="pre">stop_f</span></code><em class="property"> <span class="pre">=</span> <span class="pre">False</span></em><a class="headerlink" href="#avalanche.evaluation.metrics.ram_usage.MaxRAM.stop_f" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="avalanche.evaluation.metrics.ram_usage.MaxRAM.stop_f">
+<span class="sig-name descname"><span class="pre">stop_f</span></span><em class="property"> <span class="pre">=</span> <span class="pre">False</span></em><a class="headerlink" href="#avalanche.evaluation.metrics.ram_usage.MaxRAM.stop_f" title="Permalink to this definition">¶</a></dt>
 <dd><p>Flag to stop the thread</p>
 </dd></dl>
 
 <dl class="py attribute">
-<dt id="avalanche.evaluation.metrics.ram_usage.MaxRAM.max_usage">
-<code class="sig-name descname"><span class="pre">max_usage</span></code><em class="property"> <span class="pre">=</span> <span class="pre">0</span></em><a class="headerlink" href="#avalanche.evaluation.metrics.ram_usage.MaxRAM.max_usage" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="avalanche.evaluation.metrics.ram_usage.MaxRAM.max_usage">
+<span class="sig-name descname"><span class="pre">max_usage</span></span><em class="property"> <span class="pre">=</span> <span class="pre">0</span></em><a class="headerlink" href="#avalanche.evaluation.metrics.ram_usage.MaxRAM.max_usage" title="Permalink to this definition">¶</a></dt>
 <dd><p>Main metric result. Max RAM usage.</p>
 </dd></dl>
 
 <dl class="py attribute">
-<dt id="avalanche.evaluation.metrics.ram_usage.MaxRAM.thread">
-<code class="sig-name descname"><span class="pre">thread</span></code><a class="headerlink" href="#avalanche.evaluation.metrics.ram_usage.MaxRAM.thread" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="avalanche.evaluation.metrics.ram_usage.MaxRAM.thread">
+<span class="sig-name descname"><span class="pre">thread</span></span><a class="headerlink" href="#avalanche.evaluation.metrics.ram_usage.MaxRAM.thread" title="Permalink to this definition">¶</a></dt>
 <dd><p>Thread executing RAM monitoring code</p>
 </dd></dl>
 
 <dl class="py method">
-<dt id="avalanche.evaluation.metrics.ram_usage.MaxRAM.result">
-<code class="sig-name descname"><span class="pre">result</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">]</span></span><a class="reference internal" href="../../../../../_modules/avalanche/evaluation/metrics/ram_usage/#MaxRAM.result"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.evaluation.metrics.ram_usage.MaxRAM.result" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="avalanche.evaluation.metrics.ram_usage.MaxRAM.result">
+<span class="sig-name descname"><span class="pre">result</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">]</span></span><a class="reference internal" href="../../../../../_modules/avalanche/evaluation/metrics/ram_usage/#MaxRAM.result"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.evaluation.metrics.ram_usage.MaxRAM.result" title="Permalink to this definition">¶</a></dt>
 <dd><p>Retrieves the RAM usage.</p>
 <p>Calling this method will not change the internal state of the metric.</p>
 <dl class="field-list simple">
@@ -269,18 +272,18 @@ this metric in its initial state will return an usage value of 0.</p>
 </dd></dl>
 
 <dl class="py method">
-<dt id="avalanche.evaluation.metrics.ram_usage.MaxRAM.start_thread">
-<code class="sig-name descname"><span class="pre">start_thread</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../_modules/avalanche/evaluation/metrics/ram_usage/#MaxRAM.start_thread"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.evaluation.metrics.ram_usage.MaxRAM.start_thread" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="avalanche.evaluation.metrics.ram_usage.MaxRAM.start_thread">
+<span class="sig-name descname"><span class="pre">start_thread</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../_modules/avalanche/evaluation/metrics/ram_usage/#MaxRAM.start_thread"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.evaluation.metrics.ram_usage.MaxRAM.start_thread" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
-<dt id="avalanche.evaluation.metrics.ram_usage.MaxRAM.stop_thread">
-<code class="sig-name descname"><span class="pre">stop_thread</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../_modules/avalanche/evaluation/metrics/ram_usage/#MaxRAM.stop_thread"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.evaluation.metrics.ram_usage.MaxRAM.stop_thread" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="avalanche.evaluation.metrics.ram_usage.MaxRAM.stop_thread">
+<span class="sig-name descname"><span class="pre">stop_thread</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../_modules/avalanche/evaluation/metrics/ram_usage/#MaxRAM.stop_thread"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.evaluation.metrics.ram_usage.MaxRAM.stop_thread" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
-<dt id="avalanche.evaluation.metrics.ram_usage.MaxRAM.reset">
-<code class="sig-name descname"><span class="pre">reset</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">None</span><a class="reference internal" href="../../../../../_modules/avalanche/evaluation/metrics/ram_usage/#MaxRAM.reset"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.evaluation.metrics.ram_usage.MaxRAM.reset" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="avalanche.evaluation.metrics.ram_usage.MaxRAM.reset">
+<span class="sig-name descname"><span class="pre">reset</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">None</span><a class="reference internal" href="../../../../../_modules/avalanche/evaluation/metrics/ram_usage/#MaxRAM.reset"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.evaluation.metrics.ram_usage.MaxRAM.reset" title="Permalink to this definition">¶</a></dt>
 <dd><p>Resets the metric.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Returns</dt>
@@ -292,8 +295,8 @@ this metric in its initial state will return an usage value of 0.</p>
 </dd></dl>
 
 <dl class="py class">
-<dt id="avalanche.evaluation.metrics.ram_usage.MinibatchMaxRAM">
-<em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">avalanche.evaluation.metrics.ram_usage.</span></code><code class="sig-name descname"><span class="pre">MinibatchMaxRAM</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">every</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../_modules/avalanche/evaluation/metrics/ram_usage/#MinibatchMaxRAM"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.evaluation.metrics.ram_usage.MinibatchMaxRAM" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="avalanche.evaluation.metrics.ram_usage.MinibatchMaxRAM">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">avalanche.evaluation.metrics.ram_usage.</span></span><span class="sig-name descname"><span class="pre">MinibatchMaxRAM</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">every</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../_modules/avalanche/evaluation/metrics/ram_usage/#MinibatchMaxRAM"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.evaluation.metrics.ram_usage.MinibatchMaxRAM" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">PluginMetric[float]</span></code></p>
 <p>The Minibatch Max RAM metric.
 This plugin metric only works at training time.</p>
@@ -303,52 +306,52 @@ This plugin metric only works at training time.</p>
 <div><p>usage</p>
 </div></blockquote>
 <dl class="py method">
-<dt id="avalanche.evaluation.metrics.ram_usage.MinibatchMaxRAM.before_training">
-<code class="sig-name descname"><span class="pre">before_training</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">strategy</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">BaseStrategy</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">None</span><a class="reference internal" href="../../../../../_modules/avalanche/evaluation/metrics/ram_usage/#MinibatchMaxRAM.before_training"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.evaluation.metrics.ram_usage.MinibatchMaxRAM.before_training" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="avalanche.evaluation.metrics.ram_usage.MinibatchMaxRAM.before_training">
+<span class="sig-name descname"><span class="pre">before_training</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">strategy</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">BaseStrategy</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">None</span><a class="reference internal" href="../../../../../_modules/avalanche/evaluation/metrics/ram_usage/#MinibatchMaxRAM.before_training"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.evaluation.metrics.ram_usage.MinibatchMaxRAM.before_training" title="Permalink to this definition">¶</a></dt>
 <dd><p>Called before <cite>train</cite> by the <cite>BaseStrategy</cite>.</p>
 </dd></dl>
 
 <dl class="py method">
-<dt id="avalanche.evaluation.metrics.ram_usage.MinibatchMaxRAM.before_training_iteration">
-<code class="sig-name descname"><span class="pre">before_training_iteration</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">strategy</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">BaseStrategy</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">None</span><a class="reference internal" href="../../../../../_modules/avalanche/evaluation/metrics/ram_usage/#MinibatchMaxRAM.before_training_iteration"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.evaluation.metrics.ram_usage.MinibatchMaxRAM.before_training_iteration" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="avalanche.evaluation.metrics.ram_usage.MinibatchMaxRAM.before_training_iteration">
+<span class="sig-name descname"><span class="pre">before_training_iteration</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">strategy</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">BaseStrategy</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">None</span><a class="reference internal" href="../../../../../_modules/avalanche/evaluation/metrics/ram_usage/#MinibatchMaxRAM.before_training_iteration"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.evaluation.metrics.ram_usage.MinibatchMaxRAM.before_training_iteration" title="Permalink to this definition">¶</a></dt>
 <dd><p>Called before the start of a training iteration by the
 <cite>BaseStrategy</cite>.</p>
 </dd></dl>
 
 <dl class="py method">
-<dt id="avalanche.evaluation.metrics.ram_usage.MinibatchMaxRAM.after_training_iteration">
-<code class="sig-name descname"><span class="pre">after_training_iteration</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">strategy</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">BaseStrategy</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">MetricResult</span><a class="reference internal" href="../../../../../_modules/avalanche/evaluation/metrics/ram_usage/#MinibatchMaxRAM.after_training_iteration"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.evaluation.metrics.ram_usage.MinibatchMaxRAM.after_training_iteration" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="avalanche.evaluation.metrics.ram_usage.MinibatchMaxRAM.after_training_iteration">
+<span class="sig-name descname"><span class="pre">after_training_iteration</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">strategy</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">BaseStrategy</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">MetricResult</span><a class="reference internal" href="../../../../../_modules/avalanche/evaluation/metrics/ram_usage/#MinibatchMaxRAM.after_training_iteration"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.evaluation.metrics.ram_usage.MinibatchMaxRAM.after_training_iteration" title="Permalink to this definition">¶</a></dt>
 <dd><p>Called after the end of a training iteration by the
 <cite>BaseStrategy</cite>.</p>
 </dd></dl>
 
 <dl class="py method">
-<dt id="avalanche.evaluation.metrics.ram_usage.MinibatchMaxRAM.after_training">
-<code class="sig-name descname"><span class="pre">after_training</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">strategy</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">BaseStrategy</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">None</span><a class="reference internal" href="../../../../../_modules/avalanche/evaluation/metrics/ram_usage/#MinibatchMaxRAM.after_training"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.evaluation.metrics.ram_usage.MinibatchMaxRAM.after_training" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="avalanche.evaluation.metrics.ram_usage.MinibatchMaxRAM.after_training">
+<span class="sig-name descname"><span class="pre">after_training</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">strategy</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">BaseStrategy</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">None</span><a class="reference internal" href="../../../../../_modules/avalanche/evaluation/metrics/ram_usage/#MinibatchMaxRAM.after_training"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.evaluation.metrics.ram_usage.MinibatchMaxRAM.after_training" title="Permalink to this definition">¶</a></dt>
 <dd><p>Called after <cite>train</cite> by the <cite>BaseStrategy</cite>.</p>
 </dd></dl>
 
 <dl class="py method">
-<dt id="avalanche.evaluation.metrics.ram_usage.MinibatchMaxRAM.reset">
-<code class="sig-name descname"><span class="pre">reset</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">None</span><a class="reference internal" href="../../../../../_modules/avalanche/evaluation/metrics/ram_usage/#MinibatchMaxRAM.reset"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.evaluation.metrics.ram_usage.MinibatchMaxRAM.reset" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="avalanche.evaluation.metrics.ram_usage.MinibatchMaxRAM.reset">
+<span class="sig-name descname"><span class="pre">reset</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">None</span><a class="reference internal" href="../../../../../_modules/avalanche/evaluation/metrics/ram_usage/#MinibatchMaxRAM.reset"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.evaluation.metrics.ram_usage.MinibatchMaxRAM.reset" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
-<dt id="avalanche.evaluation.metrics.ram_usage.MinibatchMaxRAM.result">
-<code class="sig-name descname"><span class="pre">result</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">float</span><a class="reference internal" href="../../../../../_modules/avalanche/evaluation/metrics/ram_usage/#MinibatchMaxRAM.result"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.evaluation.metrics.ram_usage.MinibatchMaxRAM.result" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="avalanche.evaluation.metrics.ram_usage.MinibatchMaxRAM.result">
+<span class="sig-name descname"><span class="pre">result</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">float</span><a class="reference internal" href="../../../../../_modules/avalanche/evaluation/metrics/ram_usage/#MinibatchMaxRAM.result"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.evaluation.metrics.ram_usage.MinibatchMaxRAM.result" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
-<dt id="avalanche.evaluation.metrics.ram_usage.MinibatchMaxRAM.__str__">
-<code class="sig-name descname"><span class="pre">__str__</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../_modules/avalanche/evaluation/metrics/ram_usage/#MinibatchMaxRAM.__str__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.evaluation.metrics.ram_usage.MinibatchMaxRAM.__str__" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="avalanche.evaluation.metrics.ram_usage.MinibatchMaxRAM.__str__">
+<span class="sig-name descname"><span class="pre">__str__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../_modules/avalanche/evaluation/metrics/ram_usage/#MinibatchMaxRAM.__str__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.evaluation.metrics.ram_usage.MinibatchMaxRAM.__str__" title="Permalink to this definition">¶</a></dt>
 <dd><p>Return str(self).</p>
 </dd></dl>
 
 </dd></dl>
 
 <dl class="py class">
-<dt id="avalanche.evaluation.metrics.ram_usage.EpochMaxRAM">
-<em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">avalanche.evaluation.metrics.ram_usage.</span></code><code class="sig-name descname"><span class="pre">EpochMaxRAM</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">every</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../_modules/avalanche/evaluation/metrics/ram_usage/#EpochMaxRAM"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.evaluation.metrics.ram_usage.EpochMaxRAM" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="avalanche.evaluation.metrics.ram_usage.EpochMaxRAM">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">avalanche.evaluation.metrics.ram_usage.</span></span><span class="sig-name descname"><span class="pre">EpochMaxRAM</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">every</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../_modules/avalanche/evaluation/metrics/ram_usage/#EpochMaxRAM"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.evaluation.metrics.ram_usage.EpochMaxRAM" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">PluginMetric[float]</span></code></p>
 <p>The Epoch Max RAM metric.
 This plugin metric only works at training time.</p>
@@ -358,50 +361,50 @@ This plugin metric only works at training time.</p>
 <div><p>usage</p>
 </div></blockquote>
 <dl class="py method">
-<dt id="avalanche.evaluation.metrics.ram_usage.EpochMaxRAM.before_training">
-<code class="sig-name descname"><span class="pre">before_training</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">strategy</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">BaseStrategy</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">None</span><a class="reference internal" href="../../../../../_modules/avalanche/evaluation/metrics/ram_usage/#EpochMaxRAM.before_training"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.evaluation.metrics.ram_usage.EpochMaxRAM.before_training" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="avalanche.evaluation.metrics.ram_usage.EpochMaxRAM.before_training">
+<span class="sig-name descname"><span class="pre">before_training</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">strategy</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">BaseStrategy</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">None</span><a class="reference internal" href="../../../../../_modules/avalanche/evaluation/metrics/ram_usage/#EpochMaxRAM.before_training"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.evaluation.metrics.ram_usage.EpochMaxRAM.before_training" title="Permalink to this definition">¶</a></dt>
 <dd><p>Called before <cite>train</cite> by the <cite>BaseStrategy</cite>.</p>
 </dd></dl>
 
 <dl class="py method">
-<dt id="avalanche.evaluation.metrics.ram_usage.EpochMaxRAM.before_training_epoch">
-<code class="sig-name descname"><span class="pre">before_training_epoch</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">strategy</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">MetricResult</span><a class="reference internal" href="../../../../../_modules/avalanche/evaluation/metrics/ram_usage/#EpochMaxRAM.before_training_epoch"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.evaluation.metrics.ram_usage.EpochMaxRAM.before_training_epoch" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="avalanche.evaluation.metrics.ram_usage.EpochMaxRAM.before_training_epoch">
+<span class="sig-name descname"><span class="pre">before_training_epoch</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">strategy</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">MetricResult</span><a class="reference internal" href="../../../../../_modules/avalanche/evaluation/metrics/ram_usage/#EpochMaxRAM.before_training_epoch"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.evaluation.metrics.ram_usage.EpochMaxRAM.before_training_epoch" title="Permalink to this definition">¶</a></dt>
 <dd><p>Called before <cite>train_epoch</cite> by the <cite>BaseStrategy</cite>.</p>
 </dd></dl>
 
 <dl class="py method">
-<dt id="avalanche.evaluation.metrics.ram_usage.EpochMaxRAM.after_training_epoch">
-<code class="sig-name descname"><span class="pre">after_training_epoch</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">strategy</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">BaseStrategy</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">MetricResult</span><a class="reference internal" href="../../../../../_modules/avalanche/evaluation/metrics/ram_usage/#EpochMaxRAM.after_training_epoch"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.evaluation.metrics.ram_usage.EpochMaxRAM.after_training_epoch" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="avalanche.evaluation.metrics.ram_usage.EpochMaxRAM.after_training_epoch">
+<span class="sig-name descname"><span class="pre">after_training_epoch</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">strategy</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">BaseStrategy</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">MetricResult</span><a class="reference internal" href="../../../../../_modules/avalanche/evaluation/metrics/ram_usage/#EpochMaxRAM.after_training_epoch"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.evaluation.metrics.ram_usage.EpochMaxRAM.after_training_epoch" title="Permalink to this definition">¶</a></dt>
 <dd><p>Called after <cite>train_epoch</cite> by the <cite>BaseStrategy</cite>.</p>
 </dd></dl>
 
 <dl class="py method">
-<dt id="avalanche.evaluation.metrics.ram_usage.EpochMaxRAM.after_training">
-<code class="sig-name descname"><span class="pre">after_training</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">strategy</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">BaseStrategy</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">None</span><a class="reference internal" href="../../../../../_modules/avalanche/evaluation/metrics/ram_usage/#EpochMaxRAM.after_training"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.evaluation.metrics.ram_usage.EpochMaxRAM.after_training" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="avalanche.evaluation.metrics.ram_usage.EpochMaxRAM.after_training">
+<span class="sig-name descname"><span class="pre">after_training</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">strategy</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">BaseStrategy</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">None</span><a class="reference internal" href="../../../../../_modules/avalanche/evaluation/metrics/ram_usage/#EpochMaxRAM.after_training"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.evaluation.metrics.ram_usage.EpochMaxRAM.after_training" title="Permalink to this definition">¶</a></dt>
 <dd><p>Called after <cite>train</cite> by the <cite>BaseStrategy</cite>.</p>
 </dd></dl>
 
 <dl class="py method">
-<dt id="avalanche.evaluation.metrics.ram_usage.EpochMaxRAM.reset">
-<code class="sig-name descname"><span class="pre">reset</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">None</span><a class="reference internal" href="../../../../../_modules/avalanche/evaluation/metrics/ram_usage/#EpochMaxRAM.reset"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.evaluation.metrics.ram_usage.EpochMaxRAM.reset" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="avalanche.evaluation.metrics.ram_usage.EpochMaxRAM.reset">
+<span class="sig-name descname"><span class="pre">reset</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">None</span><a class="reference internal" href="../../../../../_modules/avalanche/evaluation/metrics/ram_usage/#EpochMaxRAM.reset"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.evaluation.metrics.ram_usage.EpochMaxRAM.reset" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
-<dt id="avalanche.evaluation.metrics.ram_usage.EpochMaxRAM.result">
-<code class="sig-name descname"><span class="pre">result</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">float</span><a class="reference internal" href="../../../../../_modules/avalanche/evaluation/metrics/ram_usage/#EpochMaxRAM.result"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.evaluation.metrics.ram_usage.EpochMaxRAM.result" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="avalanche.evaluation.metrics.ram_usage.EpochMaxRAM.result">
+<span class="sig-name descname"><span class="pre">result</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">float</span><a class="reference internal" href="../../../../../_modules/avalanche/evaluation/metrics/ram_usage/#EpochMaxRAM.result"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.evaluation.metrics.ram_usage.EpochMaxRAM.result" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
-<dt id="avalanche.evaluation.metrics.ram_usage.EpochMaxRAM.__str__">
-<code class="sig-name descname"><span class="pre">__str__</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../_modules/avalanche/evaluation/metrics/ram_usage/#EpochMaxRAM.__str__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.evaluation.metrics.ram_usage.EpochMaxRAM.__str__" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="avalanche.evaluation.metrics.ram_usage.EpochMaxRAM.__str__">
+<span class="sig-name descname"><span class="pre">__str__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../_modules/avalanche/evaluation/metrics/ram_usage/#EpochMaxRAM.__str__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.evaluation.metrics.ram_usage.EpochMaxRAM.__str__" title="Permalink to this definition">¶</a></dt>
 <dd><p>Return str(self).</p>
 </dd></dl>
 
 </dd></dl>
 
 <dl class="py class">
-<dt id="avalanche.evaluation.metrics.ram_usage.ExperienceMaxRAM">
-<em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">avalanche.evaluation.metrics.ram_usage.</span></code><code class="sig-name descname"><span class="pre">ExperienceMaxRAM</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">every</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../_modules/avalanche/evaluation/metrics/ram_usage/#ExperienceMaxRAM"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.evaluation.metrics.ram_usage.ExperienceMaxRAM" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="avalanche.evaluation.metrics.ram_usage.ExperienceMaxRAM">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">avalanche.evaluation.metrics.ram_usage.</span></span><span class="sig-name descname"><span class="pre">ExperienceMaxRAM</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">every</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../_modules/avalanche/evaluation/metrics/ram_usage/#ExperienceMaxRAM"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.evaluation.metrics.ram_usage.ExperienceMaxRAM" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">PluginMetric[float]</span></code></p>
 <p>The Experience Max RAM metric.
 This plugin metric only works at eval time.</p>
@@ -411,50 +414,50 @@ This plugin metric only works at eval time.</p>
 <div><p>usage</p>
 </div></blockquote>
 <dl class="py method">
-<dt id="avalanche.evaluation.metrics.ram_usage.ExperienceMaxRAM.before_eval">
-<code class="sig-name descname"><span class="pre">before_eval</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">strategy</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">BaseStrategy</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">None</span><a class="reference internal" href="../../../../../_modules/avalanche/evaluation/metrics/ram_usage/#ExperienceMaxRAM.before_eval"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.evaluation.metrics.ram_usage.ExperienceMaxRAM.before_eval" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="avalanche.evaluation.metrics.ram_usage.ExperienceMaxRAM.before_eval">
+<span class="sig-name descname"><span class="pre">before_eval</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">strategy</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">BaseStrategy</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">None</span><a class="reference internal" href="../../../../../_modules/avalanche/evaluation/metrics/ram_usage/#ExperienceMaxRAM.before_eval"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.evaluation.metrics.ram_usage.ExperienceMaxRAM.before_eval" title="Permalink to this definition">¶</a></dt>
 <dd><p>Called before <cite>eval</cite> by the <cite>BaseStrategy</cite>.</p>
 </dd></dl>
 
 <dl class="py method">
-<dt id="avalanche.evaluation.metrics.ram_usage.ExperienceMaxRAM.before_eval_exp">
-<code class="sig-name descname"><span class="pre">before_eval_exp</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">strategy</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">MetricResult</span><a class="reference internal" href="../../../../../_modules/avalanche/evaluation/metrics/ram_usage/#ExperienceMaxRAM.before_eval_exp"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.evaluation.metrics.ram_usage.ExperienceMaxRAM.before_eval_exp" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="avalanche.evaluation.metrics.ram_usage.ExperienceMaxRAM.before_eval_exp">
+<span class="sig-name descname"><span class="pre">before_eval_exp</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">strategy</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">MetricResult</span><a class="reference internal" href="../../../../../_modules/avalanche/evaluation/metrics/ram_usage/#ExperienceMaxRAM.before_eval_exp"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.evaluation.metrics.ram_usage.ExperienceMaxRAM.before_eval_exp" title="Permalink to this definition">¶</a></dt>
 <dd><p>Called before <cite>eval_exp</cite> by the <cite>BaseStrategy</cite>.</p>
 </dd></dl>
 
 <dl class="py method">
-<dt id="avalanche.evaluation.metrics.ram_usage.ExperienceMaxRAM.after_eval_exp">
-<code class="sig-name descname"><span class="pre">after_eval_exp</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">strategy</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">BaseStrategy</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">MetricResult</span><a class="reference internal" href="../../../../../_modules/avalanche/evaluation/metrics/ram_usage/#ExperienceMaxRAM.after_eval_exp"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.evaluation.metrics.ram_usage.ExperienceMaxRAM.after_eval_exp" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="avalanche.evaluation.metrics.ram_usage.ExperienceMaxRAM.after_eval_exp">
+<span class="sig-name descname"><span class="pre">after_eval_exp</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">strategy</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">BaseStrategy</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">MetricResult</span><a class="reference internal" href="../../../../../_modules/avalanche/evaluation/metrics/ram_usage/#ExperienceMaxRAM.after_eval_exp"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.evaluation.metrics.ram_usage.ExperienceMaxRAM.after_eval_exp" title="Permalink to this definition">¶</a></dt>
 <dd><p>Called after <cite>eval_exp</cite> by the <cite>BaseStrategy</cite>.</p>
 </dd></dl>
 
 <dl class="py method">
-<dt id="avalanche.evaluation.metrics.ram_usage.ExperienceMaxRAM.after_eval">
-<code class="sig-name descname"><span class="pre">after_eval</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">strategy</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">BaseStrategy</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">None</span><a class="reference internal" href="../../../../../_modules/avalanche/evaluation/metrics/ram_usage/#ExperienceMaxRAM.after_eval"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.evaluation.metrics.ram_usage.ExperienceMaxRAM.after_eval" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="avalanche.evaluation.metrics.ram_usage.ExperienceMaxRAM.after_eval">
+<span class="sig-name descname"><span class="pre">after_eval</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">strategy</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">BaseStrategy</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">None</span><a class="reference internal" href="../../../../../_modules/avalanche/evaluation/metrics/ram_usage/#ExperienceMaxRAM.after_eval"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.evaluation.metrics.ram_usage.ExperienceMaxRAM.after_eval" title="Permalink to this definition">¶</a></dt>
 <dd><p>Called after <cite>eval</cite> by the <cite>BaseStrategy</cite>.</p>
 </dd></dl>
 
 <dl class="py method">
-<dt id="avalanche.evaluation.metrics.ram_usage.ExperienceMaxRAM.reset">
-<code class="sig-name descname"><span class="pre">reset</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">None</span><a class="reference internal" href="../../../../../_modules/avalanche/evaluation/metrics/ram_usage/#ExperienceMaxRAM.reset"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.evaluation.metrics.ram_usage.ExperienceMaxRAM.reset" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="avalanche.evaluation.metrics.ram_usage.ExperienceMaxRAM.reset">
+<span class="sig-name descname"><span class="pre">reset</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">None</span><a class="reference internal" href="../../../../../_modules/avalanche/evaluation/metrics/ram_usage/#ExperienceMaxRAM.reset"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.evaluation.metrics.ram_usage.ExperienceMaxRAM.reset" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
-<dt id="avalanche.evaluation.metrics.ram_usage.ExperienceMaxRAM.result">
-<code class="sig-name descname"><span class="pre">result</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">float</span><a class="reference internal" href="../../../../../_modules/avalanche/evaluation/metrics/ram_usage/#ExperienceMaxRAM.result"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.evaluation.metrics.ram_usage.ExperienceMaxRAM.result" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="avalanche.evaluation.metrics.ram_usage.ExperienceMaxRAM.result">
+<span class="sig-name descname"><span class="pre">result</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">float</span><a class="reference internal" href="../../../../../_modules/avalanche/evaluation/metrics/ram_usage/#ExperienceMaxRAM.result"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.evaluation.metrics.ram_usage.ExperienceMaxRAM.result" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
-<dt id="avalanche.evaluation.metrics.ram_usage.ExperienceMaxRAM.__str__">
-<code class="sig-name descname"><span class="pre">__str__</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../_modules/avalanche/evaluation/metrics/ram_usage/#ExperienceMaxRAM.__str__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.evaluation.metrics.ram_usage.ExperienceMaxRAM.__str__" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="avalanche.evaluation.metrics.ram_usage.ExperienceMaxRAM.__str__">
+<span class="sig-name descname"><span class="pre">__str__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../_modules/avalanche/evaluation/metrics/ram_usage/#ExperienceMaxRAM.__str__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.evaluation.metrics.ram_usage.ExperienceMaxRAM.__str__" title="Permalink to this definition">¶</a></dt>
 <dd><p>Return str(self).</p>
 </dd></dl>
 
 </dd></dl>
 
 <dl class="py class">
-<dt id="avalanche.evaluation.metrics.ram_usage.StreamMaxRAM">
-<em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">avalanche.evaluation.metrics.ram_usage.</span></code><code class="sig-name descname"><span class="pre">StreamMaxRAM</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">every</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../_modules/avalanche/evaluation/metrics/ram_usage/#StreamMaxRAM"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.evaluation.metrics.ram_usage.StreamMaxRAM" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="avalanche.evaluation.metrics.ram_usage.StreamMaxRAM">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">avalanche.evaluation.metrics.ram_usage.</span></span><span class="sig-name descname"><span class="pre">StreamMaxRAM</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">every</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../_modules/avalanche/evaluation/metrics/ram_usage/#StreamMaxRAM"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.evaluation.metrics.ram_usage.StreamMaxRAM" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">PluginMetric[float]</span></code></p>
 <p>The Stream Max RAM metric.
 This plugin metric only works at eval time.</p>
@@ -464,38 +467,38 @@ This plugin metric only works at eval time.</p>
 <div><p>usage</p>
 </div></blockquote>
 <dl class="py method">
-<dt id="avalanche.evaluation.metrics.ram_usage.StreamMaxRAM.before_eval">
-<code class="sig-name descname"><span class="pre">before_eval</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">strategy</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">MetricResult</span><a class="reference internal" href="../../../../../_modules/avalanche/evaluation/metrics/ram_usage/#StreamMaxRAM.before_eval"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.evaluation.metrics.ram_usage.StreamMaxRAM.before_eval" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="avalanche.evaluation.metrics.ram_usage.StreamMaxRAM.before_eval">
+<span class="sig-name descname"><span class="pre">before_eval</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">strategy</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">MetricResult</span><a class="reference internal" href="../../../../../_modules/avalanche/evaluation/metrics/ram_usage/#StreamMaxRAM.before_eval"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.evaluation.metrics.ram_usage.StreamMaxRAM.before_eval" title="Permalink to this definition">¶</a></dt>
 <dd><p>Called before <cite>eval</cite> by the <cite>BaseStrategy</cite>.</p>
 </dd></dl>
 
 <dl class="py method">
-<dt id="avalanche.evaluation.metrics.ram_usage.StreamMaxRAM.after_eval">
-<code class="sig-name descname"><span class="pre">after_eval</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">strategy</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">BaseStrategy</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">MetricResult</span><a class="reference internal" href="../../../../../_modules/avalanche/evaluation/metrics/ram_usage/#StreamMaxRAM.after_eval"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.evaluation.metrics.ram_usage.StreamMaxRAM.after_eval" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="avalanche.evaluation.metrics.ram_usage.StreamMaxRAM.after_eval">
+<span class="sig-name descname"><span class="pre">after_eval</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">strategy</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">BaseStrategy</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">MetricResult</span><a class="reference internal" href="../../../../../_modules/avalanche/evaluation/metrics/ram_usage/#StreamMaxRAM.after_eval"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.evaluation.metrics.ram_usage.StreamMaxRAM.after_eval" title="Permalink to this definition">¶</a></dt>
 <dd><p>Called after <cite>eval</cite> by the <cite>BaseStrategy</cite>.</p>
 </dd></dl>
 
 <dl class="py method">
-<dt id="avalanche.evaluation.metrics.ram_usage.StreamMaxRAM.reset">
-<code class="sig-name descname"><span class="pre">reset</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">None</span><a class="reference internal" href="../../../../../_modules/avalanche/evaluation/metrics/ram_usage/#StreamMaxRAM.reset"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.evaluation.metrics.ram_usage.StreamMaxRAM.reset" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="avalanche.evaluation.metrics.ram_usage.StreamMaxRAM.reset">
+<span class="sig-name descname"><span class="pre">reset</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">None</span><a class="reference internal" href="../../../../../_modules/avalanche/evaluation/metrics/ram_usage/#StreamMaxRAM.reset"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.evaluation.metrics.ram_usage.StreamMaxRAM.reset" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
-<dt id="avalanche.evaluation.metrics.ram_usage.StreamMaxRAM.result">
-<code class="sig-name descname"><span class="pre">result</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">float</span><a class="reference internal" href="../../../../../_modules/avalanche/evaluation/metrics/ram_usage/#StreamMaxRAM.result"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.evaluation.metrics.ram_usage.StreamMaxRAM.result" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="avalanche.evaluation.metrics.ram_usage.StreamMaxRAM.result">
+<span class="sig-name descname"><span class="pre">result</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">float</span><a class="reference internal" href="../../../../../_modules/avalanche/evaluation/metrics/ram_usage/#StreamMaxRAM.result"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.evaluation.metrics.ram_usage.StreamMaxRAM.result" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
-<dt id="avalanche.evaluation.metrics.ram_usage.StreamMaxRAM.__str__">
-<code class="sig-name descname"><span class="pre">__str__</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../_modules/avalanche/evaluation/metrics/ram_usage/#StreamMaxRAM.__str__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.evaluation.metrics.ram_usage.StreamMaxRAM.__str__" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="avalanche.evaluation.metrics.ram_usage.StreamMaxRAM.__str__">
+<span class="sig-name descname"><span class="pre">__str__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../_modules/avalanche/evaluation/metrics/ram_usage/#StreamMaxRAM.__str__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.evaluation.metrics.ram_usage.StreamMaxRAM.__str__" title="Permalink to this definition">¶</a></dt>
 <dd><p>Return str(self).</p>
 </dd></dl>
 
 </dd></dl>
 
 <dl class="py function">
-<dt id="avalanche.evaluation.metrics.ram_usage.ram_usage_metrics">
-<code class="sig-prename descclassname"><span class="pre">avalanche.evaluation.metrics.ram_usage.</span></code><code class="sig-name descname"><span class="pre">ram_usage_metrics</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">every</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">minibatch</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">epoch</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">experience</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">stream</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">PluginMetric</span><span class="p"><span class="pre">]</span></span><a class="reference internal" href="../../../../../_modules/avalanche/evaluation/metrics/ram_usage/#ram_usage_metrics"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.evaluation.metrics.ram_usage.ram_usage_metrics" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="avalanche.evaluation.metrics.ram_usage.ram_usage_metrics">
+<span class="sig-prename descclassname"><span class="pre">avalanche.evaluation.metrics.ram_usage.</span></span><span class="sig-name descname"><span class="pre">ram_usage_metrics</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">every</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">minibatch</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">epoch</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">experience</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">stream</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">PluginMetric</span><span class="p"><span class="pre">]</span></span><a class="reference internal" href="../../../../../_modules/avalanche/evaluation/metrics/ram_usage/#ram_usage_metrics"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.evaluation.metrics.ram_usage.ram_usage_metrics" title="Permalink to this definition">¶</a></dt>
 <dd><p>Helper method that can be used to obtain the desired set of
 plugin metrics.</p>
 <dl class="field-list simple">

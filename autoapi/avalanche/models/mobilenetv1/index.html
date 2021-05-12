@@ -13,6 +13,8 @@
   
   <link rel="stylesheet" href="../../../../_static/css/mystyle.css" type="text/css" />
   <link rel="stylesheet" href="../../../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../../../_static/css/mystyle.css" type="text/css" />
   <link rel="stylesheet" href="../../../../_static/graphviz.css" type="text/css" />
 
   
@@ -30,6 +32,7 @@
   
     
       <script type="text/javascript" id="documentation_options" data-url_root="../../../../" src="../../../../_static/documentation_options.js"></script>
+        <script data-url_root="../../../../" id="documentation_options" src="../../../../_static/documentation_options.js"></script>
         <script src="../../../../_static/jquery.js"></script>
         <script src="../../../../_static/underscore.js"></script>
         <script src="../../../../_static/doctools.js"></script>
@@ -213,18 +216,18 @@
 </tbody>
 </table>
 <dl class="py function">
-<dt id="avalanche.models.mobilenetv1.remove_sequential">
-<code class="sig-prename descclassname"><span class="pre">avalanche.models.mobilenetv1.</span></code><code class="sig-name descname"><span class="pre">remove_sequential</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">network</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">all_layers</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/avalanche/models/mobilenetv1/#remove_sequential"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.models.mobilenetv1.remove_sequential" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="avalanche.models.mobilenetv1.remove_sequential">
+<span class="sig-prename descclassname"><span class="pre">avalanche.models.mobilenetv1.</span></span><span class="sig-name descname"><span class="pre">remove_sequential</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">network</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">all_layers</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/avalanche/models/mobilenetv1/#remove_sequential"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.models.mobilenetv1.remove_sequential" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py function">
-<dt id="avalanche.models.mobilenetv1.remove_DwsConvBlock">
-<code class="sig-prename descclassname"><span class="pre">avalanche.models.mobilenetv1.</span></code><code class="sig-name descname"><span class="pre">remove_DwsConvBlock</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">cur_layers</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/avalanche/models/mobilenetv1/#remove_DwsConvBlock"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.models.mobilenetv1.remove_DwsConvBlock" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="avalanche.models.mobilenetv1.remove_DwsConvBlock">
+<span class="sig-prename descclassname"><span class="pre">avalanche.models.mobilenetv1.</span></span><span class="sig-name descname"><span class="pre">remove_DwsConvBlock</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">cur_layers</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/avalanche/models/mobilenetv1/#remove_DwsConvBlock"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.models.mobilenetv1.remove_DwsConvBlock" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py class">
-<dt id="avalanche.models.mobilenetv1.MobilenetV1">
-<em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">avalanche.models.mobilenetv1.</span></code><code class="sig-name descname"><span class="pre">MobilenetV1</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">pretrained</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">latent_layer_num</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">20</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/avalanche/models/mobilenetv1/#MobilenetV1"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.models.mobilenetv1.MobilenetV1" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="avalanche.models.mobilenetv1.MobilenetV1">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">avalanche.models.mobilenetv1.</span></span><span class="sig-name descname"><span class="pre">MobilenetV1</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">pretrained</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">latent_layer_num</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">20</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/avalanche/models/mobilenetv1/#MobilenetV1"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.models.mobilenetv1.MobilenetV1" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">torch.nn.Module</span></code></p>
 <p>Base class for all neural network modules.</p>
 <p>Your models should also subclass this class.</p>
@@ -248,21 +251,21 @@ a tree structure. You can assign the submodules as regular attributes:</p>
 parameters converted too when you call <code class="xref py py-meth docutils literal notranslate"><span class="pre">to()</span></code>, etc.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Variables</dt>
-<dd class="field-odd"><p><a class="reference internal" href="../../training/#module-avalanche.training" title="avalanche.training"><strong>training</strong></a> (<em>bool</em>) – Boolean represents whether this module is in training or
+<dd class="field-odd"><p><strong>training</strong> (<em>bool</em>) – Boolean represents whether this module is in training or
 evaluation mode.</p>
 </dd>
 </dl>
 <p>Initializes internal Module state, shared by both nn.Module and ScriptModule.</p>
 <dl class="py method">
-<dt id="avalanche.models.mobilenetv1.MobilenetV1.forward">
-<code class="sig-name descname"><span class="pre">forward</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">x</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">latent_input</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">return_lat_acts</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/avalanche/models/mobilenetv1/#MobilenetV1.forward"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.models.mobilenetv1.MobilenetV1.forward" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="avalanche.models.mobilenetv1.MobilenetV1.forward">
+<span class="sig-name descname"><span class="pre">forward</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">x</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">latent_input</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">return_lat_acts</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/avalanche/models/mobilenetv1/#MobilenetV1.forward"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.models.mobilenetv1.MobilenetV1.forward" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 </dd></dl>
 
 <dl class="py data">
-<dt id="avalanche.models.mobilenetv1.model">
-<code class="sig-prename descclassname"><span class="pre">avalanche.models.mobilenetv1.</span></code><code class="sig-name descname"><span class="pre">model</span></code><a class="headerlink" href="#avalanche.models.mobilenetv1.model" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="avalanche.models.mobilenetv1.model">
+<span class="sig-prename descclassname"><span class="pre">avalanche.models.mobilenetv1.</span></span><span class="sig-name descname"><span class="pre">model</span></span><a class="headerlink" href="#avalanche.models.mobilenetv1.model" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 </div>

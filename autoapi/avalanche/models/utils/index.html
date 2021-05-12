@@ -13,6 +13,8 @@
   
   <link rel="stylesheet" href="../../../../_static/css/mystyle.css" type="text/css" />
   <link rel="stylesheet" href="../../../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../../../_static/css/mystyle.css" type="text/css" />
   <link rel="stylesheet" href="../../../../_static/graphviz.css" type="text/css" />
 
   
@@ -30,6 +32,7 @@
   
     
       <script type="text/javascript" id="documentation_options" data-url_root="../../../../" src="../../../../_static/documentation_options.js"></script>
+        <script data-url_root="../../../../" id="documentation_options" src="../../../../_static/documentation_options.js"></script>
         <script src="../../../../_static/jquery.js"></script>
         <script src="../../../../_static/underscore.js"></script>
         <script src="../../../../_static/doctools.js"></script>
@@ -181,6 +184,20 @@
 <span id="avalanche-models-utils"></span><h1><a class="reference internal" href="#module-avalanche.models.utils" title="avalanche.models.utils"><code class="xref py py-mod docutils literal notranslate"><span class="pre">avalanche.models.utils</span></code></a><a class="headerlink" href="#module-avalanche.models.utils" title="Permalink to this headline">¶</a></h1>
 <div class="section" id="module-contents">
 <h2>Module Contents<a class="headerlink" href="#module-contents" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="classes">
+<h3>Classes<a class="headerlink" href="#classes" title="Permalink to this headline">¶</a></h3>
+<table class="longtable docutils align-default">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 90%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="#avalanche.models.utils.FeatureExtractorBackbone" title="avalanche.models.utils.FeatureExtractorBackbone"><code class="xref py py-obj docutils literal notranslate"><span class="pre">FeatureExtractorBackbone</span></code></a></p></td>
+<td><p>This PyTorch module allows us to extract features from a backbone network</p></td>
+</tr>
+</tbody>
+</table>
+</div>
 <div class="section" id="functions">
 <h3>Functions<a class="headerlink" href="#functions" title="Permalink to this headline">¶</a></h3>
 <table class="longtable docutils align-default">
@@ -195,9 +212,49 @@
 </tbody>
 </table>
 <dl class="py function">
-<dt id="avalanche.models.utils.avalanche_forward">
-<code class="sig-prename descclassname"><span class="pre">avalanche.models.utils.</span></code><code class="sig-name descname"><span class="pre">avalanche_forward</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">model</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">x</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">task_labels</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/avalanche/models/utils/#avalanche_forward"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.models.utils.avalanche_forward" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="avalanche.models.utils.avalanche_forward">
+<span class="sig-prename descclassname"><span class="pre">avalanche.models.utils.</span></span><span class="sig-name descname"><span class="pre">avalanche_forward</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">model</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">x</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">task_labels</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/avalanche/models/utils/#avalanche_forward"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.models.utils.avalanche_forward" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="avalanche.models.utils.FeatureExtractorBackbone">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">avalanche.models.utils.</span></span><span class="sig-name descname"><span class="pre">FeatureExtractorBackbone</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">model</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">output_layer_name</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/avalanche/models/utils/#FeatureExtractorBackbone"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.models.utils.FeatureExtractorBackbone" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">torch.nn.Module</span></code></p>
+<p>This PyTorch module allows us to extract features from a backbone network
+given a layer name.</p>
+<p>Initializes internal Module state, shared by both nn.Module and ScriptModule.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="avalanche.models.utils.FeatureExtractorBackbone.forward">
+<span class="sig-name descname"><span class="pre">forward</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">x</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/avalanche/models/utils/#FeatureExtractorBackbone.forward"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.models.utils.FeatureExtractorBackbone.forward" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="avalanche.models.utils.FeatureExtractorBackbone.get_name_to_module">
+<span class="sig-name descname"><span class="pre">get_name_to_module</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">model</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/avalanche/models/utils/#FeatureExtractorBackbone.get_name_to_module"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.models.utils.FeatureExtractorBackbone.get_name_to_module" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="avalanche.models.utils.FeatureExtractorBackbone.get_activation">
+<span class="sig-name descname"><span class="pre">get_activation</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/avalanche/models/utils/#FeatureExtractorBackbone.get_activation"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.models.utils.FeatureExtractorBackbone.get_activation" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="avalanche.models.utils.FeatureExtractorBackbone.add_hooks">
+<span class="sig-name descname"><span class="pre">add_hooks</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">model</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/avalanche/models/utils/#FeatureExtractorBackbone.add_hooks"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.models.utils.FeatureExtractorBackbone.add_hooks" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>model</strong> – </p></li>
+<li><p><strong>outputs</strong> – Outputs from layers specified in <cite>output_layer_names</cite></p></li>
+</ul>
+</dd>
+</dl>
+<p>will be stored in <cite>output</cite> variable
+:param output_layer_names:
+:return:</p>
+</dd></dl>
+
+</dd></dl>
 
 </div>
 </div>

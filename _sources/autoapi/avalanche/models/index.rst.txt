@@ -28,6 +28,7 @@ Submodules
    pytorchcv_wrapper/index.rst
    simple_cnn/index.rst
    simple_mlp/index.rst
+   slda_resnet/index.rst
    utils/index.rst
 
 
@@ -46,9 +47,20 @@ Classes
    avalanche.models.SimpleMLP_TinyImageNet
    avalanche.models.MobilenetV1
    avalanche.models.DynamicModule
+   avalanche.models.MultiTaskModule
    avalanche.models.IncrementalClassifier
    avalanche.models.MultiHeadClassifier
+   avalanche.models.FeatureExtractorBackbone
+   avalanche.models.SLDAResNetModel
 
+
+
+Functions
+~~~~~~~~~
+
+.. autoapisummary::
+
+   avalanche.models.avalanche_forward
 
 
 .. py:class:: SimpleCNN(num_classes=10)
@@ -367,6 +379,35 @@ Classes
 
 
 
+.. py:class:: MultiTaskModule
+
+   Multi-task modules are `torch.nn.Modules`s for multi-task
+   scenarios. The `forward` method accepts task labels, one for
+   each sample in the mini-batch.
+
+   By default the `forward` method splits the mini-batch by task
+   and calls `forward_single_task`. Subclasses must implement
+   `forward_single_task` or override `forward.
+
+   .. method:: forward(self, x: torch.Tensor, task_labels: torch.Tensor) -> torch.Tensor
+
+      compute the output given the input `x` and task labels.
+
+      :param x:
+      :param task_labels: task labels for each sample.
+      :return:
+
+
+   .. method:: forward_single_task(self, x: torch.Tensor, task_label: int) -> torch.Tensor
+
+      compute the output given the input `x` and task label.
+
+      :param x:
+      :param task_label: a single task label.
+      :return:
+
+
+
 .. py:class:: IncrementalClassifier(in_features, initial_out_features=2)
 
    Bases: :class:`avalanche.models.dynamic_modules.DynamicModule`
@@ -482,6 +523,63 @@ Classes
       :param x:
       :param task_label:
       :return:
+
+
+
+.. function:: avalanche_forward(model, x, task_labels)
+
+
+.. py:class:: FeatureExtractorBackbone(model, output_layer_name)
+
+   Bases: :class:`torch.nn.Module`
+
+   This PyTorch module allows us to extract features from a backbone network
+   given a layer name.
+
+   Initializes internal Module state, shared by both nn.Module and ScriptModule.
+
+   .. method:: forward(self, x)
+
+
+   .. method:: get_name_to_module(self, model)
+
+
+   .. method:: get_activation(self)
+
+
+   .. method:: add_hooks(self, model)
+
+      :param model:
+      :param outputs: Outputs from layers specified in `output_layer_names`
+      will be stored in `output` variable
+      :param output_layer_names:
+      :return:
+
+
+
+.. py:class:: SLDAResNetModel(arch='resnet18', output_layer_name='layer4.1', imagenet_pretrained=True, device='cpu')
+
+   Bases: :class:`torch.nn.Module`
+
+   This is a model wrapper to reproduce experiments from the original
+   paper of Deep Streaming Linear Discriminant Analysis by using
+   a pretrained ResNet model.
+
+   :param arch: backbone architecture (default is resnet-18, but others
+   can be used by modifying layer for
+   feature extraction in `self.feature_extraction_wrapper'
+   :param imagenet_pretrained: True if initializing backbone with imagenet
+   pre-trained weights else False
+   :param output_layer_name: name of the layer from feature extractor
+   :param device: cpu, gpu or other device
+
+   .. method:: pool_feat(features)
+      :staticmethod:
+
+
+   .. method:: forward(self, x)
+
+      :param x: raw x data
 
 
 

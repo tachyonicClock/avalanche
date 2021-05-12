@@ -13,6 +13,8 @@
   
   <link rel="stylesheet" href="../../../../../_static/css/mystyle.css" type="text/css" />
   <link rel="stylesheet" href="../../../../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../../../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../../../../_static/css/mystyle.css" type="text/css" />
   <link rel="stylesheet" href="../../../../../_static/graphviz.css" type="text/css" />
 
   
@@ -30,6 +32,7 @@
   
     
       <script type="text/javascript" id="documentation_options" data-url_root="../../../../../" src="../../../../../_static/documentation_options.js"></script>
+        <script data-url_root="../../../../../" id="documentation_options" src="../../../../../_static/documentation_options.js"></script>
         <script src="../../../../../_static/jquery.js"></script>
         <script src="../../../../../_static/underscore.js"></script>
         <script src="../../../../../_static/doctools.js"></script>
@@ -188,8 +191,9 @@
 <span class="c1">################################################################################</span>
 
 <span class="kn">from</span> <span class="nn">typing_extensions</span> <span class="kn">import</span> <span class="n">Literal</span>
-<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Callable</span><span class="p">,</span> <span class="n">Union</span><span class="p">,</span> <span class="n">Optional</span><span class="p">,</span> <span class="n">Mapping</span><span class="p">,</span> <span class="n">TYPE_CHECKING</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Callable</span><span class="p">,</span> <span class="n">Union</span><span class="p">,</span> <span class="n">Optional</span><span class="p">,</span> <span class="n">Mapping</span><span class="p">,</span> <span class="n">TYPE_CHECKING</span><span class="p">,</span> <span class="n">List</span>
 
+<span class="kn">import</span> <span class="nn">wandb</span>
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 <span class="kn">import</span> <span class="nn">torch</span>
 <span class="kn">from</span> <span class="nn">PIL.Image</span> <span class="kn">import</span> <span class="n">Image</span>
@@ -201,6 +205,7 @@
     <span class="n">MetricValue</span><span class="p">,</span> <span class="n">MetricResult</span>
 <span class="kn">from</span> <span class="nn">avalanche.evaluation.metric_utils</span> <span class="kn">import</span> <span class="n">default_cm_image_creator</span><span class="p">,</span> \
     <span class="n">phase_and_task</span><span class="p">,</span> <span class="n">stream_type</span>
+
 <span class="k">if</span> <span class="n">TYPE_CHECKING</span><span class="p">:</span>
     <span class="kn">from</span> <span class="nn">avalanche.training</span> <span class="kn">import</span> <span class="n">BaseStrategy</span>
 
@@ -506,9 +511,136 @@
         <span class="k">return</span> <span class="s2">&quot;ConfusionMatrix_Stream&quot;</span></div></div>
 
 
+<div class="viewcode-block" id="WandBStreamConfusionMatrix"><a class="viewcode-back" href="../../../../../autoapi/avalanche/evaluation/metrics/#avalanche.evaluation.metrics.confusion_matrix.WandBStreamConfusionMatrix">[docs]</a><span class="k">class</span> <span class="nc">WandBStreamConfusionMatrix</span><span class="p">(</span><span class="n">PluginMetric</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Confusion Matrix metric compatible with Weights and Biases logger.</span>
+<span class="sd">    Differently from the `StreamConfusionMatrix`, this metric will use W&amp;B</span>
+<span class="sd">    built-in functionalities to log the Confusion Matrix.</span>
+
+<span class="sd">    This metric may not produce meaningful outputs with other loggers.</span>
+
+<span class="sd">    https://docs.wandb.ai/guides/track/log#custom-charts</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">class_names</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        :param class_names: list of names for the classes.</span>
+<span class="sd">            E.g. [&quot;cat&quot;, &quot;dog&quot;] if class 0 == &quot;cat&quot; and class 1 == &quot;dog&quot;</span>
+<span class="sd">            If None, no class names will be used. Default None.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">outputs</span> <span class="o">=</span> <span class="p">[]</span>  <span class="c1"># softmax-ed or logits outputs</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">targets</span> <span class="o">=</span> <span class="p">[]</span>  <span class="c1"># target classes</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">class_names</span> <span class="o">=</span> <span class="n">class_names</span>
+
+<div class="viewcode-block" id="WandBStreamConfusionMatrix.reset"><a class="viewcode-back" href="../../../../../autoapi/avalanche/evaluation/metrics/#avalanche.evaluation.metrics.confusion_matrix.WandBStreamConfusionMatrix.reset">[docs]</a>    <span class="k">def</span> <span class="nf">reset</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">outputs</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">targets</span> <span class="o">=</span> <span class="p">[]</span></div>
+
+<div class="viewcode-block" id="WandBStreamConfusionMatrix.before_eval"><a class="viewcode-back" href="../../../../../autoapi/avalanche/evaluation/metrics/#avalanche.evaluation.metrics.confusion_matrix.WandBStreamConfusionMatrix.before_eval">[docs]</a>    <span class="k">def</span> <span class="nf">before_eval</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">strategy</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">reset</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="WandBStreamConfusionMatrix.result"><a class="viewcode-back" href="../../../../../autoapi/avalanche/evaluation/metrics/#avalanche.evaluation.metrics.confusion_matrix.WandBStreamConfusionMatrix.result">[docs]</a>    <span class="k">def</span> <span class="nf">result</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">outputs</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">cat</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">outputs</span><span class="p">,</span> <span class="n">dim</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+        <span class="n">targets</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">cat</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">targets</span><span class="p">,</span> <span class="n">dim</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">outputs</span><span class="p">,</span> <span class="n">targets</span></div>
+
+<div class="viewcode-block" id="WandBStreamConfusionMatrix.update"><a class="viewcode-back" href="../../../../../autoapi/avalanche/evaluation/metrics/#avalanche.evaluation.metrics.confusion_matrix.WandBStreamConfusionMatrix.update">[docs]</a>    <span class="k">def</span> <span class="nf">update</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">output</span><span class="p">,</span> <span class="n">target</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">outputs</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">output</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">targets</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">target</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="WandBStreamConfusionMatrix.after_eval_iteration"><a class="viewcode-back" href="../../../../../autoapi/avalanche/evaluation/metrics/#avalanche.evaluation.metrics.confusion_matrix.WandBStreamConfusionMatrix.after_eval_iteration">[docs]</a>    <span class="k">def</span> <span class="nf">after_eval_iteration</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">strategy</span><span class="p">:</span> <span class="s1">&#39;BaseStrategy&#39;</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">WandBStreamConfusionMatrix</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">after_eval_iteration</span><span class="p">(</span><span class="n">strategy</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">strategy</span><span class="o">.</span><span class="n">logits</span><span class="p">,</span> <span class="n">strategy</span><span class="o">.</span><span class="n">mb_y</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="WandBStreamConfusionMatrix.after_eval"><a class="viewcode-back" href="../../../../../autoapi/avalanche/evaluation/metrics/#avalanche.evaluation.metrics.confusion_matrix.WandBStreamConfusionMatrix.after_eval">[docs]</a>    <span class="k">def</span> <span class="nf">after_eval</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">strategy</span><span class="p">:</span> <span class="s1">&#39;BaseStrategy&#39;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">MetricResult</span><span class="p">:</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_package_result</span><span class="p">(</span><span class="n">strategy</span><span class="p">)</span></div>
+
+    <span class="k">def</span> <span class="nf">_package_result</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">strategy</span><span class="p">:</span> <span class="s1">&#39;BaseStrategy&#39;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">MetricResult</span><span class="p">:</span>
+        <span class="n">outputs</span><span class="p">,</span> <span class="n">targets</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">result</span><span class="p">()</span>
+        <span class="n">phase_name</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">phase_and_task</span><span class="p">(</span><span class="n">strategy</span><span class="p">)</span>
+        <span class="n">stream</span> <span class="o">=</span> <span class="n">stream_type</span><span class="p">(</span><span class="n">strategy</span><span class="o">.</span><span class="n">experience</span><span class="p">)</span>
+        <span class="n">metric_name</span> <span class="o">=</span> <span class="s1">&#39;</span><span class="si">{}</span><span class="s1">/</span><span class="si">{}</span><span class="s1">_phase/</span><span class="si">{}</span><span class="s1">_stream&#39;</span> \
+            <span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="p">),</span>
+                    <span class="n">phase_name</span><span class="p">,</span>
+                    <span class="n">stream</span><span class="p">)</span>
+        <span class="n">plot_x_position</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_global_counter</span><span class="p">()</span>
+
+        <span class="c1"># compute predicted classes</span>
+        <span class="n">preds</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">argmax</span><span class="p">(</span><span class="n">outputs</span><span class="p">,</span> <span class="n">dim</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">cpu</span><span class="p">()</span><span class="o">.</span><span class="n">numpy</span><span class="p">()</span>
+        <span class="n">result</span> <span class="o">=</span> <span class="n">wandb</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">confusion_matrix</span><span class="p">(</span><span class="n">preds</span><span class="o">=</span><span class="n">preds</span><span class="p">,</span>
+                                             <span class="n">y_true</span><span class="o">=</span><span class="n">targets</span><span class="o">.</span><span class="n">cpu</span><span class="p">()</span><span class="o">.</span><span class="n">numpy</span><span class="p">(),</span>
+                                             <span class="n">class_names</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">class_names</span><span class="p">)</span>
+
+        <span class="n">metric_representation</span> <span class="o">=</span> <span class="n">MetricValue</span><span class="p">(</span>
+            <span class="bp">self</span><span class="p">,</span> <span class="n">metric_name</span><span class="p">,</span> <span class="n">AlternativeValues</span><span class="p">(</span><span class="n">result</span><span class="p">),</span>
+            <span class="n">plot_x_position</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="p">[</span><span class="n">metric_representation</span><span class="p">]</span>
+
+<div class="viewcode-block" id="WandBStreamConfusionMatrix.__str__"><a class="viewcode-back" href="../../../../../autoapi/avalanche/evaluation/metrics/#avalanche.evaluation.metrics.confusion_matrix.WandBStreamConfusionMatrix.__str__">[docs]</a>    <span class="k">def</span> <span class="fm">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="s2">&quot;W&amp;BConfusionMatrix_Stream&quot;</span></div></div>
+
+
+<div class="viewcode-block" id="confusion_matrix_metrics"><a class="viewcode-back" href="../../../../../autoapi/avalanche/evaluation/metrics/#avalanche.evaluation.metrics.confusion_matrix.confusion_matrix_metrics">[docs]</a><span class="k">def</span> <span class="nf">confusion_matrix_metrics</span><span class="p">(</span><span class="n">num_classes</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">normalize</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                             <span class="n">save_image</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+                             <span class="n">image_creator</span><span class="o">=</span><span class="n">default_cm_image_creator</span><span class="p">,</span>
+                             <span class="n">class_names</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                             <span class="n">stream</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">wandb</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="n">PluginMetric</span><span class="p">]:</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Helper method that can be used to obtain the desired set of</span>
+<span class="sd">    plugin metrics.</span>
+
+<span class="sd">    :param num_classes: The number of classes. Defaults to None,</span>
+<span class="sd">        which means that the number of classes will be inferred from</span>
+<span class="sd">        ground truth and prediction Tensors (see class description for more</span>
+<span class="sd">        details). If not None, the confusion matrix will always be of size</span>
+<span class="sd">        `num_classes, num_classes` and only the first `num_classes` values</span>
+<span class="sd">        of output logits or target logits will be considered in the update.</span>
+<span class="sd">        If the output or targets are provided as numerical labels,</span>
+<span class="sd">        there can be no label greater than `num_classes`.</span>
+<span class="sd">    :param normalize: Normalizes confusion matrix over the true (rows),</span>
+<span class="sd">        predicted (columns) conditions or all the population. If None,</span>
+<span class="sd">        confusion matrix will not be normalized. Valid values are: &#39;true&#39;,</span>
+<span class="sd">        &#39;pred&#39; and &#39;all&#39; or None.</span>
+<span class="sd">    :param save_image: If True, a graphical representation of the confusion</span>
+<span class="sd">        matrix will be logged, too. If False, only the Tensor representation</span>
+<span class="sd">        will be logged. Defaults to True.</span>
+<span class="sd">    :param image_creator: A callable that, given the tensor representation</span>
+<span class="sd">        of the confusion matrix, returns a graphical representation of the</span>
+<span class="sd">        matrix as a PIL Image. Defaults to `default_cm_image_creator`.</span>
+<span class="sd">    :param class_names: W&amp;B only. List of names for the classes.</span>
+<span class="sd">        E.g. [&quot;cat&quot;, &quot;dog&quot;] if class 0 == &quot;cat&quot; and class 1 == &quot;dog&quot;</span>
+<span class="sd">        If None, no class names will be used. Default None.</span>
+<span class="sd">    :param stream: If True, will return a metric able to log</span>
+<span class="sd">        the confusion matrix averaged over the entire evaluation stream</span>
+<span class="sd">        of experiences.</span>
+<span class="sd">    :param wandb: if True, will return a Weights and Biases confusion matrix</span>
+<span class="sd">        together with all the other confusion matrixes requested.</span>
+
+<span class="sd">    :return: A list of plugin metrics.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">metrics</span> <span class="o">=</span> <span class="p">[]</span>
+
+    <span class="k">if</span> <span class="n">stream</span><span class="p">:</span>
+        <span class="n">metrics</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">StreamConfusionMatrix</span><span class="p">(</span><span class="n">num_classes</span><span class="o">=</span><span class="n">num_classes</span><span class="p">,</span>
+                                             <span class="n">normalize</span><span class="o">=</span><span class="n">normalize</span><span class="p">,</span>
+                                             <span class="n">save_image</span><span class="o">=</span><span class="n">save_image</span><span class="p">,</span>
+                                             <span class="n">image_creator</span><span class="o">=</span><span class="n">image_creator</span><span class="p">))</span>
+        <span class="k">if</span> <span class="n">wandb</span><span class="p">:</span>
+            <span class="n">metrics</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">WandBStreamConfusionMatrix</span><span class="p">(</span><span class="n">class_names</span><span class="o">=</span><span class="n">class_names</span><span class="p">))</span>
+
+    <span class="k">return</span> <span class="n">metrics</span></div>
+
+
 <span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span>
     <span class="s1">&#39;ConfusionMatrix&#39;</span><span class="p">,</span>
-    <span class="s1">&#39;StreamConfusionMatrix&#39;</span>
+    <span class="s1">&#39;StreamConfusionMatrix&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;WandBStreamConfusionMatrix&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;confusion_matrix_metrics&#39;</span>
 <span class="p">]</span>
 </pre></div>
 

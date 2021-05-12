@@ -13,6 +13,8 @@
   
   <link rel="stylesheet" href="../../../../../_static/css/mystyle.css" type="text/css" />
   <link rel="stylesheet" href="../../../../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../../../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../../../../_static/css/mystyle.css" type="text/css" />
   <link rel="stylesheet" href="../../../../../_static/graphviz.css" type="text/css" />
 
   
@@ -30,6 +32,7 @@
   
     
       <script type="text/javascript" id="documentation_options" data-url_root="../../../../../" src="../../../../../_static/documentation_options.js"></script>
+        <script data-url_root="../../../../../" id="documentation_options" src="../../../../../_static/documentation_options.js"></script>
         <script src="../../../../../_static/jquery.js"></script>
         <script src="../../../../../_static/underscore.js"></script>
         <script src="../../../../../_static/doctools.js"></script>
@@ -210,39 +213,39 @@
 </tbody>
 </table>
 <dl class="py class">
-<dt id="avalanche.benchmarks.utils.dataset_definitions.IDataset">
-<em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">avalanche.benchmarks.utils.dataset_definitions.</span></code><code class="sig-name descname"><span class="pre">IDataset</span></code><a class="reference internal" href="../../../../../_modules/avalanche/benchmarks/utils/dataset_definitions/#IDataset"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.benchmarks.utils.dataset_definitions.IDataset" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="avalanche.benchmarks.utils.dataset_definitions.IDataset">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">avalanche.benchmarks.utils.dataset_definitions.</span></span><span class="sig-name descname"><span class="pre">IDataset</span></span><a class="reference internal" href="../../../../../_modules/avalanche/benchmarks/utils/dataset_definitions/#IDataset"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.benchmarks.utils.dataset_definitions.IDataset" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">Protocol[T_co]</span></code></p>
 <p>Protocol definition of a Dataset.</p>
 <p>Note: no __add__ method is defined.</p>
 <dl class="py method">
-<dt id="avalanche.benchmarks.utils.dataset_definitions.IDataset.__getitem__">
-<code class="sig-name descname"><span class="pre">__getitem__</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">index</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">T_co</span><a class="reference internal" href="../../../../../_modules/avalanche/benchmarks/utils/dataset_definitions/#IDataset.__getitem__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.benchmarks.utils.dataset_definitions.IDataset.__getitem__" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="avalanche.benchmarks.utils.dataset_definitions.IDataset.__getitem__">
+<span class="sig-name descname"><span class="pre">__getitem__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">index</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">T_co</span><a class="reference internal" href="../../../../../_modules/avalanche/benchmarks/utils/dataset_definitions/#IDataset.__getitem__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.benchmarks.utils.dataset_definitions.IDataset.__getitem__" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
-<dt id="avalanche.benchmarks.utils.dataset_definitions.IDataset.__len__">
-<code class="sig-name descname"><span class="pre">__len__</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">int</span><a class="reference internal" href="../../../../../_modules/avalanche/benchmarks/utils/dataset_definitions/#IDataset.__len__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.benchmarks.utils.dataset_definitions.IDataset.__len__" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="avalanche.benchmarks.utils.dataset_definitions.IDataset.__len__">
+<span class="sig-name descname"><span class="pre">__len__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">int</span><a class="reference internal" href="../../../../../_modules/avalanche/benchmarks/utils/dataset_definitions/#IDataset.__len__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.benchmarks.utils.dataset_definitions.IDataset.__len__" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 </dd></dl>
 
 <dl class="py class">
-<dt id="avalanche.benchmarks.utils.dataset_definitions.IDatasetWithTargets">
-<em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">avalanche.benchmarks.utils.dataset_definitions.</span></code><code class="sig-name descname"><span class="pre">IDatasetWithTargets</span></code><a class="reference internal" href="../../../../../_modules/avalanche/benchmarks/utils/dataset_definitions/#IDatasetWithTargets"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.benchmarks.utils.dataset_definitions.IDatasetWithTargets" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="avalanche.benchmarks.utils.dataset_definitions.IDatasetWithTargets">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">avalanche.benchmarks.utils.dataset_definitions.</span></span><span class="sig-name descname"><span class="pre">IDatasetWithTargets</span></span><a class="reference internal" href="../../../../../_modules/avalanche/benchmarks/utils/dataset_definitions/#IDatasetWithTargets"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.benchmarks.utils.dataset_definitions.IDatasetWithTargets" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">IDataset[T_co]</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">Protocol[T_co,</span> <span class="pre">TTargetType]</span></code></p>
 <p>Protocol definition of a Dataset that has a valid targets field.</p>
 <dl class="py attribute">
-<dt id="avalanche.benchmarks.utils.dataset_definitions.IDatasetWithTargets.targets">
-<code class="sig-name descname"><span class="pre">targets</span></code><em class="property"> <span class="pre">:Sequence[TTargetType]</span></em><a class="headerlink" href="#avalanche.benchmarks.utils.dataset_definitions.IDatasetWithTargets.targets" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="avalanche.benchmarks.utils.dataset_definitions.IDatasetWithTargets.targets">
+<span class="sig-name descname"><span class="pre">targets</span></span><em class="property"> <span class="pre">:Sequence[TTargetType]</span></em><a class="headerlink" href="#avalanche.benchmarks.utils.dataset_definitions.IDatasetWithTargets.targets" title="Permalink to this definition">¶</a></dt>
 <dd><p>A sequence of elements describing the targets of each pattern.</p>
 </dd></dl>
 
 </dd></dl>
 
 <dl class="py class">
-<dt id="avalanche.benchmarks.utils.dataset_definitions.ISupportedClassificationDataset">
-<em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">avalanche.benchmarks.utils.dataset_definitions.</span></code><code class="sig-name descname"><span class="pre">ISupportedClassificationDataset</span></code><a class="reference internal" href="../../../../../_modules/avalanche/benchmarks/utils/dataset_definitions/#ISupportedClassificationDataset"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.benchmarks.utils.dataset_definitions.ISupportedClassificationDataset" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="avalanche.benchmarks.utils.dataset_definitions.ISupportedClassificationDataset">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">avalanche.benchmarks.utils.dataset_definitions.</span></span><span class="sig-name descname"><span class="pre">ISupportedClassificationDataset</span></span><a class="reference internal" href="../../../../../_modules/avalanche/benchmarks/utils/dataset_definitions/#ISupportedClassificationDataset"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.benchmarks.utils.dataset_definitions.ISupportedClassificationDataset" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">IDatasetWithTargets[T_co,</span> <span class="pre">SupportsInt]</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">typing_extensions.Protocol</span></code></p>
 <p>Protocol definition of a Dataset that has a valid targets field (like the
 Datasets in the torchvision package) for classification.</p>
@@ -257,8 +260,8 @@ this protocol class supports both sequence of native ints and Tensor of ints
 defines a <cite>targets</cite> field as sequence of native <a href="#id1"><span class="problematic" id="id2">`</span></a>int`s.</p>
 <p>Create and return a new object.  See help(type) for accurate signature.</p>
 <dl class="py attribute">
-<dt id="avalanche.benchmarks.utils.dataset_definitions.ISupportedClassificationDataset.targets">
-<code class="sig-name descname"><span class="pre">targets</span></code><em class="property"> <span class="pre">:Sequence[SupportsInt]</span></em><a class="headerlink" href="#avalanche.benchmarks.utils.dataset_definitions.ISupportedClassificationDataset.targets" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="avalanche.benchmarks.utils.dataset_definitions.ISupportedClassificationDataset.targets">
+<span class="sig-name descname"><span class="pre">targets</span></span><em class="property"> <span class="pre">:Sequence[SupportsInt]</span></em><a class="headerlink" href="#avalanche.benchmarks.utils.dataset_definitions.ISupportedClassificationDataset.targets" title="Permalink to this definition">¶</a></dt>
 <dd><p>A sequence of ints or a PyTorch Tensor or a NumPy ndarray describing the
 label of each pattern contained in the dataset.</p>
 </dd></dl>
@@ -266,8 +269,8 @@ label of each pattern contained in the dataset.</p>
 </dd></dl>
 
 <dl class="py class">
-<dt id="avalanche.benchmarks.utils.dataset_definitions.ITensorDataset">
-<em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">avalanche.benchmarks.utils.dataset_definitions.</span></code><code class="sig-name descname"><span class="pre">ITensorDataset</span></code><a class="reference internal" href="../../../../../_modules/avalanche/benchmarks/utils/dataset_definitions/#ITensorDataset"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.benchmarks.utils.dataset_definitions.ITensorDataset" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="avalanche.benchmarks.utils.dataset_definitions.ITensorDataset">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">avalanche.benchmarks.utils.dataset_definitions.</span></span><span class="sig-name descname"><span class="pre">ITensorDataset</span></span><a class="reference internal" href="../../../../../_modules/avalanche/benchmarks/utils/dataset_definitions/#ITensorDataset"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.benchmarks.utils.dataset_definitions.ITensorDataset" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">IDataset[T_co]</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">typing_extensions.Protocol</span></code></p>
 <p>Protocol definition of a Dataset that has a tensors field (like
 TensorDataset).</p>
@@ -276,16 +279,16 @@ by using one of the provided tensors (usually the second, which commonly
 contains the “y” values).</p>
 <p>Create and return a new object.  See help(type) for accurate signature.</p>
 <dl class="py attribute">
-<dt id="avalanche.benchmarks.utils.dataset_definitions.ITensorDataset.tensors">
-<code class="sig-name descname"><span class="pre">tensors</span></code><em class="property"> <span class="pre">:Sequence[T_co]</span></em><a class="headerlink" href="#avalanche.benchmarks.utils.dataset_definitions.ITensorDataset.tensors" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="avalanche.benchmarks.utils.dataset_definitions.ITensorDataset.tensors">
+<span class="sig-name descname"><span class="pre">tensors</span></span><em class="property"> <span class="pre">:Sequence[T_co]</span></em><a class="headerlink" href="#avalanche.benchmarks.utils.dataset_definitions.ITensorDataset.tensors" title="Permalink to this definition">¶</a></dt>
 <dd><p>A sequence of PyTorch Tensors describing the contents of the Dataset.</p>
 </dd></dl>
 
 </dd></dl>
 
 <dl class="py class">
-<dt id="avalanche.benchmarks.utils.dataset_definitions.IClassificationDataset">
-<em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">avalanche.benchmarks.utils.dataset_definitions.</span></code><code class="sig-name descname"><span class="pre">IClassificationDataset</span></code><a class="reference internal" href="../../../../../_modules/avalanche/benchmarks/utils/dataset_definitions/#IClassificationDataset"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.benchmarks.utils.dataset_definitions.IClassificationDataset" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="avalanche.benchmarks.utils.dataset_definitions.IClassificationDataset">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">avalanche.benchmarks.utils.dataset_definitions.</span></span><span class="sig-name descname"><span class="pre">IClassificationDataset</span></span><a class="reference internal" href="../../../../../_modules/avalanche/benchmarks/utils/dataset_definitions/#IClassificationDataset"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.benchmarks.utils.dataset_definitions.IClassificationDataset" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">IDatasetWithTargets[T_co,</span> <span class="pre">int]</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">typing_extensions.Protocol</span></code></p>
 <p>Protocol definition of a Dataset that has a valid targets field (like the
 Datasets in the torchvision package) where the targets field is a sequence
@@ -294,8 +297,8 @@ of native ints.</p>
 protocol see <a class="reference internal" href="#avalanche.benchmarks.utils.dataset_definitions.ISupportedClassificationDataset" title="avalanche.benchmarks.utils.dataset_definitions.ISupportedClassificationDataset"><code class="xref py py-class docutils literal notranslate"><span class="pre">ISupportedClassificationDataset</span></code></a>.</p>
 <p>Create and return a new object.  See help(type) for accurate signature.</p>
 <dl class="py attribute">
-<dt id="avalanche.benchmarks.utils.dataset_definitions.IClassificationDataset.targets">
-<code class="sig-name descname"><span class="pre">targets</span></code><em class="property"> <span class="pre">:Sequence[int]</span></em><a class="headerlink" href="#avalanche.benchmarks.utils.dataset_definitions.IClassificationDataset.targets" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="avalanche.benchmarks.utils.dataset_definitions.IClassificationDataset.targets">
+<span class="sig-name descname"><span class="pre">targets</span></span><em class="property"> <span class="pre">:Sequence[int]</span></em><a class="headerlink" href="#avalanche.benchmarks.utils.dataset_definitions.IClassificationDataset.targets" title="Permalink to this definition">¶</a></dt>
 <dd><p>A sequence of ints describing the label of each pattern contained in the
 dataset.</p>
 </dd></dl>
@@ -303,16 +306,16 @@ dataset.</p>
 </dd></dl>
 
 <dl class="py class">
-<dt id="avalanche.benchmarks.utils.dataset_definitions.ClassificationDataset">
-<em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">avalanche.benchmarks.utils.dataset_definitions.</span></code><code class="sig-name descname"><span class="pre">ClassificationDataset</span></code><a class="reference internal" href="../../../../../_modules/avalanche/benchmarks/utils/dataset_definitions/#ClassificationDataset"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.benchmarks.utils.dataset_definitions.ClassificationDataset" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="avalanche.benchmarks.utils.dataset_definitions.ClassificationDataset">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">avalanche.benchmarks.utils.dataset_definitions.</span></span><span class="sig-name descname"><span class="pre">ClassificationDataset</span></span><a class="reference internal" href="../../../../../_modules/avalanche/benchmarks/utils/dataset_definitions/#ClassificationDataset"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.benchmarks.utils.dataset_definitions.ClassificationDataset" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">IClassificationDataset[T_co]</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">torch.utils.data.dataset.Dataset</span></code></p>
 <p>Dataset that has a valid targets field (like the Datasets in the
 torchvision package) where the targets field is a sequence of native ints.</p>
 <p>The actual value of the targets field should be set by the child class.</p>
 <p>Initialize self.  See help(type(self)) for accurate signature.</p>
 <dl class="py attribute">
-<dt id="avalanche.benchmarks.utils.dataset_definitions.ClassificationDataset.targets">
-<code class="sig-name descname"><span class="pre">targets</span></code><em class="property"> <span class="pre">=</span> <span class="pre">[]</span></em><a class="headerlink" href="#avalanche.benchmarks.utils.dataset_definitions.ClassificationDataset.targets" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="avalanche.benchmarks.utils.dataset_definitions.ClassificationDataset.targets">
+<span class="sig-name descname"><span class="pre">targets</span></span><em class="property"> <span class="pre">=</span> <span class="pre">[]</span></em><a class="headerlink" href="#avalanche.benchmarks.utils.dataset_definitions.ClassificationDataset.targets" title="Permalink to this definition">¶</a></dt>
 <dd><p>A sequence of ints describing the label of each pattern contained in the
 dataset.</p>
 </dd></dl>

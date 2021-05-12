@@ -20,6 +20,7 @@ Classes
 .. autoapisummary::
 
    avalanche.models.dynamic_modules.DynamicModule
+   avalanche.models.dynamic_modules.MultiTaskModule
    avalanche.models.dynamic_modules.IncrementalClassifier
    avalanche.models.dynamic_modules.MultiHeadClassifier
 
@@ -104,6 +105,35 @@ Classes
           an incremental classifier needs to be expanded even at evaluation
           time if new classes are available. However, you should **never**
           use this data to **train** the module's parameters.
+
+
+
+.. py:class:: MultiTaskModule
+
+   Multi-task modules are `torch.nn.Modules`s for multi-task
+   scenarios. The `forward` method accepts task labels, one for
+   each sample in the mini-batch.
+
+   By default the `forward` method splits the mini-batch by task
+   and calls `forward_single_task`. Subclasses must implement
+   `forward_single_task` or override `forward.
+
+   .. method:: forward(self, x: torch.Tensor, task_labels: torch.Tensor) -> torch.Tensor
+
+      compute the output given the input `x` and task labels.
+
+      :param x:
+      :param task_labels: task labels for each sample.
+      :return:
+
+
+   .. method:: forward_single_task(self, x: torch.Tensor, task_label: int) -> torch.Tensor
+
+      compute the output given the input `x` and task label.
+
+      :param x:
+      :param task_label: a single task label.
+      :return:
 
 
 

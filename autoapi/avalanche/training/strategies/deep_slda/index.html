@@ -1,0 +1,357 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>avalanche.training.strategies.deep_slda &mdash; Avalanche 0.1 documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="../../../../../_static/css/mystyle.css" type="text/css" />
+  <link rel="stylesheet" href="../../../../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../../../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../../../../_static/css/mystyle.css" type="text/css" />
+  <link rel="stylesheet" href="../../../../../_static/graphviz.css" type="text/css" />
+
+  
+  
+
+  
+  
+
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../../../../" src="../../../../../_static/documentation_options.js"></script>
+        <script data-url_root="../../../../../" id="documentation_options" src="../../../../../_static/documentation_options.js"></script>
+        <script src="../../../../../_static/jquery.js"></script>
+        <script src="../../../../../_static/underscore.js"></script>
+        <script src="../../../../../_static/doctools.js"></script>
+    
+    <script type="text/javascript" src="../../../../../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="../../../../../genindex/" />
+    <link rel="search" title="Search" href="../../../../../search/" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../../../../">
+          
+
+          
+            
+            <img src="../../../../../_static/avalanche_logo.png" class="logo" alt="Logo"/>
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../../../search/" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Avalanche API:</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="../../../../">API Reference</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="../../../"><code class="xref py py-mod docutils literal notranslate"><span class="pre">avalanche</span></code></a><ul class="current">
+<li class="toctree-l3 current"><a class="reference internal" href="../../../#subpackages">Subpackages</a><ul class="current">
+<li class="toctree-l4"><a class="reference internal" href="../../../benchmarks/"><code class="xref py py-mod docutils literal notranslate"><span class="pre">avalanche.benchmarks</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../evaluation/"><code class="xref py py-mod docutils literal notranslate"><span class="pre">avalanche.evaluation</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../logging/"><code class="xref py py-mod docutils literal notranslate"><span class="pre">avalanche.logging</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../models/"><code class="xref py py-mod docutils literal notranslate"><span class="pre">avalanche.models</span></code></a></li>
+<li class="toctree-l4 current"><a class="reference internal" href="../../"><code class="xref py py-mod docutils literal notranslate"><span class="pre">avalanche.training</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../../#submodules">Submodules</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../core/"><code class="xref py py-mod docutils literal notranslate"><span class="pre">avalanche.core</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../../#package-contents">Package Contents</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../#avalanche.__version__">__version__</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../../../">Avalanche</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../../../../" class="icon icon-home"></a> &raquo;</li>
+        
+      <li><code class="xref py py-mod docutils literal notranslate"><span class="pre">avalanche.training.strategies.deep_slda</span></code></li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+          
+            <a href="../../../../../_sources/autoapi/avalanche/training/strategies/deep_slda/index.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="module-avalanche.training.strategies.deep_slda">
+<span id="avalanche-training-strategies-deep-slda"></span><h1><a class="reference internal" href="#module-avalanche.training.strategies.deep_slda" title="avalanche.training.strategies.deep_slda"><code class="xref py py-mod docutils literal notranslate"><span class="pre">avalanche.training.strategies.deep_slda</span></code></a><a class="headerlink" href="#module-avalanche.training.strategies.deep_slda" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="module-contents">
+<h2>Module Contents<a class="headerlink" href="#module-contents" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="classes">
+<h3>Classes<a class="headerlink" href="#classes" title="Permalink to this headline">¶</a></h3>
+<table class="longtable docutils align-default">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 90%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="#avalanche.training.strategies.deep_slda.StreamingLDA" title="avalanche.training.strategies.deep_slda.StreamingLDA"><code class="xref py py-obj docutils literal notranslate"><span class="pre">StreamingLDA</span></code></a></p></td>
+<td><p>Deep Streaming Linear Discriminant Analysis.</p></td>
+</tr>
+</tbody>
+</table>
+<dl class="py class">
+<dt class="sig sig-object py" id="avalanche.training.strategies.deep_slda.StreamingLDA">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">avalanche.training.strategies.deep_slda.</span></span><span class="sig-name descname"><span class="pre">StreamingLDA</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">slda_model</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">criterion</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">input_size</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">num_classes</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">output_layer_name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">shrinkage_param</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.0001</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">streaming_update_sigma</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">train_epochs</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">int</span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">train_mb_size</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">int</span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">eval_mb_size</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">int</span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">device</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'cpu'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">plugins</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">Sequence</span><span class="p"><span class="pre">[</span></span><span class="pre">StrategyPlugin</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">evaluator</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">default_logger</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">eval_every</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">-</span> <span class="pre">1</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../_modules/avalanche/training/strategies/deep_slda/#StreamingLDA"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.training.strategies.deep_slda.StreamingLDA" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="../#avalanche.training.strategies.BaseStrategy" title="avalanche.training.strategies.BaseStrategy"><code class="xref py py-class docutils literal notranslate"><span class="pre">avalanche.training.strategies.BaseStrategy</span></code></a></p>
+<p>Deep Streaming Linear Discriminant Analysis.
+This strategy does not use backpropagation.
+Minibatches are first passed to the pretrained feature extractor.
+The result is processed one element at a time to fit the
+LDA.
+Original paper:
+“Hayes et. al., Lifelong Machine Learning with Deep Streaming Linear
+Discriminant Analysis, CVPR Workshop, 2020”
+<a class="reference external" href="https://openaccess.thecvf.com/content_CVPRW_2020/papers/w15/Hayes_Lifelong_Machine_Learning_With_Deep_Streaming_Linear_Discriminant_Analysis_CVPRW_2020_paper.pdf">https://openaccess.thecvf.com/content_CVPRW_2020/papers/w15/Hayes_Lifelong_Machine_Learning_With_Deep_Streaming_Linear_Discriminant_Analysis_CVPRW_2020_paper.pdf</a></p>
+<p>Init function for the SLDA model.
+:param slda_model: a PyTorch model
+:param criterion: loss function
+:param output_layer_name: if not None, wrap model to retrieve</p>
+<blockquote>
+<div><p>only the <cite>output_layer_name</cite> output. If None, the strategy
+assumes that the model already produces a valid output.
+You can use <cite>FeatureExtractorBackbone</cite> class to create your custom
+SLDA-compatible model.</p>
+</div></blockquote>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>input_size</strong> – feature dimension</p></li>
+<li><p><strong>num_classes</strong> – number of total classes in stream</p></li>
+<li><p><strong>train_mb_size</strong> – batch size for feature extractor during
+training. Fit will be called on a single pattern at a time.</p></li>
+<li><p><strong>eval_mb_size</strong> – batch size for inference</p></li>
+<li><p><strong>shrinkage_param</strong> – value of the shrinkage parameter</p></li>
+<li><p><strong>streaming_update_sigma</strong> – True if sigma is plastic else False</p></li>
+</ul>
+</dd>
+</dl>
+<p>feature extraction in <cite>self.feature_extraction_wrapper’
+:param plugins: list of StrategyPlugins
+:param evaluator: Evaluation Plugin instance
+:param eval_every: run eval every `eval_every</cite> epochs.</p>
+<blockquote>
+<div><p>See <cite>BaseStrategy</cite> for details.</p>
+</div></blockquote>
+<dl class="py method">
+<dt class="sig sig-object py" id="avalanche.training.strategies.deep_slda.StreamingLDA.forward">
+<span class="sig-name descname"><span class="pre">forward</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">return_features</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../_modules/avalanche/training/strategies/deep_slda/#StreamingLDA.forward"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.training.strategies.deep_slda.StreamingLDA.forward" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="avalanche.training.strategies.deep_slda.StreamingLDA.training_epoch">
+<span class="sig-name descname"><span class="pre">training_epoch</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../_modules/avalanche/training/strategies/deep_slda/#StreamingLDA.training_epoch"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.training.strategies.deep_slda.StreamingLDA.training_epoch" title="Permalink to this definition">¶</a></dt>
+<dd><p>Training epoch.
+:param kwargs:
+:return:</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="avalanche.training.strategies.deep_slda.StreamingLDA.make_optimizer">
+<span class="sig-name descname"><span class="pre">make_optimizer</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../_modules/avalanche/training/strategies/deep_slda/#StreamingLDA.make_optimizer"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.training.strategies.deep_slda.StreamingLDA.make_optimizer" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="avalanche.training.strategies.deep_slda.StreamingLDA.fit">
+<span class="sig-name descname"><span class="pre">fit</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">x</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../_modules/avalanche/training/strategies/deep_slda/#StreamingLDA.fit"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.training.strategies.deep_slda.StreamingLDA.fit" title="Permalink to this definition">¶</a></dt>
+<dd><p>Fit the SLDA model to a new sample (x,y).
+:param x: a torch tensor of the input data (must be a vector)
+:param y: a torch tensor of the input label
+:return: None</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="avalanche.training.strategies.deep_slda.StreamingLDA.predict">
+<span class="sig-name descname"><span class="pre">predict</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">X</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../_modules/avalanche/training/strategies/deep_slda/#StreamingLDA.predict"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.training.strategies.deep_slda.StreamingLDA.predict" title="Permalink to this definition">¶</a></dt>
+<dd><p>Make predictions on test data X.
+:param X: a torch tensor that contains N data samples (N x d)
+:param return_probas: True if the user would like probabilities instead
+of predictions returned
+:return: the test predictions or probabilities</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="avalanche.training.strategies.deep_slda.StreamingLDA.fit_base">
+<span class="sig-name descname"><span class="pre">fit_base</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">X</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../_modules/avalanche/training/strategies/deep_slda/#StreamingLDA.fit_base"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.training.strategies.deep_slda.StreamingLDA.fit_base" title="Permalink to this definition">¶</a></dt>
+<dd><p>Fit the SLDA model to the base data.
+:param X: an Nxd torch tensor of base initialization data
+:param y: an Nx1-dimensional torch tensor of the associated labels for X
+:return: None</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="avalanche.training.strategies.deep_slda.StreamingLDA.save_model">
+<span class="sig-name descname"><span class="pre">save_model</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">save_path</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">save_name</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../_modules/avalanche/training/strategies/deep_slda/#StreamingLDA.save_model"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.training.strategies.deep_slda.StreamingLDA.save_model" title="Permalink to this definition">¶</a></dt>
+<dd><p>Save the model parameters to a torch file.
+:param save_path: the path where the model will be saved
+:param save_name: the name for the saved file
+:return:</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="avalanche.training.strategies.deep_slda.StreamingLDA.load_model">
+<span class="sig-name descname"><span class="pre">load_model</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">save_path</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">save_name</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../_modules/avalanche/training/strategies/deep_slda/#StreamingLDA.load_model"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.training.strategies.deep_slda.StreamingLDA.load_model" title="Permalink to this definition">¶</a></dt>
+<dd><p>Load the model parameters into StreamingLDA object.
+:param save_path: the path where the model is saved
+:param save_name: the name of the saved file
+:return:</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &#169; Copyright 2021, ContinualAI.
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

@@ -13,6 +13,8 @@
   
   <link rel="stylesheet" href="../../../../../_static/css/mystyle.css" type="text/css" />
   <link rel="stylesheet" href="../../../../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../../../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../../../../_static/css/mystyle.css" type="text/css" />
   <link rel="stylesheet" href="../../../../../_static/graphviz.css" type="text/css" />
 
   
@@ -30,6 +32,7 @@
   
     
       <script type="text/javascript" id="documentation_options" data-url_root="../../../../../" src="../../../../../_static/documentation_options.js"></script>
+        <script data-url_root="../../../../../" id="documentation_options" src="../../../../../_static/documentation_options.js"></script>
         <script src="../../../../../_static/jquery.js"></script>
         <script src="../../../../../_static/underscore.js"></script>
         <script src="../../../../../_static/doctools.js"></script>
@@ -198,23 +201,23 @@
 </tbody>
 </table>
 <dl class="py data">
-<dt id="avalanche.benchmarks.scenarios.generic_definitions.TScenario">
-<code class="sig-prename descclassname"><span class="pre">avalanche.benchmarks.scenarios.generic_definitions.</span></code><code class="sig-name descname"><span class="pre">TScenario</span></code><a class="headerlink" href="#avalanche.benchmarks.scenarios.generic_definitions.TScenario" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="avalanche.benchmarks.scenarios.generic_definitions.TScenario">
+<span class="sig-prename descclassname"><span class="pre">avalanche.benchmarks.scenarios.generic_definitions.</span></span><span class="sig-name descname"><span class="pre">TScenario</span></span><a class="headerlink" href="#avalanche.benchmarks.scenarios.generic_definitions.TScenario" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py data">
-<dt id="avalanche.benchmarks.scenarios.generic_definitions.TExperience">
-<code class="sig-prename descclassname"><span class="pre">avalanche.benchmarks.scenarios.generic_definitions.</span></code><code class="sig-name descname"><span class="pre">TExperience</span></code><a class="headerlink" href="#avalanche.benchmarks.scenarios.generic_definitions.TExperience" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="avalanche.benchmarks.scenarios.generic_definitions.TExperience">
+<span class="sig-prename descclassname"><span class="pre">avalanche.benchmarks.scenarios.generic_definitions.</span></span><span class="sig-name descname"><span class="pre">TExperience</span></span><a class="headerlink" href="#avalanche.benchmarks.scenarios.generic_definitions.TExperience" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py data">
-<dt id="avalanche.benchmarks.scenarios.generic_definitions.TScenarioStream">
-<code class="sig-prename descclassname"><span class="pre">avalanche.benchmarks.scenarios.generic_definitions.</span></code><code class="sig-name descname"><span class="pre">TScenarioStream</span></code><a class="headerlink" href="#avalanche.benchmarks.scenarios.generic_definitions.TScenarioStream" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="avalanche.benchmarks.scenarios.generic_definitions.TScenarioStream">
+<span class="sig-prename descclassname"><span class="pre">avalanche.benchmarks.scenarios.generic_definitions.</span></span><span class="sig-name descname"><span class="pre">TScenarioStream</span></span><a class="headerlink" href="#avalanche.benchmarks.scenarios.generic_definitions.TScenarioStream" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py class">
-<dt id="avalanche.benchmarks.scenarios.generic_definitions.Experience">
-<em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">avalanche.benchmarks.scenarios.generic_definitions.</span></code><code class="sig-name descname"><span class="pre">Experience</span></code><a class="reference internal" href="../../../../../_modules/avalanche/benchmarks/scenarios/generic_definitions/#Experience"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.benchmarks.scenarios.generic_definitions.Experience" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="avalanche.benchmarks.scenarios.generic_definitions.Experience">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">avalanche.benchmarks.scenarios.generic_definitions.</span></span><span class="sig-name descname"><span class="pre">Experience</span></span><a class="reference internal" href="../../../../../_modules/avalanche/benchmarks/scenarios/generic_definitions/#Experience"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.benchmarks.scenarios.generic_definitions.Experience" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">Protocol[TScenario,</span> <span class="pre">TScenarioStream]</span></code></p>
 <p>Definition of an experience. An experience contains a set of patterns
 which has become available at a particular time instant. The content and
@@ -229,20 +232,20 @@ usually called “batches” while in Multi Task scenarios an Experience is
 usually associated to a “task”. Finally, in a Multi Incremental Task
 scenario the Experience may be composed by patterns from different tasks.</p>
 <dl class="py attribute">
-<dt id="avalanche.benchmarks.scenarios.generic_definitions.Experience.origin_stream">
-<code class="sig-name descname"><span class="pre">origin_stream</span></code><em class="property"> <span class="pre">:TScenarioStream</span></em><a class="headerlink" href="#avalanche.benchmarks.scenarios.generic_definitions.Experience.origin_stream" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="avalanche.benchmarks.scenarios.generic_definitions.Experience.origin_stream">
+<span class="sig-name descname"><span class="pre">origin_stream</span></span><em class="property"> <span class="pre">:TScenarioStream</span></em><a class="headerlink" href="#avalanche.benchmarks.scenarios.generic_definitions.Experience.origin_stream" title="Permalink to this definition">¶</a></dt>
 <dd><p>A reference to the original stream from which this experience was obtained.</p>
 </dd></dl>
 
 <dl class="py attribute">
-<dt id="avalanche.benchmarks.scenarios.generic_definitions.Experience.scenario">
-<code class="sig-name descname"><span class="pre">scenario</span></code><em class="property"> <span class="pre">:TScenario</span></em><a class="headerlink" href="#avalanche.benchmarks.scenarios.generic_definitions.Experience.scenario" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="avalanche.benchmarks.scenarios.generic_definitions.Experience.scenario">
+<span class="sig-name descname"><span class="pre">scenario</span></span><em class="property"> <span class="pre">:TScenario</span></em><a class="headerlink" href="#avalanche.benchmarks.scenarios.generic_definitions.Experience.scenario" title="Permalink to this definition">¶</a></dt>
 <dd><p>A reference to the scenario.</p>
 </dd></dl>
 
 <dl class="py attribute">
-<dt id="avalanche.benchmarks.scenarios.generic_definitions.Experience.current_experience">
-<code class="sig-name descname"><span class="pre">current_experience</span></code><em class="property"> <span class="pre">:int</span></em><a class="headerlink" href="#avalanche.benchmarks.scenarios.generic_definitions.Experience.current_experience" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="avalanche.benchmarks.scenarios.generic_definitions.Experience.current_experience">
+<span class="sig-name descname"><span class="pre">current_experience</span></span><em class="property"> <span class="pre">:int</span></em><a class="headerlink" href="#avalanche.benchmarks.scenarios.generic_definitions.Experience.current_experience" title="Permalink to this definition">¶</a></dt>
 <dd><p>This is an incremental, 0-indexed, value used to keep track of the position
 of current experience in the original stream.</p>
 <p>Beware that this value only describes the experience position in the
@@ -251,14 +254,14 @@ encounter experiences.</p>
 </dd></dl>
 
 <dl class="py method">
-<dt id="avalanche.benchmarks.scenarios.generic_definitions.Experience.dataset">
-<em class="property"><span class="pre">property</span> </em><code class="sig-name descname"><span class="pre">dataset</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">AvalancheDataset</span><a class="headerlink" href="#avalanche.benchmarks.scenarios.generic_definitions.Experience.dataset" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="avalanche.benchmarks.scenarios.generic_definitions.Experience.dataset">
+<em class="property"><span class="pre">property</span> </em><span class="sig-name descname"><span class="pre">dataset</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">AvalancheDataset</span><a class="headerlink" href="#avalanche.benchmarks.scenarios.generic_definitions.Experience.dataset" title="Permalink to this definition">¶</a></dt>
 <dd><p>The dataset containing the patterns available in this experience.</p>
 </dd></dl>
 
 <dl class="py method">
-<dt id="avalanche.benchmarks.scenarios.generic_definitions.Experience.task_labels">
-<em class="property"><span class="pre">property</span> </em><code class="sig-name descname"><span class="pre">task_labels</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">]</span></span><a class="headerlink" href="#avalanche.benchmarks.scenarios.generic_definitions.Experience.task_labels" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="avalanche.benchmarks.scenarios.generic_definitions.Experience.task_labels">
+<em class="property"><span class="pre">property</span> </em><span class="sig-name descname"><span class="pre">task_labels</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">]</span></span><a class="headerlink" href="#avalanche.benchmarks.scenarios.generic_definitions.Experience.task_labels" title="Permalink to this definition">¶</a></dt>
 <dd><p>This list will contain the unique task labels of the patterns contained
 in this experience. In the most common scenarios this will be a list
 with a single value. Note: for scenarios that don’t produce task labels,
@@ -267,8 +270,8 @@ a placeholder task label value like 0 is usually set to each pattern
 </dd></dl>
 
 <dl class="py method">
-<dt id="avalanche.benchmarks.scenarios.generic_definitions.Experience.task_label">
-<em class="property"><span class="pre">property</span> </em><code class="sig-name descname"><span class="pre">task_label</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">int</span><a class="headerlink" href="#avalanche.benchmarks.scenarios.generic_definitions.Experience.task_label" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="avalanche.benchmarks.scenarios.generic_definitions.Experience.task_label">
+<em class="property"><span class="pre">property</span> </em><span class="sig-name descname"><span class="pre">task_label</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">int</span><a class="headerlink" href="#avalanche.benchmarks.scenarios.generic_definitions.Experience.task_label" title="Permalink to this definition">¶</a></dt>
 <dd><p>The task label. This value will never have value “None”. However,
 for scenarios that don’t produce task labels a placeholder value like 0
 is usually set. Beware that this field is meant as a shortcut to obtain
@@ -280,8 +283,8 @@ multiple tasks, accessing this property will result in an exception.</p>
 </dd></dl>
 
 <dl class="py class">
-<dt id="avalanche.benchmarks.scenarios.generic_definitions.ScenarioStream">
-<em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">avalanche.benchmarks.scenarios.generic_definitions.</span></code><code class="sig-name descname"><span class="pre">ScenarioStream</span></code><a class="reference internal" href="../../../../../_modules/avalanche/benchmarks/scenarios/generic_definitions/#ScenarioStream"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.benchmarks.scenarios.generic_definitions.ScenarioStream" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="avalanche.benchmarks.scenarios.generic_definitions.ScenarioStream">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">avalanche.benchmarks.scenarios.generic_definitions.</span></span><span class="sig-name descname"><span class="pre">ScenarioStream</span></span><a class="reference internal" href="../../../../../_modules/avalanche/benchmarks/scenarios/generic_definitions/#ScenarioStream"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.benchmarks.scenarios.generic_definitions.ScenarioStream" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">Protocol[TScenario,</span> <span class="pre">TExperience]</span></code></p>
 <p>A scenario stream describes a sequence of incremental experiences.
 Experiences are described as <code class="xref py py-class docutils literal notranslate"><span class="pre">IExperience</span></code> instances. They contain a
@@ -290,20 +293,20 @@ along with any optional, scenario specific, metadata.</p>
 <p>Most scenario expose two different streams: the training stream and the test
 stream.</p>
 <dl class="py attribute">
-<dt id="avalanche.benchmarks.scenarios.generic_definitions.ScenarioStream.name">
-<code class="sig-name descname"><span class="pre">name</span></code><em class="property"> <span class="pre">:str</span></em><a class="headerlink" href="#avalanche.benchmarks.scenarios.generic_definitions.ScenarioStream.name" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="avalanche.benchmarks.scenarios.generic_definitions.ScenarioStream.name">
+<span class="sig-name descname"><span class="pre">name</span></span><em class="property"> <span class="pre">:str</span></em><a class="headerlink" href="#avalanche.benchmarks.scenarios.generic_definitions.ScenarioStream.name" title="Permalink to this definition">¶</a></dt>
 <dd><p>The name of the stream.</p>
 </dd></dl>
 
 <dl class="py attribute">
-<dt id="avalanche.benchmarks.scenarios.generic_definitions.ScenarioStream.scenario">
-<code class="sig-name descname"><span class="pre">scenario</span></code><em class="property"> <span class="pre">:TScenario</span></em><a class="headerlink" href="#avalanche.benchmarks.scenarios.generic_definitions.ScenarioStream.scenario" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="avalanche.benchmarks.scenarios.generic_definitions.ScenarioStream.scenario">
+<span class="sig-name descname"><span class="pre">scenario</span></span><em class="property"> <span class="pre">:TScenario</span></em><a class="headerlink" href="#avalanche.benchmarks.scenarios.generic_definitions.ScenarioStream.scenario" title="Permalink to this definition">¶</a></dt>
 <dd><p>A reference to the scenario this stream belongs to.</p>
 </dd></dl>
 
 <dl class="py method">
-<dt id="avalanche.benchmarks.scenarios.generic_definitions.ScenarioStream.__getitem__">
-<code class="sig-name descname"><span class="pre">__getitem__</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><a class="reference internal" href="#avalanche.benchmarks.scenarios.generic_definitions.TScenarioStream" title="avalanche.benchmarks.scenarios.generic_definitions.TScenarioStream"><span class="pre">TScenarioStream</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">experience_idx</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">,</span> </span><span class="pre">slice</span><span class="p"><span class="pre">,</span> </span><span class="pre">Iterable</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">Union</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#avalanche.benchmarks.scenarios.generic_definitions.TExperience" title="avalanche.benchmarks.scenarios.generic_definitions.TExperience"><span class="pre">TExperience</span></a><span class="p"><span class="pre">,</span> </span><a class="reference internal" href="#avalanche.benchmarks.scenarios.generic_definitions.TScenarioStream" title="avalanche.benchmarks.scenarios.generic_definitions.TScenarioStream"><span class="pre">TScenarioStream</span></a><span class="p"><span class="pre">]</span></span><a class="reference internal" href="../../../../../_modules/avalanche/benchmarks/scenarios/generic_definitions/#ScenarioStream.__getitem__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.benchmarks.scenarios.generic_definitions.ScenarioStream.__getitem__" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="avalanche.benchmarks.scenarios.generic_definitions.ScenarioStream.__getitem__">
+<span class="sig-name descname"><span class="pre">__getitem__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><a class="reference internal" href="#avalanche.benchmarks.scenarios.generic_definitions.TScenarioStream" title="avalanche.benchmarks.scenarios.generic_definitions.TScenarioStream"><span class="pre">TScenarioStream</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">experience_idx</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">,</span> </span><span class="pre">slice</span><span class="p"><span class="pre">,</span> </span><span class="pre">Iterable</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">Union</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#avalanche.benchmarks.scenarios.generic_definitions.TExperience" title="avalanche.benchmarks.scenarios.generic_definitions.TExperience"><span class="pre">TExperience</span></a><span class="p"><span class="pre">,</span> </span><a class="reference internal" href="#avalanche.benchmarks.scenarios.generic_definitions.TScenarioStream" title="avalanche.benchmarks.scenarios.generic_definitions.TScenarioStream"><span class="pre">TScenarioStream</span></a><span class="p"><span class="pre">]</span></span><a class="reference internal" href="../../../../../_modules/avalanche/benchmarks/scenarios/generic_definitions/#ScenarioStream.__getitem__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.benchmarks.scenarios.generic_definitions.ScenarioStream.__getitem__" title="Permalink to this definition">¶</a></dt>
 <dd><p>Gets an experience given its experience index (or a stream slice given
 the experience order).</p>
 <dl class="field-list simple">
@@ -319,8 +322,8 @@ index or a sliced stream instance.</p>
 </dd></dl>
 
 <dl class="py method">
-<dt id="avalanche.benchmarks.scenarios.generic_definitions.ScenarioStream.__len__">
-<code class="sig-name descname"><span class="pre">__len__</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">int</span><a class="reference internal" href="../../../../../_modules/avalanche/benchmarks/scenarios/generic_definitions/#ScenarioStream.__len__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.benchmarks.scenarios.generic_definitions.ScenarioStream.__len__" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="avalanche.benchmarks.scenarios.generic_definitions.ScenarioStream.__len__">
+<span class="sig-name descname"><span class="pre">__len__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">int</span><a class="reference internal" href="../../../../../_modules/avalanche/benchmarks/scenarios/generic_definitions/#ScenarioStream.__len__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.benchmarks.scenarios.generic_definitions.ScenarioStream.__len__" title="Permalink to this definition">¶</a></dt>
 <dd><p>Used to get the length of this stream (the amount of experiences).</p>
 <dl class="field-list simple">
 <dt class="field-odd">Returns</dt>

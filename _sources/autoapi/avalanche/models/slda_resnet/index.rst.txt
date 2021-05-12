@@ -1,0 +1,44 @@
+:mod:`avalanche.models.slda_resnet`
+===================================
+
+.. py:module:: avalanche.models.slda_resnet
+
+
+Module Contents
+---------------
+
+Classes
+~~~~~~~
+
+.. autoapisummary::
+
+   avalanche.models.slda_resnet.SLDAResNetModel
+
+
+
+.. py:class:: SLDAResNetModel(arch='resnet18', output_layer_name='layer4.1', imagenet_pretrained=True, device='cpu')
+
+   Bases: :class:`torch.nn.Module`
+
+   This is a model wrapper to reproduce experiments from the original
+   paper of Deep Streaming Linear Discriminant Analysis by using
+   a pretrained ResNet model.
+
+   :param arch: backbone architecture (default is resnet-18, but others
+   can be used by modifying layer for
+   feature extraction in `self.feature_extraction_wrapper'
+   :param imagenet_pretrained: True if initializing backbone with imagenet
+   pre-trained weights else False
+   :param output_layer_name: name of the layer from feature extractor
+   :param device: cpu, gpu or other device
+
+   .. method:: pool_feat(features)
+      :staticmethod:
+
+
+   .. method:: forward(self, x)
+
+      :param x: raw x data
+
+
+

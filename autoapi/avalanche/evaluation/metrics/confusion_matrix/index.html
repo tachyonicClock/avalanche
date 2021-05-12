@@ -13,6 +13,8 @@
   
   <link rel="stylesheet" href="../../../../../_static/css/mystyle.css" type="text/css" />
   <link rel="stylesheet" href="../../../../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../../../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../../../../_static/css/mystyle.css" type="text/css" />
   <link rel="stylesheet" href="../../../../../_static/graphviz.css" type="text/css" />
 
   
@@ -30,6 +32,7 @@
   
     
       <script type="text/javascript" id="documentation_options" data-url_root="../../../../../" src="../../../../../_static/documentation_options.js"></script>
+        <script data-url_root="../../../../../" id="documentation_options" src="../../../../../_static/documentation_options.js"></script>
         <script src="../../../../../_static/jquery.js"></script>
         <script src="../../../../../_static/underscore.js"></script>
         <script src="../../../../../_static/doctools.js"></script>
@@ -195,11 +198,28 @@
 <tr class="row-even"><td><p><a class="reference internal" href="#avalanche.evaluation.metrics.confusion_matrix.StreamConfusionMatrix" title="avalanche.evaluation.metrics.confusion_matrix.StreamConfusionMatrix"><code class="xref py py-obj docutils literal notranslate"><span class="pre">StreamConfusionMatrix</span></code></a></p></td>
 <td><p>The Stream Confusion Matrix metric.</p></td>
 </tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#avalanche.evaluation.metrics.confusion_matrix.WandBStreamConfusionMatrix" title="avalanche.evaluation.metrics.confusion_matrix.WandBStreamConfusionMatrix"><code class="xref py py-obj docutils literal notranslate"><span class="pre">WandBStreamConfusionMatrix</span></code></a></p></td>
+<td><p>Confusion Matrix metric compatible with Weights and Biases logger.</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="functions">
+<h3>Functions<a class="headerlink" href="#functions" title="Permalink to this headline">¶</a></h3>
+<table class="longtable docutils align-default">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 90%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="#avalanche.evaluation.metrics.confusion_matrix.confusion_matrix_metrics" title="avalanche.evaluation.metrics.confusion_matrix.confusion_matrix_metrics"><code class="xref py py-obj docutils literal notranslate"><span class="pre">confusion_matrix_metrics</span></code></a>(num_classes=None, normalize=None, save_image=True, image_creator=default_cm_image_creator, class_names=None, stream=False, wandb=False) → List[PluginMetric]</p></td>
+<td><p>Helper method that can be used to obtain the desired set of</p></td>
+</tr>
 </tbody>
 </table>
 <dl class="py class">
-<dt id="avalanche.evaluation.metrics.confusion_matrix.ConfusionMatrix">
-<em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">avalanche.evaluation.metrics.confusion_matrix.</span></code><code class="sig-name descname"><span class="pre">ConfusionMatrix</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">num_classes</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">int</span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">normalize</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Literal</span><span class="p"><span class="pre">[</span></span><span class="pre">true</span><span class="p"><span class="pre">,</span> </span><span class="pre">pred</span><span class="p"><span class="pre">,</span> </span><span class="pre">all</span><span class="p"><span class="pre">]</span></span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../_modules/avalanche/evaluation/metrics/confusion_matrix/#ConfusionMatrix"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.evaluation.metrics.confusion_matrix.ConfusionMatrix" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="avalanche.evaluation.metrics.confusion_matrix.ConfusionMatrix">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">avalanche.evaluation.metrics.confusion_matrix.</span></span><span class="sig-name descname"><span class="pre">ConfusionMatrix</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">num_classes</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">int</span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">normalize</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Literal</span><span class="p"><span class="pre">[</span></span><span class="pre">true</span><span class="p"><span class="pre">,</span> </span><span class="pre">pred</span><span class="p"><span class="pre">,</span> </span><span class="pre">all</span><span class="p"><span class="pre">]</span></span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../_modules/avalanche/evaluation/metrics/confusion_matrix/#ConfusionMatrix"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.evaluation.metrics.confusion_matrix.ConfusionMatrix" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">Metric[Tensor]</span></code></p>
 <p>The standalone confusion matrix metric.</p>
 <p>Instances of this metric keep track of the confusion matrix by receiving a
@@ -241,8 +261,8 @@ None to not normalize</p></li>
 </dd>
 </dl>
 <dl class="py method">
-<dt id="avalanche.evaluation.metrics.confusion_matrix.ConfusionMatrix.update">
-<code class="sig-name descname"><span class="pre">update</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">true_y</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Tensor</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">predicted_y</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Tensor</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">None</span><a class="reference internal" href="../../../../../_modules/avalanche/evaluation/metrics/confusion_matrix/#ConfusionMatrix.update"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.evaluation.metrics.confusion_matrix.ConfusionMatrix.update" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="avalanche.evaluation.metrics.confusion_matrix.ConfusionMatrix.update">
+<span class="sig-name descname"><span class="pre">update</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">true_y</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Tensor</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">predicted_y</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Tensor</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">None</span><a class="reference internal" href="../../../../../_modules/avalanche/evaluation/metrics/confusion_matrix/#ConfusionMatrix.update"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.evaluation.metrics.confusion_matrix.ConfusionMatrix.update" title="Permalink to this definition">¶</a></dt>
 <dd><p>Update the running confusion matrix given the true and predicted labels.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -260,8 +280,8 @@ are supported.</p></li>
 </dd></dl>
 
 <dl class="py method">
-<dt id="avalanche.evaluation.metrics.confusion_matrix.ConfusionMatrix.result">
-<code class="sig-name descname"><span class="pre">result</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">Tensor</span><a class="reference internal" href="../../../../../_modules/avalanche/evaluation/metrics/confusion_matrix/#ConfusionMatrix.result"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.evaluation.metrics.confusion_matrix.ConfusionMatrix.result" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="avalanche.evaluation.metrics.confusion_matrix.ConfusionMatrix.result">
+<span class="sig-name descname"><span class="pre">result</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">Tensor</span><a class="reference internal" href="../../../../../_modules/avalanche/evaluation/metrics/confusion_matrix/#ConfusionMatrix.result"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.evaluation.metrics.confusion_matrix.ConfusionMatrix.result" title="Permalink to this definition">¶</a></dt>
 <dd><p>Retrieves the unnormalized confusion matrix.</p>
 <p>Calling this method will not change the internal state of the metric.</p>
 <dl class="field-list simple">
@@ -272,8 +292,8 @@ are supported.</p></li>
 </dd></dl>
 
 <dl class="py method">
-<dt id="avalanche.evaluation.metrics.confusion_matrix.ConfusionMatrix.reset">
-<code class="sig-name descname"><span class="pre">reset</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">None</span><a class="reference internal" href="../../../../../_modules/avalanche/evaluation/metrics/confusion_matrix/#ConfusionMatrix.reset"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.evaluation.metrics.confusion_matrix.ConfusionMatrix.reset" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="avalanche.evaluation.metrics.confusion_matrix.ConfusionMatrix.reset">
+<span class="sig-name descname"><span class="pre">reset</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">None</span><a class="reference internal" href="../../../../../_modules/avalanche/evaluation/metrics/confusion_matrix/#ConfusionMatrix.reset"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.evaluation.metrics.confusion_matrix.ConfusionMatrix.reset" title="Permalink to this definition">¶</a></dt>
 <dd><p>Resets the metric.</p>
 <p>Calling this method will <em>not</em> reset the default number of classes
 optionally defined in the constructor optional parameter.</p>
@@ -285,15 +305,15 @@ optionally defined in the constructor optional parameter.</p>
 </dd></dl>
 
 <dl class="py method">
-<dt id="avalanche.evaluation.metrics.confusion_matrix.ConfusionMatrix.nan_to_num">
-<em class="property"><span class="pre">static</span> </em><code class="sig-name descname"><span class="pre">nan_to_num</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">matrix</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Tensor</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">Tensor</span><a class="reference internal" href="../../../../../_modules/avalanche/evaluation/metrics/confusion_matrix/#ConfusionMatrix.nan_to_num"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.evaluation.metrics.confusion_matrix.ConfusionMatrix.nan_to_num" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="avalanche.evaluation.metrics.confusion_matrix.ConfusionMatrix.nan_to_num">
+<em class="property"><span class="pre">static</span> </em><span class="sig-name descname"><span class="pre">nan_to_num</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">matrix</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Tensor</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">Tensor</span><a class="reference internal" href="../../../../../_modules/avalanche/evaluation/metrics/confusion_matrix/#ConfusionMatrix.nan_to_num"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.evaluation.metrics.confusion_matrix.ConfusionMatrix.nan_to_num" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 </dd></dl>
 
 <dl class="py class">
-<dt id="avalanche.evaluation.metrics.confusion_matrix.StreamConfusionMatrix">
-<em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">avalanche.evaluation.metrics.confusion_matrix.</span></code><code class="sig-name descname"><span class="pre">StreamConfusionMatrix</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">num_classes</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">,</span> </span><span class="pre">Mapping</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">,</span> </span><span class="pre">int</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">normalize</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Literal</span><span class="p"><span class="pre">[</span></span><span class="pre">true</span><span class="p"><span class="pre">,</span> </span><span class="pre">pred</span><span class="p"><span class="pre">,</span> </span><span class="pre">all</span><span class="p"><span class="pre">]</span></span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">save_image</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">bool</span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">image_creator</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Callable</span><span class="p"><span class="pre">[</span></span><span class="p"><span class="pre">[</span></span><span class="pre">Tensor</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span> </span><span class="pre">Image</span><span class="p"><span class="pre">]</span></span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">default_cm_image_creator</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../_modules/avalanche/evaluation/metrics/confusion_matrix/#StreamConfusionMatrix"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.evaluation.metrics.confusion_matrix.StreamConfusionMatrix" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="avalanche.evaluation.metrics.confusion_matrix.StreamConfusionMatrix">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">avalanche.evaluation.metrics.confusion_matrix.</span></span><span class="sig-name descname"><span class="pre">StreamConfusionMatrix</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">num_classes</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">,</span> </span><span class="pre">Mapping</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">,</span> </span><span class="pre">int</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">normalize</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Literal</span><span class="p"><span class="pre">[</span></span><span class="pre">true</span><span class="p"><span class="pre">,</span> </span><span class="pre">pred</span><span class="p"><span class="pre">,</span> </span><span class="pre">all</span><span class="p"><span class="pre">]</span></span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">save_image</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">bool</span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">image_creator</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Callable</span><span class="p"><span class="pre">[</span></span><span class="p"><span class="pre">[</span></span><span class="pre">Tensor</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span> </span><span class="pre">Image</span><span class="p"><span class="pre">]</span></span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">default_cm_image_creator</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../_modules/avalanche/evaluation/metrics/confusion_matrix/#StreamConfusionMatrix"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.evaluation.metrics.confusion_matrix.StreamConfusionMatrix" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">PluginMetric[Tensor]</span></code></p>
 <p>The Stream Confusion Matrix metric.
 This plugin metric only works on the eval phase.</p>
@@ -333,45 +353,157 @@ matrix as a PIL Image. Defaults to <cite>default_cm_image_creator</cite>.</p></l
 </dd>
 </dl>
 <dl class="py method">
-<dt id="avalanche.evaluation.metrics.confusion_matrix.StreamConfusionMatrix.reset">
-<code class="sig-name descname"><span class="pre">reset</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">None</span><a class="reference internal" href="../../../../../_modules/avalanche/evaluation/metrics/confusion_matrix/#StreamConfusionMatrix.reset"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.evaluation.metrics.confusion_matrix.StreamConfusionMatrix.reset" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="avalanche.evaluation.metrics.confusion_matrix.StreamConfusionMatrix.reset">
+<span class="sig-name descname"><span class="pre">reset</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">None</span><a class="reference internal" href="../../../../../_modules/avalanche/evaluation/metrics/confusion_matrix/#StreamConfusionMatrix.reset"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.evaluation.metrics.confusion_matrix.StreamConfusionMatrix.reset" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
-<dt id="avalanche.evaluation.metrics.confusion_matrix.StreamConfusionMatrix.result">
-<code class="sig-name descname"><span class="pre">result</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">Tensor</span><a class="reference internal" href="../../../../../_modules/avalanche/evaluation/metrics/confusion_matrix/#StreamConfusionMatrix.result"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.evaluation.metrics.confusion_matrix.StreamConfusionMatrix.result" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="avalanche.evaluation.metrics.confusion_matrix.StreamConfusionMatrix.result">
+<span class="sig-name descname"><span class="pre">result</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">Tensor</span><a class="reference internal" href="../../../../../_modules/avalanche/evaluation/metrics/confusion_matrix/#StreamConfusionMatrix.result"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.evaluation.metrics.confusion_matrix.StreamConfusionMatrix.result" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
-<dt id="avalanche.evaluation.metrics.confusion_matrix.StreamConfusionMatrix.update">
-<code class="sig-name descname"><span class="pre">update</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">true_y</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Tensor</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">predicted_y</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Tensor</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">None</span><a class="reference internal" href="../../../../../_modules/avalanche/evaluation/metrics/confusion_matrix/#StreamConfusionMatrix.update"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.evaluation.metrics.confusion_matrix.StreamConfusionMatrix.update" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="avalanche.evaluation.metrics.confusion_matrix.StreamConfusionMatrix.update">
+<span class="sig-name descname"><span class="pre">update</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">true_y</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Tensor</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">predicted_y</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Tensor</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">None</span><a class="reference internal" href="../../../../../_modules/avalanche/evaluation/metrics/confusion_matrix/#StreamConfusionMatrix.update"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.evaluation.metrics.confusion_matrix.StreamConfusionMatrix.update" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
-<dt id="avalanche.evaluation.metrics.confusion_matrix.StreamConfusionMatrix.before_eval">
-<code class="sig-name descname"><span class="pre">before_eval</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">strategy</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">None</span><a class="reference internal" href="../../../../../_modules/avalanche/evaluation/metrics/confusion_matrix/#StreamConfusionMatrix.before_eval"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.evaluation.metrics.confusion_matrix.StreamConfusionMatrix.before_eval" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="avalanche.evaluation.metrics.confusion_matrix.StreamConfusionMatrix.before_eval">
+<span class="sig-name descname"><span class="pre">before_eval</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">strategy</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">None</span><a class="reference internal" href="../../../../../_modules/avalanche/evaluation/metrics/confusion_matrix/#StreamConfusionMatrix.before_eval"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.evaluation.metrics.confusion_matrix.StreamConfusionMatrix.before_eval" title="Permalink to this definition">¶</a></dt>
 <dd><p>Called before <cite>eval</cite> by the <cite>BaseStrategy</cite>.</p>
 </dd></dl>
 
 <dl class="py method">
-<dt id="avalanche.evaluation.metrics.confusion_matrix.StreamConfusionMatrix.after_eval_iteration">
-<code class="sig-name descname"><span class="pre">after_eval_iteration</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">strategy</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">BaseStrategy</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">None</span><a class="reference internal" href="../../../../../_modules/avalanche/evaluation/metrics/confusion_matrix/#StreamConfusionMatrix.after_eval_iteration"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.evaluation.metrics.confusion_matrix.StreamConfusionMatrix.after_eval_iteration" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="avalanche.evaluation.metrics.confusion_matrix.StreamConfusionMatrix.after_eval_iteration">
+<span class="sig-name descname"><span class="pre">after_eval_iteration</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">strategy</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">BaseStrategy</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">None</span><a class="reference internal" href="../../../../../_modules/avalanche/evaluation/metrics/confusion_matrix/#StreamConfusionMatrix.after_eval_iteration"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.evaluation.metrics.confusion_matrix.StreamConfusionMatrix.after_eval_iteration" title="Permalink to this definition">¶</a></dt>
 <dd><p>Called after the end of an iteration by the
 <cite>BaseStrategy</cite>.</p>
 </dd></dl>
 
 <dl class="py method">
-<dt id="avalanche.evaluation.metrics.confusion_matrix.StreamConfusionMatrix.after_eval">
-<code class="sig-name descname"><span class="pre">after_eval</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">strategy</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">BaseStrategy</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">MetricResult</span><a class="reference internal" href="../../../../../_modules/avalanche/evaluation/metrics/confusion_matrix/#StreamConfusionMatrix.after_eval"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.evaluation.metrics.confusion_matrix.StreamConfusionMatrix.after_eval" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="avalanche.evaluation.metrics.confusion_matrix.StreamConfusionMatrix.after_eval">
+<span class="sig-name descname"><span class="pre">after_eval</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">strategy</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">BaseStrategy</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">MetricResult</span><a class="reference internal" href="../../../../../_modules/avalanche/evaluation/metrics/confusion_matrix/#StreamConfusionMatrix.after_eval"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.evaluation.metrics.confusion_matrix.StreamConfusionMatrix.after_eval" title="Permalink to this definition">¶</a></dt>
 <dd><p>Called after <cite>eval</cite> by the <cite>BaseStrategy</cite>.</p>
 </dd></dl>
 
 <dl class="py method">
-<dt id="avalanche.evaluation.metrics.confusion_matrix.StreamConfusionMatrix.__str__">
-<code class="sig-name descname"><span class="pre">__str__</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../_modules/avalanche/evaluation/metrics/confusion_matrix/#StreamConfusionMatrix.__str__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.evaluation.metrics.confusion_matrix.StreamConfusionMatrix.__str__" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="avalanche.evaluation.metrics.confusion_matrix.StreamConfusionMatrix.__str__">
+<span class="sig-name descname"><span class="pre">__str__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../_modules/avalanche/evaluation/metrics/confusion_matrix/#StreamConfusionMatrix.__str__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.evaluation.metrics.confusion_matrix.StreamConfusionMatrix.__str__" title="Permalink to this definition">¶</a></dt>
 <dd><p>Return str(self).</p>
 </dd></dl>
 
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="avalanche.evaluation.metrics.confusion_matrix.WandBStreamConfusionMatrix">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">avalanche.evaluation.metrics.confusion_matrix.</span></span><span class="sig-name descname"><span class="pre">WandBStreamConfusionMatrix</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">class_names</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../_modules/avalanche/evaluation/metrics/confusion_matrix/#WandBStreamConfusionMatrix"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.evaluation.metrics.confusion_matrix.WandBStreamConfusionMatrix" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="../../#avalanche.evaluation.PluginMetric" title="avalanche.evaluation.PluginMetric"><code class="xref py py-class docutils literal notranslate"><span class="pre">avalanche.evaluation.PluginMetric</span></code></a></p>
+<p>Confusion Matrix metric compatible with Weights and Biases logger.
+Differently from the <cite>StreamConfusionMatrix</cite>, this metric will use W&amp;B
+built-in functionalities to log the Confusion Matrix.</p>
+<p>This metric may not produce meaningful outputs with other loggers.</p>
+<p><a class="reference external" href="https://docs.wandb.ai/guides/track/log#custom-charts">https://docs.wandb.ai/guides/track/log#custom-charts</a></p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>class_names</strong> – list of names for the classes.
+E.g. [“cat”, “dog”] if class 0 == “cat” and class 1 == “dog”
+If None, no class names will be used. Default None.</p>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="avalanche.evaluation.metrics.confusion_matrix.WandBStreamConfusionMatrix.reset">
+<span class="sig-name descname"><span class="pre">reset</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">None</span><a class="reference internal" href="../../../../../_modules/avalanche/evaluation/metrics/confusion_matrix/#WandBStreamConfusionMatrix.reset"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.evaluation.metrics.confusion_matrix.WandBStreamConfusionMatrix.reset" title="Permalink to this definition">¶</a></dt>
+<dd><p>Resets the metric internal state.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>None.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="avalanche.evaluation.metrics.confusion_matrix.WandBStreamConfusionMatrix.before_eval">
+<span class="sig-name descname"><span class="pre">before_eval</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">strategy</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">None</span><a class="reference internal" href="../../../../../_modules/avalanche/evaluation/metrics/confusion_matrix/#WandBStreamConfusionMatrix.before_eval"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.evaluation.metrics.confusion_matrix.WandBStreamConfusionMatrix.before_eval" title="Permalink to this definition">¶</a></dt>
+<dd><p>Called before <cite>eval</cite> by the <cite>BaseStrategy</cite>.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="avalanche.evaluation.metrics.confusion_matrix.WandBStreamConfusionMatrix.result">
+<span class="sig-name descname"><span class="pre">result</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../_modules/avalanche/evaluation/metrics/confusion_matrix/#WandBStreamConfusionMatrix.result"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.evaluation.metrics.confusion_matrix.WandBStreamConfusionMatrix.result" title="Permalink to this definition">¶</a></dt>
+<dd><p>Obtains the value of the metric.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>The value of the metric.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="avalanche.evaluation.metrics.confusion_matrix.WandBStreamConfusionMatrix.update">
+<span class="sig-name descname"><span class="pre">update</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">output</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">target</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../_modules/avalanche/evaluation/metrics/confusion_matrix/#WandBStreamConfusionMatrix.update"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.evaluation.metrics.confusion_matrix.WandBStreamConfusionMatrix.update" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="avalanche.evaluation.metrics.confusion_matrix.WandBStreamConfusionMatrix.after_eval_iteration">
+<span class="sig-name descname"><span class="pre">after_eval_iteration</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">strategy</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">BaseStrategy</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../_modules/avalanche/evaluation/metrics/confusion_matrix/#WandBStreamConfusionMatrix.after_eval_iteration"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.evaluation.metrics.confusion_matrix.WandBStreamConfusionMatrix.after_eval_iteration" title="Permalink to this definition">¶</a></dt>
+<dd><p>Called after the end of an iteration by the
+<cite>BaseStrategy</cite>.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="avalanche.evaluation.metrics.confusion_matrix.WandBStreamConfusionMatrix.after_eval">
+<span class="sig-name descname"><span class="pre">after_eval</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">strategy</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">BaseStrategy</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">MetricResult</span><a class="reference internal" href="../../../../../_modules/avalanche/evaluation/metrics/confusion_matrix/#WandBStreamConfusionMatrix.after_eval"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.evaluation.metrics.confusion_matrix.WandBStreamConfusionMatrix.after_eval" title="Permalink to this definition">¶</a></dt>
+<dd><p>Called after <cite>eval</cite> by the <cite>BaseStrategy</cite>.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="avalanche.evaluation.metrics.confusion_matrix.WandBStreamConfusionMatrix.__str__">
+<span class="sig-name descname"><span class="pre">__str__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../_modules/avalanche/evaluation/metrics/confusion_matrix/#WandBStreamConfusionMatrix.__str__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.evaluation.metrics.confusion_matrix.WandBStreamConfusionMatrix.__str__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return str(self).</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="avalanche.evaluation.metrics.confusion_matrix.confusion_matrix_metrics">
+<span class="sig-prename descclassname"><span class="pre">avalanche.evaluation.metrics.confusion_matrix.</span></span><span class="sig-name descname"><span class="pre">confusion_matrix_metrics</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">num_classes</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">normalize</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">save_image</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">image_creator</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">default_cm_image_creator</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">class_names</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">stream</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">wandb</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">PluginMetric</span><span class="p"><span class="pre">]</span></span><a class="reference internal" href="../../../../../_modules/avalanche/evaluation/metrics/confusion_matrix/#confusion_matrix_metrics"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.evaluation.metrics.confusion_matrix.confusion_matrix_metrics" title="Permalink to this definition">¶</a></dt>
+<dd><p>Helper method that can be used to obtain the desired set of
+plugin metrics.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>num_classes</strong> – The number of classes. Defaults to None,
+which means that the number of classes will be inferred from
+ground truth and prediction Tensors (see class description for more
+details). If not None, the confusion matrix will always be of size
+<cite>num_classes, num_classes</cite> and only the first <cite>num_classes</cite> values
+of output logits or target logits will be considered in the update.
+If the output or targets are provided as numerical labels,
+there can be no label greater than <cite>num_classes</cite>.</p></li>
+<li><p><strong>normalize</strong> – Normalizes confusion matrix over the true (rows),
+predicted (columns) conditions or all the population. If None,
+confusion matrix will not be normalized. Valid values are: ‘true’,
+‘pred’ and ‘all’ or None.</p></li>
+<li><p><strong>save_image</strong> – If True, a graphical representation of the confusion
+matrix will be logged, too. If False, only the Tensor representation
+will be logged. Defaults to True.</p></li>
+<li><p><strong>image_creator</strong> – A callable that, given the tensor representation
+of the confusion matrix, returns a graphical representation of the
+matrix as a PIL Image. Defaults to <cite>default_cm_image_creator</cite>.</p></li>
+<li><p><strong>class_names</strong> – W&amp;B only. List of names for the classes.
+E.g. [“cat”, “dog”] if class 0 == “cat” and class 1 == “dog”
+If None, no class names will be used. Default None.</p></li>
+<li><p><strong>stream</strong> – If True, will return a metric able to log
+the confusion matrix averaged over the entire evaluation stream
+of experiences.</p></li>
+<li><p><strong>wandb</strong> – if True, will return a Weights and Biases confusion matrix
+together with all the other confusion matrixes requested.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>A list of plugin metrics.</p>
+</dd>
+</dl>
 </dd></dl>
 
 </div>

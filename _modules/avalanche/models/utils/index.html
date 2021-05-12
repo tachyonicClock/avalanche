@@ -13,6 +13,8 @@
   
   <link rel="stylesheet" href="../../../../_static/css/mystyle.css" type="text/css" />
   <link rel="stylesheet" href="../../../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../../../_static/css/mystyle.css" type="text/css" />
   <link rel="stylesheet" href="../../../../_static/graphviz.css" type="text/css" />
 
   
@@ -30,6 +32,7 @@
   
     
       <script type="text/javascript" id="documentation_options" data-url_root="../../../../" src="../../../../_static/documentation_options.js"></script>
+        <script data-url_root="../../../../" id="documentation_options" src="../../../../_static/documentation_options.js"></script>
         <script src="../../../../_static/jquery.js"></script>
         <script src="../../../../_static/underscore.js"></script>
         <script src="../../../../_static/doctools.js"></script>
@@ -177,13 +180,62 @@
             
   <h1>Source code for avalanche.models.utils</h1><div class="highlight"><pre>
 <span></span><span class="kn">from</span> <span class="nn">avalanche.models.dynamic_modules</span> <span class="kn">import</span> <span class="n">MultiTaskModule</span>
+<span class="kn">import</span> <span class="nn">torch.nn</span> <span class="k">as</span> <span class="nn">nn</span>
 
 
-<div class="viewcode-block" id="avalanche_forward"><a class="viewcode-back" href="../../../../autoapi/avalanche/models/utils/#avalanche.models.utils.avalanche_forward">[docs]</a><span class="k">def</span> <span class="nf">avalanche_forward</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">task_labels</span><span class="p">):</span>
+<div class="viewcode-block" id="avalanche_forward"><a class="viewcode-back" href="../../../../autoapi/avalanche/models/utils/#avalanche.models.avalanche_forward">[docs]</a><span class="k">def</span> <span class="nf">avalanche_forward</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">task_labels</span><span class="p">):</span>
     <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">MultiTaskModule</span><span class="p">):</span>
         <span class="k">return</span> <span class="n">model</span><span class="o">.</span><span class="n">forward</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">task_labels</span><span class="p">)</span>
     <span class="k">else</span><span class="p">:</span>  <span class="c1"># no task labels</span>
         <span class="k">return</span> <span class="n">model</span><span class="o">.</span><span class="n">forward</span><span class="p">(</span><span class="n">x</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="FeatureExtractorBackbone"><a class="viewcode-back" href="../../../../autoapi/avalanche/models/utils/#avalanche.models.FeatureExtractorBackbone">[docs]</a><span class="k">class</span> <span class="nc">FeatureExtractorBackbone</span><span class="p">(</span><span class="n">nn</span><span class="o">.</span><span class="n">Module</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    This PyTorch module allows us to extract features from a backbone network</span>
+<span class="sd">    given a layer name.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">model</span><span class="p">,</span> <span class="n">output_layer_name</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">FeatureExtractorBackbone</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">model</span> <span class="o">=</span> <span class="n">model</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">output_layer_name</span> <span class="o">=</span> <span class="n">output_layer_name</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">output</span> <span class="o">=</span> <span class="kc">None</span>  <span class="c1"># this will store the layer output</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">add_hooks</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="p">)</span>
+
+<div class="viewcode-block" id="FeatureExtractorBackbone.forward"><a class="viewcode-back" href="../../../../autoapi/avalanche/models/utils/#avalanche.models.FeatureExtractorBackbone.forward">[docs]</a>    <span class="k">def</span> <span class="nf">forward</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">output</span></div>
+
+<div class="viewcode-block" id="FeatureExtractorBackbone.get_name_to_module"><a class="viewcode-back" href="../../../../autoapi/avalanche/models/utils/#avalanche.models.FeatureExtractorBackbone.get_name_to_module">[docs]</a>    <span class="k">def</span> <span class="nf">get_name_to_module</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">model</span><span class="p">):</span>
+        <span class="n">name_to_module</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="k">for</span> <span class="n">m</span> <span class="ow">in</span> <span class="n">model</span><span class="o">.</span><span class="n">named_modules</span><span class="p">():</span>
+            <span class="n">name_to_module</span><span class="p">[</span><span class="n">m</span><span class="p">[</span><span class="mi">0</span><span class="p">]]</span> <span class="o">=</span> <span class="n">m</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+        <span class="k">return</span> <span class="n">name_to_module</span></div>
+
+<div class="viewcode-block" id="FeatureExtractorBackbone.get_activation"><a class="viewcode-back" href="../../../../autoapi/avalanche/models/utils/#avalanche.models.FeatureExtractorBackbone.get_activation">[docs]</a>    <span class="k">def</span> <span class="nf">get_activation</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">def</span> <span class="nf">hook</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="nb">input</span><span class="p">,</span> <span class="n">output</span><span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">output</span> <span class="o">=</span> <span class="n">output</span><span class="o">.</span><span class="n">detach</span><span class="p">()</span>
+
+        <span class="k">return</span> <span class="n">hook</span></div>
+
+<div class="viewcode-block" id="FeatureExtractorBackbone.add_hooks"><a class="viewcode-back" href="../../../../autoapi/avalanche/models/utils/#avalanche.models.FeatureExtractorBackbone.add_hooks">[docs]</a>    <span class="k">def</span> <span class="nf">add_hooks</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">model</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        :param model:</span>
+<span class="sd">        :param outputs: Outputs from layers specified in `output_layer_names`</span>
+<span class="sd">        will be stored in `output` variable</span>
+<span class="sd">        :param output_layer_names:</span>
+<span class="sd">        :return:</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">name_to_module</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_name_to_module</span><span class="p">(</span><span class="n">model</span><span class="p">)</span>
+        <span class="n">name_to_module</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">output_layer_name</span><span class="p">]</span><span class="o">.</span><span class="n">register_forward_hook</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">get_activation</span><span class="p">())</span></div></div>
+
+
+<span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="s1">&#39;avalanche_forward&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;FeatureExtractorBackbone&#39;</span>
+<span class="p">]</span>
 </pre></div>
 
            </div>

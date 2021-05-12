@@ -13,6 +13,8 @@
   
   <link rel="stylesheet" href="../../../../_static/css/mystyle.css" type="text/css" />
   <link rel="stylesheet" href="../../../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../../../_static/css/mystyle.css" type="text/css" />
   <link rel="stylesheet" href="../../../../_static/graphviz.css" type="text/css" />
 
   
@@ -30,6 +32,7 @@
   
     
       <script type="text/javascript" id="documentation_options" data-url_root="../../../../" src="../../../../_static/documentation_options.js"></script>
+        <script data-url_root="../../../../" id="documentation_options" src="../../../../_static/documentation_options.js"></script>
         <script src="../../../../_static/jquery.js"></script>
         <script src="../../../../_static/underscore.js"></script>
         <script src="../../../../_static/doctools.js"></script>
@@ -205,8 +208,8 @@ the new parameters or freeze the old ones.</p>
 </tbody>
 </table>
 <dl class="py function">
-<dt id="avalanche.models.dynamic_optimizers.reset_optimizer">
-<code class="sig-prename descclassname"><span class="pre">avalanche.models.dynamic_optimizers.</span></code><code class="sig-name descname"><span class="pre">reset_optimizer</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">optimizer</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">model</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/avalanche/models/dynamic_optimizers/#reset_optimizer"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.models.dynamic_optimizers.reset_optimizer" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="avalanche.models.dynamic_optimizers.reset_optimizer">
+<span class="sig-prename descclassname"><span class="pre">avalanche.models.dynamic_optimizers.</span></span><span class="sig-name descname"><span class="pre">reset_optimizer</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">optimizer</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">model</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/avalanche/models/dynamic_optimizers/#reset_optimizer"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.models.dynamic_optimizers.reset_optimizer" title="Permalink to this definition">¶</a></dt>
 <dd><p>Reset the optimizer to update the list of learnable parameters.</p>
 <div class="admonition warning">
 <p class="admonition-title">Warning</p>
@@ -226,8 +229,8 @@ the new parameters or freeze the old ones.</p>
 </dd></dl>
 
 <dl class="py function">
-<dt id="avalanche.models.dynamic_optimizers.update_optimizer">
-<code class="sig-prename descclassname"><span class="pre">avalanche.models.dynamic_optimizers.</span></code><code class="sig-name descname"><span class="pre">update_optimizer</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">optimizer</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">old_params</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">new_params</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">reset_state</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/avalanche/models/dynamic_optimizers/#update_optimizer"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.models.dynamic_optimizers.update_optimizer" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="avalanche.models.dynamic_optimizers.update_optimizer">
+<span class="sig-prename descclassname"><span class="pre">avalanche.models.dynamic_optimizers.</span></span><span class="sig-name descname"><span class="pre">update_optimizer</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">optimizer</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">old_params</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">new_params</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">reset_state</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/avalanche/models/dynamic_optimizers/#update_optimizer"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.models.dynamic_optimizers.update_optimizer" title="Permalink to this definition">¶</a></dt>
 <dd><p>Update the optimizer by substituting old_params with new_params.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -245,8 +248,8 @@ Defaults to True.</p></li>
 </dd></dl>
 
 <dl class="py function">
-<dt id="avalanche.models.dynamic_optimizers.add_new_params_to_optimizer">
-<code class="sig-prename descclassname"><span class="pre">avalanche.models.dynamic_optimizers.</span></code><code class="sig-name descname"><span class="pre">add_new_params_to_optimizer</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">optimizer</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">new_params</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/avalanche/models/dynamic_optimizers/#add_new_params_to_optimizer"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.models.dynamic_optimizers.add_new_params_to_optimizer" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="avalanche.models.dynamic_optimizers.add_new_params_to_optimizer">
+<span class="sig-prename descclassname"><span class="pre">avalanche.models.dynamic_optimizers.</span></span><span class="sig-name descname"><span class="pre">add_new_params_to_optimizer</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">optimizer</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">new_params</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/avalanche/models/dynamic_optimizers/#add_new_params_to_optimizer"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.models.dynamic_optimizers.add_new_params_to_optimizer" title="Permalink to this definition">¶</a></dt>
 <dd><p>Add new parameters to the trainable parameters.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>

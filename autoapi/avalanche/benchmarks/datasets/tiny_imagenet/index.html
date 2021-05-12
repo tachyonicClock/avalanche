@@ -13,6 +13,8 @@
   
   <link rel="stylesheet" href="../../../../../_static/css/mystyle.css" type="text/css" />
   <link rel="stylesheet" href="../../../../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../../../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../../../../_static/css/mystyle.css" type="text/css" />
   <link rel="stylesheet" href="../../../../../_static/graphviz.css" type="text/css" />
 
   
@@ -30,6 +32,7 @@
   
     
       <script type="text/javascript" id="documentation_options" data-url_root="../../../../../" src="../../../../../_static/documentation_options.js"></script>
+        <script data-url_root="../../../../../" id="documentation_options" src="../../../../../_static/documentation_options.js"></script>
         <script src="../../../../../_static/jquery.js"></script>
         <script src="../../../../../_static/underscore.js"></script>
         <script src="../../../../../_static/doctools.js"></script>
@@ -203,8 +206,8 @@
 </tbody>
 </table>
 <dl class="py class">
-<dt id="avalanche.benchmarks.datasets.tiny_imagenet.TinyImagenet">
-<em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">avalanche.benchmarks.datasets.tiny_imagenet.</span></code><code class="sig-name descname"><span class="pre">TinyImagenet</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data_folder</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">expanduser('~')</span> <span class="pre">+</span> <span class="pre">'/.avalanche/data/tinyimagenet/'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">train</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">transform</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">ToTensor()</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">target_transform</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">download</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../_modules/avalanche/benchmarks/datasets/tiny_imagenet/tiny_imagenet/#TinyImagenet"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.benchmarks.datasets.tiny_imagenet.TinyImagenet" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="avalanche.benchmarks.datasets.tiny_imagenet.TinyImagenet">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">avalanche.benchmarks.datasets.tiny_imagenet.</span></span><span class="sig-name descname"><span class="pre">TinyImagenet</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data_folder</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">expanduser('~')</span> <span class="pre">+</span> <span class="pre">'/.avalanche/data/tinyimagenet/'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">train</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">transform</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">ToTensor()</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">target_transform</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">download</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../_modules/avalanche/benchmarks/datasets/tiny_imagenet/tiny_imagenet/#TinyImagenet"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.benchmarks.datasets.tiny_imagenet.TinyImagenet" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">torch.utils.data.dataset.Dataset</span></code></p>
 <p>Tiny Imagenet Pytorch Dataset</p>
 <dl class="simple">
@@ -228,22 +231,22 @@
 </dd>
 </dl>
 <dl class="py method">
-<dt id="avalanche.benchmarks.datasets.tiny_imagenet.TinyImagenet.download_tinyImageNet">
-<code class="sig-name descname"><span class="pre">download_tinyImageNet</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../_modules/avalanche/benchmarks/datasets/tiny_imagenet/tiny_imagenet/#TinyImagenet.download_tinyImageNet"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.benchmarks.datasets.tiny_imagenet.TinyImagenet.download_tinyImageNet" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="avalanche.benchmarks.datasets.tiny_imagenet.TinyImagenet.download_tinyImageNet">
+<span class="sig-name descname"><span class="pre">download_tinyImageNet</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../_modules/avalanche/benchmarks/datasets/tiny_imagenet/tiny_imagenet/#TinyImagenet.download_tinyImageNet"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.benchmarks.datasets.tiny_imagenet.TinyImagenet.download_tinyImageNet" title="Permalink to this definition">¶</a></dt>
 <dd><p>Downloads the TintImagenet Dataset</p>
 </dd></dl>
 
 <dl class="py method">
-<dt id="avalanche.benchmarks.datasets.tiny_imagenet.TinyImagenet.labels2dict">
-<code class="sig-name descname"><span class="pre">labels2dict</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../_modules/avalanche/benchmarks/datasets/tiny_imagenet/tiny_imagenet/#TinyImagenet.labels2dict"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.benchmarks.datasets.tiny_imagenet.TinyImagenet.labels2dict" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="avalanche.benchmarks.datasets.tiny_imagenet.TinyImagenet.labels2dict">
+<span class="sig-name descname"><span class="pre">labels2dict</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../_modules/avalanche/benchmarks/datasets/tiny_imagenet/tiny_imagenet/#TinyImagenet.labels2dict"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.benchmarks.datasets.tiny_imagenet.TinyImagenet.labels2dict" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns dictionaries to convert class names into progressive ids
 and viceversa.
 :returns: label2id, id2label: two Python dictionaries.</p>
 </dd></dl>
 
 <dl class="py method">
-<dt id="avalanche.benchmarks.datasets.tiny_imagenet.TinyImagenet.load_data">
-<code class="sig-name descname"><span class="pre">load_data</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">train</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../_modules/avalanche/benchmarks/datasets/tiny_imagenet/tiny_imagenet/#TinyImagenet.load_data"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.benchmarks.datasets.tiny_imagenet.TinyImagenet.load_data" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="avalanche.benchmarks.datasets.tiny_imagenet.TinyImagenet.load_data">
+<span class="sig-name descname"><span class="pre">load_data</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">train</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../_modules/avalanche/benchmarks/datasets/tiny_imagenet/tiny_imagenet/#TinyImagenet.load_data"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.benchmarks.datasets.tiny_imagenet.TinyImagenet.load_data" title="Permalink to this definition">¶</a></dt>
 <dd><p>Load all images paths and targets.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -257,8 +260,8 @@ test set.</p>
 </dd></dl>
 
 <dl class="py method">
-<dt id="avalanche.benchmarks.datasets.tiny_imagenet.TinyImagenet.get_train_images_paths">
-<code class="sig-name descname"><span class="pre">get_train_images_paths</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">class_name</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../_modules/avalanche/benchmarks/datasets/tiny_imagenet/tiny_imagenet/#TinyImagenet.get_train_images_paths"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.benchmarks.datasets.tiny_imagenet.TinyImagenet.get_train_images_paths" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="avalanche.benchmarks.datasets.tiny_imagenet.TinyImagenet.get_train_images_paths">
+<span class="sig-name descname"><span class="pre">get_train_images_paths</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">class_name</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../_modules/avalanche/benchmarks/datasets/tiny_imagenet/tiny_imagenet/#TinyImagenet.get_train_images_paths"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.benchmarks.datasets.tiny_imagenet.TinyImagenet.get_train_images_paths" title="Permalink to this definition">¶</a></dt>
 <dd><p>Gets the training set image paths</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -272,8 +275,8 @@ collected.</p>
 </dd></dl>
 
 <dl class="py method">
-<dt id="avalanche.benchmarks.datasets.tiny_imagenet.TinyImagenet.get_test_images_paths">
-<code class="sig-name descname"><span class="pre">get_test_images_paths</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">class_name</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../_modules/avalanche/benchmarks/datasets/tiny_imagenet/tiny_imagenet/#TinyImagenet.get_test_images_paths"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.benchmarks.datasets.tiny_imagenet.TinyImagenet.get_test_images_paths" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="avalanche.benchmarks.datasets.tiny_imagenet.TinyImagenet.get_test_images_paths">
+<span class="sig-name descname"><span class="pre">get_test_images_paths</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">class_name</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../_modules/avalanche/benchmarks/datasets/tiny_imagenet/tiny_imagenet/#TinyImagenet.get_test_images_paths"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.benchmarks.datasets.tiny_imagenet.TinyImagenet.get_test_images_paths" title="Permalink to this definition">¶</a></dt>
 <dd><p>Gets the test set image paths</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -287,14 +290,14 @@ collected.</p>
 </dd></dl>
 
 <dl class="py method">
-<dt id="avalanche.benchmarks.datasets.tiny_imagenet.TinyImagenet.__len__">
-<code class="sig-name descname"><span class="pre">__len__</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../_modules/avalanche/benchmarks/datasets/tiny_imagenet/tiny_imagenet/#TinyImagenet.__len__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.benchmarks.datasets.tiny_imagenet.TinyImagenet.__len__" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="avalanche.benchmarks.datasets.tiny_imagenet.TinyImagenet.__len__">
+<span class="sig-name descname"><span class="pre">__len__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../_modules/avalanche/benchmarks/datasets/tiny_imagenet/tiny_imagenet/#TinyImagenet.__len__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.benchmarks.datasets.tiny_imagenet.TinyImagenet.__len__" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns the lenght of the set</p>
 </dd></dl>
 
 <dl class="py method">
-<dt id="avalanche.benchmarks.datasets.tiny_imagenet.TinyImagenet.__getitem__">
-<code class="sig-name descname"><span class="pre">__getitem__</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">index</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../_modules/avalanche/benchmarks/datasets/tiny_imagenet/tiny_imagenet/#TinyImagenet.__getitem__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.benchmarks.datasets.tiny_imagenet.TinyImagenet.__getitem__" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="avalanche.benchmarks.datasets.tiny_imagenet.TinyImagenet.__getitem__">
+<span class="sig-name descname"><span class="pre">__getitem__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">index</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../_modules/avalanche/benchmarks/datasets/tiny_imagenet/tiny_imagenet/#TinyImagenet.__getitem__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.benchmarks.datasets.tiny_imagenet.TinyImagenet.__getitem__" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns the index-th x, y pattern of the set</p>
 </dd></dl>
 

@@ -16,7 +16,7 @@ Functions
    avalanche.benchmarks.classic.ccub200.SplitCUB200
 
 
-.. function:: SplitCUB200(root, n_experiences=11, classes_first_batch=100, return_task_id=False, seed=0, fixed_class_order=None, shuffle=False, train_transform=_default_train_transform, eval_transform=_default_eval_transform)
+.. function:: SplitCUB200(root=expanduser('~') + '/.avalanche/data/CUB_200_2011/', n_experiences=11, classes_first_batch=100, return_task_id=False, seed=0, fixed_class_order=None, shuffle=False, train_transform=_default_train_transform, eval_transform=_default_eval_transform)
 
    Creates a CL scenario using the Cub-200 dataset.
 

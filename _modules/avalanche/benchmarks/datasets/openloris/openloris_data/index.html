@@ -190,9 +190,13 @@
 <span class="c1"># Website: continualai.org                                                     #</span>
 <span class="c1">################################################################################</span>
 
+<span class="sd">&quot;&quot;&quot; OpenLoris raw data handling module. It can support automatic download. &quot;&quot;&quot;</span>
+
 <span class="kn">import</span> <span class="nn">os</span>
 <span class="kn">import</span> <span class="nn">sys</span>
-<span class="kn">import</span> <span class="nn">logging</span>
+<span class="kn">import</span> <span class="nn">gdown</span>
+<span class="kn">from</span> <span class="nn">os.path</span> <span class="kn">import</span> <span class="n">expanduser</span>
+<span class="kn">from</span> <span class="nn">torchvision.datasets.utils</span> <span class="kn">import</span> <span class="n">extract_archive</span>
 
 <span class="k">if</span> <span class="n">sys</span><span class="o">.</span><span class="n">version_info</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">&gt;=</span> <span class="mi">3</span><span class="p">:</span>
     <span class="k">pass</span>
@@ -202,68 +206,63 @@
     <span class="c1"># might be around one day</span>
     <span class="k">pass</span>
 
-<span class="n">filename</span> <span class="o">=</span> <span class="p">[</span>
-    <span class="p">(</span><span class="s1">&#39;train.zip&#39;</span><span class="p">,</span>
-     <span class="s1">&#39;1ChoBAGcQ_wkclPXsel8CjJHC0tD7b4ga&#39;</span><span class="p">),</span>
-    <span class="p">(</span><span class="s1">&#39;test.zip&#39;</span><span class="p">,</span>
-     <span class="s1">&#39;1J7_ljcwSZNXo6KwlhRZoG0kiEcRK7U6x&#39;</span><span class="p">),</span>
-    <span class="p">(</span><span class="s1">&#39;LUP.pkl&#39;</span><span class="p">,</span>
-     <span class="s1">&#39;1Os8T30NZ3ZU8liHQPeVbo2nlOoPZuDSV&#39;</span><span class="p">),</span>
-    <span class="p">(</span><span class="s1">&#39;Paths.pkl&#39;</span><span class="p">,</span>
-     <span class="s1">&#39;1KnuYLdlG3VQrhgbtIANLki81ah8Thezj&#39;</span><span class="p">),</span>
-    <span class="p">(</span><span class="s1">&#39;Labels.pkl&#39;</span><span class="p">,</span>
-     <span class="s1">&#39;1GkmOxIAvmjSwo22UzmZTSlw8NSmU5Q9H&#39;</span><span class="p">),</span>
-    <span class="p">(</span><span class="s1">&#39;batches_filelists.zip&#39;</span><span class="p">,</span>
-     <span class="s1">&#39;1r0gbo5_Qlzrdet1GPIrJpVSGRgFU7NEp&#39;</span><span class="p">)</span>
-<span class="p">]</span>
-
-<span class="c1"># id of the real train.zip, the current one above is the validation.zip</span>
-<span class="c1"># 11jgiPB2Z9WRI3bW6VSN8fJZgwFl5mLsF</span>
-
 
 <div class="viewcode-block" id="OPENLORIS_DATA"><a class="viewcode-back" href="../../../../../../autoapi/avalanche/benchmarks/datasets/openloris/openloris_data/#avalanche.benchmarks.datasets.openloris.openloris_data.OPENLORIS_DATA">[docs]</a><span class="k">class</span> <span class="nc">OPENLORIS_DATA</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    OpenlORIS downloader.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data_folder</span><span class="o">=</span><span class="s1">&#39;data/&#39;</span><span class="p">):</span>
+    <span class="n">filename</span> <span class="o">=</span> <span class="p">[</span>
+        <span class="p">(</span><span class="s1">&#39;train.zip&#39;</span><span class="p">,</span>
+         <span class="s1">&#39;11jgiPB2Z9WRI3bW6VSN8fJZgwFl5mLsF&#39;</span><span class="p">),</span>
+        <span class="p">(</span><span class="s1">&#39;valid.zip&#39;</span><span class="p">,</span>
+         <span class="s1">&#39;1ChoBAGcQ_wkclPXsel8CjJHC0tD7b4ga&#39;</span><span class="p">),</span>
+        <span class="p">(</span><span class="s1">&#39;test.zip&#39;</span><span class="p">,</span>
+         <span class="s1">&#39;1J7_ljcwSZNXo6KwlhRZoG0kiEcRK7U6x&#39;</span><span class="p">),</span>
+        <span class="p">(</span><span class="s1">&#39;LUP.pkl&#39;</span><span class="p">,</span>
+         <span class="s1">&#39;1Os8T30NZ3ZU8liHQPeVbo2nlOoPZuDSV&#39;</span><span class="p">),</span>
+        <span class="p">(</span><span class="s1">&#39;Paths.pkl&#39;</span><span class="p">,</span>
+         <span class="s1">&#39;1KnuYLdlG3VQrhgbtIANLki81ah8Thezj&#39;</span><span class="p">),</span>
+        <span class="p">(</span><span class="s1">&#39;Labels.pkl&#39;</span><span class="p">,</span>
+         <span class="s1">&#39;1GkmOxIAvmjSwo22UzmZTSlw8NSmU5Q9H&#39;</span><span class="p">),</span>
+        <span class="p">(</span><span class="s1">&#39;batches_filelists.zip&#39;</span><span class="p">,</span>
+         <span class="s1">&#39;1r0gbo5_Qlzrdet1GPIrJpVSGRgFU7NEp&#39;</span><span class="p">)</span>
+    <span class="p">]</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">root</span><span class="o">=</span><span class="n">expanduser</span><span class="p">(</span><span class="s2">&quot;~&quot;</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot;/.avalanche/data/openloris/&quot;</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Args:</span>
-<span class="sd">            data_folder (string): folder in which to download openloris dataset.</span>
+<span class="sd">            root (string): folder in which to download openloris dataset.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">log</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="s2">&quot;avalanche&quot;</span><span class="p">)</span>
-        <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isabs</span><span class="p">(</span><span class="n">data_folder</span><span class="p">):</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">data_folder</span> <span class="o">=</span> <span class="n">data_folder</span>
-        <span class="k">else</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">data_folder</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="vm">__file__</span><span class="p">),</span>
-                                            <span class="n">data_folder</span><span class="p">)</span>
+        <span class="c1"># we create the dir if it does not exists</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">root</span> <span class="o">=</span> <span class="n">root</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">root</span><span class="p">):</span>
+            <span class="n">os</span><span class="o">.</span><span class="n">makedirs</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">root</span><span class="p">)</span>
 
-        <span class="k">try</span><span class="p">:</span>
-            <span class="c1"># Create target Directory for openloris data</span>
-            <span class="n">os</span><span class="o">.</span><span class="n">makedirs</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">data_folder</span><span class="p">)</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">log</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Directory </span><span class="si">%s</span><span class="s2"> created&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">data_folder</span><span class="p">)</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">download</span> <span class="o">=</span> <span class="kc">True</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">download_openloris</span><span class="p">()</span>
+<div class="viewcode-block" id="OPENLORIS_DATA.download"><a class="viewcode-back" href="../../../../../../autoapi/avalanche/benchmarks/datasets/openloris/openloris_data/#avalanche.benchmarks.datasets.openloris.openloris_data.OPENLORIS_DATA.download">[docs]</a>    <span class="k">def</span> <span class="nf">download</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Download from google drive official repositories. &quot;&quot;&quot;</span>
 
-        <span class="k">except</span> <span class="ne">OSError</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">download</span> <span class="o">=</span> <span class="kc">False</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">log</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s2">&quot;Directory </span><span class="si">%s</span><span class="s2"> already exists&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">data_folder</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">name</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">filename</span><span class="p">:</span>
+            <span class="n">filepath</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">root</span><span class="p">,</span> <span class="n">name</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">filepath</span><span class="p">):</span>
+                    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;[OpenLoris] Start downloading </span><span class="si">{}</span><span class="s1">...&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">name</span><span class="p">[</span><span class="mi">0</span><span class="p">]))</span>
+                    <span class="n">url</span> <span class="o">=</span> <span class="s2">&quot;https://drive.google.com/u/0/uc?id=&quot;</span> <span class="o">+</span> <span class="n">name</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+                    <span class="n">gdown</span><span class="o">.</span><span class="n">download</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">filepath</span><span class="p">,</span> <span class="n">quiet</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+                    <span class="n">gdown</span><span class="o">.</span><span class="n">cached_download</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">filepath</span><span class="p">)</span>
+            <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+                <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;[OpenLoris] Direct download may no longer be &#39;</span>
+                      <span class="s1">&#39;supported!</span><span class="se">\n</span><span class="s1">You should download data manually using &#39;</span>
+                      <span class="s1">&#39;the following link: </span><span class="si">{}</span><span class="se">\n</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">url</span><span class="p">))</span>
+                <span class="k">raise</span> <span class="n">e</span>
 
-<div class="viewcode-block" id="OPENLORIS_DATA.download_openloris"><a class="viewcode-back" href="../../../../../../autoapi/avalanche/benchmarks/datasets/openloris/openloris_data/#avalanche.benchmarks.datasets.openloris.openloris_data.OPENLORIS_DATA.download_openloris">[docs]</a>    <span class="k">def</span> <span class="nf">download_openloris</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="c1"># DEPRECATED: fix this below once the OpenLoris is on a server</span>
-        <span class="c1"># for name in filename:</span>
-        <span class="c1">#     print(&quot;Downloading &quot; + name[1] + &quot;...&quot;)</span>
-        <span class="c1">#     gdd.download_file_from_google_drive(</span>
-        <span class="c1">#     file_id=name[1],</span>
-        <span class="c1">#     dest_path=os.path.join(</span>
-        <span class="c1">#     self.data_folder, name[0]))</span>
-        <span class="c1">#     if name[0].endswith(&#39;.zip&#39;):</span>
-        <span class="c1">#         with ZipFile(</span>
-        <span class="c1">#                 os.path.join(self.data_folder, name[0]), &#39;r&#39;) as zipf:</span>
-        <span class="c1">#             print(&#39;Extracting OpenLORIS images...&#39;)</span>
-        <span class="c1">#             zipf.extractall(self.data_folder)</span>
-        <span class="c1">#             print(&#39;Done!&#39;)</span>
-        <span class="k">raise</span> <span class="ne">NotImplementedError</span></div></div>
+            <span class="n">extract_archive</span><span class="p">(</span><span class="n">filepath</span><span class="p">,</span> <span class="n">to_path</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">root</span><span class="p">)</span></div></div>
+
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot; Simple object creation and download test &quot;&quot;&quot;</span>
+
+    <span class="n">data</span> <span class="o">=</span> <span class="n">OPENLORIS_DATA</span><span class="p">()</span>
 
 
 <span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span>

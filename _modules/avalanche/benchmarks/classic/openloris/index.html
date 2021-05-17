@@ -193,8 +193,9 @@
 <span class="sd">&quot;&quot;&quot; This module contains the high-level OpenLORIS scenario/factor generator.</span>
 <span class="sd">It basically returns a iterable scenario object ``GenericCLScenario`` given</span>
 <span class="sd">a number of configuration parameters.&quot;&quot;&quot;</span>
-<span class="kn">from</span> <span class="nn">avalanche.benchmarks.datasets.openloris.openloris_data</span> <span class="kn">import</span> \
-    <span class="n">OPENLORIS_DATA</span>
+
+<span class="kn">from</span> <span class="nn">avalanche.benchmarks.datasets.openloris</span> <span class="kn">import</span> <span class="n">OpenLORIS</span> <span class="k">as</span> \
+    <span class="n">OpenLORISDataset</span>
 <span class="kn">from</span> <span class="nn">avalanche.benchmarks.scenarios.generic_benchmark_creation</span> <span class="kn">import</span> \
     <span class="n">create_generic_benchmark_from_filelists</span>
 <span class="kn">from</span> <span class="nn">os.path</span> <span class="kn">import</span> <span class="n">expanduser</span>
@@ -263,13 +264,8 @@
                                       <span class="s2">&quot;recognized: it should be &#39;clutter&#39;,&quot;</span> \
                                       <span class="s2">&quot;&#39;illumination&#39;, &#39;occlusion&#39;, &quot;</span> \
                                       <span class="s2">&quot;&#39;pixel&#39;, or &#39;mixture-iros&#39;.&quot;</span>
-    <span class="k">if</span> <span class="n">root</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="n">data</span> <span class="o">=</span> <span class="n">OPENLORIS_DATA</span><span class="p">()</span>
-    <span class="k">else</span><span class="p">:</span>
-        <span class="n">data</span> <span class="o">=</span> <span class="n">OPENLORIS_DATA</span><span class="p">(</span><span class="n">root</span><span class="p">)</span>
 
-    <span class="n">root</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">data_folder</span>
-    <span class="n">root_img</span> <span class="o">=</span> <span class="n">root</span>
+    <span class="n">dataset</span> <span class="o">=</span> <span class="n">OpenLORISDataset</span><span class="p">(</span><span class="n">root</span><span class="p">)</span>
 
     <span class="n">filelists_bp</span> <span class="o">=</span> <span class="n">fac2dirs</span><span class="p">[</span><span class="n">factor</span><span class="p">]</span> <span class="o">+</span> <span class="s2">&quot;/&quot;</span>
     <span class="n">train_failists_paths</span> <span class="o">=</span> <span class="p">[]</span>
@@ -279,7 +275,7 @@
             <span class="nb">str</span><span class="p">(</span><span class="n">i</span><span class="p">)</span><span class="o">.</span><span class="n">zfill</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot;.txt&quot;</span><span class="p">)</span>
 
     <span class="n">factor_obj</span> <span class="o">=</span> <span class="n">create_generic_benchmark_from_filelists</span><span class="p">(</span>
-        <span class="n">root_img</span><span class="p">,</span> <span class="n">train_failists_paths</span><span class="p">,</span>
+        <span class="n">root</span><span class="p">,</span> <span class="n">train_failists_paths</span><span class="p">,</span>
         <span class="p">[</span><span class="n">root</span> <span class="o">+</span> <span class="n">filelists_bp</span> <span class="o">+</span> <span class="s2">&quot;test.txt&quot;</span><span class="p">],</span>
         <span class="n">task_labels</span><span class="o">=</span><span class="p">[</span><span class="mi">0</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">nbatch</span><span class="p">[</span><span class="n">factor</span><span class="p">])],</span>
         <span class="n">complete_test_set_only</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>

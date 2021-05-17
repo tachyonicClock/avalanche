@@ -5,7 +5,7 @@
 
 .. autoapi-nested-parse::
 
-   Tiny-Imagenet Pytorch Dataset 
+   OpenLoris Pytorch Dataset 
 
 
 
@@ -21,7 +21,7 @@ Classes
 
 
 
-.. py:class:: OpenLORIS(root=expanduser('~') + '/.avalanche/data/openloris/', train=True, transform=ToTensor(), target_transform=None, loader=pil_loader, download=False)
+.. py:class:: OpenLORIS(root=expanduser('~') + '/.avalanche/data/openloris/', train=True, transform=ToTensor(), target_transform=None, loader=pil_loader, download=True)
 
    Bases: :class:`torch.utils.data.Dataset`
 

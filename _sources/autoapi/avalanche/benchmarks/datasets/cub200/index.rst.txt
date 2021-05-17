@@ -25,32 +25,40 @@ Classes
 
 
 
-.. py:class:: CUB200(root=expanduser('~') + '/.avalanche/data/CUB_200_2011/', train=True, transform=None, target_transform=None, loader=default_loader, download=False)
+.. py:class:: CUB200(root=expanduser('~') + '/.avalanche/data/CUB_200_2011/', train=True, transform=None, target_transform=None, loader=default_loader, download=True)
 
    Bases: :class:`avalanche.benchmarks.utils.PathsDataset`
 
-   This class extends the basic Pytorch Dataset class to handle list of paths
-   as the main data source.
+   Basic CUB200 PathsDataset to be used as a standard PyTorch Dataset.
+   A classic continual learning benchmark built on top of this dataset
+   can be found in 'benchmarks.classic', while for more custom benchmark
+   design please use the 'benchmarks.generators'.
 
-   Creates a File Dataset from a list of files and labels.
-
-   :param root: root path where the data to load are stored. May be None.
-   :param files: list of tuples. Each tuple must contain two elements: the
-       full path to the pattern and its class label. Optionally, the tuple
-       may contain a third element describing the bounding box to use for
-       cropping (top, left, height, width).
-   :param transform: eventual transformation to add to the input data (x)
-   :param target_transform: eventual transformation to add to the targets
-       (y)
-   :param loader: loader function to use (for the real data) given path.
+   :param root: root dir where the dataset can be found or downloaded.
+       Default to '~/.avalanche/data/CUB_200_2011'.
+   :param train: train or test subset of the original dataset. Default
+       to True.
+   :param transform: eventual input data transformations to apply.
+       Default to None.
+   :param target_transform: eventual target data transformations to apply.
+       Default to None.
+   :param loader: method to load the data from disk. Default to
+       torchvision default_loader.
+   :param download: default set to True. If the data is already
+       downloaded it will skip the download.
 
    .. attribute:: images_folder
       :annotation: = CUB_200_2011/images
 
       
 
-   .. attribute:: url
+   .. attribute:: official_url
       :annotation: = http://www.vision.caltech.edu/visipedia-data/CUB-200-2011/CUB_200_2011.tgz
+
+      
+
+   .. attribute:: gdrive_url
+      :annotation: = https://drive.google.com/u/0/uc?id=1hbzc_P1FuxMkcabkgn9ZKinBwW683j45
 
       
 

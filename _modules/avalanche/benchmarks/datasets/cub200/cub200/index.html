@@ -185,44 +185,76 @@
 <span class="c1"># See the accompanying LICENSE file for terms.                                 #</span>
 <span class="c1">#                                                                              #</span>
 <span class="c1"># Date: 12-04-2021                                                             #</span>
-<span class="c1"># Author: Lorenzo Pellegrini                                                   #</span>
+<span class="c1"># Author: Lorenzo Pellegrini, Vincenzo Lomonaco                                #</span>
 <span class="c1"># E-mail: contact@continualai.org                                              #</span>
 <span class="c1"># Website: continualai.org                                                     #</span>
 <span class="c1">################################################################################</span>
 
-<span class="sd">&quot;&quot;&quot; CUB200 Pytorch Dataset &quot;&quot;&quot;</span>
-
-<span class="kn">from</span> <span class="nn">collections</span> <span class="kn">import</span> <span class="n">OrderedDict</span>
-<span class="kn">from</span> <span class="nn">os.path</span> <span class="kn">import</span> <span class="n">expanduser</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">CUB200 Pytorch Dataset: Caltech-UCSD Birds-200-2011 (CUB-200-2011) is an</span>
+<span class="sd">extended version of the CUB-200 dataset, with roughly double the number of</span>
+<span class="sd">images per class and new part location annotations. For detailed information</span>
+<span class="sd">about the dataset, please check the official website:</span>
+<span class="sd">http://www.vision.caltech.edu/visipedia/CUB-200-2011.html.</span>
+<span class="sd">&quot;&quot;&quot;</span>
 
 <span class="kn">import</span> <span class="nn">csv</span>
-
+<span class="kn">import</span> <span class="nn">gdown</span>
 <span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">from</span> <span class="nn">collections</span> <span class="kn">import</span> <span class="n">OrderedDict</span>
+<span class="kn">from</span> <span class="nn">os.path</span> <span class="kn">import</span> <span class="n">expanduser</span>
 <span class="kn">from</span> <span class="nn">torchvision.datasets.folder</span> <span class="kn">import</span> <span class="n">default_loader</span>
-<span class="kn">from</span> <span class="nn">torchvision.datasets.utils</span> <span class="kn">import</span> <span class="n">download_url</span><span class="p">,</span> <span class="n">extract_archive</span>
+<span class="kn">from</span> <span class="nn">torchvision.datasets.utils</span> <span class="kn">import</span> <span class="n">extract_archive</span>
 
 <span class="kn">from</span> <span class="nn">avalanche.benchmarks.utils</span> <span class="kn">import</span> <span class="n">PathsDataset</span>
 
 
 <div class="viewcode-block" id="CUB200"><a class="viewcode-back" href="../../../../../../autoapi/avalanche/benchmarks/datasets/#avalanche.benchmarks.datasets.cub200.cub200.CUB200">[docs]</a><span class="k">class</span> <span class="nc">CUB200</span><span class="p">(</span><span class="n">PathsDataset</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot; Basic CUB200 PathsDataset to be used as a standard PyTorch Dataset.</span>
+<span class="sd">        A classic continual learning benchmark built on top of this dataset</span>
+<span class="sd">        can be found in &#39;benchmarks.classic&#39;, while for more custom benchmark</span>
+<span class="sd">        design please use the &#39;benchmarks.generators&#39;.&quot;&quot;&quot;</span>
+
     <span class="n">images_folder</span> <span class="o">=</span> <span class="s1">&#39;CUB_200_2011/images&#39;</span>
-    <span class="n">url</span> <span class="o">=</span> <span class="s1">&#39;http://www.vision.caltech.edu/visipedia-data/CUB-200-2011/&#39;</span> \
-          <span class="s1">&#39;CUB_200_2011.tgz&#39;</span>
+    <span class="n">official_url</span> <span class="o">=</span> <span class="s1">&#39;http://www.vision.caltech.edu/visipedia-data/CUB-200-2011/&#39;</span>\
+                   <span class="s1">&#39;CUB_200_2011.tgz&#39;</span>
+    <span class="n">gdrive_url</span> <span class="o">=</span> <span class="s2">&quot;https://drive.google.com/u/0/uc?id=&quot;</span> \
+                 <span class="s2">&quot;1hbzc_P1FuxMkcabkgn9ZKinBwW683j45&quot;</span>
     <span class="n">filename</span> <span class="o">=</span> <span class="s1">&#39;CUB_200_2011.tgz&#39;</span>
     <span class="n">tgz_md5</span> <span class="o">=</span> <span class="s1">&#39;97eceeb196236b17998738112f37df78&#39;</span>
 
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span>
             <span class="bp">self</span><span class="p">,</span> <span class="n">root</span><span class="o">=</span><span class="n">expanduser</span><span class="p">(</span><span class="s2">&quot;~&quot;</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot;/.avalanche/data/CUB_200_2011/&quot;</span><span class="p">,</span>
             <span class="n">train</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">transform</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">target_transform</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
-            <span class="n">loader</span><span class="o">=</span><span class="n">default_loader</span><span class="p">,</span> <span class="n">download</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+            <span class="n">loader</span><span class="o">=</span><span class="n">default_loader</span><span class="p">,</span> <span class="n">download</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+
+<span class="sd">        :param root: root dir where the dataset can be found or downloaded.</span>
+<span class="sd">            Default to &#39;~/.avalanche/data/CUB_200_2011&#39;.</span>
+<span class="sd">        :param train: train or test subset of the original dataset. Default</span>
+<span class="sd">            to True.</span>
+<span class="sd">        :param transform: eventual input data transformations to apply.</span>
+<span class="sd">            Default to None.</span>
+<span class="sd">        :param target_transform: eventual target data transformations to apply.</span>
+<span class="sd">            Default to None.</span>
+<span class="sd">        :param loader: method to load the data from disk. Default to</span>
+<span class="sd">            torchvision default_loader.</span>
+<span class="sd">        :param download: default set to True. If the data is already</span>
+<span class="sd">            downloaded it will skip the download.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
         <span class="bp">self</span><span class="o">.</span><span class="n">root</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">expanduser</span><span class="p">(</span><span class="n">root</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">train</span> <span class="o">=</span> <span class="n">train</span>
 
-        <span class="k">if</span> <span class="n">download</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">_download</span><span class="p">()</span>
+        <span class="c1"># we create the dir if it does not exists</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">root</span><span class="p">):</span>
+            <span class="n">os</span><span class="o">.</span><span class="n">makedirs</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">root</span><span class="p">)</span>
 
         <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">_check_integrity</span><span class="p">():</span>
-            <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span><span class="s1">&#39;Dataset not found or corrupted.&#39;</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">download</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_download</span><span class="p">()</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span><span class="s1">&#39;Dataset not found or corrupted. &#39;</span><span class="p">)</span>
 
         <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span>
             <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">root</span><span class="p">,</span> <span class="n">CUB200</span><span class="o">.</span><span class="n">images_folder</span><span class="p">),</span> <span class="bp">self</span><span class="o">.</span><span class="n">_images</span><span class="p">,</span>
@@ -230,6 +262,8 @@
             <span class="n">loader</span><span class="o">=</span><span class="n">loader</span><span class="p">)</span>
 
     <span class="k">def</span> <span class="nf">_load_metadata</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Main method to load the CUB200 metadata &quot;&quot;&quot;</span>
+
         <span class="n">cub_dir</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">root</span><span class="p">,</span> <span class="s1">&#39;CUB_200_2011&#39;</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_images</span> <span class="o">=</span> <span class="n">OrderedDict</span><span class="p">()</span>
 
@@ -272,6 +306,8 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">_images</span> <span class="o">=</span> <span class="n">images_tuples</span>
 
     <span class="k">def</span> <span class="nf">_check_integrity</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Checks if the data is already available and intact &quot;&quot;&quot;</span>
+
         <span class="k">try</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_load_metadata</span><span class="p">()</span>
         <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">_</span><span class="p">:</span>
@@ -290,18 +326,24 @@
             <span class="k">return</span>
 
         <span class="k">try</span><span class="p">:</span>
-            <span class="n">download_url</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">url</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">root</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">filename</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">tgz_md5</span><span class="p">)</span>
+            <span class="n">filepath</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">root</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">filename</span><span class="p">)</span>
+            <span class="n">gdown</span><span class="o">.</span><span class="n">download</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">gdrive_url</span><span class="p">,</span> <span class="n">filepath</span><span class="p">,</span> <span class="n">quiet</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+            <span class="n">gdown</span><span class="o">.</span><span class="n">cached_download</span><span class="p">(</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">gdrive_url</span><span class="p">,</span> <span class="n">filepath</span><span class="p">,</span> <span class="n">md5</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">tgz_md5</span>
+            <span class="p">)</span>
         <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
             <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;[CUB200] Direct download may no longer be supported!&#39;</span><span class="p">)</span>
             <span class="k">raise</span> <span class="n">e</span>
 
-        <span class="n">archive_name</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">root</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">filename</span><span class="p">)</span>
-        <span class="n">extract_archive</span><span class="p">(</span><span class="n">archive_name</span><span class="p">,</span> <span class="n">to_path</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">root</span><span class="p">)</span></div>
+        <span class="n">extract_archive</span><span class="p">(</span><span class="n">filepath</span><span class="p">,</span> <span class="n">to_path</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">root</span><span class="p">)</span></div>
 
 
 <span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
+
+    <span class="sd">&quot;&quot;&quot; Simple test that will start if you run this script directly &quot;&quot;&quot;</span>
+
     <span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
-    <span class="n">dataset</span> <span class="o">=</span> <span class="n">CUB200</span><span class="p">(</span><span class="n">train</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+    <span class="n">dataset</span> <span class="o">=</span> <span class="n">CUB200</span><span class="p">(</span><span class="n">train</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">download</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
     <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;test data len:&quot;</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">dataset</span><span class="p">))</span>
     <span class="n">img</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">dataset</span><span class="p">[</span><span class="mi">14</span><span class="p">]</span>
     <span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">img</span><span class="p">)</span>

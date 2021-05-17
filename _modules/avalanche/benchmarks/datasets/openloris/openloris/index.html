@@ -185,17 +185,15 @@
 <span class="c1"># See the accompanying LICENSE file for terms.                                 #</span>
 <span class="c1">#                                                                              #</span>
 <span class="c1"># Date: 11-11-2020                                                             #</span>
-<span class="c1"># Author: ContinualAI                                                          #</span>
+<span class="c1"># Author: Vincenzo Lomonaco                                                    #</span>
 <span class="c1"># E-mail: contact@continualai.org                                              #</span>
 <span class="c1"># Website: www.continualai.org                                                 #</span>
 <span class="c1">################################################################################</span>
 
-<span class="sd">&quot;&quot;&quot; Tiny-Imagenet Pytorch Dataset &quot;&quot;&quot;</span>
+<span class="sd">&quot;&quot;&quot; OpenLoris Pytorch Dataset &quot;&quot;&quot;</span>
 
 <span class="kn">import</span> <span class="nn">os</span>
-<span class="kn">import</span> <span class="nn">sys</span>
 <span class="kn">import</span> <span class="nn">pickle</span> <span class="k">as</span> <span class="nn">pkl</span>
-<span class="kn">import</span> <span class="nn">logging</span>
 <span class="kn">from</span> <span class="nn">os.path</span> <span class="kn">import</span> <span class="n">expanduser</span>
 
 <span class="kn">from</span> <span class="nn">PIL</span> <span class="kn">import</span> <span class="n">Image</span>
@@ -206,6 +204,7 @@
 
 
 <span class="k">def</span> <span class="nf">pil_loader</span><span class="p">(</span><span class="n">path</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot; Basic PIL data loader &quot;&quot;&quot;</span>
     <span class="c1"># open path as file to avoid ResourceWarning</span>
     <span class="c1"># (https://github.com/python-pillow/Pillow/issues/835)</span>
     <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="s1">&#39;rb&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
@@ -218,14 +217,14 @@
 
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">root</span><span class="o">=</span><span class="n">expanduser</span><span class="p">(</span><span class="s2">&quot;~&quot;</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot;/.avalanche/data/openloris/&quot;</span><span class="p">,</span>
                  <span class="n">train</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">transform</span><span class="o">=</span><span class="n">ToTensor</span><span class="p">(),</span> <span class="n">target_transform</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
-                 <span class="n">loader</span><span class="o">=</span><span class="n">pil_loader</span><span class="p">,</span> <span class="n">download</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+                 <span class="n">loader</span><span class="o">=</span><span class="n">pil_loader</span><span class="p">,</span> <span class="n">download</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">train</span> <span class="o">=</span> <span class="n">train</span>  <span class="c1"># training set or test set</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">transform</span> <span class="o">=</span> <span class="n">transform</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">target_transform</span> <span class="o">=</span> <span class="n">target_transform</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">root</span> <span class="o">=</span> <span class="n">root</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">loader</span> <span class="o">=</span> <span class="n">loader</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">log</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="s2">&quot;avalanche&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">openloris_data</span> <span class="o">=</span> <span class="n">OPENLORIS_DATA</span><span class="p">(</span><span class="n">root</span><span class="o">=</span><span class="n">root</span><span class="p">)</span>
 
         <span class="c1"># any scenario and factor is good here since we want just to load the</span>
         <span class="c1"># train images and targets with no particular order</span>
@@ -233,45 +232,25 @@
         <span class="n">factor</span> <span class="o">=</span> <span class="mi">0</span>
         <span class="n">ntask</span> <span class="o">=</span> <span class="mi">9</span>
 
-        <span class="k">if</span> <span class="n">download</span><span class="p">:</span>
-            <span class="c1"># self.core_data = OPENLORIS_DATA(data_folder=root)</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">log</span><span class="o">.</span><span class="n">error</span><span class="p">(</span>
-                <span class="s2">&quot;</span><span class="si">%s</span><span class="s2">&quot;</span><span class="p">,</span>
-                <span class="s2">&quot;Download is not supported for this Dataset.&quot;</span>
-                <span class="s2">&quot;You need to download the following files &quot;</span>
-                <span class="s2">&quot;manually:</span><span class="se">\n</span><span class="s2">&quot;</span>
-                <span class="s2">&quot;- train.zip: &quot;</span>
-                <span class="s2">&quot;https://drive.google.com/u/0/uc?id&quot;</span>
-                <span class="s2">&quot;=11jgiPB2Z9WRI3bW6VSN8fJZgwFl5mLsF&amp;export=download</span><span class="se">\n</span><span class="s2">&quot;</span>
-                <span class="s2">&quot;- validation.zip: https://drive.google.com/u/0/uc?id=&quot;</span>
-                <span class="s2">&quot;1ChoBAGcQ_wkclPXsel8CjJHC0tD7b4ga&amp;export=download</span><span class="se">\n</span><span class="s2">&quot;</span>
-                <span class="s2">&quot;- test.zip: https://drive.google.com/u/0/uc?id=&quot;</span>
-                <span class="s2">&quot;1J7_ljcwSZNXo6KwlhRZoG0kiEcRK7U6x&amp;export=download</span><span class="se">\n</span><span class="s2">&quot;</span>
-                <span class="s2">&quot;- LUP.pkl: https://drive.google.com/u/0/uc?id=&quot;</span>
-                <span class="s2">&quot;1Os8T30NZ3ZU8liHQPeVbo2nlOoPZuDSV&amp;export=download</span><span class="se">\n</span><span class="s2">&quot;</span>
-                <span class="s2">&quot;- Paths.pkl: https://drive.google.com/u/0/uc?id=&quot;</span>
-                <span class="s2">&quot;1KnuYLdlG3VQrhgbtIANLki81ah8Thezj&amp;export=download</span><span class="se">\n</span><span class="s2">&quot;</span>
-                <span class="s2">&quot;- Labels.pkl: https://drive.google.com/u/0/uc?id=&quot;</span>
-                <span class="s2">&quot;1GkmOxIAvmjSwo22UzmZTSlw8NSmU5Q9H&amp;export=download</span><span class="se">\n</span><span class="s2">&quot;</span>
-                <span class="s2">&quot;- batches_filelists.zip: &quot;</span>
-                <span class="s2">&quot;https://drive.google.com/u/0/uc?id=&quot;</span>
-                <span class="s2">&quot;1r0gbo5_Qlzrdet1GPIrJpVSGRgFU7NEp&amp;export=download</span><span class="se">\n</span><span class="s2">&quot;</span>                  
-                <span class="s2">&quot;For more details, check the official website: &quot;</span>
-                <span class="s2">&quot;https://lifelong-robotic-vision.github.io/dataset/object&quot;</span><span class="p">)</span>
-            <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">()</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">_check_integrity</span><span class="p">():</span>
+            <span class="k">if</span> <span class="n">download</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_download</span><span class="p">()</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span><span class="s1">&#39;Dataset not found or corrupted. Please &#39;</span>
+                                   <span class="s1">&#39;download it manually and re-try.&#39;</span><span class="p">)</span>
 
-        <span class="bp">self</span><span class="o">.</span><span class="n">log</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Loading paths...&quot;</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Loading paths...&quot;</span><span class="p">)</span>
         <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">root</span><span class="p">,</span> <span class="s1">&#39;Paths.pkl&#39;</span><span class="p">),</span> <span class="s1">&#39;rb&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">train_test_paths</span> <span class="o">=</span> <span class="n">pkl</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
 
-        <span class="bp">self</span><span class="o">.</span><span class="n">log</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Loading labels...&quot;</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Loading labels...&quot;</span><span class="p">)</span>
         <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">root</span><span class="p">,</span> <span class="s1">&#39;Labels.pkl&#39;</span><span class="p">),</span> <span class="s1">&#39;rb&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">all_targets</span> <span class="o">=</span> <span class="n">pkl</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">train_test_targets</span> <span class="o">=</span> <span class="p">[]</span>
             <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">ntask</span> <span class="o">+</span> <span class="mi">1</span><span class="p">):</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">train_test_targets</span> <span class="o">+=</span> <span class="bp">self</span><span class="o">.</span><span class="n">all_targets</span><span class="p">[</span><span class="n">scen</span><span class="p">][</span><span class="n">factor</span><span class="p">][</span><span class="n">i</span><span class="p">]</span>
 
-        <span class="bp">self</span><span class="o">.</span><span class="n">log</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Loading LUP...&quot;</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Loading LUP...&quot;</span><span class="p">)</span>
         <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">root</span><span class="p">,</span> <span class="s1">&#39;LUP.pkl&#39;</span><span class="p">),</span> <span class="s1">&#39;rb&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">LUP</span> <span class="o">=</span> <span class="n">pkl</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
 
@@ -288,6 +267,21 @@
         <span class="k">for</span> <span class="n">idx</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">idx_list</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">paths</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">train_test_paths</span><span class="p">[</span><span class="n">idx</span><span class="p">])</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">targets</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">train_test_targets</span><span class="p">[</span><span class="n">idx</span><span class="p">])</span>
+
+    <span class="k">def</span> <span class="nf">_check_integrity</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Checks if the data is already available and intact &quot;&quot;&quot;</span>
+
+        <span class="k">for</span> <span class="n">name</span><span class="p">,</span> <span class="n">googledrive_id</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">openloris_data</span><span class="o">.</span><span class="n">filename</span><span class="p">:</span>
+            <span class="n">filepath</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">root</span><span class="p">,</span> <span class="n">name</span><span class="p">)</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isfile</span><span class="p">(</span><span class="n">filepath</span><span class="p">):</span>
+                <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;[CUB200] Error checking integrity of:&#39;</span><span class="p">,</span> <span class="n">filepath</span><span class="p">)</span>
+                <span class="k">return</span> <span class="kc">False</span>
+        <span class="k">return</span> <span class="kc">True</span>
+
+    <span class="k">def</span> <span class="nf">_download</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Private method to download openloris data &quot;&quot;&quot;</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">openloris_data</span><span class="o">.</span><span class="n">download</span><span class="p">()</span>
 
 <div class="viewcode-block" id="OpenLORIS.__getitem__"><a class="viewcode-back" href="../../../../../../autoapi/avalanche/benchmarks/datasets/openloris/openloris/#avalanche.benchmarks.datasets.OpenLORIS.__getitem__">[docs]</a>    <span class="k">def</span> <span class="fm">__getitem__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">index</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>

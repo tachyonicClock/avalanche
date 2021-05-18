@@ -319,7 +319,7 @@ Classes
 
 
 
-.. py:class:: GDumbPlugin(mem_size=200)
+.. py:class:: GDumbPlugin(mem_size: int = 200)
 
    Bases: :class:`avalanche.training.plugins.strategy_plugin.StrategyPlugin`
 

@@ -190,12 +190,13 @@
 <span class="c1"># Website: www.continualai.org                                                 #</span>
 <span class="c1">################################################################################</span>
 
-<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Union</span><span class="p">,</span> <span class="n">List</span><span class="p">,</span> <span class="n">Tuple</span><span class="p">,</span> <span class="n">Optional</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Union</span><span class="p">,</span> <span class="n">List</span><span class="p">,</span> <span class="n">Tuple</span><span class="p">,</span> <span class="n">Optional</span><span class="p">,</span> <span class="n">TYPE_CHECKING</span>
 
 <span class="kn">from</span> <span class="nn">PIL.Image</span> <span class="kn">import</span> <span class="n">Image</span>
 <span class="kn">from</span> <span class="nn">torch</span> <span class="kn">import</span> <span class="n">Tensor</span>
 
-<span class="kn">from</span> <span class="nn">avalanche.evaluation</span> <span class="kn">import</span> <span class="n">Metric</span>
+<span class="k">if</span> <span class="n">TYPE_CHECKING</span><span class="p">:</span>
+    <span class="kn">from</span> <span class="nn">.metric_definitions</span> <span class="kn">import</span> <span class="n">Metric</span>
 
 <span class="n">MetricType</span> <span class="o">=</span> <span class="n">Union</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="nb">int</span><span class="p">,</span> <span class="n">Tensor</span><span class="p">,</span> <span class="n">Image</span><span class="p">]</span>
 <span class="n">MetricResult</span> <span class="o">=</span> <span class="n">Optional</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="s1">&#39;MetricValue&#39;</span><span class="p">]]</span>
@@ -236,7 +237,7 @@
 <span class="sd">    an Image. It&#39;s up to the Logger, according to its capabilities, decide which</span>
 <span class="sd">    representation to use.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">origin</span><span class="p">:</span> <span class="n">Metric</span><span class="p">,</span> <span class="n">name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">origin</span><span class="p">:</span> <span class="s1">&#39;Metric&#39;</span><span class="p">,</span> <span class="n">name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
                  <span class="n">value</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">MetricType</span><span class="p">,</span> <span class="n">AlternativeValues</span><span class="p">],</span> <span class="n">x_plot</span><span class="p">:</span> <span class="nb">int</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Creates an instance of MetricValue.</span>
@@ -257,7 +258,7 @@
 <span class="sd">            to the x-axis position of the value in a plot. When logging a</span>
 <span class="sd">            singleton value, pass 0 as a value for this parameter.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">origin</span><span class="p">:</span> <span class="n">Metric</span> <span class="o">=</span> <span class="n">origin</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">origin</span><span class="p">:</span> <span class="s1">&#39;Metric&#39;</span> <span class="o">=</span> <span class="n">origin</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">name</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">value</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">MetricType</span><span class="p">,</span> <span class="n">AlternativeValues</span><span class="p">]</span> <span class="o">=</span> <span class="n">value</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">x_plot</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="n">x_plot</span></div>

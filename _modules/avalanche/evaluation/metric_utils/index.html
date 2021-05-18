@@ -190,17 +190,14 @@
 <span class="c1"># Website: www.continualai.org                                                 #</span>
 <span class="c1">################################################################################</span>
 
-<span class="kn">import</span> <span class="nn">io</span>
 <span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Tuple</span><span class="p">,</span> <span class="n">TYPE_CHECKING</span>
 
 <span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
-<span class="kn">from</span> <span class="nn">PIL</span> <span class="kn">import</span> <span class="n">Image</span>
-<span class="kn">from</span> <span class="nn">sklearn.metrics</span> <span class="kn">import</span> <span class="n">ConfusionMatrixDisplay</span>
 <span class="kn">from</span> <span class="nn">torch</span> <span class="kn">import</span> <span class="n">Tensor</span>
 
 <span class="k">if</span> <span class="n">TYPE_CHECKING</span><span class="p">:</span>
-    <span class="kn">from</span> <span class="nn">avalanche.training</span> <span class="kn">import</span> <span class="n">BaseStrategy</span>
+    <span class="kn">from</span> <span class="nn">avalanche.training.strategies</span> <span class="kn">import</span> <span class="n">BaseStrategy</span>
     <span class="kn">from</span> <span class="nn">avalanche.benchmarks.scenarios</span> <span class="kn">import</span> <span class="n">Experience</span>
     <span class="kn">from</span> <span class="nn">avalanche.evaluation</span> <span class="kn">import</span> <span class="n">PluginMetric</span>
 
@@ -362,7 +359,8 @@
 
 <div class="viewcode-block" id="get_metric_name"><a class="viewcode-back" href="../../../../autoapi/avalanche/evaluation/metric_utils/#avalanche.evaluation.metric_utils.get_metric_name">[docs]</a><span class="k">def</span> <span class="nf">get_metric_name</span><span class="p">(</span><span class="n">metric</span><span class="p">:</span> <span class="s1">&#39;PluginMetric&#39;</span><span class="p">,</span>
                     <span class="n">strategy</span><span class="p">:</span> <span class="s1">&#39;BaseStrategy&#39;</span><span class="p">,</span>
-                    <span class="n">add_experience</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+                    <span class="n">add_experience</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+                    <span class="n">add_task</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Return the complete metric name used to report its current value.</span>
 <span class="sd">    The name is composed by:</span>
@@ -377,26 +375,25 @@
 <span class="sd">    :param strategy: the current strategy object</span>
 <span class="sd">    :param add_experience: if True, add eval_exp_id to the main metric name.</span>
 <span class="sd">            Default to False.</span>
+<span class="sd">    :param add_task: if True the main metric name will include the task</span>
+<span class="sd">        information. Otherwise, it will not.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="n">phase_name</span><span class="p">,</span> <span class="n">task_label</span> <span class="o">=</span> <span class="n">phase_and_task</span><span class="p">(</span><span class="n">strategy</span><span class="p">)</span>
     <span class="n">stream</span> <span class="o">=</span> <span class="n">stream_type</span><span class="p">(</span><span class="n">strategy</span><span class="o">.</span><span class="n">experience</span><span class="p">)</span>
-    <span class="k">if</span> <span class="n">add_experience</span><span class="p">:</span>
-        <span class="n">experience_label</span> <span class="o">=</span> <span class="n">strategy</span><span class="o">.</span><span class="n">experience</span><span class="o">.</span><span class="n">current_experience</span>
-        <span class="n">metric_name</span> <span class="o">=</span> <span class="s1">&#39;</span><span class="si">{}</span><span class="s1">/</span><span class="si">{}</span><span class="s1">_phase/</span><span class="si">{}</span><span class="s1">_stream/Task</span><span class="si">{:03}</span><span class="s1">/Exp</span><span class="si">{:03}</span><span class="s1">&#39;</span> \
-            <span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">metric</span><span class="p">),</span>
-                    <span class="n">phase_name</span><span class="p">,</span>
-                    <span class="n">stream</span><span class="p">,</span>
-                    <span class="n">task_label</span><span class="p">,</span>
-                    <span class="n">experience_label</span><span class="p">)</span>
-    <span class="k">else</span><span class="p">:</span>
-        <span class="n">metric_name</span> <span class="o">=</span> <span class="s1">&#39;</span><span class="si">{}</span><span class="s1">/</span><span class="si">{}</span><span class="s1">_phase/</span><span class="si">{}</span><span class="s1">_stream/Task</span><span class="si">{:03}</span><span class="s1">&#39;</span> \
-            <span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">metric</span><span class="p">),</span>
-                    <span class="n">phase_name</span><span class="p">,</span>
-                    <span class="n">stream</span><span class="p">,</span>
-                    <span class="n">task_label</span><span class="p">)</span>
+    <span class="n">base_name</span> <span class="o">=</span> <span class="s1">&#39;</span><span class="si">{}</span><span class="s1">/</span><span class="si">{}</span><span class="s1">_phase/</span><span class="si">{}</span><span class="s1">_stream&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">metric</span><span class="p">),</span>
+                                               <span class="n">phase_name</span><span class="p">,</span> <span class="n">stream</span><span class="p">)</span>
+    <span class="n">task_name</span> <span class="o">=</span> <span class="s1">&#39;/Task</span><span class="si">{:03}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">task_label</span><span class="p">)</span>
+    <span class="n">exp_name</span> <span class="o">=</span> <span class="s1">&#39;/Exp</span><span class="si">{:03}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">strategy</span><span class="o">.</span><span class="n">experience</span><span class="o">.</span><span class="n">current_experience</span><span class="p">)</span>
 
-    <span class="k">return</span> <span class="n">metric_name</span></div>
+    <span class="k">if</span> <span class="n">add_experience</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">add_task</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">base_name</span> <span class="o">+</span> <span class="n">exp_name</span>
+    <span class="k">elif</span> <span class="n">add_experience</span> <span class="ow">and</span> <span class="n">add_task</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">base_name</span> <span class="o">+</span> <span class="n">task_name</span> <span class="o">+</span> <span class="n">exp_name</span>
+    <span class="k">elif</span> <span class="ow">not</span> <span class="n">add_experience</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">add_task</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">base_name</span>
+    <span class="k">elif</span> <span class="ow">not</span> <span class="n">add_experience</span> <span class="ow">and</span> <span class="n">add_task</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">base_name</span> <span class="o">+</span> <span class="n">task_name</span></div>
 
 
 <span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span>

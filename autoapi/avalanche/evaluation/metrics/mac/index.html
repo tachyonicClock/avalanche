@@ -261,6 +261,17 @@ called yet.</p>
 </dd></dl>
 
 <dl class="py method">
+<dt class="sig sig-object py" id="avalanche.evaluation.metrics.mac.MAC.reset">
+<span class="sig-name descname"><span class="pre">reset</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../_modules/avalanche/evaluation/metrics/mac/#MAC.reset"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.evaluation.metrics.mac.MAC.reset" title="Permalink to this definition">¶</a></dt>
+<dd><p>Resets the metric internal state.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>None.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
 <dt class="sig sig-object py" id="avalanche.evaluation.metrics.mac.MAC.update_compute_cost">
 <span class="sig-name descname"><span class="pre">update_compute_cost</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">module</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dummy_input</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">output</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../_modules/avalanche/evaluation/metrics/mac/#MAC.update_compute_cost"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.evaluation.metrics.mac.MAC.update_compute_cost" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
@@ -275,7 +286,7 @@ called yet.</p>
 <dl class="py class">
 <dt class="sig sig-object py" id="avalanche.evaluation.metrics.mac.MinibatchMAC">
 <em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">avalanche.evaluation.metrics.mac.</span></span><span class="sig-name descname"><span class="pre">MinibatchMAC</span></span><a class="reference internal" href="../../../../../_modules/avalanche/evaluation/metrics/mac/#MinibatchMAC"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.evaluation.metrics.mac.MinibatchMAC" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">PluginMetric[float]</span></code></p>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">avalanche.evaluation.metrics.mac.MACPluginMetric</span></code></p>
 <p>The minibatch MAC metric.
 This plugin metric only works at training time.</p>
 <p>This metric computes the MAC over 1 pattern
@@ -284,23 +295,6 @@ It reports the result after each iteration.</p>
 <p>If a more coarse-grained logging is needed, consider using
 <a class="reference internal" href="#avalanche.evaluation.metrics.mac.EpochMAC" title="avalanche.evaluation.metrics.mac.EpochMAC"><code class="xref py py-class docutils literal notranslate"><span class="pre">EpochMAC</span></code></a> instead.</p>
 <p>Creates an instance of the MinibatchMAC metric.</p>
-<dl class="py method">
-<dt class="sig sig-object py" id="avalanche.evaluation.metrics.mac.MinibatchMAC.reset">
-<span class="sig-name descname"><span class="pre">reset</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">None</span><a class="reference internal" href="../../../../../_modules/avalanche/evaluation/metrics/mac/#MinibatchMAC.reset"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.evaluation.metrics.mac.MinibatchMAC.reset" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="avalanche.evaluation.metrics.mac.MinibatchMAC.result">
-<span class="sig-name descname"><span class="pre">result</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">float</span><a class="reference internal" href="../../../../../_modules/avalanche/evaluation/metrics/mac/#MinibatchMAC.result"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.evaluation.metrics.mac.MinibatchMAC.result" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="avalanche.evaluation.metrics.mac.MinibatchMAC.after_training_iteration">
-<span class="sig-name descname"><span class="pre">after_training_iteration</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">strategy</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">BaseStrategy</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">MetricResult</span><a class="reference internal" href="../../../../../_modules/avalanche/evaluation/metrics/mac/#MinibatchMAC.after_training_iteration"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.evaluation.metrics.mac.MinibatchMAC.after_training_iteration" title="Permalink to this definition">¶</a></dt>
-<dd><p>Called after the end of a training iteration by the
-<cite>BaseStrategy</cite>.</p>
-</dd></dl>
-
 <dl class="py method">
 <dt class="sig sig-object py" id="avalanche.evaluation.metrics.mac.MinibatchMAC.__str__">
 <span class="sig-name descname"><span class="pre">__str__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../_modules/avalanche/evaluation/metrics/mac/#MinibatchMAC.__str__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.evaluation.metrics.mac.MinibatchMAC.__str__" title="Permalink to this definition">¶</a></dt>
@@ -312,28 +306,12 @@ It reports the result after each iteration.</p>
 <dl class="py class">
 <dt class="sig sig-object py" id="avalanche.evaluation.metrics.mac.EpochMAC">
 <em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">avalanche.evaluation.metrics.mac.</span></span><span class="sig-name descname"><span class="pre">EpochMAC</span></span><a class="reference internal" href="../../../../../_modules/avalanche/evaluation/metrics/mac/#EpochMAC"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.evaluation.metrics.mac.EpochMAC" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">PluginMetric[float]</span></code></p>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">avalanche.evaluation.metrics.mac.MACPluginMetric</span></code></p>
 <p>The MAC at the end of each epoch computed on a
 single pattern.
 This plugin metric only works at training time.</p>
 <p>The MAC will be logged after each training epoch.</p>
 <p>Creates an instance of the EpochMAC metric.</p>
-<dl class="py method">
-<dt class="sig sig-object py" id="avalanche.evaluation.metrics.mac.EpochMAC.reset">
-<span class="sig-name descname"><span class="pre">reset</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">None</span><a class="reference internal" href="../../../../../_modules/avalanche/evaluation/metrics/mac/#EpochMAC.reset"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.evaluation.metrics.mac.EpochMAC.reset" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="avalanche.evaluation.metrics.mac.EpochMAC.result">
-<span class="sig-name descname"><span class="pre">result</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">float</span><a class="reference internal" href="../../../../../_modules/avalanche/evaluation/metrics/mac/#EpochMAC.result"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.evaluation.metrics.mac.EpochMAC.result" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="avalanche.evaluation.metrics.mac.EpochMAC.after_training_epoch">
-<span class="sig-name descname"><span class="pre">after_training_epoch</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">strategy</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">BaseStrategy</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">MetricResult</span><a class="reference internal" href="../../../../../_modules/avalanche/evaluation/metrics/mac/#EpochMAC.after_training_epoch"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.evaluation.metrics.mac.EpochMAC.after_training_epoch" title="Permalink to this definition">¶</a></dt>
-<dd><p>Called after <cite>train_epoch</cite> by the <cite>BaseStrategy</cite>.</p>
-</dd></dl>
-
 <dl class="py method">
 <dt class="sig sig-object py" id="avalanche.evaluation.metrics.mac.EpochMAC.__str__">
 <span class="sig-name descname"><span class="pre">__str__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../_modules/avalanche/evaluation/metrics/mac/#EpochMAC.__str__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.evaluation.metrics.mac.EpochMAC.__str__" title="Permalink to this definition">¶</a></dt>
@@ -345,27 +323,11 @@ This plugin metric only works at training time.</p>
 <dl class="py class">
 <dt class="sig sig-object py" id="avalanche.evaluation.metrics.mac.ExperienceMAC">
 <em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">avalanche.evaluation.metrics.mac.</span></span><span class="sig-name descname"><span class="pre">ExperienceMAC</span></span><a class="reference internal" href="../../../../../_modules/avalanche/evaluation/metrics/mac/#ExperienceMAC"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.evaluation.metrics.mac.ExperienceMAC" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">PluginMetric[float]</span></code></p>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">avalanche.evaluation.metrics.mac.MACPluginMetric</span></code></p>
 <p>At the end of each experience, this metric reports the
 MAC computed on a single pattern.
 This plugin metric only works at eval time.</p>
 <p>Creates an instance of ExperienceMAC metric</p>
-<dl class="py method">
-<dt class="sig sig-object py" id="avalanche.evaluation.metrics.mac.ExperienceMAC.reset">
-<span class="sig-name descname"><span class="pre">reset</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">None</span><a class="reference internal" href="../../../../../_modules/avalanche/evaluation/metrics/mac/#ExperienceMAC.reset"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.evaluation.metrics.mac.ExperienceMAC.reset" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="avalanche.evaluation.metrics.mac.ExperienceMAC.result">
-<span class="sig-name descname"><span class="pre">result</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">float</span><a class="reference internal" href="../../../../../_modules/avalanche/evaluation/metrics/mac/#ExperienceMAC.result"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.evaluation.metrics.mac.ExperienceMAC.result" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="avalanche.evaluation.metrics.mac.ExperienceMAC.after_eval_exp">
-<span class="sig-name descname"><span class="pre">after_eval_exp</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">strategy</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">BaseStrategy</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">MetricResult</span><a class="reference internal" href="../../../../../_modules/avalanche/evaluation/metrics/mac/#ExperienceMAC.after_eval_exp"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.evaluation.metrics.mac.ExperienceMAC.after_eval_exp" title="Permalink to this definition">¶</a></dt>
-<dd><p>Called after <cite>eval_exp</cite> by the <cite>BaseStrategy</cite>.</p>
-</dd></dl>
-
 <dl class="py method">
 <dt class="sig sig-object py" id="avalanche.evaluation.metrics.mac.ExperienceMAC.__str__">
 <span class="sig-name descname"><span class="pre">__str__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../_modules/avalanche/evaluation/metrics/mac/#ExperienceMAC.__str__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.evaluation.metrics.mac.ExperienceMAC.__str__" title="Permalink to this definition">¶</a></dt>

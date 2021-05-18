@@ -192,18 +192,12 @@
 
 <span class="kn">import</span> <span class="nn">os</span>
 <span class="kn">import</span> <span class="nn">warnings</span>
-<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Optional</span><span class="p">,</span> <span class="n">TYPE_CHECKING</span><span class="p">,</span> <span class="n">List</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Optional</span><span class="p">,</span> <span class="n">List</span>
 
 <span class="kn">from</span> <span class="nn">psutil</span> <span class="kn">import</span> <span class="n">Process</span>
 
-<span class="kn">from</span> <span class="nn">avalanche.evaluation</span> <span class="kn">import</span> <span class="n">Metric</span><span class="p">,</span> <span class="n">PluginMetric</span>
-<span class="kn">from</span> <span class="nn">avalanche.evaluation.metric_results</span> <span class="kn">import</span> <span class="n">MetricResult</span><span class="p">,</span> <span class="n">MetricValue</span>
-<span class="kn">from</span> <span class="nn">avalanche.evaluation.metric_utils</span> <span class="kn">import</span> <span class="n">get_metric_name</span><span class="p">,</span> \
-    <span class="n">phase_and_task</span><span class="p">,</span> <span class="n">stream_type</span>
+<span class="kn">from</span> <span class="nn">avalanche.evaluation</span> <span class="kn">import</span> <span class="n">Metric</span><span class="p">,</span> <span class="n">PluginMetric</span><span class="p">,</span> <span class="n">GenericPluginMetric</span>
 <span class="kn">from</span> <span class="nn">avalanche.evaluation.metrics</span> <span class="kn">import</span> <span class="n">Mean</span>
-
-<span class="k">if</span> <span class="n">TYPE_CHECKING</span><span class="p">:</span>
-    <span class="kn">from</span> <span class="nn">avalanche.training</span> <span class="kn">import</span> <span class="n">BaseStrategy</span>
 
 
 <div class="viewcode-block" id="CPUUsage"><a class="viewcode-back" href="../../../../../autoapi/avalanche/evaluation/metrics/#avalanche.evaluation.metrics.cpu_usage.CPUUsage">[docs]</a><span class="k">class</span> <span class="nc">CPUUsage</span><span class="p">(</span><span class="n">Metric</span><span class="p">[</span><span class="nb">float</span><span class="p">]):</span>
@@ -300,7 +294,19 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">_first_update</span> <span class="o">=</span> <span class="kc">True</span></div></div>
 
 
-<div class="viewcode-block" id="MinibatchCPUUsage"><a class="viewcode-back" href="../../../../../autoapi/avalanche/evaluation/metrics/#avalanche.evaluation.metrics.cpu_usage.MinibatchCPUUsage">[docs]</a><span class="k">class</span> <span class="nc">MinibatchCPUUsage</span><span class="p">(</span><span class="n">PluginMetric</span><span class="p">[</span><span class="nb">float</span><span class="p">]):</span>
+<span class="k">class</span> <span class="nc">CPUPluginMetric</span><span class="p">(</span><span class="n">GenericPluginMetric</span><span class="p">[</span><span class="nb">float</span><span class="p">]):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">reset_at</span><span class="p">,</span> <span class="n">emit_at</span><span class="p">,</span> <span class="n">mode</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_cpu</span> <span class="o">=</span> <span class="n">CPUUsage</span><span class="p">()</span>
+
+        <span class="nb">super</span><span class="p">(</span><span class="n">CPUPluginMetric</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_cpu</span><span class="p">,</span> <span class="n">reset_at</span><span class="o">=</span><span class="n">reset_at</span><span class="p">,</span> <span class="n">emit_at</span><span class="o">=</span><span class="n">emit_at</span><span class="p">,</span>
+            <span class="n">mode</span><span class="o">=</span><span class="n">mode</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">update</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">strategy</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_cpu</span><span class="o">.</span><span class="n">update</span><span class="p">()</span>
+
+
+<div class="viewcode-block" id="MinibatchCPUUsage"><a class="viewcode-back" href="../../../../../autoapi/avalanche/evaluation/metrics/#avalanche.evaluation.metrics.cpu_usage.MinibatchCPUUsage">[docs]</a><span class="k">class</span> <span class="nc">MinibatchCPUUsage</span><span class="p">(</span><span class="n">CPUPluginMetric</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    The minibatch CPU usage metric.</span>
 <span class="sd">    This plugin metric only works at training time.</span>
@@ -315,40 +321,18 @@
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Creates an instance of the minibatch CPU usage metric.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">MinibatchCPUUsage</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span>
+            <span class="n">reset_at</span><span class="o">=</span><span class="s1">&#39;iteration&#39;</span><span class="p">,</span> <span class="n">emit_at</span><span class="o">=</span><span class="s1">&#39;iteration&#39;</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s1">&#39;train&#39;</span><span class="p">)</span>
 
-        <span class="bp">self</span><span class="o">.</span><span class="n">_minibatch_cpu</span> <span class="o">=</span> <span class="n">CPUUsage</span><span class="p">()</span>
-
-<div class="viewcode-block" id="MinibatchCPUUsage.result"><a class="viewcode-back" href="../../../../../autoapi/avalanche/evaluation/metrics/#avalanche.evaluation.metrics.cpu_usage.MinibatchCPUUsage.result">[docs]</a>    <span class="k">def</span> <span class="nf">result</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_minibatch_cpu</span><span class="o">.</span><span class="n">result</span><span class="p">()</span></div>
-
-<div class="viewcode-block" id="MinibatchCPUUsage.reset"><a class="viewcode-back" href="../../../../../autoapi/avalanche/evaluation/metrics/#avalanche.evaluation.metrics.cpu_usage.MinibatchCPUUsage.reset">[docs]</a>    <span class="k">def</span> <span class="nf">reset</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_minibatch_cpu</span><span class="o">.</span><span class="n">reset</span><span class="p">()</span></div>
-
-<div class="viewcode-block" id="MinibatchCPUUsage.before_training_iteration"><a class="viewcode-back" href="../../../../../autoapi/avalanche/evaluation/metrics/#avalanche.evaluation.metrics.cpu_usage.MinibatchCPUUsage.before_training_iteration">[docs]</a>    <span class="k">def</span> <span class="nf">before_training_iteration</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">strategy</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">MetricResult</span><span class="p">:</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">reset</span><span class="p">()</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_minibatch_cpu</span><span class="o">.</span><span class="n">update</span><span class="p">()</span></div>
-
-<div class="viewcode-block" id="MinibatchCPUUsage.after_training_iteration"><a class="viewcode-back" href="../../../../../autoapi/avalanche/evaluation/metrics/#avalanche.evaluation.metrics.cpu_usage.MinibatchCPUUsage.after_training_iteration">[docs]</a>    <span class="k">def</span> <span class="nf">after_training_iteration</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">strategy</span><span class="p">:</span> <span class="s1">&#39;BaseStrategy&#39;</span><span class="p">)</span> \
-            <span class="o">-&gt;</span> <span class="n">MetricResult</span><span class="p">:</span>
-        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">after_training_iteration</span><span class="p">(</span><span class="n">strategy</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_minibatch_cpu</span><span class="o">.</span><span class="n">update</span><span class="p">()</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_package_result</span><span class="p">(</span><span class="n">strategy</span><span class="p">)</span></div>
-
-    <span class="k">def</span> <span class="nf">_package_result</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">strategy</span><span class="p">:</span> <span class="s1">&#39;BaseStrategy&#39;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">MetricResult</span><span class="p">:</span>
-        <span class="n">metric_value</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">result</span><span class="p">()</span>
-
-        <span class="n">metric_name</span> <span class="o">=</span> <span class="n">get_metric_name</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">strategy</span><span class="p">)</span>
-
-        <span class="n">plot_x_position</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_global_counter</span><span class="p">()</span>
-
-        <span class="k">return</span> <span class="p">[</span><span class="n">MetricValue</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">metric_name</span><span class="p">,</span> <span class="n">metric_value</span><span class="p">,</span> <span class="n">plot_x_position</span><span class="p">)]</span>
+<div class="viewcode-block" id="MinibatchCPUUsage.before_training_iteration"><a class="viewcode-back" href="../../../../../autoapi/avalanche/evaluation/metrics/#avalanche.evaluation.metrics.cpu_usage.MinibatchCPUUsage.before_training_iteration">[docs]</a>    <span class="k">def</span> <span class="nf">before_training_iteration</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">strategy</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">before_training_iteration</span><span class="p">(</span><span class="n">strategy</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">strategy</span><span class="p">)</span>  <span class="c1"># start monitoring thread</span></div>
 
 <div class="viewcode-block" id="MinibatchCPUUsage.__str__"><a class="viewcode-back" href="../../../../../autoapi/avalanche/evaluation/metrics/#avalanche.evaluation.metrics.cpu_usage.MinibatchCPUUsage.__str__">[docs]</a>    <span class="k">def</span> <span class="fm">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">return</span> <span class="s2">&quot;CPUUsage_MB&quot;</span></div></div>
 
 
-<div class="viewcode-block" id="EpochCPUUsage"><a class="viewcode-back" href="../../../../../autoapi/avalanche/evaluation/metrics/#avalanche.evaluation.metrics.cpu_usage.EpochCPUUsage">[docs]</a><span class="k">class</span> <span class="nc">EpochCPUUsage</span><span class="p">(</span><span class="n">PluginMetric</span><span class="p">[</span><span class="nb">float</span><span class="p">]):</span>
+<div class="viewcode-block" id="EpochCPUUsage"><a class="viewcode-back" href="../../../../../autoapi/avalanche/evaluation/metrics/#avalanche.evaluation.metrics.cpu_usage.EpochCPUUsage">[docs]</a><span class="k">class</span> <span class="nc">EpochCPUUsage</span><span class="p">(</span><span class="n">CPUPluginMetric</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    The Epoch CPU usage metric.</span>
 <span class="sd">    This plugin metric only works at training time.</span>
@@ -360,38 +344,18 @@
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Creates an instance of the epoch CPU usage metric.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">EpochCPUUsage</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span>
+            <span class="n">reset_at</span><span class="o">=</span><span class="s1">&#39;epoch&#39;</span><span class="p">,</span> <span class="n">emit_at</span><span class="o">=</span><span class="s1">&#39;epoch&#39;</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s1">&#39;train&#39;</span><span class="p">)</span>
 
-        <span class="bp">self</span><span class="o">.</span><span class="n">_epoch_cpu</span> <span class="o">=</span> <span class="n">CPUUsage</span><span class="p">()</span>
-
-<div class="viewcode-block" id="EpochCPUUsage.before_training_epoch"><a class="viewcode-back" href="../../../../../autoapi/avalanche/evaluation/metrics/#avalanche.evaluation.metrics.cpu_usage.EpochCPUUsage.before_training_epoch">[docs]</a>    <span class="k">def</span> <span class="nf">before_training_epoch</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">strategy</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">MetricResult</span><span class="p">:</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">reset</span><span class="p">()</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_epoch_cpu</span><span class="o">.</span><span class="n">update</span><span class="p">()</span></div>
-
-<div class="viewcode-block" id="EpochCPUUsage.after_training_epoch"><a class="viewcode-back" href="../../../../../autoapi/avalanche/evaluation/metrics/#avalanche.evaluation.metrics.cpu_usage.EpochCPUUsage.after_training_epoch">[docs]</a>    <span class="k">def</span> <span class="nf">after_training_epoch</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">strategy</span><span class="p">:</span> <span class="s1">&#39;BaseStrategy&#39;</span><span class="p">)</span> \
-            <span class="o">-&gt;</span> <span class="n">MetricResult</span><span class="p">:</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_epoch_cpu</span><span class="o">.</span><span class="n">update</span><span class="p">()</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_package_result</span><span class="p">(</span><span class="n">strategy</span><span class="p">)</span></div>
-
-<div class="viewcode-block" id="EpochCPUUsage.reset"><a class="viewcode-back" href="../../../../../autoapi/avalanche/evaluation/metrics/#avalanche.evaluation.metrics.cpu_usage.EpochCPUUsage.reset">[docs]</a>    <span class="k">def</span> <span class="nf">reset</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_epoch_cpu</span><span class="o">.</span><span class="n">reset</span><span class="p">()</span></div>
-
-<div class="viewcode-block" id="EpochCPUUsage.result"><a class="viewcode-back" href="../../../../../autoapi/avalanche/evaluation/metrics/#avalanche.evaluation.metrics.cpu_usage.EpochCPUUsage.result">[docs]</a>    <span class="k">def</span> <span class="nf">result</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_epoch_cpu</span><span class="o">.</span><span class="n">result</span><span class="p">()</span></div>
-
-    <span class="k">def</span> <span class="nf">_package_result</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">strategy</span><span class="p">:</span> <span class="s1">&#39;BaseStrategy&#39;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">MetricResult</span><span class="p">:</span>
-        <span class="n">cpu_usage</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">result</span><span class="p">()</span>
-
-        <span class="n">metric_name</span> <span class="o">=</span> <span class="n">get_metric_name</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">strategy</span><span class="p">)</span>
-        <span class="n">plot_x_position</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_global_counter</span><span class="p">()</span>
-
-        <span class="k">return</span> <span class="p">[</span><span class="n">MetricValue</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">metric_name</span><span class="p">,</span> <span class="n">cpu_usage</span><span class="p">,</span> <span class="n">plot_x_position</span><span class="p">)]</span>
+<div class="viewcode-block" id="EpochCPUUsage.before_training_epoch"><a class="viewcode-back" href="../../../../../autoapi/avalanche/evaluation/metrics/#avalanche.evaluation.metrics.cpu_usage.EpochCPUUsage.before_training_epoch">[docs]</a>    <span class="k">def</span> <span class="nf">before_training_epoch</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">strategy</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">before_training_epoch</span><span class="p">(</span><span class="n">strategy</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">strategy</span><span class="p">)</span>  <span class="c1"># start monitoring thread</span></div>
 
 <div class="viewcode-block" id="EpochCPUUsage.__str__"><a class="viewcode-back" href="../../../../../autoapi/avalanche/evaluation/metrics/#avalanche.evaluation.metrics.cpu_usage.EpochCPUUsage.__str__">[docs]</a>    <span class="k">def</span> <span class="fm">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">return</span> <span class="s2">&quot;CPUUsage_Epoch&quot;</span></div></div>
 
 
-<div class="viewcode-block" id="RunningEpochCPUUsage"><a class="viewcode-back" href="../../../../../autoapi/avalanche/evaluation/metrics/#avalanche.evaluation.metrics.cpu_usage.RunningEpochCPUUsage">[docs]</a><span class="k">class</span> <span class="nc">RunningEpochCPUUsage</span><span class="p">(</span><span class="n">PluginMetric</span><span class="p">[</span><span class="nb">float</span><span class="p">]):</span>
+<div class="viewcode-block" id="RunningEpochCPUUsage"><a class="viewcode-back" href="../../../../../autoapi/avalanche/evaluation/metrics/#avalanche.evaluation.metrics.cpu_usage.RunningEpochCPUUsage">[docs]</a><span class="k">class</span> <span class="nc">RunningEpochCPUUsage</span><span class="p">(</span><span class="n">CPUPluginMetric</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    The running epoch CPU usage metric.</span>
 <span class="sd">    This plugin metric only works at training time</span>
@@ -404,91 +368,57 @@
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Creates an instance of the average epoch cpu usage metric.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
-
-        <span class="bp">self</span><span class="o">.</span><span class="n">_cpu_mean</span> <span class="o">=</span> <span class="n">Mean</span><span class="p">()</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_epoch_cpu</span> <span class="o">=</span> <span class="n">CPUUsage</span><span class="p">()</span>
-
-<div class="viewcode-block" id="RunningEpochCPUUsage.before_training_epoch"><a class="viewcode-back" href="../../../../../autoapi/avalanche/evaluation/metrics/#avalanche.evaluation.metrics.cpu_usage.RunningEpochCPUUsage.before_training_epoch">[docs]</a>    <span class="k">def</span> <span class="nf">before_training_epoch</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">strategy</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">MetricResult</span><span class="p">:</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">reset</span><span class="p">()</span></div>
-
-<div class="viewcode-block" id="RunningEpochCPUUsage.before_training_iteration"><a class="viewcode-back" href="../../../../../autoapi/avalanche/evaluation/metrics/#avalanche.evaluation.metrics.cpu_usage.RunningEpochCPUUsage.before_training_iteration">[docs]</a>    <span class="k">def</span> <span class="nf">before_training_iteration</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">strategy</span><span class="p">:</span> <span class="s1">&#39;BaseStrategy&#39;</span><span class="p">)</span> \
-            <span class="o">-&gt;</span> <span class="s1">&#39;MetricResult&#39;</span><span class="p">:</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_epoch_cpu</span><span class="o">.</span><span class="n">update</span><span class="p">()</span></div>
-
-<div class="viewcode-block" id="RunningEpochCPUUsage.after_training_iteration"><a class="viewcode-back" href="../../../../../autoapi/avalanche/evaluation/metrics/#avalanche.evaluation.metrics.cpu_usage.RunningEpochCPUUsage.after_training_iteration">[docs]</a>    <span class="k">def</span> <span class="nf">after_training_iteration</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">strategy</span><span class="p">:</span> <span class="s1">&#39;BaseStrategy&#39;</span><span class="p">)</span> \
-            <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">after_training_iteration</span><span class="p">(</span><span class="n">strategy</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_epoch_cpu</span><span class="o">.</span><span class="n">update</span><span class="p">()</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_cpu_mean</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_epoch_cpu</span><span class="o">.</span><span class="n">result</span><span class="p">())</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_epoch_cpu</span><span class="o">.</span><span class="n">reset</span><span class="p">()</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_package_result</span><span class="p">(</span><span class="n">strategy</span><span class="p">)</span></div>
-
-<div class="viewcode-block" id="RunningEpochCPUUsage.reset"><a class="viewcode-back" href="../../../../../autoapi/avalanche/evaluation/metrics/#avalanche.evaluation.metrics.cpu_usage.RunningEpochCPUUsage.reset">[docs]</a>    <span class="k">def</span> <span class="nf">reset</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_epoch_cpu</span><span class="o">.</span><span class="n">reset</span><span class="p">()</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_cpu_mean</span><span class="o">.</span><span class="n">reset</span><span class="p">()</span></div>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_mean</span> <span class="o">=</span> <span class="n">Mean</span><span class="p">()</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">RunningEpochCPUUsage</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span>
+            <span class="n">reset_at</span><span class="o">=</span><span class="s1">&#39;epoch&#39;</span><span class="p">,</span> <span class="n">emit_at</span><span class="o">=</span><span class="s1">&#39;iteration&#39;</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s1">&#39;train&#39;</span><span class="p">)</span>
 
 <div class="viewcode-block" id="RunningEpochCPUUsage.result"><a class="viewcode-back" href="../../../../../autoapi/avalanche/evaluation/metrics/#avalanche.evaluation.metrics.cpu_usage.RunningEpochCPUUsage.result">[docs]</a>    <span class="k">def</span> <span class="nf">result</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_cpu_mean</span><span class="o">.</span><span class="n">result</span><span class="p">()</span></div>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_mean</span><span class="o">.</span><span class="n">result</span><span class="p">()</span></div>
 
-    <span class="k">def</span> <span class="nf">_package_result</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">strategy</span><span class="p">:</span> <span class="s1">&#39;BaseStrategy&#39;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">MetricResult</span><span class="p">:</span>
-        <span class="n">cpu_usage</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">result</span><span class="p">()</span>
+<div class="viewcode-block" id="RunningEpochCPUUsage.before_training_epoch"><a class="viewcode-back" href="../../../../../autoapi/avalanche/evaluation/metrics/#avalanche.evaluation.metrics.cpu_usage.RunningEpochCPUUsage.before_training_epoch">[docs]</a>    <span class="k">def</span> <span class="nf">before_training_epoch</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">strategy</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">before_training_epoch</span><span class="p">(</span><span class="n">strategy</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_mean</span><span class="o">.</span><span class="n">reset</span><span class="p">()</span></div>
 
-        <span class="n">metric_name</span> <span class="o">=</span> <span class="n">get_metric_name</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">strategy</span><span class="p">)</span>
+<div class="viewcode-block" id="RunningEpochCPUUsage.before_training_iteration"><a class="viewcode-back" href="../../../../../autoapi/avalanche/evaluation/metrics/#avalanche.evaluation.metrics.cpu_usage.RunningEpochCPUUsage.before_training_iteration">[docs]</a>    <span class="k">def</span> <span class="nf">before_training_iteration</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">strategy</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">before_training_iteration</span><span class="p">(</span><span class="n">strategy</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">update</span><span class="p">()</span>  <span class="c1"># start monitoring thread</span></div>
 
-        <span class="n">plot_x_position</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_global_counter</span><span class="p">()</span>
-
-        <span class="k">return</span> <span class="p">[</span><span class="n">MetricValue</span><span class="p">(</span>
-            <span class="bp">self</span><span class="p">,</span> <span class="n">metric_name</span><span class="p">,</span> <span class="n">cpu_usage</span><span class="p">,</span> <span class="n">plot_x_position</span><span class="p">)]</span>
+<div class="viewcode-block" id="RunningEpochCPUUsage.after_training_iteration"><a class="viewcode-back" href="../../../../../autoapi/avalanche/evaluation/metrics/#avalanche.evaluation.metrics.cpu_usage.RunningEpochCPUUsage.after_training_iteration">[docs]</a>    <span class="k">def</span> <span class="nf">after_training_iteration</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">strategy</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">after_training_iteration</span><span class="p">(</span><span class="n">strategy</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">update</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_mean</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_cpu</span><span class="o">.</span><span class="n">result</span><span class="p">())</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_cpu</span><span class="o">.</span><span class="n">reset</span><span class="p">()</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_package_result</span><span class="p">(</span><span class="n">strategy</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="RunningEpochCPUUsage.__str__"><a class="viewcode-back" href="../../../../../autoapi/avalanche/evaluation/metrics/#avalanche.evaluation.metrics.cpu_usage.RunningEpochCPUUsage.__str__">[docs]</a>    <span class="k">def</span> <span class="fm">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">return</span> <span class="s2">&quot;RunningCPUUsage_Epoch&quot;</span></div></div>
 
 
-<div class="viewcode-block" id="ExperienceCPUUsage"><a class="viewcode-back" href="../../../../../autoapi/avalanche/evaluation/metrics/#avalanche.evaluation.metrics.cpu_usage.ExperienceCPUUsage">[docs]</a><span class="k">class</span> <span class="nc">ExperienceCPUUsage</span><span class="p">(</span><span class="n">PluginMetric</span><span class="p">[</span><span class="nb">float</span><span class="p">]):</span>
+<div class="viewcode-block" id="ExperienceCPUUsage"><a class="viewcode-back" href="../../../../../autoapi/avalanche/evaluation/metrics/#avalanche.evaluation.metrics.cpu_usage.ExperienceCPUUsage">[docs]</a><span class="k">class</span> <span class="nc">ExperienceCPUUsage</span><span class="p">(</span><span class="n">CPUPluginMetric</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    The average experience CPU usage metric.</span>
 <span class="sd">    This plugin metric works only at eval time.</span>
 
 <span class="sd">    After each experience, this metric emits the average CPU usage on that</span>
-<span class="sd">    experienc.</span>
+<span class="sd">    experience.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Creates an instance of the experience CPU usage metric.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">ExperienceCPUUsage</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span>
+            <span class="n">reset_at</span><span class="o">=</span><span class="s1">&#39;experience&#39;</span><span class="p">,</span> <span class="n">emit_at</span><span class="o">=</span><span class="s1">&#39;experience&#39;</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s1">&#39;eval&#39;</span><span class="p">)</span>
 
-        <span class="bp">self</span><span class="o">.</span><span class="n">_exp_cpu</span> <span class="o">=</span> <span class="n">CPUUsage</span><span class="p">()</span>
-
-<div class="viewcode-block" id="ExperienceCPUUsage.before_eval_exp"><a class="viewcode-back" href="../../../../../autoapi/avalanche/evaluation/metrics/#avalanche.evaluation.metrics.cpu_usage.ExperienceCPUUsage.before_eval_exp">[docs]</a>    <span class="k">def</span> <span class="nf">before_eval_exp</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">strategy</span><span class="p">:</span> <span class="s1">&#39;BaseStrategy&#39;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">reset</span><span class="p">()</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_exp_cpu</span><span class="o">.</span><span class="n">update</span><span class="p">()</span></div>
-
-<div class="viewcode-block" id="ExperienceCPUUsage.after_eval_exp"><a class="viewcode-back" href="../../../../../autoapi/avalanche/evaluation/metrics/#avalanche.evaluation.metrics.cpu_usage.ExperienceCPUUsage.after_eval_exp">[docs]</a>    <span class="k">def</span> <span class="nf">after_eval_exp</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">strategy</span><span class="p">:</span> <span class="s1">&#39;BaseStrategy&#39;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">MetricResult</span><span class="p">:</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_exp_cpu</span><span class="o">.</span><span class="n">update</span><span class="p">()</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_package_result</span><span class="p">(</span><span class="n">strategy</span><span class="p">)</span></div>
-
-<div class="viewcode-block" id="ExperienceCPUUsage.reset"><a class="viewcode-back" href="../../../../../autoapi/avalanche/evaluation/metrics/#avalanche.evaluation.metrics.cpu_usage.ExperienceCPUUsage.reset">[docs]</a>    <span class="k">def</span> <span class="nf">reset</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_exp_cpu</span><span class="o">.</span><span class="n">reset</span><span class="p">()</span></div>
-
-<div class="viewcode-block" id="ExperienceCPUUsage.result"><a class="viewcode-back" href="../../../../../autoapi/avalanche/evaluation/metrics/#avalanche.evaluation.metrics.cpu_usage.ExperienceCPUUsage.result">[docs]</a>    <span class="k">def</span> <span class="nf">result</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_exp_cpu</span><span class="o">.</span><span class="n">result</span><span class="p">()</span></div>
-
-    <span class="k">def</span> <span class="nf">_package_result</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">strategy</span><span class="p">:</span> <span class="s1">&#39;BaseStrategy&#39;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">MetricResult</span><span class="p">:</span>
-        <span class="n">exp_cpu</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">result</span><span class="p">()</span>
-
-        <span class="n">metric_name</span> <span class="o">=</span> <span class="n">get_metric_name</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">strategy</span><span class="p">,</span> <span class="n">add_experience</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-        <span class="n">plot_x_position</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_global_counter</span><span class="p">()</span>
-
-        <span class="k">return</span> <span class="p">[</span><span class="n">MetricValue</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">metric_name</span><span class="p">,</span> <span class="n">exp_cpu</span><span class="p">,</span> <span class="n">plot_x_position</span><span class="p">)]</span>
+<div class="viewcode-block" id="ExperienceCPUUsage.before_eval_exp"><a class="viewcode-back" href="../../../../../autoapi/avalanche/evaluation/metrics/#avalanche.evaluation.metrics.cpu_usage.ExperienceCPUUsage.before_eval_exp">[docs]</a>    <span class="k">def</span> <span class="nf">before_eval_exp</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">strategy</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">before_eval_exp</span><span class="p">(</span><span class="n">strategy</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">strategy</span><span class="p">)</span>  <span class="c1"># start monitoring thread</span></div>
 
 <div class="viewcode-block" id="ExperienceCPUUsage.__str__"><a class="viewcode-back" href="../../../../../autoapi/avalanche/evaluation/metrics/#avalanche.evaluation.metrics.cpu_usage.ExperienceCPUUsage.__str__">[docs]</a>    <span class="k">def</span> <span class="fm">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">return</span> <span class="s2">&quot;CPUUsage_Exp&quot;</span></div></div>
 
 
-<div class="viewcode-block" id="StreamCPUUsage"><a class="viewcode-back" href="../../../../../autoapi/avalanche/evaluation/metrics/#avalanche.evaluation.metrics.cpu_usage.StreamCPUUsage">[docs]</a><span class="k">class</span> <span class="nc">StreamCPUUsage</span><span class="p">(</span><span class="n">PluginMetric</span><span class="p">[</span><span class="nb">float</span><span class="p">]):</span>
+<div class="viewcode-block" id="StreamCPUUsage"><a class="viewcode-back" href="../../../../../autoapi/avalanche/evaluation/metrics/#avalanche.evaluation.metrics.cpu_usage.StreamCPUUsage">[docs]</a><span class="k">class</span> <span class="nc">StreamCPUUsage</span><span class="p">(</span><span class="n">CPUPluginMetric</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    The average stream CPU usage metric.</span>
 <span class="sd">    This plugin metric works only at eval time.</span>
@@ -501,36 +431,12 @@
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Creates an instance of the stream CPU usage metric.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">StreamCPUUsage</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span>
+            <span class="n">reset_at</span><span class="o">=</span><span class="s1">&#39;stream&#39;</span><span class="p">,</span> <span class="n">emit_at</span><span class="o">=</span><span class="s1">&#39;stream&#39;</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s1">&#39;eval&#39;</span><span class="p">)</span>
 
-        <span class="bp">self</span><span class="o">.</span><span class="n">_exp_cpu</span> <span class="o">=</span> <span class="n">CPUUsage</span><span class="p">()</span>
-
-<div class="viewcode-block" id="StreamCPUUsage.before_eval"><a class="viewcode-back" href="../../../../../autoapi/avalanche/evaluation/metrics/#avalanche.evaluation.metrics.cpu_usage.StreamCPUUsage.before_eval">[docs]</a>    <span class="k">def</span> <span class="nf">before_eval</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">strategy</span><span class="p">:</span> <span class="s1">&#39;BaseStrategy&#39;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">reset</span><span class="p">()</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_exp_cpu</span><span class="o">.</span><span class="n">update</span><span class="p">()</span></div>
-
-<div class="viewcode-block" id="StreamCPUUsage.after_eval"><a class="viewcode-back" href="../../../../../autoapi/avalanche/evaluation/metrics/#avalanche.evaluation.metrics.cpu_usage.StreamCPUUsage.after_eval">[docs]</a>    <span class="k">def</span> <span class="nf">after_eval</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">strategy</span><span class="p">:</span> <span class="s1">&#39;BaseStrategy&#39;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">MetricResult</span><span class="p">:</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_exp_cpu</span><span class="o">.</span><span class="n">update</span><span class="p">()</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_package_result</span><span class="p">(</span><span class="n">strategy</span><span class="p">)</span></div>
-
-<div class="viewcode-block" id="StreamCPUUsage.reset"><a class="viewcode-back" href="../../../../../autoapi/avalanche/evaluation/metrics/#avalanche.evaluation.metrics.cpu_usage.StreamCPUUsage.reset">[docs]</a>    <span class="k">def</span> <span class="nf">reset</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_exp_cpu</span><span class="o">.</span><span class="n">reset</span><span class="p">()</span></div>
-
-<div class="viewcode-block" id="StreamCPUUsage.result"><a class="viewcode-back" href="../../../../../autoapi/avalanche/evaluation/metrics/#avalanche.evaluation.metrics.cpu_usage.StreamCPUUsage.result">[docs]</a>    <span class="k">def</span> <span class="nf">result</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_exp_cpu</span><span class="o">.</span><span class="n">result</span><span class="p">()</span></div>
-
-    <span class="k">def</span> <span class="nf">_package_result</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">strategy</span><span class="p">:</span> <span class="s1">&#39;BaseStrategy&#39;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">MetricResult</span><span class="p">:</span>
-        <span class="n">exp_cpu</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">result</span><span class="p">()</span>
-
-        <span class="n">phase_name</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">phase_and_task</span><span class="p">(</span><span class="n">strategy</span><span class="p">)</span>
-        <span class="n">stream</span> <span class="o">=</span> <span class="n">stream_type</span><span class="p">(</span><span class="n">strategy</span><span class="o">.</span><span class="n">experience</span><span class="p">)</span>
-        <span class="n">metric_name</span> <span class="o">=</span> <span class="s1">&#39;</span><span class="si">{}</span><span class="s1">/</span><span class="si">{}</span><span class="s1">_phase/</span><span class="si">{}</span><span class="s1">_stream&#39;</span> \
-            <span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="p">),</span>
-                    <span class="n">phase_name</span><span class="p">,</span>
-                    <span class="n">stream</span><span class="p">)</span>
-        <span class="n">plot_x_position</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_global_counter</span><span class="p">()</span>
-
-        <span class="k">return</span> <span class="p">[</span><span class="n">MetricValue</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">metric_name</span><span class="p">,</span> <span class="n">exp_cpu</span><span class="p">,</span> <span class="n">plot_x_position</span><span class="p">)]</span>
+<div class="viewcode-block" id="StreamCPUUsage.before_eval"><a class="viewcode-back" href="../../../../../autoapi/avalanche/evaluation/metrics/#avalanche.evaluation.metrics.cpu_usage.StreamCPUUsage.before_eval">[docs]</a>    <span class="k">def</span> <span class="nf">before_eval</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">strategy</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">before_eval</span><span class="p">(</span><span class="n">strategy</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">strategy</span><span class="p">)</span>  <span class="c1"># start monitoring thread</span></div>
 
 <div class="viewcode-block" id="StreamCPUUsage.__str__"><a class="viewcode-back" href="../../../../../autoapi/avalanche/evaluation/metrics/#avalanche.evaluation.metrics.cpu_usage.StreamCPUUsage.__str__">[docs]</a>    <span class="k">def</span> <span class="fm">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">return</span> <span class="s2">&quot;CPUUsage_Stream&quot;</span></div></div>

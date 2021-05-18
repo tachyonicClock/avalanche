@@ -190,18 +190,13 @@
 <span class="c1"># Website: www.continualai.org                                                 #</span>
 <span class="c1">################################################################################</span>
 
-<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">TYPE_CHECKING</span><span class="p">,</span> <span class="n">List</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">List</span>
 
 <span class="kn">import</span> <span class="nn">torch</span>
 <span class="kn">from</span> <span class="nn">torch</span> <span class="kn">import</span> <span class="n">Tensor</span>
 
-<span class="kn">from</span> <span class="nn">avalanche.evaluation</span> <span class="kn">import</span> <span class="n">PluginMetric</span><span class="p">,</span> <span class="n">Metric</span>
-<span class="kn">from</span> <span class="nn">avalanche.evaluation.metric_results</span> <span class="kn">import</span> <span class="n">MetricValue</span><span class="p">,</span> <span class="n">MetricResult</span>
-<span class="kn">from</span> <span class="nn">avalanche.evaluation.metric_utils</span> <span class="kn">import</span> <span class="n">get_metric_name</span><span class="p">,</span> \
-    <span class="n">phase_and_task</span><span class="p">,</span> <span class="n">stream_type</span>
+<span class="kn">from</span> <span class="nn">avalanche.evaluation</span> <span class="kn">import</span> <span class="n">PluginMetric</span><span class="p">,</span> <span class="n">Metric</span><span class="p">,</span> <span class="n">GenericPluginMetric</span>
 <span class="kn">from</span> <span class="nn">avalanche.evaluation.metrics.mean</span> <span class="kn">import</span> <span class="n">Mean</span>
-<span class="k">if</span> <span class="n">TYPE_CHECKING</span><span class="p">:</span>
-    <span class="kn">from</span> <span class="nn">avalanche.training</span> <span class="kn">import</span> <span class="n">BaseStrategy</span>
 
 
 <div class="viewcode-block" id="Loss"><a class="viewcode-back" href="../../../../../autoapi/avalanche/evaluation/metrics/loss/#avalanche.evaluation.metrics.Loss">[docs]</a><span class="k">class</span> <span class="nc">Loss</span><span class="p">(</span><span class="n">Metric</span><span class="p">[</span><span class="nb">float</span><span class="p">]):</span>
@@ -262,7 +257,17 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">_mean_loss</span><span class="o">.</span><span class="n">reset</span><span class="p">()</span></div></div>
 
 
-<div class="viewcode-block" id="MinibatchLoss"><a class="viewcode-back" href="../../../../../autoapi/avalanche/evaluation/metrics/loss/#avalanche.evaluation.metrics.MinibatchLoss">[docs]</a><span class="k">class</span> <span class="nc">MinibatchLoss</span><span class="p">(</span><span class="n">PluginMetric</span><span class="p">[</span><span class="nb">float</span><span class="p">]):</span>
+<span class="k">class</span> <span class="nc">LossPluginMetric</span><span class="p">(</span><span class="n">GenericPluginMetric</span><span class="p">[</span><span class="nb">float</span><span class="p">]):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">reset_at</span><span class="p">,</span> <span class="n">emit_at</span><span class="p">,</span> <span class="n">mode</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_loss</span> <span class="o">=</span> <span class="n">Loss</span><span class="p">()</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">LossPluginMetric</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_loss</span><span class="p">,</span> <span class="n">reset_at</span><span class="p">,</span> <span class="n">emit_at</span><span class="p">,</span> <span class="n">mode</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">update</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">strategy</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_loss</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">strategy</span><span class="o">.</span><span class="n">loss</span><span class="p">,</span> <span class="n">patterns</span><span class="o">=</span><span class="nb">len</span><span class="p">(</span><span class="n">strategy</span><span class="o">.</span><span class="n">mb_y</span><span class="p">))</span>
+
+
+<div class="viewcode-block" id="MinibatchLoss"><a class="viewcode-back" href="../../../../../autoapi/avalanche/evaluation/metrics/loss/#avalanche.evaluation.metrics.MinibatchLoss">[docs]</a><span class="k">class</span> <span class="nc">MinibatchLoss</span><span class="p">(</span><span class="n">LossPluginMetric</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    The minibatch loss metric.</span>
 <span class="sd">    This plugin metric only works at training time.</span>
@@ -279,37 +284,14 @@
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Creates an instance of the MinibatchLoss metric.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
-
-        <span class="bp">self</span><span class="o">.</span><span class="n">_loss_metric</span> <span class="o">=</span> <span class="n">Loss</span><span class="p">()</span>
-
-<div class="viewcode-block" id="MinibatchLoss.result"><a class="viewcode-back" href="../../../../../autoapi/avalanche/evaluation/metrics/loss/#avalanche.evaluation.metrics.MinibatchLoss.result">[docs]</a>    <span class="k">def</span> <span class="nf">result</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_loss_metric</span><span class="o">.</span><span class="n">result</span><span class="p">()</span></div>
-
-<div class="viewcode-block" id="MinibatchLoss.reset"><a class="viewcode-back" href="../../../../../autoapi/avalanche/evaluation/metrics/loss/#avalanche.evaluation.metrics.MinibatchLoss.reset">[docs]</a>    <span class="k">def</span> <span class="nf">reset</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_loss_metric</span><span class="o">.</span><span class="n">reset</span><span class="p">()</span></div>
-
-<div class="viewcode-block" id="MinibatchLoss.after_training_iteration"><a class="viewcode-back" href="../../../../../autoapi/avalanche/evaluation/metrics/loss/#avalanche.evaluation.metrics.MinibatchLoss.after_training_iteration">[docs]</a>    <span class="k">def</span> <span class="nf">after_training_iteration</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">strategy</span><span class="p">:</span> <span class="s1">&#39;BaseStrategy&#39;</span><span class="p">)</span> \
-            <span class="o">-&gt;</span> <span class="n">MetricResult</span><span class="p">:</span>
-        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">after_training_iteration</span><span class="p">(</span><span class="n">strategy</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">reset</span><span class="p">()</span>  <span class="c1"># Because this metric computes the loss of a single mb</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_loss_metric</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">strategy</span><span class="o">.</span><span class="n">loss</span><span class="p">,</span>
-                                 <span class="n">patterns</span><span class="o">=</span><span class="nb">len</span><span class="p">(</span><span class="n">strategy</span><span class="o">.</span><span class="n">mb_y</span><span class="p">))</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_package_result</span><span class="p">(</span><span class="n">strategy</span><span class="p">)</span></div>
-
-    <span class="k">def</span> <span class="nf">_package_result</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">strategy</span><span class="p">:</span> <span class="s1">&#39;BaseStrategy&#39;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">MetricResult</span><span class="p">:</span>
-        <span class="n">metric_value</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">result</span><span class="p">()</span>
-
-        <span class="n">metric_name</span> <span class="o">=</span> <span class="n">get_metric_name</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">strategy</span><span class="p">)</span>
-        <span class="n">plot_x_position</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_global_counter</span><span class="p">()</span>
-
-        <span class="k">return</span> <span class="p">[</span><span class="n">MetricValue</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">metric_name</span><span class="p">,</span> <span class="n">metric_value</span><span class="p">,</span> <span class="n">plot_x_position</span><span class="p">)]</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">MinibatchLoss</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span>
+            <span class="n">reset_at</span><span class="o">=</span><span class="s1">&#39;iteration&#39;</span><span class="p">,</span> <span class="n">emit_at</span><span class="o">=</span><span class="s1">&#39;iteration&#39;</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s1">&#39;train&#39;</span><span class="p">)</span>
 
 <div class="viewcode-block" id="MinibatchLoss.__str__"><a class="viewcode-back" href="../../../../../autoapi/avalanche/evaluation/metrics/loss/#avalanche.evaluation.metrics.MinibatchLoss.__str__">[docs]</a>    <span class="k">def</span> <span class="fm">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">return</span> <span class="s2">&quot;Loss_MB&quot;</span></div></div>
 
 
-<div class="viewcode-block" id="EpochLoss"><a class="viewcode-back" href="../../../../../autoapi/avalanche/evaluation/metrics/loss/#avalanche.evaluation.metrics.EpochLoss">[docs]</a><span class="k">class</span> <span class="nc">EpochLoss</span><span class="p">(</span><span class="n">PluginMetric</span><span class="p">[</span><span class="nb">float</span><span class="p">]):</span>
+<div class="viewcode-block" id="EpochLoss"><a class="viewcode-back" href="../../../../../autoapi/avalanche/evaluation/metrics/loss/#avalanche.evaluation.metrics.EpochLoss">[docs]</a><span class="k">class</span> <span class="nc">EpochLoss</span><span class="p">(</span><span class="n">LossPluginMetric</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    The average loss over a single training epoch.</span>
 <span class="sd">    This plugin metric only works at training time.</span>
@@ -324,40 +306,14 @@
 <span class="sd">        Creates an instance of the EpochLoss metric.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
 
-        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
-
-        <span class="bp">self</span><span class="o">.</span><span class="n">_loss_metric</span> <span class="o">=</span> <span class="n">Loss</span><span class="p">()</span>
-
-<div class="viewcode-block" id="EpochLoss.before_training_epoch"><a class="viewcode-back" href="../../../../../autoapi/avalanche/evaluation/metrics/loss/#avalanche.evaluation.metrics.EpochLoss.before_training_epoch">[docs]</a>    <span class="k">def</span> <span class="nf">before_training_epoch</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">strategy</span><span class="p">:</span> <span class="s1">&#39;BaseStrategy&#39;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">reset</span><span class="p">()</span></div>
-
-<div class="viewcode-block" id="EpochLoss.after_training_iteration"><a class="viewcode-back" href="../../../../../autoapi/avalanche/evaluation/metrics/loss/#avalanche.evaluation.metrics.EpochLoss.after_training_iteration">[docs]</a>    <span class="k">def</span> <span class="nf">after_training_iteration</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">strategy</span><span class="p">:</span> <span class="s1">&#39;BaseStrategy&#39;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">after_training_iteration</span><span class="p">(</span><span class="n">strategy</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_loss_metric</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">strategy</span><span class="o">.</span><span class="n">loss</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">strategy</span><span class="o">.</span><span class="n">mb_y</span><span class="p">))</span></div>
-
-<div class="viewcode-block" id="EpochLoss.after_training_epoch"><a class="viewcode-back" href="../../../../../autoapi/avalanche/evaluation/metrics/loss/#avalanche.evaluation.metrics.EpochLoss.after_training_epoch">[docs]</a>    <span class="k">def</span> <span class="nf">after_training_epoch</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">strategy</span><span class="p">:</span> <span class="s1">&#39;BaseStrategy&#39;</span><span class="p">)</span> \
-            <span class="o">-&gt;</span> <span class="n">MetricResult</span><span class="p">:</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_package_result</span><span class="p">(</span><span class="n">strategy</span><span class="p">)</span></div>
-
-<div class="viewcode-block" id="EpochLoss.reset"><a class="viewcode-back" href="../../../../../autoapi/avalanche/evaluation/metrics/loss/#avalanche.evaluation.metrics.EpochLoss.reset">[docs]</a>    <span class="k">def</span> <span class="nf">reset</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_loss_metric</span><span class="o">.</span><span class="n">reset</span><span class="p">()</span></div>
-
-<div class="viewcode-block" id="EpochLoss.result"><a class="viewcode-back" href="../../../../../autoapi/avalanche/evaluation/metrics/loss/#avalanche.evaluation.metrics.EpochLoss.result">[docs]</a>    <span class="k">def</span> <span class="nf">result</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_loss_metric</span><span class="o">.</span><span class="n">result</span><span class="p">()</span></div>
-
-    <span class="k">def</span> <span class="nf">_package_result</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">strategy</span><span class="p">:</span> <span class="s1">&#39;BaseStrategy&#39;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">MetricResult</span><span class="p">:</span>
-        <span class="n">metric_value</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">result</span><span class="p">()</span>
-
-        <span class="n">metric_name</span> <span class="o">=</span> <span class="n">get_metric_name</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">strategy</span><span class="p">)</span>
-        <span class="n">plot_x_position</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_global_counter</span><span class="p">()</span>
-
-        <span class="k">return</span> <span class="p">[</span><span class="n">MetricValue</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">metric_name</span><span class="p">,</span> <span class="n">metric_value</span><span class="p">,</span> <span class="n">plot_x_position</span><span class="p">)]</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">EpochLoss</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span>
+            <span class="n">reset_at</span><span class="o">=</span><span class="s1">&#39;epoch&#39;</span><span class="p">,</span> <span class="n">emit_at</span><span class="o">=</span><span class="s1">&#39;epoch&#39;</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s1">&#39;train&#39;</span><span class="p">)</span>
 
 <div class="viewcode-block" id="EpochLoss.__str__"><a class="viewcode-back" href="../../../../../autoapi/avalanche/evaluation/metrics/loss/#avalanche.evaluation.metrics.EpochLoss.__str__">[docs]</a>    <span class="k">def</span> <span class="fm">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">return</span> <span class="s2">&quot;Loss_Epoch&quot;</span></div></div>
 
 
-<div class="viewcode-block" id="RunningEpochLoss"><a class="viewcode-back" href="../../../../../autoapi/avalanche/evaluation/metrics/loss/#avalanche.evaluation.metrics.RunningEpochLoss">[docs]</a><span class="k">class</span> <span class="nc">RunningEpochLoss</span><span class="p">(</span><span class="n">EpochLoss</span><span class="p">):</span>
+<div class="viewcode-block" id="RunningEpochLoss"><a class="viewcode-back" href="../../../../../autoapi/avalanche/evaluation/metrics/loss/#avalanche.evaluation.metrics.RunningEpochLoss">[docs]</a><span class="k">class</span> <span class="nc">RunningEpochLoss</span><span class="p">(</span><span class="n">LossPluginMetric</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    The average loss across all minibatches up to the current</span>
 <span class="sd">    epoch iteration.</span>
@@ -373,31 +329,14 @@
 <span class="sd">        Creates an instance of the RunningEpochLoss metric.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
 
-        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
-
-<div class="viewcode-block" id="RunningEpochLoss.after_training_iteration"><a class="viewcode-back" href="../../../../../autoapi/avalanche/evaluation/metrics/loss/#avalanche.evaluation.metrics.RunningEpochLoss.after_training_iteration">[docs]</a>    <span class="k">def</span> <span class="nf">after_training_iteration</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">strategy</span><span class="p">:</span> <span class="s1">&#39;BaseStrategy&#39;</span><span class="p">)</span> \
-            <span class="o">-&gt;</span> <span class="n">MetricResult</span><span class="p">:</span>
-        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">after_training_iteration</span><span class="p">(</span><span class="n">strategy</span><span class="p">)</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_package_result</span><span class="p">(</span><span class="n">strategy</span><span class="p">)</span></div>
-
-<div class="viewcode-block" id="RunningEpochLoss.after_training_epoch"><a class="viewcode-back" href="../../../../../autoapi/avalanche/evaluation/metrics/loss/#avalanche.evaluation.metrics.RunningEpochLoss.after_training_epoch">[docs]</a>    <span class="k">def</span> <span class="nf">after_training_epoch</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">strategy</span><span class="p">:</span> <span class="s1">&#39;BaseStrategy&#39;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="c1"># Overrides the method from EpochLoss so that it doesn&#39;t</span>
-        <span class="c1"># emit a metric value on epoch end!</span>
-        <span class="k">return</span> <span class="kc">None</span></div>
-
-    <span class="k">def</span> <span class="nf">_package_result</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">strategy</span><span class="p">:</span> <span class="s1">&#39;BaseStrategy&#39;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">MetricResult</span><span class="p">:</span>
-        <span class="n">metric_value</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">result</span><span class="p">()</span>
-
-        <span class="n">metric_name</span> <span class="o">=</span> <span class="n">get_metric_name</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">strategy</span><span class="p">)</span>
-        <span class="n">plot_x_position</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_global_counter</span><span class="p">()</span>
-
-        <span class="k">return</span> <span class="p">[</span><span class="n">MetricValue</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">metric_name</span><span class="p">,</span> <span class="n">metric_value</span><span class="p">,</span> <span class="n">plot_x_position</span><span class="p">)]</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">RunningEpochLoss</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span>
+            <span class="n">reset_at</span><span class="o">=</span><span class="s1">&#39;epoch&#39;</span><span class="p">,</span> <span class="n">emit_at</span><span class="o">=</span><span class="s1">&#39;iteration&#39;</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s1">&#39;train&#39;</span><span class="p">)</span>
 
 <div class="viewcode-block" id="RunningEpochLoss.__str__"><a class="viewcode-back" href="../../../../../autoapi/avalanche/evaluation/metrics/loss/#avalanche.evaluation.metrics.RunningEpochLoss.__str__">[docs]</a>    <span class="k">def</span> <span class="fm">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">return</span> <span class="s2">&quot;RunningLoss_Epoch&quot;</span></div></div>
 
 
-<div class="viewcode-block" id="ExperienceLoss"><a class="viewcode-back" href="../../../../../autoapi/avalanche/evaluation/metrics/loss/#avalanche.evaluation.metrics.ExperienceLoss">[docs]</a><span class="k">class</span> <span class="nc">ExperienceLoss</span><span class="p">(</span><span class="n">PluginMetric</span><span class="p">[</span><span class="nb">float</span><span class="p">]):</span>
+<div class="viewcode-block" id="ExperienceLoss"><a class="viewcode-back" href="../../../../../autoapi/avalanche/evaluation/metrics/loss/#avalanche.evaluation.metrics.ExperienceLoss">[docs]</a><span class="k">class</span> <span class="nc">ExperienceLoss</span><span class="p">(</span><span class="n">LossPluginMetric</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    At the end of each experience, this metric reports</span>
 <span class="sd">    the average loss over all patterns seen in that experience.</span>
@@ -408,42 +347,14 @@
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Creates an instance of ExperienceLoss metric</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
-
-        <span class="bp">self</span><span class="o">.</span><span class="n">_loss_metric</span> <span class="o">=</span> <span class="n">Loss</span><span class="p">()</span>
-
-<div class="viewcode-block" id="ExperienceLoss.reset"><a class="viewcode-back" href="../../../../../autoapi/avalanche/evaluation/metrics/loss/#avalanche.evaluation.metrics.ExperienceLoss.reset">[docs]</a>    <span class="k">def</span> <span class="nf">reset</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_loss_metric</span><span class="o">.</span><span class="n">reset</span><span class="p">()</span></div>
-
-<div class="viewcode-block" id="ExperienceLoss.result"><a class="viewcode-back" href="../../../../../autoapi/avalanche/evaluation/metrics/loss/#avalanche.evaluation.metrics.ExperienceLoss.result">[docs]</a>    <span class="k">def</span> <span class="nf">result</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_loss_metric</span><span class="o">.</span><span class="n">result</span><span class="p">()</span></div>
-
-<div class="viewcode-block" id="ExperienceLoss.before_eval_exp"><a class="viewcode-back" href="../../../../../autoapi/avalanche/evaluation/metrics/loss/#avalanche.evaluation.metrics.ExperienceLoss.before_eval_exp">[docs]</a>    <span class="k">def</span> <span class="nf">before_eval_exp</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">strategy</span><span class="p">:</span> <span class="s1">&#39;BaseStrategy&#39;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">reset</span><span class="p">()</span></div>
-
-<div class="viewcode-block" id="ExperienceLoss.after_eval_iteration"><a class="viewcode-back" href="../../../../../autoapi/avalanche/evaluation/metrics/loss/#avalanche.evaluation.metrics.ExperienceLoss.after_eval_iteration">[docs]</a>    <span class="k">def</span> <span class="nf">after_eval_iteration</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">strategy</span><span class="p">:</span> <span class="s1">&#39;BaseStrategy&#39;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">after_eval_iteration</span><span class="p">(</span><span class="n">strategy</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_loss_metric</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">strategy</span><span class="o">.</span><span class="n">loss</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">strategy</span><span class="o">.</span><span class="n">mb_y</span><span class="p">))</span></div>
-
-<div class="viewcode-block" id="ExperienceLoss.after_eval_exp"><a class="viewcode-back" href="../../../../../autoapi/avalanche/evaluation/metrics/loss/#avalanche.evaluation.metrics.ExperienceLoss.after_eval_exp">[docs]</a>    <span class="k">def</span> <span class="nf">after_eval_exp</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">strategy</span><span class="p">:</span> <span class="s1">&#39;BaseStrategy&#39;</span><span class="p">)</span> <span class="o">-&gt;</span> \
-            <span class="s1">&#39;MetricResult&#39;</span><span class="p">:</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_package_result</span><span class="p">(</span><span class="n">strategy</span><span class="p">)</span></div>
-
-    <span class="k">def</span> <span class="nf">_package_result</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">strategy</span><span class="p">:</span> <span class="s1">&#39;BaseStrategy&#39;</span><span class="p">)</span> <span class="o">-&gt;</span> \
-            <span class="n">MetricResult</span><span class="p">:</span>
-        <span class="n">metric_value</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">result</span><span class="p">()</span>
-
-        <span class="n">metric_name</span> <span class="o">=</span> <span class="n">get_metric_name</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">strategy</span><span class="p">,</span> <span class="n">add_experience</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-
-        <span class="n">plot_x_position</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_global_counter</span><span class="p">()</span>
-
-        <span class="k">return</span> <span class="p">[</span><span class="n">MetricValue</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">metric_name</span><span class="p">,</span> <span class="n">metric_value</span><span class="p">,</span> <span class="n">plot_x_position</span><span class="p">)]</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">ExperienceLoss</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span>
+            <span class="n">reset_at</span><span class="o">=</span><span class="s1">&#39;experience&#39;</span><span class="p">,</span> <span class="n">emit_at</span><span class="o">=</span><span class="s1">&#39;experience&#39;</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s1">&#39;eval&#39;</span><span class="p">)</span>
 
 <div class="viewcode-block" id="ExperienceLoss.__str__"><a class="viewcode-back" href="../../../../../autoapi/avalanche/evaluation/metrics/loss/#avalanche.evaluation.metrics.ExperienceLoss.__str__">[docs]</a>    <span class="k">def</span> <span class="fm">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">return</span> <span class="s2">&quot;Loss_Exp&quot;</span></div></div>
 
 
-<div class="viewcode-block" id="StreamLoss"><a class="viewcode-back" href="../../../../../autoapi/avalanche/evaluation/metrics/loss/#avalanche.evaluation.metrics.StreamLoss">[docs]</a><span class="k">class</span> <span class="nc">StreamLoss</span><span class="p">(</span><span class="n">PluginMetric</span><span class="p">[</span><span class="nb">float</span><span class="p">]):</span>
+<div class="viewcode-block" id="StreamLoss"><a class="viewcode-back" href="../../../../../autoapi/avalanche/evaluation/metrics/loss/#avalanche.evaluation.metrics.StreamLoss">[docs]</a><span class="k">class</span> <span class="nc">StreamLoss</span><span class="p">(</span><span class="n">LossPluginMetric</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    At the end of the entire stream of experiences, this metric reports the</span>
 <span class="sd">    average loss over all patterns seen in all experiences.</span>
@@ -454,41 +365,8 @@
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Creates an instance of StreamLoss metric</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
-
-        <span class="bp">self</span><span class="o">.</span><span class="n">_loss_metric</span> <span class="o">=</span> <span class="n">Loss</span><span class="p">()</span>
-
-<div class="viewcode-block" id="StreamLoss.reset"><a class="viewcode-back" href="../../../../../autoapi/avalanche/evaluation/metrics/loss/#avalanche.evaluation.metrics.StreamLoss.reset">[docs]</a>    <span class="k">def</span> <span class="nf">reset</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_loss_metric</span><span class="o">.</span><span class="n">reset</span><span class="p">()</span></div>
-
-<div class="viewcode-block" id="StreamLoss.result"><a class="viewcode-back" href="../../../../../autoapi/avalanche/evaluation/metrics/loss/#avalanche.evaluation.metrics.StreamLoss.result">[docs]</a>    <span class="k">def</span> <span class="nf">result</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_loss_metric</span><span class="o">.</span><span class="n">result</span><span class="p">()</span></div>
-
-<div class="viewcode-block" id="StreamLoss.before_eval"><a class="viewcode-back" href="../../../../../autoapi/avalanche/evaluation/metrics/loss/#avalanche.evaluation.metrics.StreamLoss.before_eval">[docs]</a>    <span class="k">def</span> <span class="nf">before_eval</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">strategy</span><span class="p">:</span> <span class="s1">&#39;BaseStrategy&#39;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">reset</span><span class="p">()</span></div>
-
-<div class="viewcode-block" id="StreamLoss.after_eval_iteration"><a class="viewcode-back" href="../../../../../autoapi/avalanche/evaluation/metrics/loss/#avalanche.evaluation.metrics.StreamLoss.after_eval_iteration">[docs]</a>    <span class="k">def</span> <span class="nf">after_eval_iteration</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">strategy</span><span class="p">:</span> <span class="s1">&#39;BaseStrategy&#39;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">after_eval_iteration</span><span class="p">(</span><span class="n">strategy</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_loss_metric</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">strategy</span><span class="o">.</span><span class="n">loss</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">strategy</span><span class="o">.</span><span class="n">mb_y</span><span class="p">))</span></div>
-
-<div class="viewcode-block" id="StreamLoss.after_eval"><a class="viewcode-back" href="../../../../../autoapi/avalanche/evaluation/metrics/loss/#avalanche.evaluation.metrics.StreamLoss.after_eval">[docs]</a>    <span class="k">def</span> <span class="nf">after_eval</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">strategy</span><span class="p">:</span> <span class="s1">&#39;BaseStrategy&#39;</span><span class="p">)</span> <span class="o">-&gt;</span> \
-            <span class="s1">&#39;MetricResult&#39;</span><span class="p">:</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_package_result</span><span class="p">(</span><span class="n">strategy</span><span class="p">)</span></div>
-
-    <span class="k">def</span> <span class="nf">_package_result</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">strategy</span><span class="p">:</span> <span class="s1">&#39;BaseStrategy&#39;</span><span class="p">)</span> <span class="o">-&gt;</span> \
-            <span class="n">MetricResult</span><span class="p">:</span>
-        <span class="n">metric_value</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">result</span><span class="p">()</span>
-
-        <span class="n">phase_name</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">phase_and_task</span><span class="p">(</span><span class="n">strategy</span><span class="p">)</span>
-        <span class="n">stream</span> <span class="o">=</span> <span class="n">stream_type</span><span class="p">(</span><span class="n">strategy</span><span class="o">.</span><span class="n">experience</span><span class="p">)</span>
-        <span class="n">metric_name</span> <span class="o">=</span> <span class="s1">&#39;</span><span class="si">{}</span><span class="s1">/</span><span class="si">{}</span><span class="s1">_phase/</span><span class="si">{}</span><span class="s1">_stream&#39;</span> \
-            <span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="p">),</span>
-                    <span class="n">phase_name</span><span class="p">,</span>
-                    <span class="n">stream</span><span class="p">)</span>
-
-        <span class="n">plot_x_position</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_global_counter</span><span class="p">()</span>
-
-        <span class="k">return</span> <span class="p">[</span><span class="n">MetricValue</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">metric_name</span><span class="p">,</span> <span class="n">metric_value</span><span class="p">,</span> <span class="n">plot_x_position</span><span class="p">)]</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">StreamLoss</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span>
+            <span class="n">reset_at</span><span class="o">=</span><span class="s1">&#39;stream&#39;</span><span class="p">,</span> <span class="n">emit_at</span><span class="o">=</span><span class="s1">&#39;stream&#39;</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s1">&#39;eval&#39;</span><span class="p">)</span>
 
 <div class="viewcode-block" id="StreamLoss.__str__"><a class="viewcode-back" href="../../../../../autoapi/avalanche/evaluation/metrics/loss/#avalanche.evaluation.metrics.StreamLoss.__str__">[docs]</a>    <span class="k">def</span> <span class="fm">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">return</span> <span class="s2">&quot;Loss_Stream&quot;</span></div></div>

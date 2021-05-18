@@ -192,15 +192,9 @@
 
 <span class="kn">import</span> <span class="nn">os</span>
 <span class="kn">from</span> <span class="nn">pathlib</span> <span class="kn">import</span> <span class="n">Path</span>
-<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Union</span><span class="p">,</span> <span class="n">Sequence</span><span class="p">,</span> <span class="n">List</span><span class="p">,</span> <span class="n">Optional</span><span class="p">,</span> <span class="n">TYPE_CHECKING</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Union</span><span class="p">,</span> <span class="n">Sequence</span><span class="p">,</span> <span class="n">List</span><span class="p">,</span> <span class="n">Optional</span>
 
-<span class="kn">from</span> <span class="nn">avalanche.evaluation</span> <span class="kn">import</span> <span class="n">Metric</span><span class="p">,</span> <span class="n">PluginMetric</span>
-<span class="kn">from</span> <span class="nn">avalanche.evaluation.metric_utils</span> <span class="kn">import</span> <span class="n">get_metric_name</span><span class="p">,</span> \
-    <span class="n">phase_and_task</span><span class="p">,</span> <span class="n">stream_type</span>
-<span class="kn">from</span> <span class="nn">avalanche.evaluation.metric_results</span> <span class="kn">import</span> <span class="n">MetricResult</span><span class="p">,</span> <span class="n">MetricValue</span>
-
-<span class="k">if</span> <span class="n">TYPE_CHECKING</span><span class="p">:</span>
-    <span class="kn">from</span> <span class="nn">avalanche.training</span> <span class="kn">import</span> <span class="n">BaseStrategy</span>
+<span class="kn">from</span> <span class="nn">avalanche.evaluation</span> <span class="kn">import</span> <span class="n">Metric</span><span class="p">,</span> <span class="n">PluginMetric</span><span class="p">,</span> <span class="n">GenericPluginMetric</span>
 
 <span class="n">PathAlike</span> <span class="o">=</span> <span class="n">Union</span><span class="p">[</span><span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Path</span><span class="p">]]</span>
 
@@ -282,7 +276,19 @@
         <span class="k">return</span> <span class="n">total_size</span></div></div>
 
 
-<div class="viewcode-block" id="MinibatchDiskUsage"><a class="viewcode-back" href="../../../../../autoapi/avalanche/evaluation/metrics/#avalanche.evaluation.metrics.disk_usage.MinibatchDiskUsage">[docs]</a><span class="k">class</span> <span class="nc">MinibatchDiskUsage</span><span class="p">(</span><span class="n">PluginMetric</span><span class="p">[</span><span class="nb">float</span><span class="p">]):</span>
+<span class="k">class</span> <span class="nc">DiskPluginMetric</span><span class="p">(</span><span class="n">GenericPluginMetric</span><span class="p">[</span><span class="nb">float</span><span class="p">]):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">paths</span><span class="p">,</span> <span class="n">reset_at</span><span class="p">,</span> <span class="n">emit_at</span><span class="p">,</span> <span class="n">mode</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_disk</span> <span class="o">=</span> <span class="n">DiskUsage</span><span class="p">(</span><span class="n">paths_to_monitor</span><span class="o">=</span><span class="n">paths</span><span class="p">)</span>
+
+        <span class="nb">super</span><span class="p">(</span><span class="n">DiskPluginMetric</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_disk</span><span class="p">,</span> <span class="n">reset_at</span><span class="o">=</span><span class="n">reset_at</span><span class="p">,</span> <span class="n">emit_at</span><span class="o">=</span><span class="n">emit_at</span><span class="p">,</span>
+            <span class="n">mode</span><span class="o">=</span><span class="n">mode</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">update</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">strategy</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_disk</span><span class="o">.</span><span class="n">update</span><span class="p">()</span>
+
+
+<div class="viewcode-block" id="MinibatchDiskUsage"><a class="viewcode-back" href="../../../../../autoapi/avalanche/evaluation/metrics/#avalanche.evaluation.metrics.disk_usage.MinibatchDiskUsage">[docs]</a><span class="k">class</span> <span class="nc">MinibatchDiskUsage</span><span class="p">(</span><span class="n">DiskPluginMetric</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    The minibatch Disk usage metric.</span>
 <span class="sd">    This plugin metric only works at training time.</span>
@@ -298,39 +304,15 @@
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Creates an instance of the minibatch Disk usage metric.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
-
-        <span class="bp">self</span><span class="o">.</span><span class="n">_minibatch_disk</span> <span class="o">=</span> <span class="n">DiskUsage</span><span class="p">(</span><span class="n">paths_to_monitor</span><span class="p">)</span>
-
-<div class="viewcode-block" id="MinibatchDiskUsage.result"><a class="viewcode-back" href="../../../../../autoapi/avalanche/evaluation/metrics/#avalanche.evaluation.metrics.disk_usage.MinibatchDiskUsage.result">[docs]</a>    <span class="k">def</span> <span class="nf">result</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_minibatch_disk</span><span class="o">.</span><span class="n">result</span><span class="p">()</span></div>
-
-<div class="viewcode-block" id="MinibatchDiskUsage.reset"><a class="viewcode-back" href="../../../../../autoapi/avalanche/evaluation/metrics/#avalanche.evaluation.metrics.disk_usage.MinibatchDiskUsage.reset">[docs]</a>    <span class="k">def</span> <span class="nf">reset</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_minibatch_disk</span><span class="o">.</span><span class="n">reset</span><span class="p">()</span></div>
-
-<div class="viewcode-block" id="MinibatchDiskUsage.before_training_iteration"><a class="viewcode-back" href="../../../../../autoapi/avalanche/evaluation/metrics/#avalanche.evaluation.metrics.disk_usage.MinibatchDiskUsage.before_training_iteration">[docs]</a>    <span class="k">def</span> <span class="nf">before_training_iteration</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">strategy</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">MetricResult</span><span class="p">:</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">reset</span><span class="p">()</span></div>
-
-<div class="viewcode-block" id="MinibatchDiskUsage.after_training_iteration"><a class="viewcode-back" href="../../../../../autoapi/avalanche/evaluation/metrics/#avalanche.evaluation.metrics.disk_usage.MinibatchDiskUsage.after_training_iteration">[docs]</a>    <span class="k">def</span> <span class="nf">after_training_iteration</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">strategy</span><span class="p">:</span> <span class="s1">&#39;BaseStrategy&#39;</span><span class="p">)</span> \
-            <span class="o">-&gt;</span> <span class="n">MetricResult</span><span class="p">:</span>
-        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">after_training_iteration</span><span class="p">(</span><span class="n">strategy</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_minibatch_disk</span><span class="o">.</span><span class="n">update</span><span class="p">()</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_package_result</span><span class="p">(</span><span class="n">strategy</span><span class="p">)</span></div>
-
-    <span class="k">def</span> <span class="nf">_package_result</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">strategy</span><span class="p">:</span> <span class="s1">&#39;BaseStrategy&#39;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">MetricResult</span><span class="p">:</span>
-        <span class="n">metric_value</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">result</span><span class="p">()</span>
-
-        <span class="n">metric_name</span> <span class="o">=</span> <span class="n">get_metric_name</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">strategy</span><span class="p">)</span>
-
-        <span class="n">plot_x_position</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_global_counter</span><span class="p">()</span>
-
-        <span class="k">return</span> <span class="p">[</span><span class="n">MetricValue</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">metric_name</span><span class="p">,</span> <span class="n">metric_value</span><span class="p">,</span> <span class="n">plot_x_position</span><span class="p">)]</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">MinibatchDiskUsage</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span>
+            <span class="n">paths_to_monitor</span><span class="p">,</span>
+            <span class="n">reset_at</span><span class="o">=</span><span class="s1">&#39;iteration&#39;</span><span class="p">,</span> <span class="n">emit_at</span><span class="o">=</span><span class="s1">&#39;iteration&#39;</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s1">&#39;train&#39;</span><span class="p">)</span>
 
 <div class="viewcode-block" id="MinibatchDiskUsage.__str__"><a class="viewcode-back" href="../../../../../autoapi/avalanche/evaluation/metrics/#avalanche.evaluation.metrics.disk_usage.MinibatchDiskUsage.__str__">[docs]</a>    <span class="k">def</span> <span class="fm">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">return</span> <span class="s2">&quot;DiskUsage_MB&quot;</span></div></div>
 
 
-<div class="viewcode-block" id="EpochDiskUsage"><a class="viewcode-back" href="../../../../../autoapi/avalanche/evaluation/metrics/#avalanche.evaluation.metrics.disk_usage.EpochDiskUsage">[docs]</a><span class="k">class</span> <span class="nc">EpochDiskUsage</span><span class="p">(</span><span class="n">PluginMetric</span><span class="p">[</span><span class="nb">float</span><span class="p">]):</span>
+<div class="viewcode-block" id="EpochDiskUsage"><a class="viewcode-back" href="../../../../../autoapi/avalanche/evaluation/metrics/#avalanche.evaluation.metrics.disk_usage.EpochDiskUsage">[docs]</a><span class="k">class</span> <span class="nc">EpochDiskUsage</span><span class="p">(</span><span class="n">DiskPluginMetric</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    The Epoch Disk usage metric.</span>
 <span class="sd">    This plugin metric only works at training time.</span>
@@ -343,37 +325,15 @@
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Creates an instance of the epoch Disk usage metric.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
-
-        <span class="bp">self</span><span class="o">.</span><span class="n">_epoch_disk</span> <span class="o">=</span> <span class="n">DiskUsage</span><span class="p">(</span><span class="n">paths_to_monitor</span><span class="p">)</span>
-
-<div class="viewcode-block" id="EpochDiskUsage.before_training_epoch"><a class="viewcode-back" href="../../../../../autoapi/avalanche/evaluation/metrics/#avalanche.evaluation.metrics.disk_usage.EpochDiskUsage.before_training_epoch">[docs]</a>    <span class="k">def</span> <span class="nf">before_training_epoch</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">strategy</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">MetricResult</span><span class="p">:</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">reset</span><span class="p">()</span></div>
-
-<div class="viewcode-block" id="EpochDiskUsage.after_training_epoch"><a class="viewcode-back" href="../../../../../autoapi/avalanche/evaluation/metrics/#avalanche.evaluation.metrics.disk_usage.EpochDiskUsage.after_training_epoch">[docs]</a>    <span class="k">def</span> <span class="nf">after_training_epoch</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">strategy</span><span class="p">:</span> <span class="s1">&#39;BaseStrategy&#39;</span><span class="p">)</span> \
-            <span class="o">-&gt;</span> <span class="n">MetricResult</span><span class="p">:</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_epoch_disk</span><span class="o">.</span><span class="n">update</span><span class="p">()</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_package_result</span><span class="p">(</span><span class="n">strategy</span><span class="p">)</span></div>
-
-<div class="viewcode-block" id="EpochDiskUsage.reset"><a class="viewcode-back" href="../../../../../autoapi/avalanche/evaluation/metrics/#avalanche.evaluation.metrics.disk_usage.EpochDiskUsage.reset">[docs]</a>    <span class="k">def</span> <span class="nf">reset</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_epoch_disk</span><span class="o">.</span><span class="n">reset</span><span class="p">()</span></div>
-
-<div class="viewcode-block" id="EpochDiskUsage.result"><a class="viewcode-back" href="../../../../../autoapi/avalanche/evaluation/metrics/#avalanche.evaluation.metrics.disk_usage.EpochDiskUsage.result">[docs]</a>    <span class="k">def</span> <span class="nf">result</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_epoch_disk</span><span class="o">.</span><span class="n">result</span><span class="p">()</span></div>
-
-    <span class="k">def</span> <span class="nf">_package_result</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">strategy</span><span class="p">:</span> <span class="s1">&#39;BaseStrategy&#39;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">MetricResult</span><span class="p">:</span>
-        <span class="n">disk_usage</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">result</span><span class="p">()</span>
-
-        <span class="n">metric_name</span> <span class="o">=</span> <span class="n">get_metric_name</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">strategy</span><span class="p">)</span>
-        <span class="n">plot_x_position</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_global_counter</span><span class="p">()</span>
-
-        <span class="k">return</span> <span class="p">[</span><span class="n">MetricValue</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">metric_name</span><span class="p">,</span> <span class="n">disk_usage</span><span class="p">,</span> <span class="n">plot_x_position</span><span class="p">)]</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">EpochDiskUsage</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span>
+            <span class="n">paths_to_monitor</span><span class="p">,</span>
+            <span class="n">reset_at</span><span class="o">=</span><span class="s1">&#39;epoch&#39;</span><span class="p">,</span> <span class="n">emit_at</span><span class="o">=</span><span class="s1">&#39;epoch&#39;</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s1">&#39;train&#39;</span><span class="p">)</span>
 
 <div class="viewcode-block" id="EpochDiskUsage.__str__"><a class="viewcode-back" href="../../../../../autoapi/avalanche/evaluation/metrics/#avalanche.evaluation.metrics.disk_usage.EpochDiskUsage.__str__">[docs]</a>    <span class="k">def</span> <span class="fm">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">return</span> <span class="s2">&quot;DiskUsage_Epoch&quot;</span></div></div>
 
 
-<div class="viewcode-block" id="ExperienceDiskUsage"><a class="viewcode-back" href="../../../../../autoapi/avalanche/evaluation/metrics/#avalanche.evaluation.metrics.disk_usage.ExperienceDiskUsage">[docs]</a><span class="k">class</span> <span class="nc">ExperienceDiskUsage</span><span class="p">(</span><span class="n">PluginMetric</span><span class="p">[</span><span class="nb">float</span><span class="p">]):</span>
+<div class="viewcode-block" id="ExperienceDiskUsage"><a class="viewcode-back" href="../../../../../autoapi/avalanche/evaluation/metrics/#avalanche.evaluation.metrics.disk_usage.ExperienceDiskUsage">[docs]</a><span class="k">class</span> <span class="nc">ExperienceDiskUsage</span><span class="p">(</span><span class="n">DiskPluginMetric</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    The average experience Disk usage metric.</span>
 <span class="sd">    This plugin metric works only at eval time.</span>
@@ -386,36 +346,15 @@
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Creates an instance of the experience Disk usage metric.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
-
-        <span class="bp">self</span><span class="o">.</span><span class="n">_exp_disk</span> <span class="o">=</span> <span class="n">DiskUsage</span><span class="p">(</span><span class="n">paths_to_monitor</span><span class="p">)</span>
-
-<div class="viewcode-block" id="ExperienceDiskUsage.before_eval_exp"><a class="viewcode-back" href="../../../../../autoapi/avalanche/evaluation/metrics/#avalanche.evaluation.metrics.disk_usage.ExperienceDiskUsage.before_eval_exp">[docs]</a>    <span class="k">def</span> <span class="nf">before_eval_exp</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">strategy</span><span class="p">:</span> <span class="s1">&#39;BaseStrategy&#39;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">reset</span><span class="p">()</span></div>
-
-<div class="viewcode-block" id="ExperienceDiskUsage.after_eval_exp"><a class="viewcode-back" href="../../../../../autoapi/avalanche/evaluation/metrics/#avalanche.evaluation.metrics.disk_usage.ExperienceDiskUsage.after_eval_exp">[docs]</a>    <span class="k">def</span> <span class="nf">after_eval_exp</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">strategy</span><span class="p">:</span> <span class="s1">&#39;BaseStrategy&#39;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">MetricResult</span><span class="p">:</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_exp_disk</span><span class="o">.</span><span class="n">update</span><span class="p">()</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_package_result</span><span class="p">(</span><span class="n">strategy</span><span class="p">)</span></div>
-
-<div class="viewcode-block" id="ExperienceDiskUsage.reset"><a class="viewcode-back" href="../../../../../autoapi/avalanche/evaluation/metrics/#avalanche.evaluation.metrics.disk_usage.ExperienceDiskUsage.reset">[docs]</a>    <span class="k">def</span> <span class="nf">reset</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_exp_disk</span><span class="o">.</span><span class="n">reset</span><span class="p">()</span></div>
-
-<div class="viewcode-block" id="ExperienceDiskUsage.result"><a class="viewcode-back" href="../../../../../autoapi/avalanche/evaluation/metrics/#avalanche.evaluation.metrics.disk_usage.ExperienceDiskUsage.result">[docs]</a>    <span class="k">def</span> <span class="nf">result</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_exp_disk</span><span class="o">.</span><span class="n">result</span><span class="p">()</span></div>
-
-    <span class="k">def</span> <span class="nf">_package_result</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">strategy</span><span class="p">:</span> <span class="s1">&#39;BaseStrategy&#39;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">MetricResult</span><span class="p">:</span>
-        <span class="n">exp_disk</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">result</span><span class="p">()</span>
-
-        <span class="n">metric_name</span> <span class="o">=</span> <span class="n">get_metric_name</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">strategy</span><span class="p">,</span> <span class="n">add_experience</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-        <span class="n">plot_x_position</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_global_counter</span><span class="p">()</span>
-
-        <span class="k">return</span> <span class="p">[</span><span class="n">MetricValue</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">metric_name</span><span class="p">,</span> <span class="n">exp_disk</span><span class="p">,</span> <span class="n">plot_x_position</span><span class="p">)]</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">ExperienceDiskUsage</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span>
+            <span class="n">paths_to_monitor</span><span class="p">,</span>
+            <span class="n">reset_at</span><span class="o">=</span><span class="s1">&#39;experience&#39;</span><span class="p">,</span> <span class="n">emit_at</span><span class="o">=</span><span class="s1">&#39;experience&#39;</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s1">&#39;eval&#39;</span><span class="p">)</span>
 
 <div class="viewcode-block" id="ExperienceDiskUsage.__str__"><a class="viewcode-back" href="../../../../../autoapi/avalanche/evaluation/metrics/#avalanche.evaluation.metrics.disk_usage.ExperienceDiskUsage.__str__">[docs]</a>    <span class="k">def</span> <span class="fm">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">return</span> <span class="s2">&quot;DiskUsage_Exp&quot;</span></div></div>
 
 
-<div class="viewcode-block" id="StreamDiskUsage"><a class="viewcode-back" href="../../../../../autoapi/avalanche/evaluation/metrics/#avalanche.evaluation.metrics.disk_usage.StreamDiskUsage">[docs]</a><span class="k">class</span> <span class="nc">StreamDiskUsage</span><span class="p">(</span><span class="n">PluginMetric</span><span class="p">[</span><span class="nb">float</span><span class="p">]):</span>
+<div class="viewcode-block" id="StreamDiskUsage"><a class="viewcode-back" href="../../../../../autoapi/avalanche/evaluation/metrics/#avalanche.evaluation.metrics.disk_usage.StreamDiskUsage">[docs]</a><span class="k">class</span> <span class="nc">StreamDiskUsage</span><span class="p">(</span><span class="n">DiskPluginMetric</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    The average stream Disk usage metric.</span>
 <span class="sd">    This plugin metric works only at eval time.</span>
@@ -428,35 +367,9 @@
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Creates an instance of the stream Disk usage metric.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
-
-        <span class="bp">self</span><span class="o">.</span><span class="n">_exp_disk</span> <span class="o">=</span> <span class="n">DiskUsage</span><span class="p">(</span><span class="n">paths_to_monitor</span><span class="p">)</span>
-
-<div class="viewcode-block" id="StreamDiskUsage.before_eval"><a class="viewcode-back" href="../../../../../autoapi/avalanche/evaluation/metrics/#avalanche.evaluation.metrics.disk_usage.StreamDiskUsage.before_eval">[docs]</a>    <span class="k">def</span> <span class="nf">before_eval</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">strategy</span><span class="p">:</span> <span class="s1">&#39;BaseStrategy&#39;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">reset</span><span class="p">()</span></div>
-
-<div class="viewcode-block" id="StreamDiskUsage.after_eval"><a class="viewcode-back" href="../../../../../autoapi/avalanche/evaluation/metrics/#avalanche.evaluation.metrics.disk_usage.StreamDiskUsage.after_eval">[docs]</a>    <span class="k">def</span> <span class="nf">after_eval</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">strategy</span><span class="p">:</span> <span class="s1">&#39;BaseStrategy&#39;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">MetricResult</span><span class="p">:</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_exp_disk</span><span class="o">.</span><span class="n">update</span><span class="p">()</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_package_result</span><span class="p">(</span><span class="n">strategy</span><span class="p">)</span></div>
-
-<div class="viewcode-block" id="StreamDiskUsage.reset"><a class="viewcode-back" href="../../../../../autoapi/avalanche/evaluation/metrics/#avalanche.evaluation.metrics.disk_usage.StreamDiskUsage.reset">[docs]</a>    <span class="k">def</span> <span class="nf">reset</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_exp_disk</span><span class="o">.</span><span class="n">reset</span><span class="p">()</span></div>
-
-<div class="viewcode-block" id="StreamDiskUsage.result"><a class="viewcode-back" href="../../../../../autoapi/avalanche/evaluation/metrics/#avalanche.evaluation.metrics.disk_usage.StreamDiskUsage.result">[docs]</a>    <span class="k">def</span> <span class="nf">result</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_exp_disk</span><span class="o">.</span><span class="n">result</span><span class="p">()</span></div>
-
-    <span class="k">def</span> <span class="nf">_package_result</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">strategy</span><span class="p">:</span> <span class="s1">&#39;BaseStrategy&#39;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">MetricResult</span><span class="p">:</span>
-        <span class="n">exp_disk</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">result</span><span class="p">()</span>
-
-        <span class="n">phase_name</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">phase_and_task</span><span class="p">(</span><span class="n">strategy</span><span class="p">)</span>
-        <span class="n">stream</span> <span class="o">=</span> <span class="n">stream_type</span><span class="p">(</span><span class="n">strategy</span><span class="o">.</span><span class="n">experience</span><span class="p">)</span>
-        <span class="n">metric_name</span> <span class="o">=</span> <span class="s1">&#39;</span><span class="si">{}</span><span class="s1">/</span><span class="si">{}</span><span class="s1">_phase/</span><span class="si">{}</span><span class="s1">_stream&#39;</span> \
-            <span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="p">),</span>
-                    <span class="n">phase_name</span><span class="p">,</span>
-                    <span class="n">stream</span><span class="p">)</span>
-        <span class="n">plot_x_position</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_global_counter</span><span class="p">()</span>
-
-        <span class="k">return</span> <span class="p">[</span><span class="n">MetricValue</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">metric_name</span><span class="p">,</span> <span class="n">exp_disk</span><span class="p">,</span> <span class="n">plot_x_position</span><span class="p">)]</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">StreamDiskUsage</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span>
+            <span class="n">paths_to_monitor</span><span class="p">,</span>
+            <span class="n">reset_at</span><span class="o">=</span><span class="s1">&#39;stream&#39;</span><span class="p">,</span> <span class="n">emit_at</span><span class="o">=</span><span class="s1">&#39;stream&#39;</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s1">&#39;eval&#39;</span><span class="p">)</span>
 
 <div class="viewcode-block" id="StreamDiskUsage.__str__"><a class="viewcode-back" href="../../../../../autoapi/avalanche/evaluation/metrics/#avalanche.evaluation.metrics.disk_usage.StreamDiskUsage.__str__">[docs]</a>    <span class="k">def</span> <span class="fm">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">return</span> <span class="s2">&quot;DiskUsage_Stream&quot;</span></div></div>

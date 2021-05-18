@@ -194,15 +194,8 @@
 
 <span class="kn">import</span> <span class="nn">torch</span>
 <span class="kn">from</span> <span class="nn">torch</span> <span class="kn">import</span> <span class="n">Tensor</span>
-
-<span class="kn">from</span> <span class="nn">avalanche.evaluation</span> <span class="kn">import</span> <span class="n">Metric</span><span class="p">,</span> <span class="n">PluginMetric</span>
-<span class="kn">from</span> <span class="nn">avalanche.evaluation.metric_results</span> <span class="kn">import</span> <span class="n">MetricValue</span><span class="p">,</span> <span class="n">MetricResult</span>
-<span class="kn">from</span> <span class="nn">avalanche.evaluation.metric_utils</span> <span class="kn">import</span> <span class="n">get_metric_name</span><span class="p">,</span> \
-    <span class="n">phase_and_task</span><span class="p">,</span> <span class="n">stream_type</span>
+<span class="kn">from</span> <span class="nn">avalanche.evaluation</span> <span class="kn">import</span> <span class="n">Metric</span><span class="p">,</span> <span class="n">PluginMetric</span><span class="p">,</span> <span class="n">GenericPluginMetric</span>
 <span class="kn">from</span> <span class="nn">avalanche.evaluation.metrics.mean</span> <span class="kn">import</span> <span class="n">Mean</span>
-
-<span class="k">if</span> <span class="n">TYPE_CHECKING</span><span class="p">:</span>
-    <span class="kn">from</span> <span class="nn">avalanche.training</span> <span class="kn">import</span> <span class="n">BaseStrategy</span>
 
 
 <div class="viewcode-block" id="Accuracy"><a class="viewcode-back" href="../../../../../autoapi/avalanche/evaluation/metrics/#avalanche.evaluation.metrics.accuracy.Accuracy">[docs]</a><span class="k">class</span> <span class="nc">Accuracy</span><span class="p">(</span><span class="n">Metric</span><span class="p">[</span><span class="nb">float</span><span class="p">]):</span>
@@ -288,7 +281,21 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">_mean_accuracy</span><span class="o">.</span><span class="n">reset</span><span class="p">()</span></div></div>
 
 
-<div class="viewcode-block" id="MinibatchAccuracy"><a class="viewcode-back" href="../../../../../autoapi/avalanche/evaluation/metrics/#avalanche.evaluation.metrics.accuracy.MinibatchAccuracy">[docs]</a><span class="k">class</span> <span class="nc">MinibatchAccuracy</span><span class="p">(</span><span class="n">PluginMetric</span><span class="p">[</span><span class="nb">float</span><span class="p">]):</span>
+<span class="k">class</span> <span class="nc">AccuracyPluginMetric</span><span class="p">(</span><span class="n">GenericPluginMetric</span><span class="p">[</span><span class="nb">float</span><span class="p">]):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Base class for all accuracies plugin metrics</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">reset_at</span><span class="p">,</span> <span class="n">emit_at</span><span class="p">,</span> <span class="n">mode</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_accuracy</span> <span class="o">=</span> <span class="n">Accuracy</span><span class="p">()</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">AccuracyPluginMetric</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_accuracy</span><span class="p">,</span> <span class="n">reset_at</span><span class="o">=</span><span class="n">reset_at</span><span class="p">,</span> <span class="n">emit_at</span><span class="o">=</span><span class="n">emit_at</span><span class="p">,</span>
+            <span class="n">mode</span><span class="o">=</span><span class="n">mode</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">update</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">strategy</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_accuracy</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">strategy</span><span class="o">.</span><span class="n">mb_output</span><span class="p">,</span> <span class="n">strategy</span><span class="o">.</span><span class="n">mb_y</span><span class="p">)</span>
+
+
+<div class="viewcode-block" id="MinibatchAccuracy"><a class="viewcode-back" href="../../../../../autoapi/avalanche/evaluation/metrics/#avalanche.evaluation.metrics.accuracy.MinibatchAccuracy">[docs]</a><span class="k">class</span> <span class="nc">MinibatchAccuracy</span><span class="p">(</span><span class="n">AccuracyPluginMetric</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    The minibatch plugin accuracy metric.</span>
 <span class="sd">    This metric only works at training time.</span>
@@ -300,43 +307,18 @@
 <span class="sd">    If a more coarse-grained logging is needed, consider using</span>
 <span class="sd">    :class:`EpochAccuracy` instead.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Creates an instance of the MinibatchAccuracy metric.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-
-        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
-
-        <span class="bp">self</span><span class="o">.</span><span class="n">_minibatch_accuracy</span> <span class="o">=</span> <span class="n">Accuracy</span><span class="p">()</span>
-
-<div class="viewcode-block" id="MinibatchAccuracy.result"><a class="viewcode-back" href="../../../../../autoapi/avalanche/evaluation/metrics/#avalanche.evaluation.metrics.accuracy.MinibatchAccuracy.result">[docs]</a>    <span class="k">def</span> <span class="nf">result</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_minibatch_accuracy</span><span class="o">.</span><span class="n">result</span><span class="p">()</span></div>
-
-<div class="viewcode-block" id="MinibatchAccuracy.reset"><a class="viewcode-back" href="../../../../../autoapi/avalanche/evaluation/metrics/#avalanche.evaluation.metrics.accuracy.MinibatchAccuracy.reset">[docs]</a>    <span class="k">def</span> <span class="nf">reset</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_minibatch_accuracy</span><span class="o">.</span><span class="n">reset</span><span class="p">()</span></div>
-
-<div class="viewcode-block" id="MinibatchAccuracy.after_training_iteration"><a class="viewcode-back" href="../../../../../autoapi/avalanche/evaluation/metrics/#avalanche.evaluation.metrics.accuracy.MinibatchAccuracy.after_training_iteration">[docs]</a>    <span class="k">def</span> <span class="nf">after_training_iteration</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">strategy</span><span class="p">:</span> <span class="s1">&#39;BaseStrategy&#39;</span><span class="p">)</span> \
-            <span class="o">-&gt;</span> <span class="n">MetricResult</span><span class="p">:</span>
-        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">after_training_iteration</span><span class="p">(</span><span class="n">strategy</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">reset</span><span class="p">()</span>  <span class="c1"># Because this metric computes the accuracy of a single mb</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_minibatch_accuracy</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">strategy</span><span class="o">.</span><span class="n">mb_y</span><span class="p">,</span>
-                                        <span class="n">strategy</span><span class="o">.</span><span class="n">mb_output</span><span class="p">)</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_package_result</span><span class="p">(</span><span class="n">strategy</span><span class="p">)</span></div>
-
-    <span class="k">def</span> <span class="nf">_package_result</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">strategy</span><span class="p">:</span> <span class="s1">&#39;BaseStrategy&#39;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">MetricResult</span><span class="p">:</span>
-        <span class="n">metric_value</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">result</span><span class="p">()</span>
-
-        <span class="n">metric_name</span> <span class="o">=</span> <span class="n">get_metric_name</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">strategy</span><span class="p">)</span>
-        <span class="n">plot_x_position</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_global_counter</span><span class="p">()</span>
-
-        <span class="k">return</span> <span class="p">[</span><span class="n">MetricValue</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">metric_name</span><span class="p">,</span> <span class="n">metric_value</span><span class="p">,</span> <span class="n">plot_x_position</span><span class="p">)]</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">MinibatchAccuracy</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span>
+            <span class="n">reset_at</span><span class="o">=</span><span class="s1">&#39;iteration&#39;</span><span class="p">,</span> <span class="n">emit_at</span><span class="o">=</span><span class="s1">&#39;iteration&#39;</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s1">&#39;train&#39;</span><span class="p">)</span>
 
 <div class="viewcode-block" id="MinibatchAccuracy.__str__"><a class="viewcode-back" href="../../../../../autoapi/avalanche/evaluation/metrics/#avalanche.evaluation.metrics.accuracy.MinibatchAccuracy.__str__">[docs]</a>    <span class="k">def</span> <span class="fm">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">return</span> <span class="s2">&quot;Top1_Acc_MB&quot;</span></div></div>
 
 
-<div class="viewcode-block" id="EpochAccuracy"><a class="viewcode-back" href="../../../../../autoapi/avalanche/evaluation/metrics/#avalanche.evaluation.metrics.accuracy.EpochAccuracy">[docs]</a><span class="k">class</span> <span class="nc">EpochAccuracy</span><span class="p">(</span><span class="n">PluginMetric</span><span class="p">[</span><span class="nb">float</span><span class="p">]):</span>
+<div class="viewcode-block" id="EpochAccuracy"><a class="viewcode-back" href="../../../../../autoapi/avalanche/evaluation/metrics/#avalanche.evaluation.metrics.accuracy.EpochAccuracy">[docs]</a><span class="k">class</span> <span class="nc">EpochAccuracy</span><span class="p">(</span><span class="n">AccuracyPluginMetric</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    The average accuracy over a single training epoch.</span>
 <span class="sd">    This plugin metric only works at training time.</span>
@@ -350,41 +332,15 @@
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Creates an instance of the EpochAccuracy metric.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
 
-        <span class="bp">self</span><span class="o">.</span><span class="n">_accuracy_metric</span> <span class="o">=</span> <span class="n">Accuracy</span><span class="p">()</span>
-
-<div class="viewcode-block" id="EpochAccuracy.reset"><a class="viewcode-back" href="../../../../../autoapi/avalanche/evaluation/metrics/#avalanche.evaluation.metrics.accuracy.EpochAccuracy.reset">[docs]</a>    <span class="k">def</span> <span class="nf">reset</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_accuracy_metric</span><span class="o">.</span><span class="n">reset</span><span class="p">()</span></div>
-
-<div class="viewcode-block" id="EpochAccuracy.result"><a class="viewcode-back" href="../../../../../autoapi/avalanche/evaluation/metrics/#avalanche.evaluation.metrics.accuracy.EpochAccuracy.result">[docs]</a>    <span class="k">def</span> <span class="nf">result</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_accuracy_metric</span><span class="o">.</span><span class="n">result</span><span class="p">()</span></div>
-
-<div class="viewcode-block" id="EpochAccuracy.after_training_iteration"><a class="viewcode-back" href="../../../../../autoapi/avalanche/evaluation/metrics/#avalanche.evaluation.metrics.accuracy.EpochAccuracy.after_training_iteration">[docs]</a>    <span class="k">def</span> <span class="nf">after_training_iteration</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">strategy</span><span class="p">:</span> <span class="s1">&#39;BaseStrategy&#39;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">after_training_iteration</span><span class="p">(</span><span class="n">strategy</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_accuracy_metric</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">strategy</span><span class="o">.</span><span class="n">mb_y</span><span class="p">,</span>
-                                     <span class="n">strategy</span><span class="o">.</span><span class="n">mb_output</span><span class="p">)</span></div>
-
-<div class="viewcode-block" id="EpochAccuracy.before_training_epoch"><a class="viewcode-back" href="../../../../../autoapi/avalanche/evaluation/metrics/#avalanche.evaluation.metrics.accuracy.EpochAccuracy.before_training_epoch">[docs]</a>    <span class="k">def</span> <span class="nf">before_training_epoch</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">strategy</span><span class="p">:</span> <span class="s1">&#39;BaseStrategy&#39;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">reset</span><span class="p">()</span></div>
-
-<div class="viewcode-block" id="EpochAccuracy.after_training_epoch"><a class="viewcode-back" href="../../../../../autoapi/avalanche/evaluation/metrics/#avalanche.evaluation.metrics.accuracy.EpochAccuracy.after_training_epoch">[docs]</a>    <span class="k">def</span> <span class="nf">after_training_epoch</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">strategy</span><span class="p">:</span> <span class="s1">&#39;BaseStrategy&#39;</span><span class="p">)</span> \
-            <span class="o">-&gt;</span> <span class="n">MetricResult</span><span class="p">:</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_package_result</span><span class="p">(</span><span class="n">strategy</span><span class="p">)</span></div>
-
-    <span class="k">def</span> <span class="nf">_package_result</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">strategy</span><span class="p">:</span> <span class="s1">&#39;BaseStrategy&#39;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">MetricResult</span><span class="p">:</span>
-        <span class="n">metric_value</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">result</span><span class="p">()</span>
-
-        <span class="n">metric_name</span> <span class="o">=</span> <span class="n">get_metric_name</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">strategy</span><span class="p">)</span>
-        <span class="n">plot_x_position</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_global_counter</span><span class="p">()</span>
-
-        <span class="k">return</span> <span class="p">[</span><span class="n">MetricValue</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">metric_name</span><span class="p">,</span> <span class="n">metric_value</span><span class="p">,</span> <span class="n">plot_x_position</span><span class="p">)]</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">EpochAccuracy</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span>
+            <span class="n">reset_at</span><span class="o">=</span><span class="s1">&#39;epoch&#39;</span><span class="p">,</span> <span class="n">emit_at</span><span class="o">=</span><span class="s1">&#39;epoch&#39;</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s1">&#39;train&#39;</span><span class="p">)</span>
 
 <div class="viewcode-block" id="EpochAccuracy.__str__"><a class="viewcode-back" href="../../../../../autoapi/avalanche/evaluation/metrics/#avalanche.evaluation.metrics.accuracy.EpochAccuracy.__str__">[docs]</a>    <span class="k">def</span> <span class="fm">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">return</span> <span class="s2">&quot;Top1_Acc_Epoch&quot;</span></div></div>
 
 
-<div class="viewcode-block" id="RunningEpochAccuracy"><a class="viewcode-back" href="../../../../../autoapi/avalanche/evaluation/metrics/#avalanche.evaluation.metrics.accuracy.RunningEpochAccuracy">[docs]</a><span class="k">class</span> <span class="nc">RunningEpochAccuracy</span><span class="p">(</span><span class="n">EpochAccuracy</span><span class="p">):</span>
+<div class="viewcode-block" id="RunningEpochAccuracy"><a class="viewcode-back" href="../../../../../autoapi/avalanche/evaluation/metrics/#avalanche.evaluation.metrics.accuracy.RunningEpochAccuracy">[docs]</a><span class="k">class</span> <span class="nc">RunningEpochAccuracy</span><span class="p">(</span><span class="n">AccuracyPluginMetric</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    The average accuracy across all minibatches up to the current</span>
 <span class="sd">    epoch iteration.</span>
@@ -400,31 +356,14 @@
 <span class="sd">        Creates an instance of the RunningEpochAccuracy metric.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
 
-        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
-
-<div class="viewcode-block" id="RunningEpochAccuracy.after_training_iteration"><a class="viewcode-back" href="../../../../../autoapi/avalanche/evaluation/metrics/#avalanche.evaluation.metrics.accuracy.RunningEpochAccuracy.after_training_iteration">[docs]</a>    <span class="k">def</span> <span class="nf">after_training_iteration</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">strategy</span><span class="p">:</span> <span class="s1">&#39;BaseStrategy&#39;</span><span class="p">)</span> \
-            <span class="o">-&gt;</span> <span class="n">MetricResult</span><span class="p">:</span>
-        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">after_training_iteration</span><span class="p">(</span><span class="n">strategy</span><span class="p">)</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_package_result</span><span class="p">(</span><span class="n">strategy</span><span class="p">)</span></div>
-
-<div class="viewcode-block" id="RunningEpochAccuracy.after_training_epoch"><a class="viewcode-back" href="../../../../../autoapi/avalanche/evaluation/metrics/#avalanche.evaluation.metrics.accuracy.RunningEpochAccuracy.after_training_epoch">[docs]</a>    <span class="k">def</span> <span class="nf">after_training_epoch</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">strategy</span><span class="p">:</span> <span class="s1">&#39;BaseStrategy&#39;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="c1"># Overrides the method from EpochAccuracy so that it doesn&#39;t</span>
-        <span class="c1"># emit a metric value on epoch end!</span>
-        <span class="k">return</span> <span class="kc">None</span></div>
-
-    <span class="k">def</span> <span class="nf">_package_result</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">strategy</span><span class="p">:</span> <span class="s1">&#39;BaseStrategy&#39;</span><span class="p">):</span>
-        <span class="n">metric_value</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">result</span><span class="p">()</span>
-
-        <span class="n">metric_name</span> <span class="o">=</span> <span class="n">get_metric_name</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">strategy</span><span class="p">)</span>
-        <span class="n">plot_x_position</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_global_counter</span><span class="p">()</span>
-
-        <span class="k">return</span> <span class="p">[</span><span class="n">MetricValue</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">metric_name</span><span class="p">,</span> <span class="n">metric_value</span><span class="p">,</span> <span class="n">plot_x_position</span><span class="p">)]</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">RunningEpochAccuracy</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span>
+            <span class="n">reset_at</span><span class="o">=</span><span class="s1">&#39;epoch&#39;</span><span class="p">,</span> <span class="n">emit_at</span><span class="o">=</span><span class="s1">&#39;iteration&#39;</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s1">&#39;train&#39;</span><span class="p">)</span>
 
 <div class="viewcode-block" id="RunningEpochAccuracy.__str__"><a class="viewcode-back" href="../../../../../autoapi/avalanche/evaluation/metrics/#avalanche.evaluation.metrics.accuracy.RunningEpochAccuracy.__str__">[docs]</a>    <span class="k">def</span> <span class="fm">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">return</span> <span class="s2">&quot;Top1_RunningAcc_Epoch&quot;</span></div></div>
 
 
-<div class="viewcode-block" id="ExperienceAccuracy"><a class="viewcode-back" href="../../../../../autoapi/avalanche/evaluation/metrics/#avalanche.evaluation.metrics.accuracy.ExperienceAccuracy">[docs]</a><span class="k">class</span> <span class="nc">ExperienceAccuracy</span><span class="p">(</span><span class="n">PluginMetric</span><span class="p">[</span><span class="nb">float</span><span class="p">]):</span>
+<div class="viewcode-block" id="ExperienceAccuracy"><a class="viewcode-back" href="../../../../../autoapi/avalanche/evaluation/metrics/#avalanche.evaluation.metrics.accuracy.ExperienceAccuracy">[docs]</a><span class="k">class</span> <span class="nc">ExperienceAccuracy</span><span class="p">(</span><span class="n">AccuracyPluginMetric</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    At the end of each experience, this plugin metric reports</span>
 <span class="sd">    the average accuracy over all patterns seen in that experience.</span>
@@ -435,43 +374,14 @@
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Creates an instance of ExperienceAccuracy metric</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
-
-        <span class="bp">self</span><span class="o">.</span><span class="n">_accuracy_metric</span> <span class="o">=</span> <span class="n">Accuracy</span><span class="p">()</span>
-
-<div class="viewcode-block" id="ExperienceAccuracy.reset"><a class="viewcode-back" href="../../../../../autoapi/avalanche/evaluation/metrics/#avalanche.evaluation.metrics.accuracy.ExperienceAccuracy.reset">[docs]</a>    <span class="k">def</span> <span class="nf">reset</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_accuracy_metric</span><span class="o">.</span><span class="n">reset</span><span class="p">()</span></div>
-
-<div class="viewcode-block" id="ExperienceAccuracy.result"><a class="viewcode-back" href="../../../../../autoapi/avalanche/evaluation/metrics/#avalanche.evaluation.metrics.accuracy.ExperienceAccuracy.result">[docs]</a>    <span class="k">def</span> <span class="nf">result</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_accuracy_metric</span><span class="o">.</span><span class="n">result</span><span class="p">()</span></div>
-
-<div class="viewcode-block" id="ExperienceAccuracy.before_eval_exp"><a class="viewcode-back" href="../../../../../autoapi/avalanche/evaluation/metrics/#avalanche.evaluation.metrics.accuracy.ExperienceAccuracy.before_eval_exp">[docs]</a>    <span class="k">def</span> <span class="nf">before_eval_exp</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">strategy</span><span class="p">:</span> <span class="s1">&#39;BaseStrategy&#39;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">reset</span><span class="p">()</span></div>
-
-<div class="viewcode-block" id="ExperienceAccuracy.after_eval_iteration"><a class="viewcode-back" href="../../../../../autoapi/avalanche/evaluation/metrics/#avalanche.evaluation.metrics.accuracy.ExperienceAccuracy.after_eval_iteration">[docs]</a>    <span class="k">def</span> <span class="nf">after_eval_iteration</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">strategy</span><span class="p">:</span> <span class="s1">&#39;BaseStrategy&#39;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">after_eval_iteration</span><span class="p">(</span><span class="n">strategy</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_accuracy_metric</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">strategy</span><span class="o">.</span><span class="n">mb_y</span><span class="p">,</span>
-                                     <span class="n">strategy</span><span class="o">.</span><span class="n">mb_output</span><span class="p">)</span></div>
-
-<div class="viewcode-block" id="ExperienceAccuracy.after_eval_exp"><a class="viewcode-back" href="../../../../../autoapi/avalanche/evaluation/metrics/#avalanche.evaluation.metrics.accuracy.ExperienceAccuracy.after_eval_exp">[docs]</a>    <span class="k">def</span> <span class="nf">after_eval_exp</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">strategy</span><span class="p">:</span> <span class="s1">&#39;BaseStrategy&#39;</span><span class="p">)</span> <span class="o">-&gt;</span> \
-            <span class="s1">&#39;MetricResult&#39;</span><span class="p">:</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_package_result</span><span class="p">(</span><span class="n">strategy</span><span class="p">)</span></div>
-
-    <span class="k">def</span> <span class="nf">_package_result</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">strategy</span><span class="p">:</span> <span class="s1">&#39;BaseStrategy&#39;</span><span class="p">)</span> <span class="o">-&gt;</span> \
-            <span class="n">MetricResult</span><span class="p">:</span>
-        <span class="n">metric_value</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">result</span><span class="p">()</span>
-
-        <span class="n">metric_name</span> <span class="o">=</span> <span class="n">get_metric_name</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">strategy</span><span class="p">,</span> <span class="n">add_experience</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-
-        <span class="n">plot_x_position</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_global_counter</span><span class="p">()</span>
-
-        <span class="k">return</span> <span class="p">[</span><span class="n">MetricValue</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">metric_name</span><span class="p">,</span> <span class="n">metric_value</span><span class="p">,</span> <span class="n">plot_x_position</span><span class="p">)]</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">ExperienceAccuracy</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span>
+            <span class="n">reset_at</span><span class="o">=</span><span class="s1">&#39;experience&#39;</span><span class="p">,</span> <span class="n">emit_at</span><span class="o">=</span><span class="s1">&#39;experience&#39;</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s1">&#39;eval&#39;</span><span class="p">)</span>
 
 <div class="viewcode-block" id="ExperienceAccuracy.__str__"><a class="viewcode-back" href="../../../../../autoapi/avalanche/evaluation/metrics/#avalanche.evaluation.metrics.accuracy.ExperienceAccuracy.__str__">[docs]</a>    <span class="k">def</span> <span class="fm">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">return</span> <span class="s2">&quot;Top1_Acc_Exp&quot;</span></div></div>
 
 
-<div class="viewcode-block" id="StreamAccuracy"><a class="viewcode-back" href="../../../../../autoapi/avalanche/evaluation/metrics/#avalanche.evaluation.metrics.accuracy.StreamAccuracy">[docs]</a><span class="k">class</span> <span class="nc">StreamAccuracy</span><span class="p">(</span><span class="n">PluginMetric</span><span class="p">[</span><span class="nb">float</span><span class="p">]):</span>
+<div class="viewcode-block" id="StreamAccuracy"><a class="viewcode-back" href="../../../../../autoapi/avalanche/evaluation/metrics/#avalanche.evaluation.metrics.accuracy.StreamAccuracy">[docs]</a><span class="k">class</span> <span class="nc">StreamAccuracy</span><span class="p">(</span><span class="n">AccuracyPluginMetric</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    At the end of the entire stream of experiences, this plugin metric</span>
 <span class="sd">    reports the average accuracy over all patterns seen in all experiences.</span>
@@ -482,41 +392,8 @@
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Creates an instance of StreamAccuracy metric</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
-
-        <span class="bp">self</span><span class="o">.</span><span class="n">_accuracy_metric</span> <span class="o">=</span> <span class="n">Accuracy</span><span class="p">()</span>
-
-<div class="viewcode-block" id="StreamAccuracy.reset"><a class="viewcode-back" href="../../../../../autoapi/avalanche/evaluation/metrics/#avalanche.evaluation.metrics.accuracy.StreamAccuracy.reset">[docs]</a>    <span class="k">def</span> <span class="nf">reset</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_accuracy_metric</span><span class="o">.</span><span class="n">reset</span><span class="p">()</span></div>
-
-<div class="viewcode-block" id="StreamAccuracy.result"><a class="viewcode-back" href="../../../../../autoapi/avalanche/evaluation/metrics/#avalanche.evaluation.metrics.accuracy.StreamAccuracy.result">[docs]</a>    <span class="k">def</span> <span class="nf">result</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_accuracy_metric</span><span class="o">.</span><span class="n">result</span><span class="p">()</span></div>
-
-<div class="viewcode-block" id="StreamAccuracy.before_eval"><a class="viewcode-back" href="../../../../../autoapi/avalanche/evaluation/metrics/#avalanche.evaluation.metrics.accuracy.StreamAccuracy.before_eval">[docs]</a>    <span class="k">def</span> <span class="nf">before_eval</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">strategy</span><span class="p">:</span> <span class="s1">&#39;BaseStrategy&#39;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">reset</span><span class="p">()</span></div>
-
-<div class="viewcode-block" id="StreamAccuracy.after_eval_iteration"><a class="viewcode-back" href="../../../../../autoapi/avalanche/evaluation/metrics/#avalanche.evaluation.metrics.accuracy.StreamAccuracy.after_eval_iteration">[docs]</a>    <span class="k">def</span> <span class="nf">after_eval_iteration</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">strategy</span><span class="p">:</span> <span class="s1">&#39;BaseStrategy&#39;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">after_eval_iteration</span><span class="p">(</span><span class="n">strategy</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_accuracy_metric</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">strategy</span><span class="o">.</span><span class="n">mb_y</span><span class="p">,</span>
-                                     <span class="n">strategy</span><span class="o">.</span><span class="n">mb_output</span><span class="p">)</span></div>
-
-<div class="viewcode-block" id="StreamAccuracy.after_eval"><a class="viewcode-back" href="../../../../../autoapi/avalanche/evaluation/metrics/#avalanche.evaluation.metrics.accuracy.StreamAccuracy.after_eval">[docs]</a>    <span class="k">def</span> <span class="nf">after_eval</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">strategy</span><span class="p">:</span> <span class="s1">&#39;BaseStrategy&#39;</span><span class="p">)</span> <span class="o">-&gt;</span> \
-            <span class="s1">&#39;MetricResult&#39;</span><span class="p">:</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_package_result</span><span class="p">(</span><span class="n">strategy</span><span class="p">)</span></div>
-
-    <span class="k">def</span> <span class="nf">_package_result</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">strategy</span><span class="p">:</span> <span class="s1">&#39;BaseStrategy&#39;</span><span class="p">)</span> <span class="o">-&gt;</span> \
-            <span class="n">MetricResult</span><span class="p">:</span>
-        <span class="n">metric_value</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">result</span><span class="p">()</span>
-
-        <span class="n">phase_name</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">phase_and_task</span><span class="p">(</span><span class="n">strategy</span><span class="p">)</span>
-        <span class="n">stream</span> <span class="o">=</span> <span class="n">stream_type</span><span class="p">(</span><span class="n">strategy</span><span class="o">.</span><span class="n">experience</span><span class="p">)</span>
-        <span class="n">metric_name</span> <span class="o">=</span> <span class="s1">&#39;</span><span class="si">{}</span><span class="s1">/</span><span class="si">{}</span><span class="s1">_phase/</span><span class="si">{}</span><span class="s1">_stream&#39;</span> \
-            <span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="p">),</span>
-                    <span class="n">phase_name</span><span class="p">,</span>
-                    <span class="n">stream</span><span class="p">)</span>
-        <span class="n">plot_x_position</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_global_counter</span><span class="p">()</span>
-
-        <span class="k">return</span> <span class="p">[</span><span class="n">MetricValue</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">metric_name</span><span class="p">,</span> <span class="n">metric_value</span><span class="p">,</span> <span class="n">plot_x_position</span><span class="p">)]</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">StreamAccuracy</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span>
+            <span class="n">reset_at</span><span class="o">=</span><span class="s1">&#39;stream&#39;</span><span class="p">,</span> <span class="n">emit_at</span><span class="o">=</span><span class="s1">&#39;stream&#39;</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s1">&#39;eval&#39;</span><span class="p">)</span>
 
 <div class="viewcode-block" id="StreamAccuracy.__str__"><a class="viewcode-back" href="../../../../../autoapi/avalanche/evaluation/metrics/#avalanche.evaluation.metrics.accuracy.StreamAccuracy.__str__">[docs]</a>    <span class="k">def</span> <span class="fm">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">return</span> <span class="s2">&quot;Top1_Acc_Stream&quot;</span></div></div>

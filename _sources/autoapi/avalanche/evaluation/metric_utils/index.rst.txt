@@ -86,7 +86,7 @@ Functions
 .. function:: bytes2human(n)
 
 
-.. function:: get_metric_name(metric: PluginMetric, strategy: BaseStrategy, add_experience=False)
+.. function:: get_metric_name(metric: PluginMetric, strategy: BaseStrategy, add_experience=False, add_task=True)
 
    Return the complete metric name used to report its current value.
    The name is composed by:
@@ -101,5 +101,7 @@ Functions
    :param strategy: the current strategy object
    :param add_experience: if True, add eval_exp_id to the main metric name.
            Default to False.
+   :param add_task: if True the main metric name will include the task
+       information. Otherwise, it will not.
 
 

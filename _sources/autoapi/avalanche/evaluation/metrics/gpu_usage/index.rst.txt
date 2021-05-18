@@ -89,10 +89,13 @@ Functions
       :return: The percentage GPU usage as a float value in range [0, 1].
 
 
+   .. method:: update(self)
+
+
 
 .. py:class:: MinibatchMaxGPU(gpu_id, every=0.5)
 
-   Bases: :class:`PluginMetric[float]`
+   Bases: :class:`avalanche.evaluation.metrics.gpu_usage.GPUPluginMetric`
 
    The Minibatch Max GPU metric.
    This plugin metric only works at training time.
@@ -105,41 +108,17 @@ Functions
 
    .. method:: before_training(self, strategy: BaseStrategy) -> None
 
-      Called before `train` by the `BaseStrategy`. 
-
-
-   .. method:: before_training_iteration(self, strategy: BaseStrategy) -> None
-
-      Called before the start of a training iteration by the
-      `BaseStrategy`. 
-
-
-   .. method:: after_training_iteration(self, strategy: BaseStrategy) -> MetricResult
-
-      Called after the end of a training iteration by the
-      `BaseStrategy`. 
-
 
    .. method:: after_training(self, strategy: BaseStrategy) -> None
 
-      Called after `train` by the `BaseStrategy`. 
-
-
-   .. method:: reset(self) -> None
-
-
-   .. method:: result(self) -> float
-
 
    .. method:: __str__(self)
-
-      Return str(self).
 
 
 
 .. py:class:: EpochMaxGPU(gpu_id, every=0.5)
 
-   Bases: :class:`PluginMetric[float]`
+   Bases: :class:`avalanche.evaluation.metrics.gpu_usage.GPUPluginMetric`
 
    The Epoch Max GPU metric.
    This plugin metric only works at training time.
@@ -150,41 +129,19 @@ Functions
    :param every: seconds after which update the maximum GPU
        usage
 
-   .. method:: before_training(self, strategy: BaseStrategy) -> None
-
-      Called before `train` by the `BaseStrategy`. 
-
-
-   .. method:: before_training_epoch(self, strategy) -> MetricResult
-
-      Called before `train_epoch` by the `BaseStrategy`. 
-
-
-   .. method:: after_training_epoch(self, strategy: BaseStrategy) -> MetricResult
-
-      Called after `train_epoch` by the `BaseStrategy`. 
+   .. method:: before_training(self, strategy: BaseStrategy)
 
 
    .. method:: after_training(self, strategy: BaseStrategy) -> None
 
-      Called after `train` by the `BaseStrategy`. 
-
-
-   .. method:: reset(self) -> None
-
-
-   .. method:: result(self) -> float
-
 
    .. method:: __str__(self)
-
-      Return str(self).
 
 
 
 .. py:class:: ExperienceMaxGPU(gpu_id, every=0.5)
 
-   Bases: :class:`PluginMetric[float]`
+   Bases: :class:`avalanche.evaluation.metrics.gpu_usage.GPUPluginMetric`
 
    The Experience Max GPU metric.
    This plugin metric only works at eval time.
@@ -195,41 +152,19 @@ Functions
    :param every: seconds after which update the maximum GPU
        usage
 
-   .. method:: before_eval(self, strategy: BaseStrategy) -> None
-
-      Called before `eval` by the `BaseStrategy`. 
+   .. method:: before_eval(self, strategy: BaseStrategy)
 
 
-   .. method:: before_eval_exp(self, strategy) -> MetricResult
-
-      Called before `eval_exp` by the `BaseStrategy`. 
-
-
-   .. method:: after_eval_exp(self, strategy: BaseStrategy) -> MetricResult
-
-      Called after `eval_exp` by the `BaseStrategy`. 
-
-
-   .. method:: after_eval(self, strategy: BaseStrategy) -> None
-
-      Called after `eval` by the `BaseStrategy`. 
-
-
-   .. method:: reset(self) -> None
-
-
-   .. method:: result(self) -> float
+   .. method:: after_eval(self, strategy: BaseStrategy)
 
 
    .. method:: __str__(self)
-
-      Return str(self).
 
 
 
 .. py:class:: StreamMaxGPU(gpu_id, every=0.5)
 
-   Bases: :class:`PluginMetric[float]`
+   Bases: :class:`avalanche.evaluation.metrics.gpu_usage.GPUPluginMetric`
 
    The Stream Max GPU metric.
    This plugin metric only works at eval time.
@@ -242,23 +177,11 @@ Functions
 
    .. method:: before_eval(self, strategy) -> MetricResult
 
-      Called before `eval` by the `BaseStrategy`. 
-
 
    .. method:: after_eval(self, strategy: BaseStrategy) -> MetricResult
 
-      Called after `eval` by the `BaseStrategy`. 
-
-
-   .. method:: reset(self) -> None
-
-
-   .. method:: result(self) -> float
-
 
    .. method:: __str__(self)
-
-      Return str(self).
 
 
 

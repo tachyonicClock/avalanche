@@ -280,7 +280,7 @@ the current working directory is used. Defaults to None.</p>
 <dl class="py class">
 <dt class="sig sig-object py" id="avalanche.evaluation.metrics.disk_usage.MinibatchDiskUsage">
 <em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">avalanche.evaluation.metrics.disk_usage.</span></span><span class="sig-name descname"><span class="pre">MinibatchDiskUsage</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">paths_to_monitor</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../_modules/avalanche/evaluation/metrics/disk_usage/#MinibatchDiskUsage"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.evaluation.metrics.disk_usage.MinibatchDiskUsage" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">PluginMetric[float]</span></code></p>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">avalanche.evaluation.metrics.disk_usage.DiskPluginMetric</span></code></p>
 <p>The minibatch Disk usage metric.
 This plugin metric only works at training time.</p>
 <p>At the end of each iteration, this metric logs the total
@@ -289,151 +289,57 @@ size (in KB) of all the monitored paths.</p>
 <a class="reference internal" href="#avalanche.evaluation.metrics.disk_usage.EpochDiskUsage" title="avalanche.evaluation.metrics.disk_usage.EpochDiskUsage"><code class="xref py py-class docutils literal notranslate"><span class="pre">EpochDiskUsage</span></code></a>.</p>
 <p>Creates an instance of the minibatch Disk usage metric.</p>
 <dl class="py method">
-<dt class="sig sig-object py" id="avalanche.evaluation.metrics.disk_usage.MinibatchDiskUsage.result">
-<span class="sig-name descname"><span class="pre">result</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">float</span><a class="reference internal" href="../../../../../_modules/avalanche/evaluation/metrics/disk_usage/#MinibatchDiskUsage.result"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.evaluation.metrics.disk_usage.MinibatchDiskUsage.result" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="avalanche.evaluation.metrics.disk_usage.MinibatchDiskUsage.reset">
-<span class="sig-name descname"><span class="pre">reset</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">None</span><a class="reference internal" href="../../../../../_modules/avalanche/evaluation/metrics/disk_usage/#MinibatchDiskUsage.reset"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.evaluation.metrics.disk_usage.MinibatchDiskUsage.reset" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="avalanche.evaluation.metrics.disk_usage.MinibatchDiskUsage.before_training_iteration">
-<span class="sig-name descname"><span class="pre">before_training_iteration</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">strategy</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">MetricResult</span><a class="reference internal" href="../../../../../_modules/avalanche/evaluation/metrics/disk_usage/#MinibatchDiskUsage.before_training_iteration"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.evaluation.metrics.disk_usage.MinibatchDiskUsage.before_training_iteration" title="Permalink to this definition">¶</a></dt>
-<dd><p>Called before the start of a training iteration by the
-<cite>BaseStrategy</cite>.</p>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="avalanche.evaluation.metrics.disk_usage.MinibatchDiskUsage.after_training_iteration">
-<span class="sig-name descname"><span class="pre">after_training_iteration</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">strategy</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">BaseStrategy</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">MetricResult</span><a class="reference internal" href="../../../../../_modules/avalanche/evaluation/metrics/disk_usage/#MinibatchDiskUsage.after_training_iteration"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.evaluation.metrics.disk_usage.MinibatchDiskUsage.after_training_iteration" title="Permalink to this definition">¶</a></dt>
-<dd><p>Called after the end of a training iteration by the
-<cite>BaseStrategy</cite>.</p>
-</dd></dl>
-
-<dl class="py method">
 <dt class="sig sig-object py" id="avalanche.evaluation.metrics.disk_usage.MinibatchDiskUsage.__str__">
 <span class="sig-name descname"><span class="pre">__str__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../_modules/avalanche/evaluation/metrics/disk_usage/#MinibatchDiskUsage.__str__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.evaluation.metrics.disk_usage.MinibatchDiskUsage.__str__" title="Permalink to this definition">¶</a></dt>
-<dd><p>Return str(self).</p>
-</dd></dl>
+<dd></dd></dl>
 
 </dd></dl>
 
 <dl class="py class">
 <dt class="sig sig-object py" id="avalanche.evaluation.metrics.disk_usage.EpochDiskUsage">
 <em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">avalanche.evaluation.metrics.disk_usage.</span></span><span class="sig-name descname"><span class="pre">EpochDiskUsage</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">paths_to_monitor</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../_modules/avalanche/evaluation/metrics/disk_usage/#EpochDiskUsage"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.evaluation.metrics.disk_usage.EpochDiskUsage" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">PluginMetric[float]</span></code></p>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">avalanche.evaluation.metrics.disk_usage.DiskPluginMetric</span></code></p>
 <p>The Epoch Disk usage metric.
 This plugin metric only works at training time.</p>
 <p>At the end of each epoch, this metric logs the total
 size (in KB) of all the monitored paths.</p>
 <p>Creates an instance of the epoch Disk usage metric.</p>
 <dl class="py method">
-<dt class="sig sig-object py" id="avalanche.evaluation.metrics.disk_usage.EpochDiskUsage.before_training_epoch">
-<span class="sig-name descname"><span class="pre">before_training_epoch</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">strategy</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">MetricResult</span><a class="reference internal" href="../../../../../_modules/avalanche/evaluation/metrics/disk_usage/#EpochDiskUsage.before_training_epoch"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.evaluation.metrics.disk_usage.EpochDiskUsage.before_training_epoch" title="Permalink to this definition">¶</a></dt>
-<dd><p>Called before <cite>train_epoch</cite> by the <cite>BaseStrategy</cite>.</p>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="avalanche.evaluation.metrics.disk_usage.EpochDiskUsage.after_training_epoch">
-<span class="sig-name descname"><span class="pre">after_training_epoch</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">strategy</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">BaseStrategy</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">MetricResult</span><a class="reference internal" href="../../../../../_modules/avalanche/evaluation/metrics/disk_usage/#EpochDiskUsage.after_training_epoch"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.evaluation.metrics.disk_usage.EpochDiskUsage.after_training_epoch" title="Permalink to this definition">¶</a></dt>
-<dd><p>Called after <cite>train_epoch</cite> by the <cite>BaseStrategy</cite>.</p>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="avalanche.evaluation.metrics.disk_usage.EpochDiskUsage.reset">
-<span class="sig-name descname"><span class="pre">reset</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">None</span><a class="reference internal" href="../../../../../_modules/avalanche/evaluation/metrics/disk_usage/#EpochDiskUsage.reset"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.evaluation.metrics.disk_usage.EpochDiskUsage.reset" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="avalanche.evaluation.metrics.disk_usage.EpochDiskUsage.result">
-<span class="sig-name descname"><span class="pre">result</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">float</span><a class="reference internal" href="../../../../../_modules/avalanche/evaluation/metrics/disk_usage/#EpochDiskUsage.result"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.evaluation.metrics.disk_usage.EpochDiskUsage.result" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="py method">
 <dt class="sig sig-object py" id="avalanche.evaluation.metrics.disk_usage.EpochDiskUsage.__str__">
 <span class="sig-name descname"><span class="pre">__str__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../_modules/avalanche/evaluation/metrics/disk_usage/#EpochDiskUsage.__str__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.evaluation.metrics.disk_usage.EpochDiskUsage.__str__" title="Permalink to this definition">¶</a></dt>
-<dd><p>Return str(self).</p>
-</dd></dl>
+<dd></dd></dl>
 
 </dd></dl>
 
 <dl class="py class">
 <dt class="sig sig-object py" id="avalanche.evaluation.metrics.disk_usage.ExperienceDiskUsage">
 <em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">avalanche.evaluation.metrics.disk_usage.</span></span><span class="sig-name descname"><span class="pre">ExperienceDiskUsage</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">paths_to_monitor</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../_modules/avalanche/evaluation/metrics/disk_usage/#ExperienceDiskUsage"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.evaluation.metrics.disk_usage.ExperienceDiskUsage" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">PluginMetric[float]</span></code></p>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">avalanche.evaluation.metrics.disk_usage.DiskPluginMetric</span></code></p>
 <p>The average experience Disk usage metric.
 This plugin metric works only at eval time.</p>
 <p>At the end of each experience, this metric logs the total
 size (in KB) of all the monitored paths.</p>
 <p>Creates an instance of the experience Disk usage metric.</p>
 <dl class="py method">
-<dt class="sig sig-object py" id="avalanche.evaluation.metrics.disk_usage.ExperienceDiskUsage.before_eval_exp">
-<span class="sig-name descname"><span class="pre">before_eval_exp</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">strategy</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">BaseStrategy</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">None</span><a class="reference internal" href="../../../../../_modules/avalanche/evaluation/metrics/disk_usage/#ExperienceDiskUsage.before_eval_exp"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.evaluation.metrics.disk_usage.ExperienceDiskUsage.before_eval_exp" title="Permalink to this definition">¶</a></dt>
-<dd><p>Called before <cite>eval_exp</cite> by the <cite>BaseStrategy</cite>.</p>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="avalanche.evaluation.metrics.disk_usage.ExperienceDiskUsage.after_eval_exp">
-<span class="sig-name descname"><span class="pre">after_eval_exp</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">strategy</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">BaseStrategy</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">MetricResult</span><a class="reference internal" href="../../../../../_modules/avalanche/evaluation/metrics/disk_usage/#ExperienceDiskUsage.after_eval_exp"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.evaluation.metrics.disk_usage.ExperienceDiskUsage.after_eval_exp" title="Permalink to this definition">¶</a></dt>
-<dd><p>Called after <cite>eval_exp</cite> by the <cite>BaseStrategy</cite>.</p>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="avalanche.evaluation.metrics.disk_usage.ExperienceDiskUsage.reset">
-<span class="sig-name descname"><span class="pre">reset</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">None</span><a class="reference internal" href="../../../../../_modules/avalanche/evaluation/metrics/disk_usage/#ExperienceDiskUsage.reset"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.evaluation.metrics.disk_usage.ExperienceDiskUsage.reset" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="avalanche.evaluation.metrics.disk_usage.ExperienceDiskUsage.result">
-<span class="sig-name descname"><span class="pre">result</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">float</span><a class="reference internal" href="../../../../../_modules/avalanche/evaluation/metrics/disk_usage/#ExperienceDiskUsage.result"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.evaluation.metrics.disk_usage.ExperienceDiskUsage.result" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="py method">
 <dt class="sig sig-object py" id="avalanche.evaluation.metrics.disk_usage.ExperienceDiskUsage.__str__">
 <span class="sig-name descname"><span class="pre">__str__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../_modules/avalanche/evaluation/metrics/disk_usage/#ExperienceDiskUsage.__str__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.evaluation.metrics.disk_usage.ExperienceDiskUsage.__str__" title="Permalink to this definition">¶</a></dt>
-<dd><p>Return str(self).</p>
-</dd></dl>
+<dd></dd></dl>
 
 </dd></dl>
 
 <dl class="py class">
 <dt class="sig sig-object py" id="avalanche.evaluation.metrics.disk_usage.StreamDiskUsage">
 <em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">avalanche.evaluation.metrics.disk_usage.</span></span><span class="sig-name descname"><span class="pre">StreamDiskUsage</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">paths_to_monitor</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../_modules/avalanche/evaluation/metrics/disk_usage/#StreamDiskUsage"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.evaluation.metrics.disk_usage.StreamDiskUsage" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">PluginMetric[float]</span></code></p>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">avalanche.evaluation.metrics.disk_usage.DiskPluginMetric</span></code></p>
 <p>The average stream Disk usage metric.
 This plugin metric works only at eval time.</p>
 <p>At the end of the eval stream, this metric logs the total
 size (in KB) of all the monitored paths.</p>
 <p>Creates an instance of the stream Disk usage metric.</p>
 <dl class="py method">
-<dt class="sig sig-object py" id="avalanche.evaluation.metrics.disk_usage.StreamDiskUsage.before_eval">
-<span class="sig-name descname"><span class="pre">before_eval</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">strategy</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">BaseStrategy</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">None</span><a class="reference internal" href="../../../../../_modules/avalanche/evaluation/metrics/disk_usage/#StreamDiskUsage.before_eval"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.evaluation.metrics.disk_usage.StreamDiskUsage.before_eval" title="Permalink to this definition">¶</a></dt>
-<dd><p>Called before <cite>eval</cite> by the <cite>BaseStrategy</cite>.</p>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="avalanche.evaluation.metrics.disk_usage.StreamDiskUsage.after_eval">
-<span class="sig-name descname"><span class="pre">after_eval</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">strategy</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">BaseStrategy</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">MetricResult</span><a class="reference internal" href="../../../../../_modules/avalanche/evaluation/metrics/disk_usage/#StreamDiskUsage.after_eval"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.evaluation.metrics.disk_usage.StreamDiskUsage.after_eval" title="Permalink to this definition">¶</a></dt>
-<dd><p>Called after <cite>eval</cite> by the <cite>BaseStrategy</cite>.</p>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="avalanche.evaluation.metrics.disk_usage.StreamDiskUsage.reset">
-<span class="sig-name descname"><span class="pre">reset</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">None</span><a class="reference internal" href="../../../../../_modules/avalanche/evaluation/metrics/disk_usage/#StreamDiskUsage.reset"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.evaluation.metrics.disk_usage.StreamDiskUsage.reset" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="avalanche.evaluation.metrics.disk_usage.StreamDiskUsage.result">
-<span class="sig-name descname"><span class="pre">result</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">float</span><a class="reference internal" href="../../../../../_modules/avalanche/evaluation/metrics/disk_usage/#StreamDiskUsage.result"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.evaluation.metrics.disk_usage.StreamDiskUsage.result" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="py method">
 <dt class="sig sig-object py" id="avalanche.evaluation.metrics.disk_usage.StreamDiskUsage.__str__">
 <span class="sig-name descname"><span class="pre">__str__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../_modules/avalanche/evaluation/metrics/disk_usage/#StreamDiskUsage.__str__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.evaluation.metrics.disk_usage.StreamDiskUsage.__str__" title="Permalink to this definition">¶</a></dt>
-<dd><p>Return str(self).</p>
-</dd></dl>
+<dd></dd></dl>
 
 </dd></dl>
 

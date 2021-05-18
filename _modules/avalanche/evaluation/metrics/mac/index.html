@@ -191,15 +191,10 @@
 <span class="c1">################################################################################</span>
 
 <span class="kn">from</span> <span class="nn">torch.nn</span> <span class="kn">import</span> <span class="n">Module</span>
-<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">TYPE_CHECKING</span><span class="p">,</span> <span class="n">List</span><span class="p">,</span> <span class="n">Optional</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">List</span><span class="p">,</span> <span class="n">Optional</span>
 <span class="kn">from</span> <span class="nn">torch</span> <span class="kn">import</span> <span class="n">Tensor</span>
 
-<span class="kn">from</span> <span class="nn">avalanche.evaluation</span> <span class="kn">import</span> <span class="n">Metric</span><span class="p">,</span> <span class="n">PluginMetric</span>
-<span class="kn">from</span> <span class="nn">avalanche.evaluation.metric_results</span> <span class="kn">import</span> <span class="n">MetricValue</span><span class="p">,</span> <span class="n">MetricResult</span>
-<span class="kn">from</span> <span class="nn">avalanche.evaluation.metric_utils</span> <span class="kn">import</span> <span class="n">get_metric_name</span>
-
-<span class="k">if</span> <span class="n">TYPE_CHECKING</span><span class="p">:</span>
-    <span class="kn">from</span> <span class="nn">avalanche.training</span> <span class="kn">import</span> <span class="n">BaseStrategy</span>
+<span class="kn">from</span> <span class="nn">avalanche.evaluation</span> <span class="kn">import</span> <span class="n">Metric</span><span class="p">,</span> <span class="n">PluginMetric</span><span class="p">,</span> <span class="n">GenericPluginMetric</span>
 
 
 <div class="viewcode-block" id="MAC"><a class="viewcode-back" href="../../../../../autoapi/avalanche/evaluation/metrics/mac/#avalanche.evaluation.metrics.MAC">[docs]</a><span class="k">class</span> <span class="nc">MAC</span><span class="p">(</span><span class="n">Metric</span><span class="p">[</span><span class="nb">int</span><span class="p">]):</span>
@@ -250,6 +245,9 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_compute_cost</span></div>
 
+<div class="viewcode-block" id="MAC.reset"><a class="viewcode-back" href="../../../../../autoapi/avalanche/evaluation/metrics/mac/#avalanche.evaluation.metrics.MAC.reset">[docs]</a>    <span class="k">def</span> <span class="nf">reset</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">pass</span></div>
+
 <div class="viewcode-block" id="MAC.update_compute_cost"><a class="viewcode-back" href="../../../../../autoapi/avalanche/evaluation/metrics/mac/#avalanche.evaluation.metrics.MAC.update_compute_cost">[docs]</a>    <span class="k">def</span> <span class="nf">update_compute_cost</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">module</span><span class="p">,</span> <span class="n">dummy_input</span><span class="p">,</span> <span class="n">output</span><span class="p">):</span>
         <span class="n">modname</span> <span class="o">=</span> <span class="n">module</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__name__</span>
         <span class="k">if</span> <span class="n">modname</span> <span class="o">==</span> <span class="s1">&#39;Linear&#39;</span><span class="p">:</span>
@@ -265,7 +263,19 @@
         <span class="k">return</span> <span class="n">modname</span> <span class="o">==</span> <span class="s1">&#39;Linear&#39;</span> <span class="ow">or</span> <span class="n">modname</span> <span class="o">==</span> <span class="s1">&#39;Conv2d&#39;</span></div></div>
 
 
-<div class="viewcode-block" id="MinibatchMAC"><a class="viewcode-back" href="../../../../../autoapi/avalanche/evaluation/metrics/mac/#avalanche.evaluation.metrics.MinibatchMAC">[docs]</a><span class="k">class</span> <span class="nc">MinibatchMAC</span><span class="p">(</span><span class="n">PluginMetric</span><span class="p">[</span><span class="nb">float</span><span class="p">]):</span>
+<span class="k">class</span> <span class="nc">MACPluginMetric</span><span class="p">(</span><span class="n">GenericPluginMetric</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">reset_at</span><span class="p">,</span> <span class="n">emit_at</span><span class="p">,</span> <span class="n">mode</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_mac</span> <span class="o">=</span> <span class="n">MAC</span><span class="p">()</span>
+
+        <span class="nb">super</span><span class="p">(</span><span class="n">MACPluginMetric</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_mac</span><span class="p">,</span> <span class="n">reset_at</span><span class="o">=</span><span class="n">reset_at</span><span class="p">,</span> <span class="n">emit_at</span><span class="o">=</span><span class="n">emit_at</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="n">mode</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">update</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">strategy</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_mac</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">strategy</span><span class="o">.</span><span class="n">model</span><span class="p">,</span>
+                         <span class="n">strategy</span><span class="o">.</span><span class="n">mb_x</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">unsqueeze</span><span class="p">(</span><span class="mi">0</span><span class="p">))</span>
+
+
+<div class="viewcode-block" id="MinibatchMAC"><a class="viewcode-back" href="../../../../../autoapi/avalanche/evaluation/metrics/mac/#avalanche.evaluation.metrics.MinibatchMAC">[docs]</a><span class="k">class</span> <span class="nc">MinibatchMAC</span><span class="p">(</span><span class="n">MACPluginMetric</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    The minibatch MAC metric.</span>
 <span class="sd">    This plugin metric only works at training time.</span>
@@ -282,37 +292,14 @@
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Creates an instance of the MinibatchMAC metric.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-
-        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
-
-        <span class="bp">self</span><span class="o">.</span><span class="n">_minibatch_MAC</span> <span class="o">=</span> <span class="n">MAC</span><span class="p">()</span>
-
-<div class="viewcode-block" id="MinibatchMAC.reset"><a class="viewcode-back" href="../../../../../autoapi/avalanche/evaluation/metrics/mac/#avalanche.evaluation.metrics.MinibatchMAC.reset">[docs]</a>    <span class="k">def</span> <span class="nf">reset</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="k">pass</span></div>
-
-<div class="viewcode-block" id="MinibatchMAC.result"><a class="viewcode-back" href="../../../../../autoapi/avalanche/evaluation/metrics/mac/#avalanche.evaluation.metrics.MinibatchMAC.result">[docs]</a>    <span class="k">def</span> <span class="nf">result</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_minibatch_MAC</span><span class="o">.</span><span class="n">result</span><span class="p">()</span></div>
-
-<div class="viewcode-block" id="MinibatchMAC.after_training_iteration"><a class="viewcode-back" href="../../../../../autoapi/avalanche/evaluation/metrics/mac/#avalanche.evaluation.metrics.MinibatchMAC.after_training_iteration">[docs]</a>    <span class="k">def</span> <span class="nf">after_training_iteration</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">strategy</span><span class="p">:</span> <span class="s1">&#39;BaseStrategy&#39;</span><span class="p">)</span> \
-            <span class="o">-&gt;</span> <span class="n">MetricResult</span><span class="p">:</span>
-        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">after_training_iteration</span><span class="p">(</span><span class="n">strategy</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_minibatch_MAC</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">strategy</span><span class="o">.</span><span class="n">model</span><span class="p">,</span>
-                                   <span class="n">strategy</span><span class="o">.</span><span class="n">mb_x</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">unsqueeze</span><span class="p">(</span><span class="mi">0</span><span class="p">))</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_package_result</span><span class="p">(</span><span class="n">strategy</span><span class="p">)</span></div>
-
-    <span class="k">def</span> <span class="nf">_package_result</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">strategy</span><span class="p">:</span> <span class="s1">&#39;BaseStrategy&#39;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">MetricResult</span><span class="p">:</span>
-        <span class="n">metric_value</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">result</span><span class="p">()</span>
-
-        <span class="n">metric_name</span> <span class="o">=</span> <span class="n">get_metric_name</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">strategy</span><span class="p">)</span>
-        <span class="n">plot_x_position</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_global_counter</span><span class="p">()</span>
-
-        <span class="k">return</span> <span class="p">[</span><span class="n">MetricValue</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">metric_name</span><span class="p">,</span> <span class="n">metric_value</span><span class="p">,</span> <span class="n">plot_x_position</span><span class="p">)]</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">MinibatchMAC</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span>
+            <span class="n">reset_at</span><span class="o">=</span><span class="s1">&#39;iteration&#39;</span><span class="p">,</span> <span class="n">emit_at</span><span class="o">=</span><span class="s1">&#39;iteration&#39;</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s1">&#39;train&#39;</span><span class="p">)</span>
 
 <div class="viewcode-block" id="MinibatchMAC.__str__"><a class="viewcode-back" href="../../../../../autoapi/avalanche/evaluation/metrics/mac/#avalanche.evaluation.metrics.MinibatchMAC.__str__">[docs]</a>    <span class="k">def</span> <span class="fm">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">return</span> <span class="s2">&quot;MAC_MB&quot;</span></div></div>
 
 
-<div class="viewcode-block" id="EpochMAC"><a class="viewcode-back" href="../../../../../autoapi/avalanche/evaluation/metrics/mac/#avalanche.evaluation.metrics.EpochMAC">[docs]</a><span class="k">class</span> <span class="nc">EpochMAC</span><span class="p">(</span><span class="n">PluginMetric</span><span class="p">[</span><span class="nb">float</span><span class="p">]):</span>
+<div class="viewcode-block" id="EpochMAC"><a class="viewcode-back" href="../../../../../autoapi/avalanche/evaluation/metrics/mac/#avalanche.evaluation.metrics.EpochMAC">[docs]</a><span class="k">class</span> <span class="nc">EpochMAC</span><span class="p">(</span><span class="n">MACPluginMetric</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    The MAC at the end of each epoch computed on a</span>
 <span class="sd">    single pattern.</span>
@@ -325,35 +312,14 @@
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Creates an instance of the EpochMAC metric.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
-
-        <span class="bp">self</span><span class="o">.</span><span class="n">_MAC_metric</span> <span class="o">=</span> <span class="n">MAC</span><span class="p">()</span>
-
-<div class="viewcode-block" id="EpochMAC.reset"><a class="viewcode-back" href="../../../../../autoapi/avalanche/evaluation/metrics/mac/#avalanche.evaluation.metrics.EpochMAC.reset">[docs]</a>    <span class="k">def</span> <span class="nf">reset</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="k">pass</span></div>
-
-<div class="viewcode-block" id="EpochMAC.result"><a class="viewcode-back" href="../../../../../autoapi/avalanche/evaluation/metrics/mac/#avalanche.evaluation.metrics.EpochMAC.result">[docs]</a>    <span class="k">def</span> <span class="nf">result</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_MAC_metric</span><span class="o">.</span><span class="n">result</span><span class="p">()</span></div>
-
-<div class="viewcode-block" id="EpochMAC.after_training_epoch"><a class="viewcode-back" href="../../../../../autoapi/avalanche/evaluation/metrics/mac/#avalanche.evaluation.metrics.EpochMAC.after_training_epoch">[docs]</a>    <span class="k">def</span> <span class="nf">after_training_epoch</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">strategy</span><span class="p">:</span> <span class="s1">&#39;BaseStrategy&#39;</span><span class="p">)</span> \
-            <span class="o">-&gt;</span> <span class="n">MetricResult</span><span class="p">:</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_MAC_metric</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">strategy</span><span class="o">.</span><span class="n">model</span><span class="p">,</span>
-                                <span class="n">strategy</span><span class="o">.</span><span class="n">mb_x</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">unsqueeze</span><span class="p">(</span><span class="mi">0</span><span class="p">))</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_package_result</span><span class="p">(</span><span class="n">strategy</span><span class="p">)</span></div>
-
-    <span class="k">def</span> <span class="nf">_package_result</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">strategy</span><span class="p">:</span> <span class="s1">&#39;BaseStrategy&#39;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">MetricResult</span><span class="p">:</span>
-        <span class="n">metric_value</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">result</span><span class="p">()</span>
-
-        <span class="n">metric_name</span> <span class="o">=</span> <span class="n">get_metric_name</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">strategy</span><span class="p">)</span>
-        <span class="n">plot_x_position</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_global_counter</span><span class="p">()</span>
-
-        <span class="k">return</span> <span class="p">[</span><span class="n">MetricValue</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">metric_name</span><span class="p">,</span> <span class="n">metric_value</span><span class="p">,</span> <span class="n">plot_x_position</span><span class="p">)]</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">EpochMAC</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span>
+            <span class="n">reset_at</span><span class="o">=</span><span class="s1">&#39;epoch&#39;</span><span class="p">,</span> <span class="n">emit_at</span><span class="o">=</span><span class="s1">&#39;epoch&#39;</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s1">&#39;train&#39;</span><span class="p">)</span>
 
 <div class="viewcode-block" id="EpochMAC.__str__"><a class="viewcode-back" href="../../../../../autoapi/avalanche/evaluation/metrics/mac/#avalanche.evaluation.metrics.EpochMAC.__str__">[docs]</a>    <span class="k">def</span> <span class="fm">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">return</span> <span class="s2">&quot;MAC_Epoch&quot;</span></div></div>
 
 
-<div class="viewcode-block" id="ExperienceMAC"><a class="viewcode-back" href="../../../../../autoapi/avalanche/evaluation/metrics/mac/#avalanche.evaluation.metrics.ExperienceMAC">[docs]</a><span class="k">class</span> <span class="nc">ExperienceMAC</span><span class="p">(</span><span class="n">PluginMetric</span><span class="p">[</span><span class="nb">float</span><span class="p">]):</span>
+<div class="viewcode-block" id="ExperienceMAC"><a class="viewcode-back" href="../../../../../autoapi/avalanche/evaluation/metrics/mac/#avalanche.evaluation.metrics.ExperienceMAC">[docs]</a><span class="k">class</span> <span class="nc">ExperienceMAC</span><span class="p">(</span><span class="n">MACPluginMetric</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    At the end of each experience, this metric reports the</span>
 <span class="sd">    MAC computed on a single pattern.</span>
@@ -364,31 +330,8 @@
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Creates an instance of ExperienceMAC metric</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
-
-        <span class="bp">self</span><span class="o">.</span><span class="n">_MAC_metric</span> <span class="o">=</span> <span class="n">MAC</span><span class="p">()</span>
-
-<div class="viewcode-block" id="ExperienceMAC.reset"><a class="viewcode-back" href="../../../../../autoapi/avalanche/evaluation/metrics/mac/#avalanche.evaluation.metrics.ExperienceMAC.reset">[docs]</a>    <span class="k">def</span> <span class="nf">reset</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="k">pass</span></div>
-
-<div class="viewcode-block" id="ExperienceMAC.result"><a class="viewcode-back" href="../../../../../autoapi/avalanche/evaluation/metrics/mac/#avalanche.evaluation.metrics.ExperienceMAC.result">[docs]</a>    <span class="k">def</span> <span class="nf">result</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_MAC_metric</span><span class="o">.</span><span class="n">result</span><span class="p">()</span></div>
-
-<div class="viewcode-block" id="ExperienceMAC.after_eval_exp"><a class="viewcode-back" href="../../../../../autoapi/avalanche/evaluation/metrics/mac/#avalanche.evaluation.metrics.ExperienceMAC.after_eval_exp">[docs]</a>    <span class="k">def</span> <span class="nf">after_eval_exp</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">strategy</span><span class="p">:</span> <span class="s1">&#39;BaseStrategy&#39;</span><span class="p">)</span> <span class="o">-&gt;</span> \
-            <span class="s1">&#39;MetricResult&#39;</span><span class="p">:</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_MAC_metric</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">strategy</span><span class="o">.</span><span class="n">model</span><span class="p">,</span>
-                                <span class="n">strategy</span><span class="o">.</span><span class="n">mb_x</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">unsqueeze</span><span class="p">(</span><span class="mi">0</span><span class="p">))</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_package_result</span><span class="p">(</span><span class="n">strategy</span><span class="p">)</span></div>
-
-    <span class="k">def</span> <span class="nf">_package_result</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">strategy</span><span class="p">:</span> <span class="s1">&#39;BaseStrategy&#39;</span><span class="p">)</span> <span class="o">-&gt;</span> \
-            <span class="n">MetricResult</span><span class="p">:</span>
-        <span class="n">metric_value</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">result</span><span class="p">()</span>
-
-        <span class="n">metric_name</span> <span class="o">=</span> <span class="n">get_metric_name</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">strategy</span><span class="p">,</span> <span class="n">add_experience</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-
-        <span class="n">plot_x_position</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_global_counter</span><span class="p">()</span>
-
-        <span class="k">return</span> <span class="p">[</span><span class="n">MetricValue</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">metric_name</span><span class="p">,</span> <span class="n">metric_value</span><span class="p">,</span> <span class="n">plot_x_position</span><span class="p">)]</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">ExperienceMAC</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span>
+            <span class="n">reset_at</span><span class="o">=</span><span class="s1">&#39;experience&#39;</span><span class="p">,</span> <span class="n">emit_at</span><span class="o">=</span><span class="s1">&#39;experience&#39;</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s1">&#39;eval&#39;</span><span class="p">)</span>
 
 <div class="viewcode-block" id="ExperienceMAC.__str__"><a class="viewcode-back" href="../../../../../autoapi/avalanche/evaluation/metrics/mac/#avalanche.evaluation.metrics.ExperienceMAC.__str__">[docs]</a>    <span class="k">def</span> <span class="fm">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">return</span> <span class="s2">&quot;MAC_Exp&quot;</span></div></div>

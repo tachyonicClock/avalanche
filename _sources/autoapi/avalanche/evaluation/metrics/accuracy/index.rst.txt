@@ -84,7 +84,7 @@ Functions
 
 .. py:class:: MinibatchAccuracy
 
-   Bases: :class:`PluginMetric[float]`
+   Bases: :class:`avalanche.evaluation.metrics.accuracy.AccuracyPluginMetric`
 
    The minibatch plugin accuracy metric.
    This metric only works at training time.
@@ -98,27 +98,13 @@ Functions
 
    Creates an instance of the MinibatchAccuracy metric.
 
-   .. method:: result(self) -> float
-
-
-   .. method:: reset(self) -> None
-
-
-   .. method:: after_training_iteration(self, strategy: BaseStrategy) -> MetricResult
-
-      Called after the end of a training iteration by the
-      `BaseStrategy`. 
-
-
    .. method:: __str__(self)
-
-      Return str(self).
 
 
 
 .. py:class:: EpochAccuracy
 
-   Bases: :class:`PluginMetric[float]`
+   Bases: :class:`avalanche.evaluation.metrics.accuracy.AccuracyPluginMetric`
 
    The average accuracy over a single training epoch.
    This plugin metric only works at training time.
@@ -129,37 +115,13 @@ Functions
 
    Creates an instance of the EpochAccuracy metric.
 
-   .. method:: reset(self) -> None
-
-
-   .. method:: result(self) -> float
-
-
-   .. method:: after_training_iteration(self, strategy: BaseStrategy) -> None
-
-      Called after the end of a training iteration by the
-      `BaseStrategy`. 
-
-
-   .. method:: before_training_epoch(self, strategy: BaseStrategy) -> None
-
-      Called before `train_epoch` by the `BaseStrategy`. 
-
-
-   .. method:: after_training_epoch(self, strategy: BaseStrategy) -> MetricResult
-
-      Called after `train_epoch` by the `BaseStrategy`. 
-
-
    .. method:: __str__(self)
-
-      Return str(self).
 
 
 
 .. py:class:: RunningEpochAccuracy
 
-   Bases: :class:`avalanche.evaluation.metrics.accuracy.EpochAccuracy`
+   Bases: :class:`avalanche.evaluation.metrics.accuracy.AccuracyPluginMetric`
 
    The average accuracy across all minibatches up to the current
    epoch iteration.
@@ -171,26 +133,13 @@ Functions
 
    Creates an instance of the RunningEpochAccuracy metric.
 
-   .. method:: after_training_iteration(self, strategy: BaseStrategy) -> MetricResult
-
-      Called after the end of a training iteration by the
-      `BaseStrategy`. 
-
-
-   .. method:: after_training_epoch(self, strategy: BaseStrategy) -> None
-
-      Called after `train_epoch` by the `BaseStrategy`. 
-
-
    .. method:: __str__(self)
-
-      Return str(self).
 
 
 
 .. py:class:: ExperienceAccuracy
 
-   Bases: :class:`PluginMetric[float]`
+   Bases: :class:`avalanche.evaluation.metrics.accuracy.AccuracyPluginMetric`
 
    At the end of each experience, this plugin metric reports
    the average accuracy over all patterns seen in that experience.
@@ -198,37 +147,13 @@ Functions
 
    Creates an instance of ExperienceAccuracy metric
 
-   .. method:: reset(self) -> None
-
-
-   .. method:: result(self) -> float
-
-
-   .. method:: before_eval_exp(self, strategy: BaseStrategy) -> None
-
-      Called before `eval_exp` by the `BaseStrategy`. 
-
-
-   .. method:: after_eval_iteration(self, strategy: BaseStrategy) -> None
-
-      Called after the end of an iteration by the
-      `BaseStrategy`. 
-
-
-   .. method:: after_eval_exp(self, strategy: BaseStrategy) -> 'MetricResult'
-
-      Called after `eval_exp` by the `BaseStrategy`. 
-
-
    .. method:: __str__(self)
-
-      Return str(self).
 
 
 
 .. py:class:: StreamAccuracy
 
-   Bases: :class:`PluginMetric[float]`
+   Bases: :class:`avalanche.evaluation.metrics.accuracy.AccuracyPluginMetric`
 
    At the end of the entire stream of experiences, this plugin metric
    reports the average accuracy over all patterns seen in all experiences.
@@ -236,31 +161,7 @@ Functions
 
    Creates an instance of StreamAccuracy metric
 
-   .. method:: reset(self) -> None
-
-
-   .. method:: result(self) -> float
-
-
-   .. method:: before_eval(self, strategy: BaseStrategy) -> None
-
-      Called before `eval` by the `BaseStrategy`. 
-
-
-   .. method:: after_eval_iteration(self, strategy: BaseStrategy) -> None
-
-      Called after the end of an iteration by the
-      `BaseStrategy`. 
-
-
-   .. method:: after_eval(self, strategy: BaseStrategy) -> 'MetricResult'
-
-      Called after `eval` by the `BaseStrategy`. 
-
-
    .. method:: __str__(self)
-
-      Return str(self).
 
 
 

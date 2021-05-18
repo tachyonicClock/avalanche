@@ -197,10 +197,8 @@
 <span class="kn">import</span> <span class="nn">warnings</span>
 <span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Optional</span><span class="p">,</span> <span class="n">TYPE_CHECKING</span><span class="p">,</span> <span class="n">List</span>
 
-<span class="kn">from</span> <span class="nn">avalanche.evaluation</span> <span class="kn">import</span> <span class="n">Metric</span><span class="p">,</span> <span class="n">PluginMetric</span>
-<span class="kn">from</span> <span class="nn">avalanche.evaluation.metric_results</span> <span class="kn">import</span> <span class="n">MetricValue</span><span class="p">,</span> <span class="n">MetricResult</span>
-<span class="kn">from</span> <span class="nn">avalanche.evaluation.metric_utils</span> <span class="kn">import</span> <span class="n">get_metric_name</span><span class="p">,</span> \
-    <span class="n">phase_and_task</span><span class="p">,</span> <span class="n">stream_type</span>
+<span class="kn">from</span> <span class="nn">avalanche.evaluation</span> <span class="kn">import</span> <span class="n">Metric</span><span class="p">,</span> <span class="n">PluginMetric</span><span class="p">,</span> <span class="n">GenericPluginMetric</span>
+<span class="kn">from</span> <span class="nn">avalanche.evaluation.metric_results</span> <span class="kn">import</span> <span class="n">MetricResult</span>
 <span class="k">if</span> <span class="n">TYPE_CHECKING</span><span class="p">:</span>
     <span class="kn">from</span> <span class="nn">avalanche.training</span> <span class="kn">import</span> <span class="n">BaseStrategy</span>
 
@@ -304,10 +302,26 @@
 
 <span class="sd">        :return: The percentage GPU usage as a float value in range [0, 1].</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">max_usage</span></div></div>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">max_usage</span></div>
+
+<div class="viewcode-block" id="MaxGPU.update"><a class="viewcode-back" href="../../../../../autoapi/avalanche/evaluation/metrics/#avalanche.evaluation.metrics.gpu_usage.MaxGPU.update">[docs]</a>    <span class="k">def</span> <span class="nf">update</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">pass</span></div></div>
 
 
-<div class="viewcode-block" id="MinibatchMaxGPU"><a class="viewcode-back" href="../../../../../autoapi/avalanche/evaluation/metrics/#avalanche.evaluation.metrics.gpu_usage.MinibatchMaxGPU">[docs]</a><span class="k">class</span> <span class="nc">MinibatchMaxGPU</span><span class="p">(</span><span class="n">PluginMetric</span><span class="p">[</span><span class="nb">float</span><span class="p">]):</span>
+<span class="k">class</span> <span class="nc">GPUPluginMetric</span><span class="p">(</span><span class="n">GenericPluginMetric</span><span class="p">[</span><span class="nb">float</span><span class="p">]):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">gpu_id</span><span class="p">,</span> <span class="n">every</span><span class="p">,</span> <span class="n">reset_at</span><span class="p">,</span> <span class="n">emit_at</span><span class="p">,</span> <span class="n">mode</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">gpu_id</span> <span class="o">=</span> <span class="n">gpu_id</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_gpu</span> <span class="o">=</span> <span class="n">MaxGPU</span><span class="p">(</span><span class="n">gpu_id</span><span class="p">,</span> <span class="n">every</span><span class="p">)</span>
+
+        <span class="nb">super</span><span class="p">(</span><span class="n">GPUPluginMetric</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_gpu</span><span class="p">,</span> <span class="n">reset_at</span><span class="o">=</span><span class="n">reset_at</span><span class="p">,</span> <span class="n">emit_at</span><span class="o">=</span><span class="n">emit_at</span><span class="p">,</span>
+            <span class="n">mode</span><span class="o">=</span><span class="n">mode</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">update</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">strategy</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_gpu</span><span class="o">.</span><span class="n">update</span><span class="p">()</span>
+
+
+<div class="viewcode-block" id="MinibatchMaxGPU"><a class="viewcode-back" href="../../../../../autoapi/avalanche/evaluation/metrics/#avalanche.evaluation.metrics.gpu_usage.MinibatchMaxGPU">[docs]</a><span class="k">class</span> <span class="nc">MinibatchMaxGPU</span><span class="p">(</span><span class="n">GPUPluginMetric</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    The Minibatch Max GPU metric.</span>
 <span class="sd">    This plugin metric only works at training time.</span>
@@ -321,45 +335,24 @@
 <span class="sd">        :param every: seconds after which update the maximum GPU</span>
 <span class="sd">            usage</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
-
-        <span class="bp">self</span><span class="o">.</span><span class="n">gpu_id</span> <span class="o">=</span> <span class="n">gpu_id</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_gpu</span> <span class="o">=</span> <span class="n">MaxGPU</span><span class="p">(</span><span class="n">gpu_id</span><span class="p">,</span> <span class="n">every</span><span class="p">)</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">MinibatchMaxGPU</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span>
+            <span class="n">gpu_id</span><span class="p">,</span> <span class="n">every</span><span class="p">,</span>
+            <span class="n">reset_at</span><span class="o">=</span><span class="s1">&#39;iteration&#39;</span><span class="p">,</span> <span class="n">emit_at</span><span class="o">=</span><span class="s1">&#39;iteration&#39;</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s1">&#39;train&#39;</span><span class="p">)</span>
 
 <div class="viewcode-block" id="MinibatchMaxGPU.before_training"><a class="viewcode-back" href="../../../../../autoapi/avalanche/evaluation/metrics/#avalanche.evaluation.metrics.gpu_usage.MinibatchMaxGPU.before_training">[docs]</a>    <span class="k">def</span> <span class="nf">before_training</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">strategy</span><span class="p">:</span> <span class="s1">&#39;BaseStrategy&#39;</span><span class="p">)</span> \
             <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">before_training</span><span class="p">(</span><span class="n">strategy</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_gpu</span><span class="o">.</span><span class="n">start_thread</span><span class="p">()</span></div>
 
-<div class="viewcode-block" id="MinibatchMaxGPU.before_training_iteration"><a class="viewcode-back" href="../../../../../autoapi/avalanche/evaluation/metrics/#avalanche.evaluation.metrics.gpu_usage.MinibatchMaxGPU.before_training_iteration">[docs]</a>    <span class="k">def</span> <span class="nf">before_training_iteration</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">strategy</span><span class="p">:</span> <span class="s1">&#39;BaseStrategy&#39;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">reset</span><span class="p">()</span></div>
-
-<div class="viewcode-block" id="MinibatchMaxGPU.after_training_iteration"><a class="viewcode-back" href="../../../../../autoapi/avalanche/evaluation/metrics/#avalanche.evaluation.metrics.gpu_usage.MinibatchMaxGPU.after_training_iteration">[docs]</a>    <span class="k">def</span> <span class="nf">after_training_iteration</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">strategy</span><span class="p">:</span> <span class="s1">&#39;BaseStrategy&#39;</span><span class="p">)</span> \
-            <span class="o">-&gt;</span> <span class="n">MetricResult</span><span class="p">:</span>
-        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">after_training_iteration</span><span class="p">(</span><span class="n">strategy</span><span class="p">)</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_package_result</span><span class="p">(</span><span class="n">strategy</span><span class="p">)</span></div>
-
 <div class="viewcode-block" id="MinibatchMaxGPU.after_training"><a class="viewcode-back" href="../../../../../autoapi/avalanche/evaluation/metrics/#avalanche.evaluation.metrics.gpu_usage.MinibatchMaxGPU.after_training">[docs]</a>    <span class="k">def</span> <span class="nf">after_training</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">strategy</span><span class="p">:</span> <span class="s1">&#39;BaseStrategy&#39;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">before_training</span><span class="p">(</span><span class="n">strategy</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_gpu</span><span class="o">.</span><span class="n">stop_thread</span><span class="p">()</span></div>
-
-<div class="viewcode-block" id="MinibatchMaxGPU.reset"><a class="viewcode-back" href="../../../../../autoapi/avalanche/evaluation/metrics/#avalanche.evaluation.metrics.gpu_usage.MinibatchMaxGPU.reset">[docs]</a>    <span class="k">def</span> <span class="nf">reset</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_gpu</span><span class="o">.</span><span class="n">reset</span><span class="p">()</span></div>
-
-<div class="viewcode-block" id="MinibatchMaxGPU.result"><a class="viewcode-back" href="../../../../../autoapi/avalanche/evaluation/metrics/#avalanche.evaluation.metrics.gpu_usage.MinibatchMaxGPU.result">[docs]</a>    <span class="k">def</span> <span class="nf">result</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_gpu</span><span class="o">.</span><span class="n">result</span><span class="p">()</span></div>
-
-    <span class="k">def</span> <span class="nf">_package_result</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">strategy</span><span class="p">:</span> <span class="s1">&#39;BaseStrategy&#39;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">MetricResult</span><span class="p">:</span>
-        <span class="n">gpu_usage</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">result</span><span class="p">()</span>
-
-        <span class="n">metric_name</span> <span class="o">=</span> <span class="n">get_metric_name</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">strategy</span><span class="p">)</span>
-        <span class="n">plot_x_position</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_global_counter</span><span class="p">()</span>
-
-        <span class="k">return</span> <span class="p">[</span><span class="n">MetricValue</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">metric_name</span><span class="p">,</span> <span class="n">gpu_usage</span><span class="p">,</span> <span class="n">plot_x_position</span><span class="p">)]</span>
 
 <div class="viewcode-block" id="MinibatchMaxGPU.__str__"><a class="viewcode-back" href="../../../../../autoapi/avalanche/evaluation/metrics/#avalanche.evaluation.metrics.gpu_usage.MinibatchMaxGPU.__str__">[docs]</a>    <span class="k">def</span> <span class="fm">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;MaxGPU</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">gpu_id</span><span class="si">}</span><span class="s2">Usage_MB&quot;</span></div></div>
 
 
-<div class="viewcode-block" id="EpochMaxGPU"><a class="viewcode-back" href="../../../../../autoapi/avalanche/evaluation/metrics/#avalanche.evaluation.metrics.gpu_usage.EpochMaxGPU">[docs]</a><span class="k">class</span> <span class="nc">EpochMaxGPU</span><span class="p">(</span><span class="n">PluginMetric</span><span class="p">[</span><span class="nb">float</span><span class="p">]):</span>
+<div class="viewcode-block" id="EpochMaxGPU"><a class="viewcode-back" href="../../../../../autoapi/avalanche/evaluation/metrics/#avalanche.evaluation.metrics.gpu_usage.EpochMaxGPU">[docs]</a><span class="k">class</span> <span class="nc">EpochMaxGPU</span><span class="p">(</span><span class="n">GPUPluginMetric</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    The Epoch Max GPU metric.</span>
 <span class="sd">    This plugin metric only works at training time.</span>
@@ -373,44 +366,22 @@
 <span class="sd">        :param every: seconds after which update the maximum GPU</span>
 <span class="sd">            usage</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">EpochMaxGPU</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span>
+            <span class="n">gpu_id</span><span class="p">,</span> <span class="n">every</span><span class="p">,</span>
+            <span class="n">reset_at</span><span class="o">=</span><span class="s1">&#39;epoch&#39;</span><span class="p">,</span> <span class="n">emit_at</span><span class="o">=</span><span class="s1">&#39;epoch&#39;</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s1">&#39;train&#39;</span><span class="p">)</span>
 
-        <span class="bp">self</span><span class="o">.</span><span class="n">gpu_id</span> <span class="o">=</span> <span class="n">gpu_id</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_gpu</span> <span class="o">=</span> <span class="n">MaxGPU</span><span class="p">(</span><span class="n">gpu_id</span><span class="p">,</span> <span class="n">every</span><span class="p">)</span>
-
-<div class="viewcode-block" id="EpochMaxGPU.before_training"><a class="viewcode-back" href="../../../../../autoapi/avalanche/evaluation/metrics/#avalanche.evaluation.metrics.gpu_usage.EpochMaxGPU.before_training">[docs]</a>    <span class="k">def</span> <span class="nf">before_training</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">strategy</span><span class="p">:</span> <span class="s1">&#39;BaseStrategy&#39;</span><span class="p">)</span> \
-            <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<div class="viewcode-block" id="EpochMaxGPU.before_training"><a class="viewcode-back" href="../../../../../autoapi/avalanche/evaluation/metrics/#avalanche.evaluation.metrics.gpu_usage.EpochMaxGPU.before_training">[docs]</a>    <span class="k">def</span> <span class="nf">before_training</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">strategy</span><span class="p">:</span> <span class="s1">&#39;BaseStrategy&#39;</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">before_training</span><span class="p">(</span><span class="n">strategy</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_gpu</span><span class="o">.</span><span class="n">start_thread</span><span class="p">()</span></div>
-
-<div class="viewcode-block" id="EpochMaxGPU.before_training_epoch"><a class="viewcode-back" href="../../../../../autoapi/avalanche/evaluation/metrics/#avalanche.evaluation.metrics.gpu_usage.EpochMaxGPU.before_training_epoch">[docs]</a>    <span class="k">def</span> <span class="nf">before_training_epoch</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">strategy</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">MetricResult</span><span class="p">:</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">reset</span><span class="p">()</span></div>
-
-<div class="viewcode-block" id="EpochMaxGPU.after_training_epoch"><a class="viewcode-back" href="../../../../../autoapi/avalanche/evaluation/metrics/#avalanche.evaluation.metrics.gpu_usage.EpochMaxGPU.after_training_epoch">[docs]</a>    <span class="k">def</span> <span class="nf">after_training_epoch</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">strategy</span><span class="p">:</span> <span class="s1">&#39;BaseStrategy&#39;</span><span class="p">)</span> \
-            <span class="o">-&gt;</span> <span class="n">MetricResult</span><span class="p">:</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_package_result</span><span class="p">(</span><span class="n">strategy</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="EpochMaxGPU.after_training"><a class="viewcode-back" href="../../../../../autoapi/avalanche/evaluation/metrics/#avalanche.evaluation.metrics.gpu_usage.EpochMaxGPU.after_training">[docs]</a>    <span class="k">def</span> <span class="nf">after_training</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">strategy</span><span class="p">:</span> <span class="s1">&#39;BaseStrategy&#39;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_gpu</span><span class="o">.</span><span class="n">stop_thread</span><span class="p">()</span></div>
-
-<div class="viewcode-block" id="EpochMaxGPU.reset"><a class="viewcode-back" href="../../../../../autoapi/avalanche/evaluation/metrics/#avalanche.evaluation.metrics.gpu_usage.EpochMaxGPU.reset">[docs]</a>    <span class="k">def</span> <span class="nf">reset</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_gpu</span><span class="o">.</span><span class="n">reset</span><span class="p">()</span></div>
-
-<div class="viewcode-block" id="EpochMaxGPU.result"><a class="viewcode-back" href="../../../../../autoapi/avalanche/evaluation/metrics/#avalanche.evaluation.metrics.gpu_usage.EpochMaxGPU.result">[docs]</a>    <span class="k">def</span> <span class="nf">result</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_gpu</span><span class="o">.</span><span class="n">result</span><span class="p">()</span></div>
-
-    <span class="k">def</span> <span class="nf">_package_result</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">strategy</span><span class="p">:</span> <span class="s1">&#39;BaseStrategy&#39;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">MetricResult</span><span class="p">:</span>
-        <span class="n">gpu_usage</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">result</span><span class="p">()</span>
-
-        <span class="n">metric_name</span> <span class="o">=</span> <span class="n">get_metric_name</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">strategy</span><span class="p">)</span>
-        <span class="n">plot_x_position</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_global_counter</span><span class="p">()</span>
-
-        <span class="k">return</span> <span class="p">[</span><span class="n">MetricValue</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">metric_name</span><span class="p">,</span> <span class="n">gpu_usage</span><span class="p">,</span> <span class="n">plot_x_position</span><span class="p">)]</span>
 
 <div class="viewcode-block" id="EpochMaxGPU.__str__"><a class="viewcode-back" href="../../../../../autoapi/avalanche/evaluation/metrics/#avalanche.evaluation.metrics.gpu_usage.EpochMaxGPU.__str__">[docs]</a>    <span class="k">def</span> <span class="fm">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;MaxGPU</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">gpu_id</span><span class="si">}</span><span class="s2">Usage_Epoch&quot;</span></div></div>
 
 
-<div class="viewcode-block" id="ExperienceMaxGPU"><a class="viewcode-back" href="../../../../../autoapi/avalanche/evaluation/metrics/#avalanche.evaluation.metrics.gpu_usage.ExperienceMaxGPU">[docs]</a><span class="k">class</span> <span class="nc">ExperienceMaxGPU</span><span class="p">(</span><span class="n">PluginMetric</span><span class="p">[</span><span class="nb">float</span><span class="p">]):</span>
+<div class="viewcode-block" id="ExperienceMaxGPU"><a class="viewcode-back" href="../../../../../autoapi/avalanche/evaluation/metrics/#avalanche.evaluation.metrics.gpu_usage.ExperienceMaxGPU">[docs]</a><span class="k">class</span> <span class="nc">ExperienceMaxGPU</span><span class="p">(</span><span class="n">GPUPluginMetric</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    The Experience Max GPU metric.</span>
 <span class="sd">    This plugin metric only works at eval time.</span>
@@ -424,44 +395,23 @@
 <span class="sd">        :param every: seconds after which update the maximum GPU</span>
 <span class="sd">            usage</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">ExperienceMaxGPU</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span>
+            <span class="n">gpu_id</span><span class="p">,</span> <span class="n">every</span><span class="p">,</span>
+            <span class="n">reset_at</span><span class="o">=</span><span class="s1">&#39;experience&#39;</span><span class="p">,</span> <span class="n">emit_at</span><span class="o">=</span><span class="s1">&#39;experience&#39;</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s1">&#39;eval&#39;</span><span class="p">)</span>
 
-        <span class="bp">self</span><span class="o">.</span><span class="n">gpu_id</span> <span class="o">=</span> <span class="n">gpu_id</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_gpu</span> <span class="o">=</span> <span class="n">MaxGPU</span><span class="p">(</span><span class="n">gpu_id</span><span class="p">,</span> <span class="n">every</span><span class="p">)</span>
-
-<div class="viewcode-block" id="ExperienceMaxGPU.before_eval"><a class="viewcode-back" href="../../../../../autoapi/avalanche/evaluation/metrics/#avalanche.evaluation.metrics.gpu_usage.ExperienceMaxGPU.before_eval">[docs]</a>    <span class="k">def</span> <span class="nf">before_eval</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">strategy</span><span class="p">:</span> <span class="s1">&#39;BaseStrategy&#39;</span><span class="p">)</span> \
-            <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<div class="viewcode-block" id="ExperienceMaxGPU.before_eval"><a class="viewcode-back" href="../../../../../autoapi/avalanche/evaluation/metrics/#avalanche.evaluation.metrics.gpu_usage.ExperienceMaxGPU.before_eval">[docs]</a>    <span class="k">def</span> <span class="nf">before_eval</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">strategy</span><span class="p">:</span> <span class="s1">&#39;BaseStrategy&#39;</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">before_eval</span><span class="p">(</span><span class="n">strategy</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_gpu</span><span class="o">.</span><span class="n">start_thread</span><span class="p">()</span></div>
 
-<div class="viewcode-block" id="ExperienceMaxGPU.before_eval_exp"><a class="viewcode-back" href="../../../../../autoapi/avalanche/evaluation/metrics/#avalanche.evaluation.metrics.gpu_usage.ExperienceMaxGPU.before_eval_exp">[docs]</a>    <span class="k">def</span> <span class="nf">before_eval_exp</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">strategy</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">MetricResult</span><span class="p">:</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">reset</span><span class="p">()</span></div>
-
-<div class="viewcode-block" id="ExperienceMaxGPU.after_eval_exp"><a class="viewcode-back" href="../../../../../autoapi/avalanche/evaluation/metrics/#avalanche.evaluation.metrics.gpu_usage.ExperienceMaxGPU.after_eval_exp">[docs]</a>    <span class="k">def</span> <span class="nf">after_eval_exp</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">strategy</span><span class="p">:</span> <span class="s1">&#39;BaseStrategy&#39;</span><span class="p">)</span> \
-            <span class="o">-&gt;</span> <span class="n">MetricResult</span><span class="p">:</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_package_result</span><span class="p">(</span><span class="n">strategy</span><span class="p">)</span></div>
-
-<div class="viewcode-block" id="ExperienceMaxGPU.after_eval"><a class="viewcode-back" href="../../../../../autoapi/avalanche/evaluation/metrics/#avalanche.evaluation.metrics.gpu_usage.ExperienceMaxGPU.after_eval">[docs]</a>    <span class="k">def</span> <span class="nf">after_eval</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">strategy</span><span class="p">:</span> <span class="s1">&#39;BaseStrategy&#39;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<div class="viewcode-block" id="ExperienceMaxGPU.after_eval"><a class="viewcode-back" href="../../../../../autoapi/avalanche/evaluation/metrics/#avalanche.evaluation.metrics.gpu_usage.ExperienceMaxGPU.after_eval">[docs]</a>    <span class="k">def</span> <span class="nf">after_eval</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">strategy</span><span class="p">:</span> <span class="s1">&#39;BaseStrategy&#39;</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">after_eval</span><span class="p">(</span><span class="n">strategy</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_gpu</span><span class="o">.</span><span class="n">stop_thread</span><span class="p">()</span></div>
-
-<div class="viewcode-block" id="ExperienceMaxGPU.reset"><a class="viewcode-back" href="../../../../../autoapi/avalanche/evaluation/metrics/#avalanche.evaluation.metrics.gpu_usage.ExperienceMaxGPU.reset">[docs]</a>    <span class="k">def</span> <span class="nf">reset</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_gpu</span><span class="o">.</span><span class="n">reset</span><span class="p">()</span></div>
-
-<div class="viewcode-block" id="ExperienceMaxGPU.result"><a class="viewcode-back" href="../../../../../autoapi/avalanche/evaluation/metrics/#avalanche.evaluation.metrics.gpu_usage.ExperienceMaxGPU.result">[docs]</a>    <span class="k">def</span> <span class="nf">result</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_gpu</span><span class="o">.</span><span class="n">result</span><span class="p">()</span></div>
-
-    <span class="k">def</span> <span class="nf">_package_result</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">strategy</span><span class="p">:</span> <span class="s1">&#39;BaseStrategy&#39;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">MetricResult</span><span class="p">:</span>
-        <span class="n">gpu_usage</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">result</span><span class="p">()</span>
-
-        <span class="n">metric_name</span> <span class="o">=</span> <span class="n">get_metric_name</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">strategy</span><span class="p">,</span> <span class="n">add_experience</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-        <span class="n">plot_x_position</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_global_counter</span><span class="p">()</span>
-
-        <span class="k">return</span> <span class="p">[</span><span class="n">MetricValue</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">metric_name</span><span class="p">,</span> <span class="n">gpu_usage</span><span class="p">,</span> <span class="n">plot_x_position</span><span class="p">)]</span>
 
 <div class="viewcode-block" id="ExperienceMaxGPU.__str__"><a class="viewcode-back" href="../../../../../autoapi/avalanche/evaluation/metrics/#avalanche.evaluation.metrics.gpu_usage.ExperienceMaxGPU.__str__">[docs]</a>    <span class="k">def</span> <span class="fm">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;MaxGPU</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">gpu_id</span><span class="si">}</span><span class="s2">Usage_Experience&quot;</span></div></div>
 
 
-<div class="viewcode-block" id="StreamMaxGPU"><a class="viewcode-back" href="../../../../../autoapi/avalanche/evaluation/metrics/#avalanche.evaluation.metrics.gpu_usage.StreamMaxGPU">[docs]</a><span class="k">class</span> <span class="nc">StreamMaxGPU</span><span class="p">(</span><span class="n">PluginMetric</span><span class="p">[</span><span class="nb">float</span><span class="p">]):</span>
+<div class="viewcode-block" id="StreamMaxGPU"><a class="viewcode-back" href="../../../../../autoapi/avalanche/evaluation/metrics/#avalanche.evaluation.metrics.gpu_usage.StreamMaxGPU">[docs]</a><span class="k">class</span> <span class="nc">StreamMaxGPU</span><span class="p">(</span><span class="n">GPUPluginMetric</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    The Stream Max GPU metric.</span>
 <span class="sd">    This plugin metric only works at eval time.</span>
@@ -475,39 +425,19 @@
 <span class="sd">        :param every: seconds after which update the maximum GPU</span>
 <span class="sd">            usage</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
-
-        <span class="bp">self</span><span class="o">.</span><span class="n">gpu_id</span> <span class="o">=</span> <span class="n">gpu_id</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_gpu</span> <span class="o">=</span> <span class="n">MaxGPU</span><span class="p">(</span><span class="n">gpu_id</span><span class="p">,</span> <span class="n">every</span><span class="p">)</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">StreamMaxGPU</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span>
+            <span class="n">gpu_id</span><span class="p">,</span> <span class="n">every</span><span class="p">,</span>
+            <span class="n">reset_at</span><span class="o">=</span><span class="s1">&#39;stream&#39;</span><span class="p">,</span> <span class="n">emit_at</span><span class="o">=</span><span class="s1">&#39;stream&#39;</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s1">&#39;eval&#39;</span><span class="p">)</span>
 
 <div class="viewcode-block" id="StreamMaxGPU.before_eval"><a class="viewcode-back" href="../../../../../autoapi/avalanche/evaluation/metrics/#avalanche.evaluation.metrics.gpu_usage.StreamMaxGPU.before_eval">[docs]</a>    <span class="k">def</span> <span class="nf">before_eval</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">strategy</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">MetricResult</span><span class="p">:</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">reset</span><span class="p">()</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">before_eval</span><span class="p">(</span><span class="n">strategy</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_gpu</span><span class="o">.</span><span class="n">start_thread</span><span class="p">()</span></div>
 
 <div class="viewcode-block" id="StreamMaxGPU.after_eval"><a class="viewcode-back" href="../../../../../autoapi/avalanche/evaluation/metrics/#avalanche.evaluation.metrics.gpu_usage.StreamMaxGPU.after_eval">[docs]</a>    <span class="k">def</span> <span class="nf">after_eval</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">strategy</span><span class="p">:</span> <span class="s1">&#39;BaseStrategy&#39;</span><span class="p">)</span> \
             <span class="o">-&gt;</span> <span class="n">MetricResult</span><span class="p">:</span>
-        <span class="n">packed</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_package_result</span><span class="p">(</span><span class="n">strategy</span><span class="p">)</span>
+        <span class="n">packed</span> <span class="o">=</span> <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">after_eval</span><span class="p">(</span><span class="n">strategy</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_gpu</span><span class="o">.</span><span class="n">stop_thread</span><span class="p">()</span>
         <span class="k">return</span> <span class="n">packed</span></div>
-
-<div class="viewcode-block" id="StreamMaxGPU.reset"><a class="viewcode-back" href="../../../../../autoapi/avalanche/evaluation/metrics/#avalanche.evaluation.metrics.gpu_usage.StreamMaxGPU.reset">[docs]</a>    <span class="k">def</span> <span class="nf">reset</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_gpu</span><span class="o">.</span><span class="n">reset</span><span class="p">()</span></div>
-
-<div class="viewcode-block" id="StreamMaxGPU.result"><a class="viewcode-back" href="../../../../../autoapi/avalanche/evaluation/metrics/#avalanche.evaluation.metrics.gpu_usage.StreamMaxGPU.result">[docs]</a>    <span class="k">def</span> <span class="nf">result</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_gpu</span><span class="o">.</span><span class="n">result</span><span class="p">()</span></div>
-
-    <span class="k">def</span> <span class="nf">_package_result</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">strategy</span><span class="p">:</span> <span class="s1">&#39;BaseStrategy&#39;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">MetricResult</span><span class="p">:</span>
-        <span class="n">gpu_usage</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">result</span><span class="p">()</span>
-
-        <span class="n">phase_name</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">phase_and_task</span><span class="p">(</span><span class="n">strategy</span><span class="p">)</span>
-        <span class="n">stream</span> <span class="o">=</span> <span class="n">stream_type</span><span class="p">(</span><span class="n">strategy</span><span class="o">.</span><span class="n">experience</span><span class="p">)</span>
-        <span class="n">metric_name</span> <span class="o">=</span> <span class="s1">&#39;</span><span class="si">{}</span><span class="s1">/</span><span class="si">{}</span><span class="s1">_phase/</span><span class="si">{}</span><span class="s1">_stream&#39;</span> \
-            <span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="p">),</span>
-                    <span class="n">phase_name</span><span class="p">,</span>
-                    <span class="n">stream</span><span class="p">)</span>
-        <span class="n">plot_x_position</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_global_counter</span><span class="p">()</span>
-
-        <span class="k">return</span> <span class="p">[</span><span class="n">MetricValue</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">metric_name</span><span class="p">,</span> <span class="n">gpu_usage</span><span class="p">,</span> <span class="n">plot_x_position</span><span class="p">)]</span>
 
 <div class="viewcode-block" id="StreamMaxGPU.__str__"><a class="viewcode-back" href="../../../../../autoapi/avalanche/evaluation/metrics/#avalanche.evaluation.metrics.gpu_usage.StreamMaxGPU.__str__">[docs]</a>    <span class="k">def</span> <span class="fm">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;MaxGPU</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">gpu_id</span><span class="si">}</span><span class="s2">Usage_Stream&quot;</span></div></div>

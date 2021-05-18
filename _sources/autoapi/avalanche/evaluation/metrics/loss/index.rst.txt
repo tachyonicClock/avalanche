@@ -83,7 +83,7 @@ Functions
 
 .. py:class:: MinibatchLoss
 
-   Bases: :class:`PluginMetric[float]`
+   Bases: :class:`avalanche.evaluation.metrics.loss.LossPluginMetric`
 
    The minibatch loss metric.
    This plugin metric only works at training time.
@@ -97,27 +97,13 @@ Functions
 
    Creates an instance of the MinibatchLoss metric.
 
-   .. method:: result(self) -> float
-
-
-   .. method:: reset(self) -> None
-
-
-   .. method:: after_training_iteration(self, strategy: BaseStrategy) -> MetricResult
-
-      Called after the end of a training iteration by the
-      `BaseStrategy`. 
-
-
    .. method:: __str__(self)
-
-      Return str(self).
 
 
 
 .. py:class:: EpochLoss
 
-   Bases: :class:`PluginMetric[float]`
+   Bases: :class:`avalanche.evaluation.metrics.loss.LossPluginMetric`
 
    The average loss over a single training epoch.
    This plugin metric only works at training time.
@@ -128,37 +114,13 @@ Functions
 
    Creates an instance of the EpochLoss metric.
 
-   .. method:: before_training_epoch(self, strategy: BaseStrategy) -> None
-
-      Called before `train_epoch` by the `BaseStrategy`. 
-
-
-   .. method:: after_training_iteration(self, strategy: BaseStrategy) -> None
-
-      Called after the end of a training iteration by the
-      `BaseStrategy`. 
-
-
-   .. method:: after_training_epoch(self, strategy: BaseStrategy) -> MetricResult
-
-      Called after `train_epoch` by the `BaseStrategy`. 
-
-
-   .. method:: reset(self) -> None
-
-
-   .. method:: result(self) -> float
-
-
    .. method:: __str__(self)
-
-      Return str(self).
 
 
 
 .. py:class:: RunningEpochLoss
 
-   Bases: :class:`avalanche.evaluation.metrics.loss.EpochLoss`
+   Bases: :class:`avalanche.evaluation.metrics.loss.LossPluginMetric`
 
    The average loss across all minibatches up to the current
    epoch iteration.
@@ -170,26 +132,13 @@ Functions
 
    Creates an instance of the RunningEpochLoss metric.
 
-   .. method:: after_training_iteration(self, strategy: BaseStrategy) -> MetricResult
-
-      Called after the end of a training iteration by the
-      `BaseStrategy`. 
-
-
-   .. method:: after_training_epoch(self, strategy: BaseStrategy) -> None
-
-      Called after `train_epoch` by the `BaseStrategy`. 
-
-
    .. method:: __str__(self)
-
-      Return str(self).
 
 
 
 .. py:class:: ExperienceLoss
 
-   Bases: :class:`PluginMetric[float]`
+   Bases: :class:`avalanche.evaluation.metrics.loss.LossPluginMetric`
 
    At the end of each experience, this metric reports
    the average loss over all patterns seen in that experience.
@@ -197,37 +146,13 @@ Functions
 
    Creates an instance of ExperienceLoss metric
 
-   .. method:: reset(self) -> None
-
-
-   .. method:: result(self) -> float
-
-
-   .. method:: before_eval_exp(self, strategy: BaseStrategy) -> None
-
-      Called before `eval_exp` by the `BaseStrategy`. 
-
-
-   .. method:: after_eval_iteration(self, strategy: BaseStrategy) -> None
-
-      Called after the end of an iteration by the
-      `BaseStrategy`. 
-
-
-   .. method:: after_eval_exp(self, strategy: BaseStrategy) -> 'MetricResult'
-
-      Called after `eval_exp` by the `BaseStrategy`. 
-
-
    .. method:: __str__(self)
-
-      Return str(self).
 
 
 
 .. py:class:: StreamLoss
 
-   Bases: :class:`PluginMetric[float]`
+   Bases: :class:`avalanche.evaluation.metrics.loss.LossPluginMetric`
 
    At the end of the entire stream of experiences, this metric reports the
    average loss over all patterns seen in all experiences.
@@ -235,31 +160,7 @@ Functions
 
    Creates an instance of StreamLoss metric
 
-   .. method:: reset(self) -> None
-
-
-   .. method:: result(self) -> float
-
-
-   .. method:: before_eval(self, strategy: BaseStrategy) -> None
-
-      Called before `eval` by the `BaseStrategy`. 
-
-
-   .. method:: after_eval_iteration(self, strategy: BaseStrategy) -> None
-
-      Called after the end of an iteration by the
-      `BaseStrategy`. 
-
-
-   .. method:: after_eval(self, strategy: BaseStrategy) -> 'MetricResult'
-
-      Called after `eval` by the `BaseStrategy`. 
-
-
    .. method:: __str__(self)
-
-      Return str(self).
 
 
 

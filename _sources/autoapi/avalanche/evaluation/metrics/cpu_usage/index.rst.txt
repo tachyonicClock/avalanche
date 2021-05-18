@@ -84,7 +84,7 @@ Functions
 
 .. py:class:: MinibatchCPUUsage
 
-   Bases: :class:`PluginMetric[float]`
+   Bases: :class:`avalanche.evaluation.metrics.cpu_usage.CPUPluginMetric`
 
    The minibatch CPU usage metric.
    This plugin metric only works at training time.
@@ -96,33 +96,16 @@ Functions
 
    Creates an instance of the minibatch CPU usage metric.
 
-   .. method:: result(self) -> float
-
-
-   .. method:: reset(self) -> None
-
-
-   .. method:: before_training_iteration(self, strategy) -> MetricResult
-
-      Called before the start of a training iteration by the
-      `BaseStrategy`. 
-
-
-   .. method:: after_training_iteration(self, strategy: BaseStrategy) -> MetricResult
-
-      Called after the end of a training iteration by the
-      `BaseStrategy`. 
+   .. method:: before_training_iteration(self, strategy)
 
 
    .. method:: __str__(self)
-
-      Return str(self).
 
 
 
 .. py:class:: EpochCPUUsage
 
-   Bases: :class:`PluginMetric[float]`
+   Bases: :class:`avalanche.evaluation.metrics.cpu_usage.CPUPluginMetric`
 
    The Epoch CPU usage metric.
    This plugin metric only works at training time.
@@ -131,31 +114,16 @@ Functions
 
    Creates an instance of the epoch CPU usage metric.
 
-   .. method:: before_training_epoch(self, strategy) -> MetricResult
-
-      Called before `train_epoch` by the `BaseStrategy`. 
-
-
-   .. method:: after_training_epoch(self, strategy: BaseStrategy) -> MetricResult
-
-      Called after `train_epoch` by the `BaseStrategy`. 
-
-
-   .. method:: reset(self) -> None
-
-
-   .. method:: result(self) -> float
+   .. method:: before_training_epoch(self, strategy)
 
 
    .. method:: __str__(self)
-
-      Return str(self).
 
 
 
 .. py:class:: RunningEpochCPUUsage
 
-   Bases: :class:`PluginMetric[float]`
+   Bases: :class:`avalanche.evaluation.metrics.cpu_usage.CPUPluginMetric`
 
    The running epoch CPU usage metric.
    This plugin metric only works at training time
@@ -165,72 +133,44 @@ Functions
 
    Creates an instance of the average epoch cpu usage metric.
 
-   .. method:: before_training_epoch(self, strategy) -> MetricResult
-
-      Called before `train_epoch` by the `BaseStrategy`. 
-
-
-   .. method:: before_training_iteration(self, strategy: BaseStrategy) -> 'MetricResult'
-
-      Called before the start of a training iteration by the
-      `BaseStrategy`. 
-
-
-   .. method:: after_training_iteration(self, strategy: BaseStrategy) -> None
-
-      Called after the end of a training iteration by the
-      `BaseStrategy`. 
-
-
-   .. method:: reset(self) -> None
-
-
    .. method:: result(self) -> float
 
 
-   .. method:: __str__(self)
+   .. method:: before_training_epoch(self, strategy)
 
-      Return str(self).
+
+   .. method:: before_training_iteration(self, strategy)
+
+
+   .. method:: after_training_iteration(self, strategy)
+
+
+   .. method:: __str__(self)
 
 
 
 .. py:class:: ExperienceCPUUsage
 
-   Bases: :class:`PluginMetric[float]`
+   Bases: :class:`avalanche.evaluation.metrics.cpu_usage.CPUPluginMetric`
 
    The average experience CPU usage metric.
    This plugin metric works only at eval time.
 
    After each experience, this metric emits the average CPU usage on that
-   experienc.
+   experience.
 
    Creates an instance of the experience CPU usage metric.
 
-   .. method:: before_eval_exp(self, strategy: BaseStrategy) -> None
-
-      Called before `eval_exp` by the `BaseStrategy`. 
-
-
-   .. method:: after_eval_exp(self, strategy: BaseStrategy) -> MetricResult
-
-      Called after `eval_exp` by the `BaseStrategy`. 
-
-
-   .. method:: reset(self) -> None
-
-
-   .. method:: result(self) -> float
+   .. method:: before_eval_exp(self, strategy)
 
 
    .. method:: __str__(self)
-
-      Return str(self).
 
 
 
 .. py:class:: StreamCPUUsage
 
-   Bases: :class:`PluginMetric[float]`
+   Bases: :class:`avalanche.evaluation.metrics.cpu_usage.CPUPluginMetric`
 
    The average stream CPU usage metric.
    This plugin metric works only at eval time.
@@ -240,25 +180,10 @@ Functions
 
    Creates an instance of the stream CPU usage metric.
 
-   .. method:: before_eval(self, strategy: BaseStrategy) -> None
-
-      Called before `eval` by the `BaseStrategy`. 
-
-
-   .. method:: after_eval(self, strategy: BaseStrategy) -> MetricResult
-
-      Called after `eval` by the `BaseStrategy`. 
-
-
-   .. method:: reset(self) -> None
-
-
-   .. method:: result(self) -> float
+   .. method:: before_eval(self, strategy)
 
 
    .. method:: __str__(self)
-
-      Return str(self).
 
 
 

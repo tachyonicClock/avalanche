@@ -266,7 +266,7 @@ Functions
 
 .. py:class:: MinibatchAccuracy
 
-   Bases: :class:`PluginMetric[float]`
+   Bases: :class:`avalanche.evaluation.metrics.accuracy.AccuracyPluginMetric`
 
    The minibatch plugin accuracy metric.
    This metric only works at training time.
@@ -280,27 +280,13 @@ Functions
 
    Creates an instance of the MinibatchAccuracy metric.
 
-   .. method:: result(self) -> float
-
-
-   .. method:: reset(self) -> None
-
-
-   .. method:: after_training_iteration(self, strategy: BaseStrategy) -> MetricResult
-
-      Called after the end of a training iteration by the
-      `BaseStrategy`. 
-
-
    .. method:: __str__(self)
-
-      Return str(self).
 
 
 
 .. py:class:: EpochAccuracy
 
-   Bases: :class:`PluginMetric[float]`
+   Bases: :class:`avalanche.evaluation.metrics.accuracy.AccuracyPluginMetric`
 
    The average accuracy over a single training epoch.
    This plugin metric only works at training time.
@@ -311,37 +297,13 @@ Functions
 
    Creates an instance of the EpochAccuracy metric.
 
-   .. method:: reset(self) -> None
-
-
-   .. method:: result(self) -> float
-
-
-   .. method:: after_training_iteration(self, strategy: BaseStrategy) -> None
-
-      Called after the end of a training iteration by the
-      `BaseStrategy`. 
-
-
-   .. method:: before_training_epoch(self, strategy: BaseStrategy) -> None
-
-      Called before `train_epoch` by the `BaseStrategy`. 
-
-
-   .. method:: after_training_epoch(self, strategy: BaseStrategy) -> MetricResult
-
-      Called after `train_epoch` by the `BaseStrategy`. 
-
-
    .. method:: __str__(self)
-
-      Return str(self).
 
 
 
 .. py:class:: RunningEpochAccuracy
 
-   Bases: :class:`avalanche.evaluation.metrics.accuracy.EpochAccuracy`
+   Bases: :class:`avalanche.evaluation.metrics.accuracy.AccuracyPluginMetric`
 
    The average accuracy across all minibatches up to the current
    epoch iteration.
@@ -353,26 +315,13 @@ Functions
 
    Creates an instance of the RunningEpochAccuracy metric.
 
-   .. method:: after_training_iteration(self, strategy: BaseStrategy) -> MetricResult
-
-      Called after the end of a training iteration by the
-      `BaseStrategy`. 
-
-
-   .. method:: after_training_epoch(self, strategy: BaseStrategy) -> None
-
-      Called after `train_epoch` by the `BaseStrategy`. 
-
-
    .. method:: __str__(self)
-
-      Return str(self).
 
 
 
 .. py:class:: ExperienceAccuracy
 
-   Bases: :class:`PluginMetric[float]`
+   Bases: :class:`avalanche.evaluation.metrics.accuracy.AccuracyPluginMetric`
 
    At the end of each experience, this plugin metric reports
    the average accuracy over all patterns seen in that experience.
@@ -380,37 +329,13 @@ Functions
 
    Creates an instance of ExperienceAccuracy metric
 
-   .. method:: reset(self) -> None
-
-
-   .. method:: result(self) -> float
-
-
-   .. method:: before_eval_exp(self, strategy: BaseStrategy) -> None
-
-      Called before `eval_exp` by the `BaseStrategy`. 
-
-
-   .. method:: after_eval_iteration(self, strategy: BaseStrategy) -> None
-
-      Called after the end of an iteration by the
-      `BaseStrategy`. 
-
-
-   .. method:: after_eval_exp(self, strategy: BaseStrategy) -> 'MetricResult'
-
-      Called after `eval_exp` by the `BaseStrategy`. 
-
-
    .. method:: __str__(self)
-
-      Return str(self).
 
 
 
 .. py:class:: StreamAccuracy
 
-   Bases: :class:`PluginMetric[float]`
+   Bases: :class:`avalanche.evaluation.metrics.accuracy.AccuracyPluginMetric`
 
    At the end of the entire stream of experiences, this plugin metric
    reports the average accuracy over all patterns seen in all experiences.
@@ -418,31 +343,7 @@ Functions
 
    Creates an instance of StreamAccuracy metric
 
-   .. method:: reset(self) -> None
-
-
-   .. method:: result(self) -> float
-
-
-   .. method:: before_eval(self, strategy: BaseStrategy) -> None
-
-      Called before `eval` by the `BaseStrategy`. 
-
-
-   .. method:: after_eval_iteration(self, strategy: BaseStrategy) -> None
-
-      Called after the end of an iteration by the
-      `BaseStrategy`. 
-
-
-   .. method:: after_eval(self, strategy: BaseStrategy) -> 'MetricResult'
-
-      Called after `eval` by the `BaseStrategy`. 
-
-
    .. method:: __str__(self)
-
-      Return str(self).
 
 
 
@@ -764,7 +665,7 @@ Functions
 
 .. py:class:: MinibatchCPUUsage
 
-   Bases: :class:`PluginMetric[float]`
+   Bases: :class:`avalanche.evaluation.metrics.cpu_usage.CPUPluginMetric`
 
    The minibatch CPU usage metric.
    This plugin metric only works at training time.
@@ -776,33 +677,16 @@ Functions
 
    Creates an instance of the minibatch CPU usage metric.
 
-   .. method:: result(self) -> float
-
-
-   .. method:: reset(self) -> None
-
-
-   .. method:: before_training_iteration(self, strategy) -> MetricResult
-
-      Called before the start of a training iteration by the
-      `BaseStrategy`. 
-
-
-   .. method:: after_training_iteration(self, strategy: BaseStrategy) -> MetricResult
-
-      Called after the end of a training iteration by the
-      `BaseStrategy`. 
+   .. method:: before_training_iteration(self, strategy)
 
 
    .. method:: __str__(self)
-
-      Return str(self).
 
 
 
 .. py:class:: EpochCPUUsage
 
-   Bases: :class:`PluginMetric[float]`
+   Bases: :class:`avalanche.evaluation.metrics.cpu_usage.CPUPluginMetric`
 
    The Epoch CPU usage metric.
    This plugin metric only works at training time.
@@ -811,31 +695,16 @@ Functions
 
    Creates an instance of the epoch CPU usage metric.
 
-   .. method:: before_training_epoch(self, strategy) -> MetricResult
-
-      Called before `train_epoch` by the `BaseStrategy`. 
-
-
-   .. method:: after_training_epoch(self, strategy: BaseStrategy) -> MetricResult
-
-      Called after `train_epoch` by the `BaseStrategy`. 
-
-
-   .. method:: reset(self) -> None
-
-
-   .. method:: result(self) -> float
+   .. method:: before_training_epoch(self, strategy)
 
 
    .. method:: __str__(self)
-
-      Return str(self).
 
 
 
 .. py:class:: RunningEpochCPUUsage
 
-   Bases: :class:`PluginMetric[float]`
+   Bases: :class:`avalanche.evaluation.metrics.cpu_usage.CPUPluginMetric`
 
    The running epoch CPU usage metric.
    This plugin metric only works at training time
@@ -845,72 +714,44 @@ Functions
 
    Creates an instance of the average epoch cpu usage metric.
 
-   .. method:: before_training_epoch(self, strategy) -> MetricResult
-
-      Called before `train_epoch` by the `BaseStrategy`. 
-
-
-   .. method:: before_training_iteration(self, strategy: BaseStrategy) -> 'MetricResult'
-
-      Called before the start of a training iteration by the
-      `BaseStrategy`. 
-
-
-   .. method:: after_training_iteration(self, strategy: BaseStrategy) -> None
-
-      Called after the end of a training iteration by the
-      `BaseStrategy`. 
-
-
-   .. method:: reset(self) -> None
-
-
    .. method:: result(self) -> float
 
 
-   .. method:: __str__(self)
+   .. method:: before_training_epoch(self, strategy)
 
-      Return str(self).
+
+   .. method:: before_training_iteration(self, strategy)
+
+
+   .. method:: after_training_iteration(self, strategy)
+
+
+   .. method:: __str__(self)
 
 
 
 .. py:class:: ExperienceCPUUsage
 
-   Bases: :class:`PluginMetric[float]`
+   Bases: :class:`avalanche.evaluation.metrics.cpu_usage.CPUPluginMetric`
 
    The average experience CPU usage metric.
    This plugin metric works only at eval time.
 
    After each experience, this metric emits the average CPU usage on that
-   experienc.
+   experience.
 
    Creates an instance of the experience CPU usage metric.
 
-   .. method:: before_eval_exp(self, strategy: BaseStrategy) -> None
-
-      Called before `eval_exp` by the `BaseStrategy`. 
-
-
-   .. method:: after_eval_exp(self, strategy: BaseStrategy) -> MetricResult
-
-      Called after `eval_exp` by the `BaseStrategy`. 
-
-
-   .. method:: reset(self) -> None
-
-
-   .. method:: result(self) -> float
+   .. method:: before_eval_exp(self, strategy)
 
 
    .. method:: __str__(self)
-
-      Return str(self).
 
 
 
 .. py:class:: StreamCPUUsage
 
-   Bases: :class:`PluginMetric[float]`
+   Bases: :class:`avalanche.evaluation.metrics.cpu_usage.CPUPluginMetric`
 
    The average stream CPU usage metric.
    This plugin metric works only at eval time.
@@ -920,25 +761,10 @@ Functions
 
    Creates an instance of the stream CPU usage metric.
 
-   .. method:: before_eval(self, strategy: BaseStrategy) -> None
-
-      Called before `eval` by the `BaseStrategy`. 
-
-
-   .. method:: after_eval(self, strategy: BaseStrategy) -> MetricResult
-
-      Called after `eval` by the `BaseStrategy`. 
-
-
-   .. method:: reset(self) -> None
-
-
-   .. method:: result(self) -> float
+   .. method:: before_eval(self, strategy)
 
 
    .. method:: __str__(self)
-
-      Return str(self).
 
 
 
@@ -1009,7 +835,7 @@ Functions
 
 .. py:class:: MinibatchDiskUsage(paths_to_monitor)
 
-   Bases: :class:`PluginMetric[float]`
+   Bases: :class:`avalanche.evaluation.metrics.disk_usage.DiskPluginMetric`
 
    The minibatch Disk usage metric.
    This plugin metric only works at training time.
@@ -1022,33 +848,13 @@ Functions
 
    Creates an instance of the minibatch Disk usage metric.
 
-   .. method:: result(self) -> float
-
-
-   .. method:: reset(self) -> None
-
-
-   .. method:: before_training_iteration(self, strategy) -> MetricResult
-
-      Called before the start of a training iteration by the
-      `BaseStrategy`. 
-
-
-   .. method:: after_training_iteration(self, strategy: BaseStrategy) -> MetricResult
-
-      Called after the end of a training iteration by the
-      `BaseStrategy`. 
-
-
    .. method:: __str__(self)
-
-      Return str(self).
 
 
 
 .. py:class:: EpochDiskUsage(paths_to_monitor)
 
-   Bases: :class:`PluginMetric[float]`
+   Bases: :class:`avalanche.evaluation.metrics.disk_usage.DiskPluginMetric`
 
    The Epoch Disk usage metric.
    This plugin metric only works at training time.
@@ -1058,31 +864,13 @@ Functions
 
    Creates an instance of the epoch Disk usage metric.
 
-   .. method:: before_training_epoch(self, strategy) -> MetricResult
-
-      Called before `train_epoch` by the `BaseStrategy`. 
-
-
-   .. method:: after_training_epoch(self, strategy: BaseStrategy) -> MetricResult
-
-      Called after `train_epoch` by the `BaseStrategy`. 
-
-
-   .. method:: reset(self) -> None
-
-
-   .. method:: result(self) -> float
-
-
    .. method:: __str__(self)
-
-      Return str(self).
 
 
 
 .. py:class:: ExperienceDiskUsage(paths_to_monitor)
 
-   Bases: :class:`PluginMetric[float]`
+   Bases: :class:`avalanche.evaluation.metrics.disk_usage.DiskPluginMetric`
 
    The average experience Disk usage metric.
    This plugin metric works only at eval time.
@@ -1092,31 +880,13 @@ Functions
 
    Creates an instance of the experience Disk usage metric.
 
-   .. method:: before_eval_exp(self, strategy: BaseStrategy) -> None
-
-      Called before `eval_exp` by the `BaseStrategy`. 
-
-
-   .. method:: after_eval_exp(self, strategy: BaseStrategy) -> MetricResult
-
-      Called after `eval_exp` by the `BaseStrategy`. 
-
-
-   .. method:: reset(self) -> None
-
-
-   .. method:: result(self) -> float
-
-
    .. method:: __str__(self)
-
-      Return str(self).
 
 
 
 .. py:class:: StreamDiskUsage(paths_to_monitor)
 
-   Bases: :class:`PluginMetric[float]`
+   Bases: :class:`avalanche.evaluation.metrics.disk_usage.DiskPluginMetric`
 
    The average stream Disk usage metric.
    This plugin metric works only at eval time.
@@ -1126,25 +896,7 @@ Functions
 
    Creates an instance of the stream Disk usage metric.
 
-   .. method:: before_eval(self, strategy: BaseStrategy) -> None
-
-      Called before `eval` by the `BaseStrategy`. 
-
-
-   .. method:: after_eval(self, strategy: BaseStrategy) -> MetricResult
-
-      Called after `eval` by the `BaseStrategy`. 
-
-
-   .. method:: reset(self) -> None
-
-
-   .. method:: result(self) -> float
-
-
    .. method:: __str__(self)
-
-      Return str(self).
 
 
 
@@ -1532,10 +1284,13 @@ Functions
       :return: The percentage GPU usage as a float value in range [0, 1].
 
 
+   .. method:: update(self)
+
+
 
 .. py:class:: MinibatchMaxGPU(gpu_id, every=0.5)
 
-   Bases: :class:`PluginMetric[float]`
+   Bases: :class:`avalanche.evaluation.metrics.gpu_usage.GPUPluginMetric`
 
    The Minibatch Max GPU metric.
    This plugin metric only works at training time.
@@ -1548,41 +1303,17 @@ Functions
 
    .. method:: before_training(self, strategy: BaseStrategy) -> None
 
-      Called before `train` by the `BaseStrategy`. 
-
-
-   .. method:: before_training_iteration(self, strategy: BaseStrategy) -> None
-
-      Called before the start of a training iteration by the
-      `BaseStrategy`. 
-
-
-   .. method:: after_training_iteration(self, strategy: BaseStrategy) -> MetricResult
-
-      Called after the end of a training iteration by the
-      `BaseStrategy`. 
-
 
    .. method:: after_training(self, strategy: BaseStrategy) -> None
 
-      Called after `train` by the `BaseStrategy`. 
-
-
-   .. method:: reset(self) -> None
-
-
-   .. method:: result(self) -> float
-
 
    .. method:: __str__(self)
-
-      Return str(self).
 
 
 
 .. py:class:: EpochMaxGPU(gpu_id, every=0.5)
 
-   Bases: :class:`PluginMetric[float]`
+   Bases: :class:`avalanche.evaluation.metrics.gpu_usage.GPUPluginMetric`
 
    The Epoch Max GPU metric.
    This plugin metric only works at training time.
@@ -1593,41 +1324,19 @@ Functions
    :param every: seconds after which update the maximum GPU
        usage
 
-   .. method:: before_training(self, strategy: BaseStrategy) -> None
-
-      Called before `train` by the `BaseStrategy`. 
-
-
-   .. method:: before_training_epoch(self, strategy) -> MetricResult
-
-      Called before `train_epoch` by the `BaseStrategy`. 
-
-
-   .. method:: after_training_epoch(self, strategy: BaseStrategy) -> MetricResult
-
-      Called after `train_epoch` by the `BaseStrategy`. 
+   .. method:: before_training(self, strategy: BaseStrategy)
 
 
    .. method:: after_training(self, strategy: BaseStrategy) -> None
 
-      Called after `train` by the `BaseStrategy`. 
-
-
-   .. method:: reset(self) -> None
-
-
-   .. method:: result(self) -> float
-
 
    .. method:: __str__(self)
-
-      Return str(self).
 
 
 
 .. py:class:: ExperienceMaxGPU(gpu_id, every=0.5)
 
-   Bases: :class:`PluginMetric[float]`
+   Bases: :class:`avalanche.evaluation.metrics.gpu_usage.GPUPluginMetric`
 
    The Experience Max GPU metric.
    This plugin metric only works at eval time.
@@ -1638,41 +1347,19 @@ Functions
    :param every: seconds after which update the maximum GPU
        usage
 
-   .. method:: before_eval(self, strategy: BaseStrategy) -> None
-
-      Called before `eval` by the `BaseStrategy`. 
+   .. method:: before_eval(self, strategy: BaseStrategy)
 
 
-   .. method:: before_eval_exp(self, strategy) -> MetricResult
-
-      Called before `eval_exp` by the `BaseStrategy`. 
-
-
-   .. method:: after_eval_exp(self, strategy: BaseStrategy) -> MetricResult
-
-      Called after `eval_exp` by the `BaseStrategy`. 
-
-
-   .. method:: after_eval(self, strategy: BaseStrategy) -> None
-
-      Called after `eval` by the `BaseStrategy`. 
-
-
-   .. method:: reset(self) -> None
-
-
-   .. method:: result(self) -> float
+   .. method:: after_eval(self, strategy: BaseStrategy)
 
 
    .. method:: __str__(self)
-
-      Return str(self).
 
 
 
 .. py:class:: StreamMaxGPU(gpu_id, every=0.5)
 
-   Bases: :class:`PluginMetric[float]`
+   Bases: :class:`avalanche.evaluation.metrics.gpu_usage.GPUPluginMetric`
 
    The Stream Max GPU metric.
    This plugin metric only works at eval time.
@@ -1685,23 +1372,11 @@ Functions
 
    .. method:: before_eval(self, strategy) -> MetricResult
 
-      Called before `eval` by the `BaseStrategy`. 
-
 
    .. method:: after_eval(self, strategy: BaseStrategy) -> MetricResult
 
-      Called after `eval` by the `BaseStrategy`. 
-
-
-   .. method:: reset(self) -> None
-
-
-   .. method:: result(self) -> float
-
 
    .. method:: __str__(self)
-
-      Return str(self).
 
 
 
@@ -1779,7 +1454,7 @@ Functions
 
 .. py:class:: MinibatchLoss
 
-   Bases: :class:`PluginMetric[float]`
+   Bases: :class:`avalanche.evaluation.metrics.loss.LossPluginMetric`
 
    The minibatch loss metric.
    This plugin metric only works at training time.
@@ -1793,27 +1468,13 @@ Functions
 
    Creates an instance of the MinibatchLoss metric.
 
-   .. method:: result(self) -> float
-
-
-   .. method:: reset(self) -> None
-
-
-   .. method:: after_training_iteration(self, strategy: BaseStrategy) -> MetricResult
-
-      Called after the end of a training iteration by the
-      `BaseStrategy`. 
-
-
    .. method:: __str__(self)
-
-      Return str(self).
 
 
 
 .. py:class:: EpochLoss
 
-   Bases: :class:`PluginMetric[float]`
+   Bases: :class:`avalanche.evaluation.metrics.loss.LossPluginMetric`
 
    The average loss over a single training epoch.
    This plugin metric only works at training time.
@@ -1824,37 +1485,13 @@ Functions
 
    Creates an instance of the EpochLoss metric.
 
-   .. method:: before_training_epoch(self, strategy: BaseStrategy) -> None
-
-      Called before `train_epoch` by the `BaseStrategy`. 
-
-
-   .. method:: after_training_iteration(self, strategy: BaseStrategy) -> None
-
-      Called after the end of a training iteration by the
-      `BaseStrategy`. 
-
-
-   .. method:: after_training_epoch(self, strategy: BaseStrategy) -> MetricResult
-
-      Called after `train_epoch` by the `BaseStrategy`. 
-
-
-   .. method:: reset(self) -> None
-
-
-   .. method:: result(self) -> float
-
-
    .. method:: __str__(self)
-
-      Return str(self).
 
 
 
 .. py:class:: RunningEpochLoss
 
-   Bases: :class:`avalanche.evaluation.metrics.loss.EpochLoss`
+   Bases: :class:`avalanche.evaluation.metrics.loss.LossPluginMetric`
 
    The average loss across all minibatches up to the current
    epoch iteration.
@@ -1866,26 +1503,13 @@ Functions
 
    Creates an instance of the RunningEpochLoss metric.
 
-   .. method:: after_training_iteration(self, strategy: BaseStrategy) -> MetricResult
-
-      Called after the end of a training iteration by the
-      `BaseStrategy`. 
-
-
-   .. method:: after_training_epoch(self, strategy: BaseStrategy) -> None
-
-      Called after `train_epoch` by the `BaseStrategy`. 
-
-
    .. method:: __str__(self)
-
-      Return str(self).
 
 
 
 .. py:class:: ExperienceLoss
 
-   Bases: :class:`PluginMetric[float]`
+   Bases: :class:`avalanche.evaluation.metrics.loss.LossPluginMetric`
 
    At the end of each experience, this metric reports
    the average loss over all patterns seen in that experience.
@@ -1893,37 +1517,13 @@ Functions
 
    Creates an instance of ExperienceLoss metric
 
-   .. method:: reset(self) -> None
-
-
-   .. method:: result(self) -> float
-
-
-   .. method:: before_eval_exp(self, strategy: BaseStrategy) -> None
-
-      Called before `eval_exp` by the `BaseStrategy`. 
-
-
-   .. method:: after_eval_iteration(self, strategy: BaseStrategy) -> None
-
-      Called after the end of an iteration by the
-      `BaseStrategy`. 
-
-
-   .. method:: after_eval_exp(self, strategy: BaseStrategy) -> 'MetricResult'
-
-      Called after `eval_exp` by the `BaseStrategy`. 
-
-
    .. method:: __str__(self)
-
-      Return str(self).
 
 
 
 .. py:class:: StreamLoss
 
-   Bases: :class:`PluginMetric[float]`
+   Bases: :class:`avalanche.evaluation.metrics.loss.LossPluginMetric`
 
    At the end of the entire stream of experiences, this metric reports the
    average loss over all patterns seen in all experiences.
@@ -1931,31 +1531,7 @@ Functions
 
    Creates an instance of StreamLoss metric
 
-   .. method:: reset(self) -> None
-
-
-   .. method:: result(self) -> float
-
-
-   .. method:: before_eval(self, strategy: BaseStrategy) -> None
-
-      Called before `eval` by the `BaseStrategy`. 
-
-
-   .. method:: after_eval_iteration(self, strategy: BaseStrategy) -> None
-
-      Called after the end of an iteration by the
-      `BaseStrategy`. 
-
-
-   .. method:: after_eval(self, strategy: BaseStrategy) -> 'MetricResult'
-
-      Called after `eval` by the `BaseStrategy`. 
-
-
    .. method:: __str__(self)
-
-      Return str(self).
 
 
 
@@ -2008,6 +1584,13 @@ Functions
           called yet.
 
 
+   .. method:: reset(self)
+
+      Resets the metric internal state.
+
+      :return: None.
+
+
    .. method:: update_compute_cost(self, module, dummy_input, output)
 
 
@@ -2018,7 +1601,7 @@ Functions
 
 .. py:class:: MinibatchMAC
 
-   Bases: :class:`PluginMetric[float]`
+   Bases: :class:`avalanche.evaluation.metrics.mac.MACPluginMetric`
 
    The minibatch MAC metric.
    This plugin metric only works at training time.
@@ -2032,18 +1615,6 @@ Functions
 
    Creates an instance of the MinibatchMAC metric.
 
-   .. method:: reset(self) -> None
-
-
-   .. method:: result(self) -> float
-
-
-   .. method:: after_training_iteration(self, strategy: BaseStrategy) -> MetricResult
-
-      Called after the end of a training iteration by the
-      `BaseStrategy`. 
-
-
    .. method:: __str__(self)
 
       Return str(self).
@@ -2052,7 +1623,7 @@ Functions
 
 .. py:class:: EpochMAC
 
-   Bases: :class:`PluginMetric[float]`
+   Bases: :class:`avalanche.evaluation.metrics.mac.MACPluginMetric`
 
    The MAC at the end of each epoch computed on a
    single pattern.
@@ -2062,17 +1633,6 @@ Functions
 
    Creates an instance of the EpochMAC metric.
 
-   .. method:: reset(self) -> None
-
-
-   .. method:: result(self) -> float
-
-
-   .. method:: after_training_epoch(self, strategy: BaseStrategy) -> MetricResult
-
-      Called after `train_epoch` by the `BaseStrategy`. 
-
-
    .. method:: __str__(self)
 
       Return str(self).
@@ -2081,24 +1641,13 @@ Functions
 
 .. py:class:: ExperienceMAC
 
-   Bases: :class:`PluginMetric[float]`
+   Bases: :class:`avalanche.evaluation.metrics.mac.MACPluginMetric`
 
    At the end of each experience, this metric reports the
    MAC computed on a single pattern.
    This plugin metric only works at eval time.
 
    Creates an instance of ExperienceMAC metric
-
-   .. method:: reset(self) -> None
-
-
-   .. method:: result(self) -> float
-
-
-   .. method:: after_eval_exp(self, strategy: BaseStrategy) -> 'MetricResult'
-
-      Called after `eval_exp` by the `BaseStrategy`. 
-
 
    .. method:: __str__(self)
 
@@ -2182,10 +1731,13 @@ Functions
       :return: None.
 
 
+   .. method:: update(self)
+
+
 
 .. py:class:: MinibatchMaxRAM(every=1)
 
-   Bases: :class:`PluginMetric[float]`
+   Bases: :class:`avalanche.evaluation.metrics.ram_usage.RAMPluginMetric`
 
    The Minibatch Max RAM metric.
    This plugin metric only works at training time.
@@ -2196,41 +1748,17 @@ Functions
 
    .. method:: before_training(self, strategy: BaseStrategy) -> None
 
-      Called before `train` by the `BaseStrategy`. 
-
-
-   .. method:: before_training_iteration(self, strategy: BaseStrategy) -> None
-
-      Called before the start of a training iteration by the
-      `BaseStrategy`. 
-
-
-   .. method:: after_training_iteration(self, strategy: BaseStrategy) -> MetricResult
-
-      Called after the end of a training iteration by the
-      `BaseStrategy`. 
-
 
    .. method:: after_training(self, strategy: BaseStrategy) -> None
 
-      Called after `train` by the `BaseStrategy`. 
-
-
-   .. method:: reset(self) -> None
-
-
-   .. method:: result(self) -> float
-
 
    .. method:: __str__(self)
-
-      Return str(self).
 
 
 
 .. py:class:: EpochMaxRAM(every=1)
 
-   Bases: :class:`PluginMetric[float]`
+   Bases: :class:`avalanche.evaluation.metrics.ram_usage.RAMPluginMetric`
 
    The Epoch Max RAM metric.
    This plugin metric only works at training time.
@@ -2241,39 +1769,17 @@ Functions
 
    .. method:: before_training(self, strategy: BaseStrategy) -> None
 
-      Called before `train` by the `BaseStrategy`. 
-
-
-   .. method:: before_training_epoch(self, strategy) -> MetricResult
-
-      Called before `train_epoch` by the `BaseStrategy`. 
-
-
-   .. method:: after_training_epoch(self, strategy: BaseStrategy) -> MetricResult
-
-      Called after `train_epoch` by the `BaseStrategy`. 
-
 
    .. method:: after_training(self, strategy: BaseStrategy) -> None
 
-      Called after `train` by the `BaseStrategy`. 
-
-
-   .. method:: reset(self) -> None
-
-
-   .. method:: result(self) -> float
-
 
    .. method:: __str__(self)
-
-      Return str(self).
 
 
 
 .. py:class:: ExperienceMaxRAM(every=1)
 
-   Bases: :class:`PluginMetric[float]`
+   Bases: :class:`avalanche.evaluation.metrics.ram_usage.RAMPluginMetric`
 
    The Experience Max RAM metric.
    This plugin metric only works at eval time.
@@ -2284,39 +1790,17 @@ Functions
 
    .. method:: before_eval(self, strategy: BaseStrategy) -> None
 
-      Called before `eval` by the `BaseStrategy`. 
-
-
-   .. method:: before_eval_exp(self, strategy) -> MetricResult
-
-      Called before `eval_exp` by the `BaseStrategy`. 
-
-
-   .. method:: after_eval_exp(self, strategy: BaseStrategy) -> MetricResult
-
-      Called after `eval_exp` by the `BaseStrategy`. 
-
 
    .. method:: after_eval(self, strategy: BaseStrategy) -> None
 
-      Called after `eval` by the `BaseStrategy`. 
-
-
-   .. method:: reset(self) -> None
-
-
-   .. method:: result(self) -> float
-
 
    .. method:: __str__(self)
-
-      Return str(self).
 
 
 
 .. py:class:: StreamMaxRAM(every=1)
 
-   Bases: :class:`PluginMetric[float]`
+   Bases: :class:`avalanche.evaluation.metrics.ram_usage.RAMPluginMetric`
 
    The Stream Max RAM metric.
    This plugin metric only works at eval time.
@@ -2327,23 +1811,11 @@ Functions
 
    .. method:: before_eval(self, strategy) -> MetricResult
 
-      Called before `eval` by the `BaseStrategy`. 
-
 
    .. method:: after_eval(self, strategy: BaseStrategy) -> MetricResult
 
-      Called after `eval` by the `BaseStrategy`. 
-
-
-   .. method:: reset(self) -> None
-
-
-   .. method:: result(self) -> float
-
 
    .. method:: __str__(self)
-
-      Return str(self).
 
 
 
@@ -2422,7 +1894,7 @@ Functions
 
 .. py:class:: MinibatchTime
 
-   Bases: :class:`PluginMetric[float]`
+   Bases: :class:`avalanche.evaluation.metrics.timing.TimePluginMetric`
 
    The minibatch time metric.
    This plugin metric only works at training time.
@@ -2434,33 +1906,16 @@ Functions
 
    Creates an instance of the minibatch time metric.
 
-   .. method:: result(self) -> float
-
-
-   .. method:: reset(self) -> None
-
-
    .. method:: before_training_iteration(self, strategy) -> MetricResult
-
-      Called before the start of a training iteration by the
-      `BaseStrategy`. 
-
-
-   .. method:: after_training_iteration(self, strategy: BaseStrategy) -> MetricResult
-
-      Called after the end of a training iteration by the
-      `BaseStrategy`. 
 
 
    .. method:: __str__(self)
-
-      Return str(self).
 
 
 
 .. py:class:: EpochTime
 
-   Bases: :class:`PluginMetric[float]`
+   Bases: :class:`avalanche.evaluation.metrics.timing.TimePluginMetric`
 
    The epoch elapsed time metric.
    This plugin metric only works at training time.
@@ -2471,29 +1926,14 @@ Functions
 
    .. method:: before_training_epoch(self, strategy) -> MetricResult
 
-      Called before `train_epoch` by the `BaseStrategy`. 
-
-
-   .. method:: after_training_epoch(self, strategy: BaseStrategy) -> MetricResult
-
-      Called after `train_epoch` by the `BaseStrategy`. 
-
-
-   .. method:: reset(self) -> None
-
-
-   .. method:: result(self) -> float
-
 
    .. method:: __str__(self)
-
-      Return str(self).
 
 
 
 .. py:class:: RunningEpochTime
 
-   Bases: :class:`PluginMetric[float]`
+   Bases: :class:`avalanche.evaluation.GenericPluginMetric`
 
    The running epoch time metric.
    This plugin metric only works at training time.
@@ -2509,19 +1949,10 @@ Functions
       Called before `train_epoch` by the `BaseStrategy`. 
 
 
-   .. method:: before_training_iteration(self, strategy: BaseStrategy) -> None
-
-      Called before the start of a training iteration by the
-      `BaseStrategy`. 
-
-
    .. method:: after_training_iteration(self, strategy: BaseStrategy) -> MetricResult
 
       Called after the end of a training iteration by the
       `BaseStrategy`. 
-
-
-   .. method:: reset(self) -> None
 
 
    .. method:: result(self) -> float
@@ -2535,7 +1966,7 @@ Functions
 
 .. py:class:: ExperienceTime
 
-   Bases: :class:`PluginMetric[float]`
+   Bases: :class:`avalanche.evaluation.metrics.timing.TimePluginMetric`
 
    The experience time metric.
    This plugin metric only works at eval time.
@@ -2547,29 +1978,14 @@ Functions
 
    .. method:: before_eval_exp(self, strategy: BaseStrategy) -> MetricResult
 
-      Called before `eval_exp` by the `BaseStrategy`. 
-
-
-   .. method:: after_eval_exp(self, strategy: BaseStrategy) -> MetricResult
-
-      Called after `eval_exp` by the `BaseStrategy`. 
-
-
-   .. method:: reset(self) -> None
-
-
-   .. method:: result(self) -> float
-
 
    .. method:: __str__(self)
-
-      Return str(self).
 
 
 
 .. py:class:: StreamTime
 
-   Bases: :class:`PluginMetric[float]`
+   Bases: :class:`avalanche.evaluation.metrics.timing.TimePluginMetric`
 
    The stream time metric.
    This metric only works at eval time.
@@ -2581,23 +1997,8 @@ Functions
 
    .. method:: before_eval(self, strategy: BaseStrategy) -> MetricResult
 
-      Called before `eval` by the `BaseStrategy`. 
-
-
-   .. method:: after_eval(self, strategy: BaseStrategy) -> MetricResult
-
-      Called after `eval` by the `BaseStrategy`. 
-
-
-   .. method:: reset(self) -> None
-
-
-   .. method:: result(self) -> float
-
 
    .. method:: __str__(self)
-
-      Return str(self).
 
 
 

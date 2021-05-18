@@ -2115,7 +2115,7 @@ Functions
 
 .. py:class:: RunningEpochTime
 
-   Bases: :class:`avalanche.evaluation.GenericPluginMetric`
+   Bases: :class:`avalanche.evaluation.metrics.timing.TimePluginMetric`
 
    The running epoch time metric.
    This plugin metric only works at training time.
@@ -2128,21 +2128,14 @@ Functions
 
    .. method:: before_training_epoch(self, strategy) -> MetricResult
 
-      Called before `train_epoch` by the `BaseStrategy`. 
-
 
    .. method:: after_training_iteration(self, strategy: BaseStrategy) -> MetricResult
-
-      Called after the end of a training iteration by the
-      `BaseStrategy`. 
 
 
    .. method:: result(self) -> float
 
 
    .. method:: __str__(self)
-
-      Return str(self).
 
 
 

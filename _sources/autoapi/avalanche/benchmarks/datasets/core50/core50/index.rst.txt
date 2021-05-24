@@ -21,13 +21,23 @@ Classes
 
 
 
-.. py:class:: CORe50(root=expanduser('~') + '/.avalanche/data/core50/', train=True, transform=ToTensor(), target_transform=None, loader=pil_loader, download=True)
+.. py:class:: CORe50(root=expanduser('~') + '/.avalanche/data/core50/', train=True, transform=ToTensor(), target_transform=None, loader=pil_loader, download=True, object_level=True)
 
    Bases: :class:`torch.utils.data.dataset.Dataset`
 
    CORe50 Pytorch Dataset 
 
-   Initialize self.  See help(type(self)) for accurate signature.
+   :param root: root for the datasets data.
+   :param train: train or test split.
+   :param transform: eventual transformations to be applied.
+   :param target_transform: eventual transformation to be applied to the
+       targets.
+   :param loader: data loader method from disk.
+   :param download: boolean to automatically download data. Default to
+       True.
+   :param object_level: if the classification is objects based or
+       category based: 50 or 10 way classification problem. Default to True
+       (50-way object classification problem)
 
    .. method:: __getitem__(self, index)
 

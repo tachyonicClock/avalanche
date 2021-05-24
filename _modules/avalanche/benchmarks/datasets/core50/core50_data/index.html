@@ -195,7 +195,9 @@
 <span class="kn">import</span> <span class="nn">os</span>
 <span class="kn">import</span> <span class="nn">sys</span>
 <span class="kn">import</span> <span class="nn">logging</span>
-<span class="kn">from</span> <span class="nn">zipfile</span> <span class="kn">import</span> <span class="n">ZipFile</span> 
+<span class="kn">import</span> <span class="nn">glob</span>
+<span class="kn">import</span> <span class="nn">pickle</span> <span class="k">as</span> <span class="nn">pkl</span>
+<span class="kn">from</span> <span class="nn">zipfile</span> <span class="kn">import</span> <span class="n">ZipFile</span>
 
 
 <span class="k">if</span> <span class="n">sys</span><span class="o">.</span><span class="n">version_info</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">&gt;=</span> <span class="mi">3</span><span class="p">:</span>
@@ -217,12 +219,36 @@
     <span class="p">(</span><span class="s1">&#39;paths.pkl&#39;</span><span class="p">,</span> <span class="s1">&#39;https://vlomonaco.github.io/core50/data/paths.pkl&#39;</span><span class="p">),</span>
     <span class="p">(</span><span class="s1">&#39;LUP.pkl&#39;</span><span class="p">,</span> <span class="s1">&#39;https://vlomonaco.github.io/core50/data/LUP.pkl&#39;</span><span class="p">),</span>
     <span class="p">(</span><span class="s1">&#39;labels.pkl&#39;</span><span class="p">,</span> <span class="s1">&#39;https://vlomonaco.github.io/core50/data/labels.pkl&#39;</span><span class="p">),</span>
+    <span class="p">(</span><span class="s1">&#39;labels2names.pkl&#39;</span><span class="p">,</span>
+     <span class="s1">&#39;https://vlomonaco.github.io/core50/data/labels2names.pkl&#39;</span><span class="p">)</span>
 <span class="p">]</span>
 
 <span class="n">extra_data</span> <span class="o">=</span> <span class="p">[</span>
     <span class="p">(</span><span class="s1">&#39;core50_imgs.npz&#39;</span><span class="p">,</span>
      <span class="s1">&#39;http://bias.csr.unibo.it/maltoni/download/core50/core50_imgs.npz&#39;</span><span class="p">)</span>
 <span class="p">]</span>
+
+<span class="n">scen2dirs</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s1">&#39;ni&#39;</span><span class="p">:</span> <span class="s2">&quot;batches_filelists/NI_inc/&quot;</span><span class="p">,</span>
+    <span class="s1">&#39;nc&#39;</span><span class="p">:</span> <span class="s2">&quot;batches_filelists/NC_inc/&quot;</span><span class="p">,</span>
+    <span class="s1">&#39;nic&#39;</span><span class="p">:</span> <span class="s2">&quot;batches_filelists/NIC_inc/&quot;</span><span class="p">,</span>
+    <span class="s1">&#39;nicv2_79&#39;</span><span class="p">:</span> <span class="s2">&quot;NIC_v2_79/&quot;</span><span class="p">,</span>
+    <span class="s1">&#39;nicv2_196&#39;</span><span class="p">:</span> <span class="s2">&quot;NIC_v2_196/&quot;</span><span class="p">,</span>
+    <span class="s1">&#39;nicv2_391&#39;</span><span class="p">:</span> <span class="s2">&quot;NIC_v2_391/&quot;</span>
+<span class="p">}</span>
+
+<span class="n">name2cat</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s1">&#39;plug_adapter&#39;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+    <span class="s1">&#39;mobile_phone&#39;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
+    <span class="s1">&#39;scissor&#39;</span><span class="p">:</span> <span class="mi">2</span><span class="p">,</span>
+    <span class="s1">&#39;light_bulb&#39;</span><span class="p">:</span> <span class="mi">3</span><span class="p">,</span>
+    <span class="s1">&#39;can&#39;</span><span class="p">:</span> <span class="mi">4</span><span class="p">,</span>
+    <span class="s1">&#39;glass&#39;</span><span class="p">:</span> <span class="mi">5</span><span class="p">,</span>
+    <span class="s1">&#39;ball&#39;</span><span class="p">:</span> <span class="mi">6</span><span class="p">,</span>
+    <span class="s1">&#39;marker&#39;</span><span class="p">:</span> <span class="mi">7</span><span class="p">,</span>
+    <span class="s1">&#39;cup&#39;</span><span class="p">:</span> <span class="mi">8</span><span class="p">,</span>
+    <span class="s1">&#39;remote_control&#39;</span><span class="p">:</span> <span class="mi">9</span>
+<span class="p">}</span>
 
 
 <div class="viewcode-block" id="CORE50_DATA"><a class="viewcode-back" href="../../../../../../autoapi/avalanche/benchmarks/datasets/core50/core50_data/#avalanche.benchmarks.datasets.core50.core50_data.CORE50_DATA">[docs]</a><span class="k">class</span> <span class="nc">CORE50_DATA</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
@@ -255,6 +281,15 @@
             <span class="bp">self</span><span class="o">.</span><span class="n">download</span> <span class="o">=</span> <span class="kc">False</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">log</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s2">&quot;Directory </span><span class="si">%s</span><span class="s2"> already exists&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">data_folder</span><span class="p">)</span>
 
+        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">data_folder</span><span class="p">,</span> <span class="s1">&#39;labels2names.pkl&#39;</span><span class="p">),</span> <span class="s1">&#39;rb&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">labels2names</span> <span class="o">=</span> <span class="n">pkl</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">data_folder</span><span class="p">,</span> <span class="s2">&quot;NIC_v2_79_cat&quot;</span><span class="p">)):</span>
+            <span class="c1"># It means category filelists has been already created</span>
+            <span class="k">pass</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_create_cat_filelists</span><span class="p">()</span>
+
 <div class="viewcode-block" id="CORE50_DATA.download_core50"><a class="viewcode-back" href="../../../../../../autoapi/avalanche/benchmarks/datasets/core50/core50_data/#avalanche.benchmarks.datasets.core50.core50_data.CORE50_DATA.download_core50">[docs]</a>    <span class="k">def</span> <span class="nf">download_core50</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">extra</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot; Download and extract CORe50 data</span>
 
@@ -278,7 +313,42 @@
                     <span class="n">zipf</span><span class="o">.</span><span class="n">extractall</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">data_folder</span><span class="p">)</span> 
                     <span class="bp">self</span><span class="o">.</span><span class="n">log</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;Done!&#39;</span><span class="p">)</span>
 
-        <span class="bp">self</span><span class="o">.</span><span class="n">log</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Download complete.&quot;</span><span class="p">)</span></div></div>
+        <span class="bp">self</span><span class="o">.</span><span class="n">log</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Download complete.&quot;</span><span class="p">)</span></div>
+
+    <span class="k">def</span> <span class="nf">_objlab2cat</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">label</span><span class="p">,</span> <span class="n">scen</span><span class="p">,</span> <span class="n">run</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Mapping an object label into its corresponding category label</span>
+<span class="sd">        based on the scenario. &quot;&quot;&quot;</span>
+
+        <span class="k">if</span> <span class="n">scen</span> <span class="o">==</span> <span class="s2">&quot;nc&quot;</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">name2cat</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">labels2names</span><span class="p">[</span><span class="s1">&#39;nc&#39;</span><span class="p">][</span><span class="n">run</span><span class="p">][</span><span class="n">label</span><span class="p">][:</span><span class="o">-</span><span class="mi">1</span><span class="p">]]</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span> <span class="nb">int</span><span class="p">(</span><span class="n">label</span><span class="p">)</span> <span class="o">//</span> <span class="mi">5</span>
+
+    <span class="k">def</span> <span class="nf">_create_cat_filelists</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Generates corresponding filelists with category-wise labels. The</span>
+<span class="sd">        default one are based on the object-level labels from 0 to 49.&quot;&quot;&quot;</span>
+
+        <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">scen2dirs</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+            <span class="n">orig_root_path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">data_folder</span><span class="p">,</span> <span class="n">v</span><span class="p">)</span>
+            <span class="n">root_path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">data_folder</span><span class="p">,</span> <span class="n">v</span><span class="p">[:</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="s2">&quot;_cat&quot;</span><span class="p">)</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">root_path</span><span class="p">):</span>
+                <span class="n">os</span><span class="o">.</span><span class="n">makedirs</span><span class="p">(</span><span class="n">root_path</span><span class="p">)</span>
+            <span class="k">for</span> <span class="n">run</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">10</span><span class="p">):</span>
+                <span class="n">cur_path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">root_path</span><span class="p">,</span> <span class="s2">&quot;run&quot;</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="n">run</span><span class="p">))</span>
+                <span class="n">orig_cur_path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">orig_root_path</span><span class="p">,</span> <span class="s2">&quot;run&quot;</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="n">run</span><span class="p">))</span>
+                <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">cur_path</span><span class="p">):</span>
+                    <span class="n">os</span><span class="o">.</span><span class="n">makedirs</span><span class="p">(</span><span class="n">cur_path</span><span class="p">)</span>
+                <span class="k">for</span> <span class="n">file</span> <span class="ow">in</span> <span class="n">glob</span><span class="o">.</span><span class="n">glob</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">orig_cur_path</span><span class="p">,</span> <span class="s2">&quot;*.txt&quot;</span><span class="p">)):</span>
+                    <span class="n">o_filename</span> <span class="o">=</span> <span class="n">file</span>
+                    <span class="n">_</span><span class="p">,</span> <span class="n">d_filename</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="n">o_filename</span><span class="p">)</span>
+                    <span class="n">orig_f</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="n">o_filename</span><span class="p">,</span> <span class="s2">&quot;r&quot;</span><span class="p">)</span>
+                    <span class="n">dst_f</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">cur_path</span><span class="p">,</span> <span class="n">d_filename</span><span class="p">),</span> <span class="s2">&quot;w&quot;</span><span class="p">)</span>
+                    <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">orig_f</span><span class="p">:</span>
+                        <span class="n">path</span><span class="p">,</span> <span class="n">label</span> <span class="o">=</span> <span class="n">line</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot; &quot;</span><span class="p">)</span>
+                        <span class="n">new_label</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_objlab2cat</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">label</span><span class="p">),</span> <span class="n">k</span><span class="p">,</span> <span class="n">run</span><span class="p">)</span>
+                        <span class="n">dst_f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">path</span> <span class="o">+</span> <span class="s2">&quot; &quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">new_label</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+                    <span class="n">orig_f</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+                    <span class="n">dst_f</span><span class="o">.</span><span class="n">close</span><span class="p">()</span></div>
 
 
 <span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span>

@@ -222,6 +222,7 @@
 <div class="viewcode-block" id="CORe50"><a class="viewcode-back" href="../../../../../autoapi/avalanche/benchmarks/#avalanche.benchmarks.classic.core50.CORe50">[docs]</a><span class="k">def</span> <span class="nf">CORe50</span><span class="p">(</span><span class="n">root</span><span class="o">=</span><span class="n">expanduser</span><span class="p">(</span><span class="s2">&quot;~&quot;</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot;/.avalanche/data/core50/&quot;</span><span class="p">,</span>
            <span class="n">scenario</span><span class="o">=</span><span class="s2">&quot;nicv2_391&quot;</span><span class="p">,</span>
            <span class="n">run</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>
+           <span class="n">object_lvl</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
            <span class="n">train_transform</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
            <span class="n">eval_transform</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
@@ -250,6 +251,8 @@
 <span class="sd">        &#39;nic&#39;, &#39;nicv2_79&#39;, &#39;nicv2_196&#39; or &#39;nicv2_391.&#39;</span>
 <span class="sd">    :param run: number of run for the scenario. Each run defines a different</span>
 <span class="sd">        ordering. Must be a number between 0 and 9.</span>
+<span class="sd">    :param object_lvl: True for a 50-way classification at the object level.</span>
+<span class="sd">        False if you want to use the categories as classes. Default to True.</span>
 <span class="sd">    :param train_transform: The transformation to apply to the training data,</span>
 <span class="sd">        e.g. a random crop, a normalization or a concatenation of different</span>
 <span class="sd">        transformations (see torchvision.transform documentation for a</span>
@@ -276,7 +279,11 @@
     <span class="n">root</span> <span class="o">=</span> <span class="n">core_data</span><span class="o">.</span><span class="n">data_folder</span>
     <span class="n">root_img</span> <span class="o">=</span> <span class="n">root</span> <span class="o">+</span> <span class="s2">&quot;core50_128x128/&quot;</span>
 
-    <span class="n">filelists_bp</span> <span class="o">=</span> <span class="n">scen2dirs</span><span class="p">[</span><span class="n">scenario</span><span class="p">]</span> <span class="o">+</span> <span class="s2">&quot;run&quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">run</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot;/&quot;</span>
+    <span class="k">if</span> <span class="n">object_lvl</span><span class="p">:</span>
+        <span class="n">suffix</span> <span class="o">=</span> <span class="s2">&quot;/&quot;</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">suffix</span> <span class="o">=</span> <span class="s2">&quot;_cat/&quot;</span>
+    <span class="n">filelists_bp</span> <span class="o">=</span> <span class="n">scen2dirs</span><span class="p">[</span><span class="n">scenario</span><span class="p">][:</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="n">suffix</span> <span class="o">+</span> <span class="s2">&quot;run&quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">run</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot;/&quot;</span>
     <span class="n">train_failists_paths</span> <span class="o">=</span> <span class="p">[]</span>
     <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">nbatch</span><span class="p">[</span><span class="n">scenario</span><span class="p">]):</span>
         <span class="n">train_failists_paths</span><span class="o">.</span><span class="n">append</span><span class="p">(</span>

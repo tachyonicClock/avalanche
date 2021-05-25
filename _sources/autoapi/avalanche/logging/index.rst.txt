@@ -209,7 +209,7 @@ Classes
 
 
 
-.. py:class:: TensorboardLogger(tb_log_dir='./tb_data', filename_suffix='')
+.. py:class:: TensorboardLogger(tb_log_dir: Union[str, Path] = './tb_data', filename_suffix: str = '')
 
    Bases: :class:`avalanche.logging.StrategyLogger`
 
@@ -218,6 +218,9 @@ Classes
    logged to Tensorboard.
    The user can inspect results in real time by appropriately launching
    tensorboard with `tensorboard --logdir=/path/to/tb_log_exp_name`.
+
+   AWS's S3 buckets and (if tensorflow is installed) GCloud storage url are
+   supported.
 
    If no parameters are provided, the default folder in which tensorboard
    log files are placed is "./runs/".
@@ -233,6 +236,9 @@ Classes
        will be stored. Default to "./tb_data".
    :param filename_suffix: string suffix to append at the end of
        tensorboard log file. Default ''.
+
+   .. method:: __del__(self)
+
 
    .. method:: log_metric(self, metric_value: MetricValue, callback: str)
 

@@ -1054,6 +1054,11 @@
     <span class="k">def</span> <span class="nf">_set_original_dataset_transform_group</span><span class="p">(</span>
             <span class="bp">self</span><span class="p">,</span> <span class="n">group_name</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
         <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_dataset</span><span class="p">,</span> <span class="n">AvalancheDataset</span><span class="p">):</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_dataset</span><span class="o">.</span><span class="n">current_transform_group</span> <span class="o">==</span> <span class="n">group_name</span><span class="p">:</span>
+                <span class="c1"># Prevents a huge slowdown in some corner cases</span>
+                <span class="c1"># (apart from being actually more performant)</span>
+                <span class="k">return</span>
+
             <span class="bp">self</span><span class="o">.</span><span class="n">_dataset</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_dataset</span><span class="o">.</span><span class="n">with_transforms</span><span class="p">(</span><span class="n">group_name</span><span class="p">)</span>
 
     <span class="k">def</span> <span class="nf">_freeze_original_dataset</span><span class="p">(</span>
@@ -1420,6 +1425,11 @@
 
     <span class="k">def</span> <span class="nf">_set_original_dataset_transform_group</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">group_name</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
         <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_original_dataset</span><span class="p">,</span> <span class="n">AvalancheDataset</span><span class="p">):</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_original_dataset</span><span class="o">.</span><span class="n">current_transform_group</span> <span class="o">==</span> <span class="n">group_name</span><span class="p">:</span>
+                <span class="c1"># Prevents a huge slowdown in some corner cases</span>
+                <span class="c1"># (apart from being actually more performant)</span>
+                <span class="k">return</span>
+
             <span class="bp">self</span><span class="o">.</span><span class="n">_original_dataset</span> <span class="o">=</span> \
                 <span class="bp">self</span><span class="o">.</span><span class="n">_original_dataset</span><span class="o">.</span><span class="n">with_transforms</span><span class="p">(</span><span class="n">group_name</span><span class="p">)</span>
 
@@ -1922,6 +1932,11 @@
             <span class="bp">self</span><span class="p">,</span> <span class="n">group_name</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
         <span class="k">for</span> <span class="n">dataset_idx</span><span class="p">,</span> <span class="n">dataset</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_dataset_list</span><span class="p">):</span>
             <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">dataset</span><span class="p">,</span> <span class="n">AvalancheDataset</span><span class="p">):</span>
+                <span class="k">if</span> <span class="n">dataset</span><span class="o">.</span><span class="n">current_transform_group</span> <span class="o">==</span> <span class="n">group_name</span><span class="p">:</span>
+                    <span class="c1"># Prevents a huge slowdown in some corner cases</span>
+                    <span class="c1"># (apart from being actually more performant)</span>
+                    <span class="k">continue</span>
+
                 <span class="bp">self</span><span class="o">.</span><span class="n">_dataset_list</span><span class="p">[</span><span class="n">dataset_idx</span><span class="p">]</span> <span class="o">=</span> \
                     <span class="n">dataset</span><span class="o">.</span><span class="n">with_transforms</span><span class="p">(</span><span class="n">group_name</span><span class="p">)</span>
 
@@ -2016,13 +2031,97 @@
             <span class="c1"># --------</span>
             <span class="c1"># elif isinstance(dataset, ConcatDataset):</span>
             <span class="c1">#    flattened_list.extend(dataset.datasets)</span>
+            <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">dataset</span><span class="p">,</span> <span class="n">AvalancheSubset</span><span class="p">):</span>
+                <span class="n">flattened_list</span> <span class="o">+=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_flatten_subset_concat_branch</span><span class="p">(</span><span class="n">dataset</span><span class="p">)</span>
             <span class="k">else</span><span class="p">:</span>
                 <span class="n">flattened_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">dataset</span><span class="p">)</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">_dataset_list</span> <span class="o">=</span> <span class="n">flattened_list</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_datasets_lengths</span> <span class="o">=</span> <span class="p">[</span><span class="nb">len</span><span class="p">(</span><span class="n">dataset</span><span class="p">)</span> <span class="k">for</span> <span class="n">dataset</span> <span class="ow">in</span> <span class="n">flattened_list</span><span class="p">]</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_datasets_cumulative_lengths</span> <span class="o">=</span> <span class="n">ConcatDataset</span><span class="o">.</span><span class="n">cumsum</span><span class="p">(</span><span class="n">flattened_list</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_overall_length</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_datasets_lengths</span><span class="p">)</span></div>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_overall_length</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_datasets_lengths</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">_flatten_subset_concat_branch</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dataset</span><span class="p">:</span> <span class="n">AvalancheSubset</span><span class="p">)</span> \
+            <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="n">Dataset</span><span class="p">]:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Optimizes the dataset hierarchy in the corner case:</span>
+
+<span class="sd">        self -&gt; [Subset, Subset, ] -&gt; ConcatDataset -&gt; [Dataset]</span>
+
+<span class="sd">        :param dataset: The dataset. This function returns [dataset] if the</span>
+<span class="sd">            dataset is not a subset containing a concat dataset (or if other</span>
+<span class="sd">            corner cases are encountered).</span>
+<span class="sd">        :return: The flattened list of datasets to be concatenated.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">dataset</span><span class="o">.</span><span class="n">_original_dataset</span><span class="p">,</span> <span class="n">AvalancheConcatDataset</span><span class="p">):</span>
+            <span class="k">return</span> <span class="p">[</span><span class="n">dataset</span><span class="p">]</span>
+
+        <span class="n">concat_dataset</span><span class="p">:</span> <span class="n">AvalancheConcatDataset</span> <span class="o">=</span> <span class="n">dataset</span><span class="o">.</span><span class="n">_original_dataset</span>
+        <span class="k">if</span> <span class="n">concat_dataset</span><span class="o">.</span><span class="n">_has_own_transformations</span><span class="p">():</span>
+            <span class="c1"># The dataset has custom transforms -&gt; do nothing</span>
+            <span class="k">return</span> <span class="p">[</span><span class="n">dataset</span><span class="p">]</span>
+
+        <span class="n">result</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">AvalancheSubset</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="n">last_c_dataset</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="n">last_c_idxs</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="n">last_c_targets</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="n">last_c_tasks</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">idx</span> <span class="ow">in</span> <span class="n">dataset</span><span class="o">.</span><span class="n">_indices</span><span class="p">:</span>
+            <span class="n">dataset_idx</span><span class="p">,</span> <span class="n">internal_idx</span> <span class="o">=</span> <span class="n">find_list_from_index</span><span class="p">(</span>
+                <span class="n">idx</span><span class="p">,</span> <span class="n">concat_dataset</span><span class="o">.</span><span class="n">_datasets_lengths</span><span class="p">,</span>
+                <span class="n">concat_dataset</span><span class="o">.</span><span class="n">_overall_length</span><span class="p">,</span>
+                <span class="n">cumulative_sizes</span><span class="o">=</span><span class="n">concat_dataset</span><span class="o">.</span><span class="n">_datasets_cumulative_lengths</span><span class="p">)</span>
+
+            <span class="k">if</span> <span class="n">last_c_dataset</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="n">last_c_dataset</span> <span class="o">=</span> <span class="n">dataset_idx</span>
+            <span class="k">elif</span> <span class="n">last_c_dataset</span> <span class="o">!=</span> <span class="n">dataset_idx</span><span class="p">:</span>
+                <span class="c1"># Consolidate current subset</span>
+                <span class="n">result</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">AvalancheConcatDataset</span><span class="o">.</span><span class="n">_make_similar_subset</span><span class="p">(</span>
+                    <span class="n">dataset</span><span class="p">,</span> <span class="n">concat_dataset</span><span class="o">.</span><span class="n">_dataset_list</span><span class="p">[</span><span class="n">last_c_dataset</span><span class="p">],</span>
+                    <span class="n">last_c_idxs</span><span class="p">,</span> <span class="n">last_c_targets</span><span class="p">,</span> <span class="n">last_c_tasks</span><span class="p">))</span>
+
+                <span class="c1"># Switch to next dataset</span>
+                <span class="n">last_c_dataset</span> <span class="o">=</span> <span class="n">dataset_idx</span>
+                <span class="n">last_c_idxs</span> <span class="o">=</span> <span class="p">[]</span>
+                <span class="n">last_c_targets</span> <span class="o">=</span> <span class="p">[]</span>
+                <span class="n">last_c_tasks</span> <span class="o">=</span> <span class="p">[]</span>
+
+            <span class="n">last_c_idxs</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">internal_idx</span><span class="p">)</span>
+            <span class="n">last_c_targets</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">dataset</span><span class="o">.</span><span class="n">targets</span><span class="p">[</span><span class="n">idx</span><span class="p">])</span>
+            <span class="n">last_c_tasks</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">dataset</span><span class="o">.</span><span class="n">targets_task_labels</span><span class="p">[</span><span class="n">idx</span><span class="p">])</span>
+
+        <span class="k">if</span> <span class="n">last_c_dataset</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">result</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">AvalancheConcatDataset</span><span class="o">.</span><span class="n">_make_similar_subset</span><span class="p">(</span>
+                <span class="n">dataset</span><span class="p">,</span> <span class="n">concat_dataset</span><span class="o">.</span><span class="n">_dataset_list</span><span class="p">[</span><span class="n">last_c_dataset</span><span class="p">],</span>
+                <span class="n">last_c_idxs</span><span class="p">,</span> <span class="n">last_c_targets</span><span class="p">,</span> <span class="n">last_c_tasks</span><span class="p">))</span>
+
+        <span class="k">return</span> <span class="n">result</span>
+
+    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">_make_similar_subset</span><span class="p">(</span><span class="n">subset</span><span class="p">,</span> <span class="n">ref_dataset</span><span class="p">,</span> <span class="n">indices</span><span class="p">,</span> <span class="n">targets</span><span class="p">,</span> <span class="n">tasks</span><span class="p">):</span>
+        <span class="n">t_groups</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">()</span>
+        <span class="n">f_groups</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">()</span>
+        <span class="n">AvalancheDataset</span><span class="o">.</span><span class="n">_borrow_transformations</span><span class="p">(</span>
+            <span class="n">subset</span><span class="p">,</span> <span class="n">t_groups</span><span class="p">,</span> <span class="n">f_groups</span><span class="p">)</span>
+
+        <span class="n">collate_fn</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="k">if</span> <span class="n">subset</span><span class="o">.</span><span class="n">dataset_type</span> <span class="o">==</span> <span class="n">AvalancheDatasetType</span><span class="o">.</span><span class="n">UNDEFINED</span><span class="p">:</span>
+            <span class="n">collate_fn</span> <span class="o">=</span> <span class="n">subset</span><span class="o">.</span><span class="n">collate_fn</span>
+
+        <span class="n">result</span> <span class="o">=</span> <span class="n">AvalancheSubset</span><span class="p">(</span>
+            <span class="n">ref_dataset</span><span class="p">,</span>
+            <span class="n">indices</span><span class="o">=</span><span class="n">indices</span><span class="p">,</span>
+            <span class="n">class_mapping</span><span class="o">=</span><span class="n">subset</span><span class="o">.</span><span class="n">_class_mapping</span><span class="p">,</span>
+            <span class="n">transform_groups</span><span class="o">=</span><span class="n">t_groups</span><span class="p">,</span>
+            <span class="n">initial_transform_group</span><span class="o">=</span><span class="n">subset</span><span class="o">.</span><span class="n">current_transform_group</span><span class="p">,</span>
+            <span class="n">task_labels</span><span class="o">=</span><span class="n">tasks</span><span class="p">,</span>
+            <span class="n">targets</span><span class="o">=</span><span class="n">targets</span><span class="p">,</span>
+            <span class="n">dataset_type</span><span class="o">=</span><span class="n">subset</span><span class="o">.</span><span class="n">dataset_type</span><span class="p">,</span>
+            <span class="n">collate_fn</span><span class="o">=</span><span class="n">collate_fn</span><span class="p">,</span>
+        <span class="p">)</span>
+
+        <span class="n">result</span><span class="o">.</span><span class="n">_frozen_transforms</span> <span class="o">=</span> <span class="n">f_groups</span>
+        <span class="k">return</span> <span class="n">result</span></div>
 
 
 <div class="viewcode-block" id="concat_datasets_sequentially"><a class="viewcode-back" href="../../../../../autoapi/avalanche/benchmarks/utils/#avalanche.benchmarks.utils.avalanche_dataset.concat_datasets_sequentially">[docs]</a><span class="k">def</span> <span class="nf">concat_datasets_sequentially</span><span class="p">(</span>

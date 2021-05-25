@@ -91,6 +91,9 @@ Functions
    .. method:: __getitem__(self, item_idx) -> TTargetType
 
 
+   .. method:: __iter__(self)
+
+
    .. method:: __str__(self)
 
       Return str(self).
@@ -111,9 +114,6 @@ Functions
    Elements returned by `__getitem__` will be int values.
 
    Initialize self.  See help(type(self)) for accurate signature.
-
-   .. method:: __getitem__(self, item_idx) -> int
-
 
 
 .. py:class:: ConstantSequence(constant_value: int, size: int)

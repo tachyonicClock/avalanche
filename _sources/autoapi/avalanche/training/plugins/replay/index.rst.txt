@@ -16,10 +16,15 @@ Classes
    avalanche.training.plugins.replay.StoragePolicy
    avalanche.training.plugins.replay.ExperienceBalancedStoragePolicy
    avalanche.training.plugins.replay.ClassBalancedStoragePolicy
+   avalanche.training.plugins.replay.ClassExemplarsSelectionStrategy
+   avalanche.training.plugins.replay.RandomExemplarsSelectionStrategy
+   avalanche.training.plugins.replay.FeatureBasedExemplarsSelectionStrategy
+   avalanche.training.plugins.replay.HerdingSelectionStrategy
+   avalanche.training.plugins.replay.ClosestToCenterSelectionStrategy
 
 
 
-.. py:class:: ReplayPlugin(mem_size=200, storage_policy=None)
+.. py:class:: ReplayPlugin(mem_size: int = 200, storage_policy: Optional['StoragePolicy'] = None)
 
    Bases: :class:`avalanche.training.plugins.strategy_plugin.StrategyPlugin`
 
@@ -38,35 +43,45 @@ Classes
 
    The :mem_size: attribute controls the total number of patterns to be stored 
    in the external memory.
+   :param storage_policy: The policy that controls how to add new exemplars
+                          in memory
 
-   .. method:: before_training_exp(self, strategy, num_workers=0, shuffle=True, **kwargs)
+   .. method:: before_training_exp(self, strategy: BaseStrategy, num_workers: int = 0, shuffle: bool = True, **kwargs)
 
       Dataloader to build batches containing examples from both memories and
       the training dataset
 
 
-   .. method:: after_training_exp(self, strategy, **kwargs)
+   .. method:: after_training_exp(self, strategy: BaseStrategy, **kwargs)
 
 
 
-.. py:class:: StoragePolicy
+.. py:class:: StoragePolicy(ext_mem: Dict[int, AvalancheDataset], mem_size: int)
 
    Bases: :class:`abc.ABC`
 
    A policy to store exemplars in a replay memory.
 
-   .. method:: __call__(self, data_source, **kwargs)
+   :param ext_mem: The replay memory dictionary to store samples.
+   :param mem_size: max number of total input samples in the replay memory.
+
+   Initialize self.  See help(type(self)) for accurate signature.
+
+   .. method:: __call__(self, data_source: AvalancheDataset, **kwargs)
       :abstractmethod:
 
       Store exemplars in the replay memory
 
 
 
-.. py:class:: ExperienceBalancedStoragePolicy(ext_mem: Dict, mem_size: int, adaptive_size=True, num_experiences=-1)
+.. py:class:: ExperienceBalancedStoragePolicy(ext_mem: Dict, mem_size: int, adaptive_size: bool = True, num_experiences=-1)
 
    Bases: :class:`avalanche.training.plugins.replay.StoragePolicy`
 
    A policy to store exemplars in a replay memory.
+
+   :param ext_mem: The replay memory dictionary to store samples.
+   :param mem_size: max number of total input samples in the replay memory.
 
    Stores samples for replay, equally divided over experiences.
    Because it is conditioned on the experience, it should be called in
@@ -83,28 +98,31 @@ Classes
    :param num_experiences: If adaptive size is False, the fixed number
                            of experiences to divide capacity over.
 
-   .. method:: subsample_single(self, data, new_size)
+   .. method:: subsample_single(self, data: AvalancheDataset, new_size: int)
 
       Subsample `data` to match length `new_size`. 
 
 
-   .. method:: subsample_all_groups(self, new_size)
+   .. method:: subsample_all_groups(self, new_size: int)
 
       Subsample all groups equally to match total buffer size
       `new_size`. 
 
 
-   .. method:: __call__(self, strategy, **kwargs)
+   .. method:: __call__(self, strategy: BaseStrategy, **kwargs)
 
       Store exemplars in the replay memory
 
 
 
-.. py:class:: ClassBalancedStoragePolicy(ext_mem: Dict, mem_size: int, adaptive_size=True, total_num_classes=-1)
+.. py:class:: ClassBalancedStoragePolicy(ext_mem: Dict, mem_size: int, adaptive_size: bool = True, total_num_classes: int = -1, selection_strategy: Optional['ClassExemplarsSelectionStrategy'] = None)
 
    Bases: :class:`avalanche.training.plugins.replay.StoragePolicy`
 
    A policy to store exemplars in a replay memory.
+
+   :param ext_mem: The replay memory dictionary to store samples.
+   :param mem_size: max number of total input samples in the replay memory.
 
    Stores samples for replay, equally divided over classes.
    It should be called in the 'after_training_exp' phase (see
@@ -118,16 +136,104 @@ Classes
                        observed experiences (keys in replay_mem).
    :param total_num_classes: If adaptive size is False, the fixed number
                              of classes to divide capacity over.
+   :param selection_strategy: The strategy used to select exemplars to 
+                              keep in memory when cutting it off
 
-   .. method:: __call__(self, strategy, **kwargs)
+   .. method:: __call__(self, strategy: BaseStrategy, **kwargs)
 
       Store exemplars in the replay memory
 
 
-   .. method:: divide_remaining_samples(self, exp_mem_size, div_cnt)
+   .. method:: divide_remaining_samples(self, exp_mem_size: int, div_cnt: int) -> Dict[int, int]
 
 
-   .. method:: cutoff_memory(self, cutoff_per_exp)
+   .. method:: cutoff_memory(self, cutoff_per_exp: Dict[int, int])
+
+
+
+.. py:class:: ClassExemplarsSelectionStrategy
+
+   Bases: :class:`abc.ABC`
+
+   Base class to define how to select class exemplars from a dataset
+
+   .. method:: make_sorted_indices(self, strategy: BaseStrategy, data: AvalancheDataset) -> List[int]
+      :abstractmethod:
+
+      Should return the sorted list of indices to keep as exemplars.
+
+      The last indices will be the first to be removed when cutoff memory.
+
+
+
+.. py:class:: RandomExemplarsSelectionStrategy
+
+   Bases: :class:`avalanche.training.plugins.replay.ClassExemplarsSelectionStrategy`
+
+   Select the exemplars at random in the dataset
+
+   .. method:: make_sorted_indices(self, strategy: BaseStrategy, data: AvalancheDataset) -> List[int]
+
+      Should return the sorted list of indices to keep as exemplars.
+
+      The last indices will be the first to be removed when cutoff memory.
+
+
+
+.. py:class:: FeatureBasedExemplarsSelectionStrategy(model: Module, layer_name: str)
+
+   Bases: :class:`avalanche.training.plugins.replay.ClassExemplarsSelectionStrategy`, :class:`abc.ABC`
+
+   Base class to select exemplars from their features
+
+   Initialize self.  See help(type(self)) for accurate signature.
+
+   .. method:: make_sorted_indices(self, strategy: BaseStrategy, data: AvalancheDataset) -> List[int]
+
+      Should return the sorted list of indices to keep as exemplars.
+
+      The last indices will be the first to be removed when cutoff memory.
+
+
+   .. method:: make_sorted_indices_from_features(self, features: Tensor) -> List[int]
+      :abstractmethod:
+
+      Should return the sorted list of indices to keep as exemplars.
+
+      The last indices will be the first to be removed when cutoff memory.
+
+
+
+.. py:class:: HerdingSelectionStrategy(model: Module, layer_name: str)
+
+   Bases: :class:`avalanche.training.plugins.replay.FeatureBasedExemplarsSelectionStrategy`
+
+   Base class to select exemplars from their features
+
+   Initialize self.  See help(type(self)) for accurate signature.
+
+   .. method:: make_sorted_indices_from_features(self, features: Tensor) -> List[int]
+
+      The herding strategy as described in iCaRL
+
+      It is a greedy algorithm, that select the remaining exemplar that get
+      the center of already selected exemplars as close as possible as the
+      center of all elements (in the feature space).
+
+
+
+.. py:class:: ClosestToCenterSelectionStrategy(model: Module, layer_name: str)
+
+   Bases: :class:`avalanche.training.plugins.replay.FeatureBasedExemplarsSelectionStrategy`
+
+   Base class to select exemplars from their features
+
+   Initialize self.  See help(type(self)) for accurate signature.
+
+   .. method:: make_sorted_indices_from_features(self, features: Tensor) -> List[int]
+
+      A greedy algorithm that select the remaining exemplar that is the
+      closest to the center of all elements (in feature space)
 
 
 

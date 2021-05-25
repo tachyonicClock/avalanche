@@ -214,13 +214,8 @@
 <span class="kn">from</span> <span class="nn">.dataset_definitions</span> <span class="kn">import</span> <span class="n">ITensorDataset</span><span class="p">,</span> <span class="n">ClassificationDataset</span><span class="p">,</span> \
     <span class="n">IDatasetWithTargets</span><span class="p">,</span> <span class="n">ISupportedClassificationDataset</span>
 
-<span class="k">try</span><span class="p">:</span>
-    <span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">List</span><span class="p">,</span> <span class="n">Any</span><span class="p">,</span> <span class="n">Iterable</span><span class="p">,</span> <span class="n">Sequence</span><span class="p">,</span> <span class="n">Union</span><span class="p">,</span> <span class="n">Optional</span><span class="p">,</span> \
-        <span class="n">TypeVar</span><span class="p">,</span> <span class="n">Protocol</span><span class="p">,</span> <span class="n">SupportsInt</span><span class="p">,</span> <span class="n">Generic</span><span class="p">,</span> <span class="n">Callable</span><span class="p">,</span> <span class="n">Dict</span><span class="p">,</span> <span class="n">Tuple</span><span class="p">,</span> <span class="n">Literal</span>
-<span class="k">except</span> <span class="ne">ImportError</span><span class="p">:</span>
-    <span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">List</span><span class="p">,</span> <span class="n">Any</span><span class="p">,</span> <span class="n">Iterable</span><span class="p">,</span> <span class="n">Sequence</span><span class="p">,</span> <span class="n">Union</span><span class="p">,</span> <span class="n">Optional</span><span class="p">,</span> \
-        <span class="n">TypeVar</span><span class="p">,</span> <span class="n">SupportsInt</span><span class="p">,</span> <span class="n">Generic</span><span class="p">,</span> <span class="n">Callable</span><span class="p">,</span> <span class="n">Dict</span><span class="p">,</span> <span class="n">Tuple</span>
-    <span class="kn">from</span> <span class="nn">typing_extensions</span> <span class="kn">import</span> <span class="n">Protocol</span><span class="p">,</span> <span class="n">Literal</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">List</span><span class="p">,</span> <span class="n">Any</span><span class="p">,</span> <span class="n">Sequence</span><span class="p">,</span> <span class="n">Union</span><span class="p">,</span> <span class="n">Optional</span><span class="p">,</span> <span class="n">TypeVar</span><span class="p">,</span> <span class="n">SupportsInt</span><span class="p">,</span> \
+    <span class="n">Callable</span><span class="p">,</span> <span class="n">Dict</span><span class="p">,</span> <span class="n">Tuple</span><span class="p">,</span> <span class="n">Collection</span>
 
 <span class="n">T_co</span> <span class="o">=</span> <span class="n">TypeVar</span><span class="p">(</span><span class="s1">&#39;T_co&#39;</span><span class="p">,</span> <span class="n">covariant</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 <span class="n">TTargetType</span> <span class="o">=</span> <span class="n">TypeVar</span><span class="p">(</span><span class="s1">&#39;TTargetType&#39;</span><span class="p">)</span>
@@ -931,7 +926,7 @@
 
             <span class="k">if</span> <span class="ow">not</span> <span class="nb">len</span><span class="p">(</span><span class="n">map_value</span><span class="p">)</span> <span class="o">==</span> <span class="mi">2</span><span class="p">:</span>
                 <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
-                    <span class="s1">&#39;Transformations for group &quot;&#39;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">map_key</span><span class="p">)</span> <span class="o">+</span> <span class="s1">&#39;&quot; must be &#39;</span> 
+                    <span class="s1">&#39;Transformations for group &quot;&#39;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">map_key</span><span class="p">)</span> <span class="o">+</span> <span class="s1">&#39;&quot; must be &#39;</span>
                     <span class="s1">&#39;a tuple containing 2 elements: a transformation for the X &#39;</span>
                     <span class="s1">&#39;values and a transformation for the Y values&#39;</span><span class="p">)</span>
 
@@ -1685,7 +1680,7 @@
 <span class="sd">    (if they are subclasses of :class:`AvalancheDataset`).</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span>
-                 <span class="n">datasets</span><span class="p">:</span> <span class="n">Sequence</span><span class="p">[</span><span class="n">SupportedDataset</span><span class="p">],</span>
+                 <span class="n">datasets</span><span class="p">:</span> <span class="n">Collection</span><span class="p">[</span><span class="n">SupportedDataset</span><span class="p">],</span>
                  <span class="o">*</span><span class="p">,</span>
                  <span class="n">transform</span><span class="p">:</span> <span class="n">Callable</span><span class="p">[[</span><span class="n">Any</span><span class="p">],</span> <span class="n">Any</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
                  <span class="n">target_transform</span><span class="p">:</span> <span class="n">Callable</span><span class="p">[[</span><span class="nb">int</span><span class="p">],</span> <span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
@@ -1702,7 +1697,7 @@
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Creates a ``AvalancheConcatDataset`` instance.</span>
 
-<span class="sd">        :param datasets: A sequence of datasets.</span>
+<span class="sd">        :param datasets: A collection of datasets.</span>
 <span class="sd">        :param transform: A function/transform that takes the X value of a</span>
 <span class="sd">            pattern from the original dataset and returns a transformed version.</span>
 <span class="sd">        :param target_transform: A function/transform that takes in the target</span>
@@ -1764,14 +1759,15 @@
 <span class="sd">            the value of the second element returned by `__getitem__`.</span>
 <span class="sd">            The adapter is used to adapt the values of the targets field only.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">dataset_list</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">datasets</span><span class="p">)</span>
 
         <span class="n">dataset_type</span><span class="p">,</span> <span class="n">collate_fn</span><span class="p">,</span> <span class="n">targets_adapter</span> <span class="o">=</span> \
             <span class="bp">self</span><span class="o">.</span><span class="n">_get_dataset_type_collate_and_adapter</span><span class="p">(</span>
-                <span class="n">datasets</span><span class="p">,</span> <span class="n">dataset_type</span><span class="p">,</span> <span class="n">collate_fn</span><span class="p">,</span> <span class="n">targets_adapter</span><span class="p">)</span>
+                <span class="n">dataset_list</span><span class="p">,</span> <span class="n">dataset_type</span><span class="p">,</span> <span class="n">collate_fn</span><span class="p">,</span> <span class="n">targets_adapter</span><span class="p">)</span>
 
-        <span class="bp">self</span><span class="o">.</span><span class="n">_dataset_list</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">datasets</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_datasets_lengths</span> <span class="o">=</span> <span class="p">[</span><span class="nb">len</span><span class="p">(</span><span class="n">dataset</span><span class="p">)</span> <span class="k">for</span> <span class="n">dataset</span> <span class="ow">in</span> <span class="n">datasets</span><span class="p">]</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_datasets_cumulative_lengths</span> <span class="o">=</span> <span class="n">ConcatDataset</span><span class="o">.</span><span class="n">cumsum</span><span class="p">(</span><span class="n">datasets</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_dataset_list</span> <span class="o">=</span> <span class="n">dataset_list</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_datasets_lengths</span> <span class="o">=</span> <span class="p">[</span><span class="nb">len</span><span class="p">(</span><span class="n">dataset</span><span class="p">)</span> <span class="k">for</span> <span class="n">dataset</span> <span class="ow">in</span> <span class="n">dataset_list</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_datasets_cumulative_lengths</span> <span class="o">=</span> <span class="n">ConcatDataset</span><span class="o">.</span><span class="n">cumsum</span><span class="p">(</span><span class="n">dataset_list</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_overall_length</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_datasets_lengths</span><span class="p">)</span>
 
         <span class="k">if</span> <span class="n">initial_transform_group</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
@@ -1839,7 +1835,6 @@
 
         <span class="k">if</span> <span class="n">dataset_type</span> <span class="o">!=</span> <span class="n">AvalancheDatasetType</span><span class="o">.</span><span class="n">UNDEFINED</span> <span class="ow">and</span> \
                 <span class="p">(</span><span class="n">collate_fn</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">or</span> <span class="n">targets_adapter</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">):</span>
-
             <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
                 <span class="s1">&#39;dataset_type </span><span class="si">{}</span><span class="s1"> was inferred from the list of &#39;</span>
                 <span class="s1">&#39;concatenated dataset. This dataset type can</span><span class="se">\&#39;</span><span class="s1">t be used &#39;</span>
@@ -2214,7 +2209,6 @@
         <span class="n">dataset</span><span class="p">:</span> <span class="n">ISupportedClassificationDataset</span><span class="p">[</span><span class="n">T_co</span><span class="p">],</span>
         <span class="n">dataset_type</span><span class="p">:</span> <span class="n">AvalancheDatasetType</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> \
         <span class="o">-&gt;</span> <span class="n">AvalancheDataset</span><span class="p">[</span><span class="n">T_co</span><span class="p">,</span> <span class="n">TTargetType</span><span class="p">]:</span>
-
     <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">dataset</span><span class="p">,</span> <span class="n">AvalancheDataset</span><span class="p">)</span> <span class="ow">and</span> <span class="n">dataset_type</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
         <span class="c1"># There is no need to show the warning</span>
         <span class="k">return</span> <span class="n">dataset</span>
@@ -2282,7 +2276,6 @@
 <span class="k">def</span> <span class="nf">_traverse_supported_dataset</span><span class="p">(</span>
         <span class="n">dataset</span><span class="p">,</span> <span class="n">values_selector</span><span class="p">:</span> <span class="n">Callable</span><span class="p">[[</span><span class="n">Dataset</span><span class="p">,</span> <span class="n">List</span><span class="p">[</span><span class="nb">int</span><span class="p">]],</span> <span class="n">List</span><span class="p">],</span>
         <span class="n">indices</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">:</span>
-
     <span class="n">initial_error</span> <span class="o">=</span> <span class="kc">None</span>
     <span class="k">try</span><span class="p">:</span>
         <span class="n">result</span> <span class="o">=</span> <span class="n">values_selector</span><span class="p">(</span><span class="n">dataset</span><span class="p">,</span> <span class="n">indices</span><span class="p">)</span>

@@ -21,7 +21,7 @@ Functions
    avalanche.evaluation.metric_utils.get_metric_name
 
 
-.. function:: default_cm_image_creator(confusion_matrix_tensor: Tensor, display_labels=None, include_values=False, xticks_rotation=0, yticks_rotation=0, values_format=None, cmap='viridis', image_title='')
+.. function:: default_cm_image_creator(confusion_matrix_tensor: Tensor, display_labels: Sequence = None, include_values=False, xticks_rotation=0, yticks_rotation=0, values_format=None, cmap='viridis', image_title='')
 
    The default Confusion Matrix image creator.
    Code adapted from

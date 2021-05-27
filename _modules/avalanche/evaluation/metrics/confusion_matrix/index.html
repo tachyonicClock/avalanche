@@ -189,9 +189,10 @@
 <span class="c1"># E-mail: contact@continualai.org                                              #</span>
 <span class="c1"># Website: www.continualai.org                                                 #</span>
 <span class="c1">################################################################################</span>
-
+<span class="kn">from</span> <span class="nn">numpy</span> <span class="kn">import</span> <span class="n">arange</span><span class="p">,</span> <span class="n">ndarray</span>
 <span class="kn">from</span> <span class="nn">typing_extensions</span> <span class="kn">import</span> <span class="n">Literal</span>
-<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Callable</span><span class="p">,</span> <span class="n">Union</span><span class="p">,</span> <span class="n">Optional</span><span class="p">,</span> <span class="n">Mapping</span><span class="p">,</span> <span class="n">TYPE_CHECKING</span><span class="p">,</span> <span class="n">List</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Callable</span><span class="p">,</span> <span class="n">Union</span><span class="p">,</span> <span class="n">Optional</span><span class="p">,</span> <span class="n">Mapping</span><span class="p">,</span> <span class="n">TYPE_CHECKING</span><span class="p">,</span> <span class="n">List</span><span class="p">,</span> \
+    <span class="n">Sequence</span>
 
 <span class="kn">import</span> <span class="nn">wandb</span>
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
@@ -200,6 +201,7 @@
 <span class="kn">from</span> <span class="nn">torch</span> <span class="kn">import</span> <span class="n">Tensor</span>
 <span class="kn">from</span> <span class="nn">torch.nn.functional</span> <span class="kn">import</span> <span class="n">pad</span>
 
+<span class="kn">from</span> <span class="nn">avalanche.benchmarks</span> <span class="kn">import</span> <span class="n">NCScenario</span>
 <span class="kn">from</span> <span class="nn">avalanche.evaluation</span> <span class="kn">import</span> <span class="n">PluginMetric</span><span class="p">,</span> <span class="n">Metric</span>
 <span class="kn">from</span> <span class="nn">avalanche.evaluation.metric_results</span> <span class="kn">import</span> <span class="n">AlternativeValues</span><span class="p">,</span> \
     <span class="n">MetricValue</span><span class="p">,</span> <span class="n">MetricResult</span>
@@ -424,8 +426,8 @@
                  <span class="n">num_classes</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="n">Mapping</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">int</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
                  <span class="n">normalize</span><span class="p">:</span> <span class="n">Literal</span><span class="p">[</span><span class="s1">&#39;true&#39;</span><span class="p">,</span> <span class="s1">&#39;pred&#39;</span><span class="p">,</span> <span class="s1">&#39;all&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
                  <span class="n">save_image</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
-                 <span class="n">image_creator</span><span class="p">:</span> <span class="n">Callable</span><span class="p">[[</span><span class="n">Tensor</span><span class="p">],</span> <span class="n">Image</span><span class="p">]</span> <span class="o">=</span>
-                 <span class="n">default_cm_image_creator</span><span class="p">):</span>
+                 <span class="n">image_creator</span><span class="p">:</span> <span class="n">Callable</span><span class="p">[[</span><span class="n">Tensor</span><span class="p">,</span> <span class="n">Sequence</span><span class="p">],</span> <span class="n">Image</span><span class="p">]</span> <span class="o">=</span>
+                 <span class="n">default_cm_image_creator</span><span class="p">,</span> <span class="n">absolute_class_order</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Creates an instance of the Stream Confusion Matrix metric.</span>
 
@@ -449,20 +451,23 @@
 <span class="sd">            matrix will be logged, too. If False, only the Tensor representation</span>
 <span class="sd">            will be logged. Defaults to True.</span>
 <span class="sd">        :param image_creator: A callable that, given the tensor representation</span>
-<span class="sd">            of the confusion matrix, returns a graphical representation of the</span>
-<span class="sd">            matrix as a PIL Image. Defaults to `default_cm_image_creator`.</span>
+<span class="sd">            of the confusion matrix and the corresponding labels, returns a</span>
+<span class="sd">            graphical representation of the matrix as a PIL Image. Defaults to</span>
+<span class="sd">            `default_cm_image_creator`.</span>
+<span class="sd">        :param absolute_class_order: If true, the labels in the created image</span>
+<span class="sd">            will be sorted by id, otherwise they will be sorted by order of</span>
+<span class="sd">            encounter at training time. This parameter is ignored if</span>
+<span class="sd">            `save_image` is False, or the scenario is not a NCScenario.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">_save_image</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="n">save_image</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">num_classes</span> <span class="o">=</span> <span class="n">num_classes</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">normalize</span> <span class="o">=</span> <span class="n">normalize</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">absolute_class_order</span> <span class="o">=</span> <span class="n">absolute_class_order</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_matrix</span><span class="p">:</span> <span class="n">ConfusionMatrix</span> <span class="o">=</span> <span class="n">ConfusionMatrix</span><span class="p">(</span><span class="n">num_classes</span><span class="o">=</span><span class="n">num_classes</span><span class="p">,</span>
                                                         <span class="n">normalize</span><span class="o">=</span><span class="n">normalize</span><span class="p">)</span>
-
-        <span class="k">if</span> <span class="n">image_creator</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="n">image_creator</span> <span class="o">=</span> <span class="n">default_cm_image_creator</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_image_creator</span><span class="p">:</span> <span class="n">Callable</span><span class="p">[[</span><span class="n">Tensor</span><span class="p">],</span> <span class="n">Image</span><span class="p">]</span> <span class="o">=</span> <span class="n">image_creator</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_image_creator</span> <span class="o">=</span> <span class="n">image_creator</span>
 
 <div class="viewcode-block" id="StreamConfusionMatrix.reset"><a class="viewcode-back" href="../../../../../autoapi/avalanche/evaluation/metrics/#avalanche.evaluation.metrics.confusion_matrix.StreamConfusionMatrix.reset">[docs]</a>    <span class="k">def</span> <span class="nf">reset</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_matrix</span> <span class="o">=</span> <span class="n">ConfusionMatrix</span><span class="p">(</span><span class="n">num_classes</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">num_classes</span><span class="p">,</span>
@@ -497,7 +502,12 @@
         <span class="n">plot_x_position</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_global_counter</span><span class="p">()</span>
 
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_save_image</span><span class="p">:</span>
-            <span class="n">cm_image</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_image_creator</span><span class="p">(</span><span class="n">exp_cm</span><span class="p">)</span>
+            <span class="n">class_order</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_display_class_order</span><span class="p">(</span><span class="n">exp_cm</span><span class="p">,</span> <span class="n">strategy</span><span class="p">)</span>
+
+            <span class="n">cm_image</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_image_creator</span><span class="p">(</span>
+                <span class="n">exp_cm</span><span class="p">[</span><span class="n">class_order</span><span class="p">][:,</span> <span class="n">class_order</span><span class="p">],</span>
+                <span class="n">class_order</span>
+            <span class="p">)</span>
             <span class="n">metric_representation</span> <span class="o">=</span> <span class="n">MetricValue</span><span class="p">(</span>
                 <span class="bp">self</span><span class="p">,</span> <span class="n">metric_name</span><span class="p">,</span> <span class="n">AlternativeValues</span><span class="p">(</span><span class="n">cm_image</span><span class="p">,</span> <span class="n">exp_cm</span><span class="p">),</span>
                 <span class="n">plot_x_position</span><span class="p">)</span>
@@ -506,6 +516,15 @@
                 <span class="bp">self</span><span class="p">,</span> <span class="n">metric_name</span><span class="p">,</span> <span class="n">exp_cm</span><span class="p">,</span> <span class="n">plot_x_position</span><span class="p">)</span>
 
         <span class="k">return</span> <span class="p">[</span><span class="n">metric_representation</span><span class="p">]</span>
+
+    <span class="k">def</span> <span class="nf">_get_display_class_order</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">exp_cm</span><span class="p">:</span> <span class="n">Tensor</span><span class="p">,</span> <span class="n">strategy</span><span class="p">:</span> <span class="s1">&#39;BaseStrategy&#39;</span>
+                                 <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">ndarray</span><span class="p">:</span>
+        <span class="n">scenario</span> <span class="o">=</span> <span class="n">strategy</span><span class="o">.</span><span class="n">experience</span><span class="o">.</span><span class="n">scenario</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">absolute_class_order</span> <span class="ow">or</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">scenario</span><span class="p">,</span> <span class="n">NCScenario</span><span class="p">):</span>
+            <span class="k">return</span> <span class="n">arange</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">exp_cm</span><span class="p">))</span>
+
+        <span class="k">return</span> <span class="n">scenario</span><span class="o">.</span><span class="n">classes_order</span>
 
 <div class="viewcode-block" id="StreamConfusionMatrix.__str__"><a class="viewcode-back" href="../../../../../autoapi/avalanche/evaluation/metrics/#avalanche.evaluation.metrics.confusion_matrix.StreamConfusionMatrix.__str__">[docs]</a>    <span class="k">def</span> <span class="fm">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">return</span> <span class="s2">&quot;ConfusionMatrix_Stream&quot;</span></div></div>
@@ -584,11 +603,16 @@
         <span class="k">return</span> <span class="s2">&quot;W&amp;BConfusionMatrix_Stream&quot;</span></div></div>
 
 
-<div class="viewcode-block" id="confusion_matrix_metrics"><a class="viewcode-back" href="../../../../../autoapi/avalanche/evaluation/metrics/#avalanche.evaluation.metrics.confusion_matrix.confusion_matrix_metrics">[docs]</a><span class="k">def</span> <span class="nf">confusion_matrix_metrics</span><span class="p">(</span><span class="n">num_classes</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">normalize</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
-                             <span class="n">save_image</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
-                             <span class="n">image_creator</span><span class="o">=</span><span class="n">default_cm_image_creator</span><span class="p">,</span>
-                             <span class="n">class_names</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
-                             <span class="n">stream</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">wandb</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="n">PluginMetric</span><span class="p">]:</span>
+<div class="viewcode-block" id="confusion_matrix_metrics"><a class="viewcode-back" href="../../../../../autoapi/avalanche/evaluation/metrics/#avalanche.evaluation.metrics.confusion_matrix.confusion_matrix_metrics">[docs]</a><span class="k">def</span> <span class="nf">confusion_matrix_metrics</span><span class="p">(</span>
+        <span class="n">num_classes</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+        <span class="n">normalize</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+        <span class="n">save_image</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+        <span class="n">image_creator</span><span class="o">=</span><span class="n">default_cm_image_creator</span><span class="p">,</span>
+        <span class="n">class_names</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+        <span class="n">stream</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+        <span class="n">wandb</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+        <span class="n">absolute_class_order</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="n">PluginMetric</span><span class="p">]:</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Helper method that can be used to obtain the desired set of</span>
 <span class="sd">    plugin metrics.</span>
@@ -619,6 +643,10 @@
 <span class="sd">        of experiences.</span>
 <span class="sd">    :param wandb: if True, will return a Weights and Biases confusion matrix</span>
 <span class="sd">        together with all the other confusion matrixes requested.</span>
+<span class="sd">    :param absolute_class_order: Not W&amp;B. If true, the labels in the created</span>
+<span class="sd">        image will be sorted by id, otherwise they will be sorted by order of</span>
+<span class="sd">        encounter at training time. This parameter is ignored if `save_image` is</span>
+<span class="sd">         False, or the scenario is not a NCScenario.</span>
 
 <span class="sd">    :return: A list of plugin metrics.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
@@ -626,10 +654,13 @@
     <span class="n">metrics</span> <span class="o">=</span> <span class="p">[]</span>
 
     <span class="k">if</span> <span class="n">stream</span><span class="p">:</span>
-        <span class="n">metrics</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">StreamConfusionMatrix</span><span class="p">(</span><span class="n">num_classes</span><span class="o">=</span><span class="n">num_classes</span><span class="p">,</span>
-                                             <span class="n">normalize</span><span class="o">=</span><span class="n">normalize</span><span class="p">,</span>
-                                             <span class="n">save_image</span><span class="o">=</span><span class="n">save_image</span><span class="p">,</span>
-                                             <span class="n">image_creator</span><span class="o">=</span><span class="n">image_creator</span><span class="p">))</span>
+        <span class="n">metrics</span><span class="o">.</span><span class="n">append</span><span class="p">(</span>
+            <span class="n">StreamConfusionMatrix</span><span class="p">(</span><span class="n">num_classes</span><span class="o">=</span><span class="n">num_classes</span><span class="p">,</span>
+                                  <span class="n">normalize</span><span class="o">=</span><span class="n">normalize</span><span class="p">,</span>
+                                  <span class="n">save_image</span><span class="o">=</span><span class="n">save_image</span><span class="p">,</span>
+                                  <span class="n">image_creator</span><span class="o">=</span><span class="n">image_creator</span><span class="p">,</span>
+                                  <span class="n">absolute_class_order</span><span class="o">=</span><span class="n">absolute_class_order</span><span class="p">,</span>
+                                  <span class="p">))</span>
         <span class="k">if</span> <span class="n">wandb</span><span class="p">:</span>
             <span class="n">metrics</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">WandBStreamConfusionMatrix</span><span class="p">(</span><span class="n">class_names</span><span class="o">=</span><span class="n">class_names</span><span class="p">))</span>
 

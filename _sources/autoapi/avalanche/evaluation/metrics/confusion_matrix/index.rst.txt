@@ -107,7 +107,7 @@ Functions
 
 
 
-.. py:class:: StreamConfusionMatrix(num_classes: Union[int, Mapping[int, int]] = None, normalize: Literal['true', 'pred', 'all'] = None, save_image: bool = True, image_creator: Callable[[Tensor], Image] = default_cm_image_creator)
+.. py:class:: StreamConfusionMatrix(num_classes: Union[int, Mapping[int, int]] = None, normalize: Literal['true', 'pred', 'all'] = None, save_image: bool = True, image_creator: Callable[[Tensor, Sequence], Image] = default_cm_image_creator, absolute_class_order: bool = False)
 
    Bases: :class:`PluginMetric[Tensor]`
 
@@ -146,8 +146,13 @@ Functions
        matrix will be logged, too. If False, only the Tensor representation
        will be logged. Defaults to True.
    :param image_creator: A callable that, given the tensor representation
-       of the confusion matrix, returns a graphical representation of the
-       matrix as a PIL Image. Defaults to `default_cm_image_creator`.
+       of the confusion matrix and the corresponding labels, returns a
+       graphical representation of the matrix as a PIL Image. Defaults to
+       `default_cm_image_creator`.
+   :param absolute_class_order: If true, the labels in the created image
+       will be sorted by id, otherwise they will be sorted by order of
+       encounter at training time. This parameter is ignored if
+       `save_image` is False, or the scenario is not a NCScenario.
 
    .. method:: reset(self) -> None
 
@@ -235,7 +240,7 @@ Functions
 
 
 
-.. function:: confusion_matrix_metrics(num_classes=None, normalize=None, save_image=True, image_creator=default_cm_image_creator, class_names=None, stream=False, wandb=False) -> List[PluginMetric]
+.. function:: confusion_matrix_metrics(num_classes=None, normalize=None, save_image=True, image_creator=default_cm_image_creator, class_names=None, stream=False, wandb=False, absolute_class_order: bool = False) -> List[PluginMetric]
 
    Helper method that can be used to obtain the desired set of
    plugin metrics.
@@ -266,6 +271,10 @@ Functions
        of experiences.
    :param wandb: if True, will return a Weights and Biases confusion matrix
        together with all the other confusion matrixes requested.
+   :param absolute_class_order: Not W&B. If true, the labels in the created
+       image will be sorted by id, otherwise they will be sorted by order of
+       encounter at training time. This parameter is ignored if `save_image` is
+        False, or the scenario is not a NCScenario.
 
    :return: A list of plugin metrics.
 

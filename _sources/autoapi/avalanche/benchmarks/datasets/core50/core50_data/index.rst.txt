@@ -21,14 +21,17 @@ Classes
 
 
 
-.. py:class:: CORE50_DATA(data_folder='data/')
+.. py:class:: CORE50_DATA(data_folder='data/', mini=False, obj_lvl=True)
 
    Bases: :class:`object`
 
    CORE50 downloader.
 
    Args:
-       data_folder (string): folder in which to download core50 dataset. 
+       data_folder (string): folder in which to download core50 dataset.
+       mini (bool): if we need to download/use only 32x32 data.
+       obj_lvl: classification level (object or categories level).
+           Default to objec-level (50 classes).
 
    .. method:: download_core50(self, extra=False)
 

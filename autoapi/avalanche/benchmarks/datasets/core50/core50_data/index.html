@@ -200,11 +200,16 @@
 </table>
 <dl class="py class">
 <dt class="sig sig-object py" id="avalanche.benchmarks.datasets.core50.core50_data.CORE50_DATA">
-<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">avalanche.benchmarks.datasets.core50.core50_data.</span></span><span class="sig-name descname"><span class="pre">CORE50_DATA</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data_folder</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'data/'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../../_modules/avalanche/benchmarks/datasets/core50/core50_data/#CORE50_DATA"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.benchmarks.datasets.core50.core50_data.CORE50_DATA" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">avalanche.benchmarks.datasets.core50.core50_data.</span></span><span class="sig-name descname"><span class="pre">CORE50_DATA</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data_folder</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'data/'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mini</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">obj_lvl</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../../_modules/avalanche/benchmarks/datasets/core50/core50_data/#CORE50_DATA"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.benchmarks.datasets.core50.core50_data.CORE50_DATA" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
 <p>CORE50 downloader.</p>
-<dl class="simple">
-<dt>Args:</dt><dd><p>data_folder (string): folder in which to download core50 dataset.</p>
+<dl>
+<dt>Args:</dt><dd><p>data_folder (string): folder in which to download core50 dataset.
+mini (bool): if we need to download/use only 32x32 data.
+obj_lvl: classification level (object or categories level).</p>
+<blockquote>
+<div><p>Default to objec-level (50 classes).</p>
+</div></blockquote>
 </dd>
 </dl>
 <dl class="py method">

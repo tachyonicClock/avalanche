@@ -194,7 +194,6 @@
 
 <span class="kn">import</span> <span class="nn">os</span>
 <span class="kn">import</span> <span class="nn">sys</span>
-<span class="kn">import</span> <span class="nn">logging</span>
 <span class="kn">import</span> <span class="nn">glob</span>
 <span class="kn">import</span> <span class="nn">pickle</span> <span class="k">as</span> <span class="nn">pkl</span>
 <span class="kn">from</span> <span class="nn">zipfile</span> <span class="kn">import</span> <span class="n">ZipFile</span>
@@ -225,7 +224,9 @@
 
 <span class="n">extra_data</span> <span class="o">=</span> <span class="p">[</span>
     <span class="p">(</span><span class="s1">&#39;core50_imgs.npz&#39;</span><span class="p">,</span>
-     <span class="s1">&#39;http://bias.csr.unibo.it/maltoni/download/core50/core50_imgs.npz&#39;</span><span class="p">)</span>
+     <span class="s1">&#39;http://bias.csr.unibo.it/maltoni/download/core50/core50_imgs.npz&#39;</span><span class="p">),</span>
+    <span class="p">(</span><span class="s1">&#39;core50_32x32.zip&#39;</span><span class="p">,</span>
+     <span class="s1">&#39;http://vps.continualai.org/data/core50_32x32.zip&#39;</span><span class="p">)</span>
 <span class="p">]</span>
 
 <span class="n">scen2dirs</span> <span class="o">=</span> <span class="p">{</span>
@@ -256,13 +257,23 @@
 <span class="sd">    CORE50 downloader.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data_folder</span><span class="o">=</span><span class="s1">&#39;data/&#39;</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data_folder</span><span class="o">=</span><span class="s1">&#39;data/&#39;</span><span class="p">,</span> <span class="n">mini</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">obj_lvl</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Args:</span>
-<span class="sd">            data_folder (string): folder in which to download core50 dataset. </span>
+<span class="sd">            data_folder (string): folder in which to download core50 dataset.</span>
+<span class="sd">            mini (bool): if we need to download/use only 32x32 data.</span>
+<span class="sd">            obj_lvl: classification level (object or categories level).</span>
+<span class="sd">                Default to objec-level (50 classes).</span>
 <span class="sd">        &quot;&quot;&quot;</span>
 
-        <span class="bp">self</span><span class="o">.</span><span class="n">log</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="s2">&quot;avalanche&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">mini</span> <span class="o">=</span> <span class="n">mini</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">obj_lvl</span> <span class="o">=</span> <span class="n">obj_lvl</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">mini</span><span class="p">:</span>
+            <span class="c1"># we swap the main zip file to download: 32x32 instead of 128x128</span>
+            <span class="n">app_tup</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+            <span class="n">data</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">extra_data</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+            <span class="n">extra_data</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">app_tup</span>
 
         <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isabs</span><span class="p">(</span><span class="n">data_folder</span><span class="p">):</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">data_folder</span> <span class="o">=</span> <span class="n">data_folder</span>
@@ -273,13 +284,13 @@
         <span class="k">try</span><span class="p">:</span>
             <span class="c1"># Create target Directory for CORE50 data</span>
             <span class="n">os</span><span class="o">.</span><span class="n">makedirs</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">data_folder</span><span class="p">)</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">log</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Directory </span><span class="si">%s</span><span class="s2"> created&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">data_folder</span><span class="p">)</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Root data folder created at:&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">data_folder</span><span class="p">)</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">download</span> <span class="o">=</span> <span class="kc">True</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">download_core50</span><span class="p">()</span>
 
         <span class="k">except</span> <span class="ne">OSError</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">download</span> <span class="o">=</span> <span class="kc">False</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">log</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s2">&quot;Directory </span><span class="si">%s</span><span class="s2"> already exists&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">data_folder</span><span class="p">)</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Directory </span><span class="si">%s</span><span class="s2"> already exists&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">data_folder</span><span class="p">)</span>
 
         <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">data_folder</span><span class="p">,</span> <span class="s1">&#39;labels2names.pkl&#39;</span><span class="p">),</span> <span class="s1">&#39;rb&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">labels2names</span> <span class="o">=</span> <span class="n">pkl</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
@@ -287,7 +298,7 @@
         <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">data_folder</span><span class="p">,</span> <span class="s2">&quot;NIC_v2_79_cat&quot;</span><span class="p">)):</span>
             <span class="c1"># It means category filelists has been already created</span>
             <span class="k">pass</span>
-        <span class="k">else</span><span class="p">:</span>
+        <span class="k">elif</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">obj_lvl</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_create_cat_filelists</span><span class="p">()</span>
 
 <div class="viewcode-block" id="CORE50_DATA.download_core50"><a class="viewcode-back" href="../../../../../../autoapi/avalanche/benchmarks/datasets/core50/core50_data/#avalanche.benchmarks.datasets.core50.core50_data.CORE50_DATA.download_core50">[docs]</a>    <span class="k">def</span> <span class="nf">download_core50</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">extra</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
@@ -303,17 +314,17 @@
             <span class="n">data2download</span> <span class="o">=</span> <span class="n">data</span>
 
         <span class="k">for</span> <span class="n">name</span> <span class="ow">in</span> <span class="n">data2download</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">log</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Downloading &quot;</span> <span class="o">+</span> <span class="n">name</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="s2">&quot;...&quot;</span><span class="p">)</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Downloading &quot;</span> <span class="o">+</span> <span class="n">name</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="s2">&quot;...&quot;</span><span class="p">)</span>
             <span class="n">urlretrieve</span><span class="p">(</span><span class="n">name</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">data_folder</span><span class="p">,</span> <span class="n">name</span><span class="p">[</span><span class="mi">0</span><span class="p">]))</span>
 
             <span class="k">if</span> <span class="n">name</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">endswith</span><span class="p">(</span><span class="s1">&#39;.zip&#39;</span><span class="p">):</span>
                 <span class="k">with</span> <span class="n">ZipFile</span><span class="p">(</span>
                         <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">data_folder</span><span class="p">,</span> <span class="n">name</span><span class="p">[</span><span class="mi">0</span><span class="p">]),</span> <span class="s1">&#39;r&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">zipf</span><span class="p">:</span>
-                    <span class="bp">self</span><span class="o">.</span><span class="n">log</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;Extracting CORe50 images...&#39;</span><span class="p">)</span>
+                    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Extracting data from zip...&#39;</span><span class="p">)</span>
                     <span class="n">zipf</span><span class="o">.</span><span class="n">extractall</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">data_folder</span><span class="p">)</span> 
-                    <span class="bp">self</span><span class="o">.</span><span class="n">log</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;Done!&#39;</span><span class="p">)</span>
+                    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Done!&#39;</span><span class="p">)</span>
 
-        <span class="bp">self</span><span class="o">.</span><span class="n">log</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Download complete.&quot;</span><span class="p">)</span></div>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Download complete.&quot;</span><span class="p">)</span></div>
 
     <span class="k">def</span> <span class="nf">_objlab2cat</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">label</span><span class="p">,</span> <span class="n">scen</span><span class="p">,</span> <span class="n">run</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot; Mapping an object label into its corresponding category label</span>

@@ -21,7 +21,7 @@ Classes
 
 
 
-.. py:class:: CORe50(root=expanduser('~') + '/.avalanche/data/core50/', train=True, transform=ToTensor(), target_transform=None, loader=pil_loader, download=True, object_level=True)
+.. py:class:: CORe50(root=expanduser('~') + '/.avalanche/data/core50/', train=True, transform=ToTensor(), target_transform=None, loader=pil_loader, download=True, mini=False, object_level=True)
 
    Bases: :class:`torch.utils.data.dataset.Dataset`
 
@@ -35,6 +35,8 @@ Classes
    :param loader: data loader method from disk.
    :param download: boolean to automatically download data. Default to
        True.
+   :param mini: boolean to use the 32x32 version instead of the 128x128.
+       Default to False.
    :param object_level: if the classification is objects based or
        category based: 50 or 10 way classification problem. Default to True
        (50-way object classification problem)

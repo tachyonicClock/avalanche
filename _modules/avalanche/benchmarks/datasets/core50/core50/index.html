@@ -216,7 +216,8 @@
 
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">root</span><span class="o">=</span><span class="n">expanduser</span><span class="p">(</span><span class="s2">&quot;~&quot;</span><span class="p">)</span><span class="o">+</span><span class="s2">&quot;/.avalanche/data/core50/&quot;</span><span class="p">,</span>
                  <span class="n">train</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">transform</span><span class="o">=</span><span class="n">ToTensor</span><span class="p">(),</span> <span class="n">target_transform</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
-                 <span class="n">loader</span><span class="o">=</span><span class="n">pil_loader</span><span class="p">,</span> <span class="n">download</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">object_level</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+                 <span class="n">loader</span><span class="o">=</span><span class="n">pil_loader</span><span class="p">,</span> <span class="n">download</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">mini</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+                 <span class="n">object_level</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 
 <span class="sd">        :param root: root for the datasets data.</span>
@@ -227,6 +228,8 @@
 <span class="sd">        :param loader: data loader method from disk.</span>
 <span class="sd">        :param download: boolean to automatically download data. Default to</span>
 <span class="sd">            True.</span>
+<span class="sd">        :param mini: boolean to use the 32x32 version instead of the 128x128.</span>
+<span class="sd">            Default to False.</span>
 <span class="sd">        :param object_level: if the classification is objects based or</span>
 <span class="sd">            category based: 50 or 10 way classification problem. Default to True</span>
 <span class="sd">            (50-way object classification problem)</span>
@@ -238,6 +241,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">root</span> <span class="o">=</span> <span class="n">root</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">loader</span> <span class="o">=</span> <span class="n">loader</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">object_level</span> <span class="o">=</span> <span class="n">object_level</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">mini</span> <span class="o">=</span> <span class="n">mini</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">log</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="s2">&quot;avalanche&quot;</span><span class="p">)</span>
 
         <span class="c1"># any scenario and run is good here since we want just to load the</span>
@@ -247,7 +251,7 @@
         <span class="n">nbatch</span> <span class="o">=</span> <span class="mi">8</span>
 
         <span class="k">if</span> <span class="n">download</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">core_data</span> <span class="o">=</span> <span class="n">CORE50_DATA</span><span class="p">(</span><span class="n">data_folder</span><span class="o">=</span><span class="n">root</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">core_data</span> <span class="o">=</span> <span class="n">CORE50_DATA</span><span class="p">(</span><span class="n">data_folder</span><span class="o">=</span><span class="n">root</span><span class="p">,</span> <span class="n">mini</span><span class="o">=</span><span class="n">mini</span><span class="p">)</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">log</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Loading paths...&quot;</span><span class="p">)</span>
         <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">root</span><span class="p">,</span> <span class="s1">&#39;paths.pkl&#39;</span><span class="p">),</span> <span class="s1">&#39;rb&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
@@ -295,10 +299,15 @@
 <span class="sd">                class.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
 
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">mini</span><span class="p">:</span>
+            <span class="n">bp</span> <span class="o">=</span> <span class="s2">&quot;core50_32x32&quot;</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">bp</span> <span class="o">=</span> <span class="s2">&quot;core50_128x128&quot;</span>
+
         <span class="n">target</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">targets</span><span class="p">[</span><span class="n">index</span><span class="p">]</span>
         <span class="n">img</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">loader</span><span class="p">(</span>
             <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">root</span><span class="p">,</span> <span class="s2">&quot;core50_128x128&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">paths</span><span class="p">[</span><span class="n">index</span><span class="p">]</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">root</span><span class="p">,</span> <span class="n">bp</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">paths</span><span class="p">[</span><span class="n">index</span><span class="p">]</span>
             <span class="p">)</span>
         <span class="p">)</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">transform</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>

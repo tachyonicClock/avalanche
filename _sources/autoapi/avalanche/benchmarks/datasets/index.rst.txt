@@ -12,6 +12,7 @@ Subpackages
 
    core50/index.rst
    cub200/index.rst
+   inaturalist/index.rst
    mini_imagenet/index.rst
    openloris/index.rst
    stream51/index.rst
@@ -44,6 +45,7 @@ Classes
    avalanche.benchmarks.datasets.TinyImagenet
    avalanche.benchmarks.datasets.Omniglot
    avalanche.benchmarks.datasets.Stream51
+   avalanche.benchmarks.datasets.INATURALIST2018
 
 
 
@@ -497,5 +499,53 @@ Functions
 
 
 .. function:: CelebA(*args, **kwargs)
+
+
+.. py:class:: INATURALIST2018(root=expanduser('~') + '/.avalanche/data/inaturalist2018/', split='train', transform=ToTensor(), target_transform=None, loader=pil_loader, download=True, supcats=None)
+
+   Bases: :class:`torch.utils.data.dataset.Dataset`
+
+   INATURALIST Pytorch Dataset
+
+   For default selection of 10 supercategories:
+   - Training Images in total: 428,830
+   - Validation Images in total:  23,229
+   - Shape of images: torch.Size([1, 3, 600, 800])
+   - Class counts per supercategory (both train/val):
+    { 'Amphibia': 144,
+     'Animalia': 178,
+     'Arachnida': 114,
+     'Aves': 1258,
+     'Fungi': 321,
+     'Insecta': 2031,
+     'Mammalia': 234,
+     'Mollusca': 262,
+     'Plantae': 2917,
+     'Reptilia': 284}
+
+   Initialize self.  See help(type(self)) for accurate signature.
+
+   .. attribute:: splits
+      :annotation: = ['train', 'val', 'test']
+
+      
+
+   .. attribute:: def_supcats
+      :annotation: = ['Amphibia', 'Animalia', 'Arachnida', 'Aves', 'Fungi', 'Insecta', 'Mammalia', 'Mollusca', 'Plantae', 'Reptilia']
+
+      
+
+   .. method:: __getitem__(self, index)
+
+      Args:
+          index (int): Index
+
+      Returns:
+          tuple: (sample, target) where target is class_index of the target
+              class.
+
+
+   .. method:: __len__(self)
+
 
 

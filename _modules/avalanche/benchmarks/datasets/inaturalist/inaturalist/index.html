@@ -1,0 +1,423 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>avalanche.benchmarks.datasets.inaturalist.inaturalist &mdash; Avalanche 0.1 documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="../../../../../../_static/css/mystyle.css" type="text/css" />
+  <link rel="stylesheet" href="../../../../../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../../../../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../../../../../_static/css/mystyle.css" type="text/css" />
+  <link rel="stylesheet" href="../../../../../../_static/graphviz.css" type="text/css" />
+
+  
+  
+
+  
+  
+
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../../../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../../../../../" src="../../../../../../_static/documentation_options.js"></script>
+        <script data-url_root="../../../../../../" id="documentation_options" src="../../../../../../_static/documentation_options.js"></script>
+        <script src="../../../../../../_static/jquery.js"></script>
+        <script src="../../../../../../_static/underscore.js"></script>
+        <script src="../../../../../../_static/doctools.js"></script>
+    
+    <script type="text/javascript" src="../../../../../../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="../../../../../../genindex/" />
+    <link rel="search" title="Search" href="../../../../../../search/" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../../../../../">
+          
+
+          
+            
+            <img src="../../../../../../_static/avalanche_logo.png" class="logo" alt="Logo"/>
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../../../../search/" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Avalanche API:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../../autoapi/">API Reference</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../autoapi/avalanche/"><code class="xref py py-mod docutils literal notranslate"><span class="pre">avalanche</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../../../../autoapi/avalanche/#subpackages">Subpackages</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../../../../autoapi/avalanche/benchmarks/"><code class="xref py py-mod docutils literal notranslate"><span class="pre">avalanche.benchmarks</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../../../autoapi/avalanche/evaluation/"><code class="xref py py-mod docutils literal notranslate"><span class="pre">avalanche.evaluation</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../../../autoapi/avalanche/logging/"><code class="xref py py-mod docutils literal notranslate"><span class="pre">avalanche.logging</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../../../autoapi/avalanche/models/"><code class="xref py py-mod docutils literal notranslate"><span class="pre">avalanche.models</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../../../autoapi/avalanche/training/"><code class="xref py py-mod docutils literal notranslate"><span class="pre">avalanche.training</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../../../autoapi/avalanche/#submodules">Submodules</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../../../../autoapi/avalanche/core/"><code class="xref py py-mod docutils literal notranslate"><span class="pre">avalanche.core</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../../../autoapi/avalanche/#package-contents">Package Contents</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../../../../autoapi/avalanche/#avalanche.__version__">__version__</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../../../../">Avalanche</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../../../../../" class="icon icon-home"></a> &raquo;</li>
+        
+          <li><a href="../../../../../">Module code</a> &raquo;</li>
+        
+      <li>avalanche.benchmarks.datasets.inaturalist.inaturalist</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for avalanche.benchmarks.datasets.inaturalist.inaturalist</h1><div class="highlight"><pre>
+<span></span><span class="c1">################################################################################</span>
+<span class="c1"># Copyright (c) 2021 ContinualAI.                                              #</span>
+<span class="c1"># Copyrights licensed under the MIT License.                                   #</span>
+<span class="c1"># See the accompanying LICENSE file for terms.                                 #</span>
+<span class="c1">#                                                                              #</span>
+<span class="c1"># Date: 20-05-2021                                                             #</span>
+<span class="c1"># Author: Matthias De Lange                                                    #</span>
+<span class="c1"># E-mail: contact@continualai.org                                              #</span>
+<span class="c1"># Website: www.continualai.org                                                 #</span>
+<span class="c1">################################################################################</span>
+
+<span class="sd">&quot;&quot;&quot; INATURALIST2018 Pytorch Dataset</span>
+<span class="sd">Info: https://www.kaggle.com/c/inaturalist-2018/data</span>
+<span class="sd">Download: https://github.com/visipedia/inat_comp/tree/master/2018</span>
+<span class="sd">Based on survey in CL: https://ieeexplore.ieee.org/document/9349197</span>
+
+<span class="sd">Images have a max dimension of 800px and have been converted to JPEG format</span>
+<span class="sd">You can select supercategories to include. By default 10 Super categories are</span>
+<span class="sd">selected from the 14 available, based on at least having 100 categories (leaving</span>
+<span class="sd">out Chromista, Protozoa, Bacteria), and omitting a random super category from</span>
+<span class="sd">the remainder (Actinopterygii).</span>
+
+<span class="sd">Example filename from the JSON:</span>
+<span class="sd"> &quot;file_name&quot;: &quot;train_val2018/Insecta/1455/994fa5...f1e360d34aae943.jpg&quot;</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Any</span><span class="p">,</span> <span class="n">List</span>
+
+<span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">import</span> <span class="nn">logging</span>
+<span class="kn">from</span> <span class="nn">torch.utils.data.dataset</span> <span class="kn">import</span> <span class="n">Dataset</span>
+<span class="kn">from</span> <span class="nn">torchvision.transforms</span> <span class="kn">import</span> <span class="n">ToTensor</span>
+<span class="kn">from</span> <span class="nn">PIL</span> <span class="kn">import</span> <span class="n">Image</span>
+<span class="kn">from</span> <span class="nn">os.path</span> <span class="kn">import</span> <span class="n">expanduser</span>
+<span class="kn">import</span> <span class="nn">pprint</span>
+
+<span class="kn">from</span> <span class="nn">.inaturalist_data</span> <span class="kn">import</span> <span class="n">INATURALIST_DATA</span>
+
+
+<span class="k">def</span> <span class="nf">pil_loader</span><span class="p">(</span><span class="n">path</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot; Load an Image with PIL &quot;&quot;&quot;</span>
+    <span class="c1"># open path as file to avoid ResourceWarning</span>
+    <span class="c1"># (https://github.com/python-pillow/Pillow/issues/835)</span>
+    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="s1">&#39;rb&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+        <span class="n">img</span> <span class="o">=</span> <span class="n">Image</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">img</span><span class="o">.</span><span class="n">convert</span><span class="p">(</span><span class="s1">&#39;RGB&#39;</span><span class="p">)</span>
+
+
+<span class="k">def</span> <span class="nf">_isArrayLike</span><span class="p">(</span><span class="n">obj</span><span class="p">):</span>
+    <span class="k">return</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">obj</span><span class="p">,</span> <span class="s1">&#39;__iter__&#39;</span><span class="p">)</span> <span class="ow">and</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">obj</span><span class="p">,</span> <span class="s1">&#39;__len__&#39;</span><span class="p">)</span>
+
+
+<div class="viewcode-block" id="INATURALIST2018"><a class="viewcode-back" href="../../../../../../autoapi/avalanche/benchmarks/datasets/#avalanche.benchmarks.datasets.inaturalist.inaturalist.INATURALIST2018">[docs]</a><span class="k">class</span> <span class="nc">INATURALIST2018</span><span class="p">(</span><span class="n">Dataset</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot; INATURALIST Pytorch Dataset</span>
+
+<span class="sd">    For default selection of 10 supercategories:</span>
+<span class="sd">    - Training Images in total: 428,830</span>
+<span class="sd">    - Validation Images in total:  23,229</span>
+<span class="sd">    - Shape of images: torch.Size([1, 3, 600, 800])</span>
+<span class="sd">    - Class counts per supercategory (both train/val):</span>
+<span class="sd">     { &#39;Amphibia&#39;: 144,</span>
+<span class="sd">      &#39;Animalia&#39;: 178,</span>
+<span class="sd">      &#39;Arachnida&#39;: 114,</span>
+<span class="sd">      &#39;Aves&#39;: 1258,</span>
+<span class="sd">      &#39;Fungi&#39;: 321,</span>
+<span class="sd">      &#39;Insecta&#39;: 2031,</span>
+<span class="sd">      &#39;Mammalia&#39;: 234,</span>
+<span class="sd">      &#39;Mollusca&#39;: 262,</span>
+<span class="sd">      &#39;Plantae&#39;: 2917,</span>
+<span class="sd">      &#39;Reptilia&#39;: 284}</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">splits</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;train&#39;</span><span class="p">,</span> <span class="s1">&#39;val&#39;</span><span class="p">,</span> <span class="s1">&#39;test&#39;</span><span class="p">]</span>
+
+    <span class="n">def_supcats</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;Amphibia&#39;</span><span class="p">,</span> <span class="s1">&#39;Animalia&#39;</span><span class="p">,</span> <span class="s1">&#39;Arachnida&#39;</span><span class="p">,</span> <span class="s1">&#39;Aves&#39;</span><span class="p">,</span> <span class="s1">&#39;Fungi&#39;</span><span class="p">,</span>
+                   <span class="s1">&#39;Insecta&#39;</span><span class="p">,</span> <span class="s1">&#39;Mammalia&#39;</span><span class="p">,</span> <span class="s1">&#39;Mollusca&#39;</span><span class="p">,</span> <span class="s1">&#39;Plantae&#39;</span><span class="p">,</span> <span class="s1">&#39;Reptilia&#39;</span><span class="p">]</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span>
+                 <span class="n">root</span><span class="o">=</span><span class="n">expanduser</span><span class="p">(</span><span class="s2">&quot;~&quot;</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot;/.avalanche/data/inaturalist2018/&quot;</span><span class="p">,</span>
+                 <span class="n">split</span><span class="o">=</span><span class="s1">&#39;train&#39;</span><span class="p">,</span> <span class="n">transform</span><span class="o">=</span><span class="n">ToTensor</span><span class="p">(),</span> <span class="n">target_transform</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                 <span class="n">loader</span><span class="o">=</span><span class="n">pil_loader</span><span class="p">,</span> <span class="n">download</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">supcats</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
+        <span class="c1"># conda install -c conda-forge pycocotools</span>
+        <span class="kn">from</span> <span class="nn">pycocotools.coco</span> <span class="kn">import</span> <span class="n">COCO</span> <span class="k">as</span> <span class="n">jsonparser</span>
+
+        <span class="k">assert</span> <span class="n">split</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">splits</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">split</span> <span class="o">=</span> <span class="n">split</span>  <span class="c1"># training set or test set</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">transform</span> <span class="o">=</span> <span class="n">transform</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">target_transform</span> <span class="o">=</span> <span class="n">target_transform</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">root</span> <span class="o">=</span> <span class="n">root</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">loader</span> <span class="o">=</span> <span class="n">loader</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">log</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="s2">&quot;avalanche&quot;</span><span class="p">)</span>
+
+        <span class="c1"># Supercategories to include (None = all)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">supcats</span> <span class="o">=</span> <span class="n">supcats</span> <span class="k">if</span> <span class="n">supcats</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="k">else</span> <span class="bp">self</span><span class="o">.</span><span class="n">def_supcats</span>
+
+        <span class="k">if</span> <span class="n">download</span><span class="p">:</span>
+            <span class="n">download_trainval</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">split</span> <span class="ow">in</span> <span class="p">[</span><span class="s1">&#39;train&#39;</span><span class="p">,</span> <span class="s1">&#39;val&#39;</span><span class="p">]</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">inat_data</span> <span class="o">=</span> <span class="n">INATURALIST_DATA</span><span class="p">(</span><span class="n">data_folder</span><span class="o">=</span><span class="n">root</span><span class="p">,</span>
+                                              <span class="n">trainval</span><span class="o">=</span><span class="n">download_trainval</span><span class="p">)</span>
+
+        <span class="c1"># load annotations</span>
+        <span class="n">ann_file</span> <span class="o">=</span> <span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">split</span><span class="si">}</span><span class="s1">2018.json&#39;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">log</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Loading annotations from: </span><span class="si">{</span><span class="n">ann_file</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">ds</span> <span class="o">=</span> <span class="n">jsonparser</span><span class="p">(</span><span class="n">annotation_file</span><span class="o">=</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">root</span><span class="p">,</span> <span class="n">ann_file</span><span class="p">))</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">img_ids</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">targets</span> <span class="o">=</span> <span class="p">[],</span> <span class="p">[]</span>  <span class="c1"># targets field is required!</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">cats_per_supcat</span> <span class="o">=</span> <span class="p">{}</span>
+
+        <span class="c1"># Filter full dataset parsed</span>
+        <span class="k">for</span> <span class="n">ann</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">ds</span><span class="o">.</span><span class="n">anns</span><span class="o">.</span><span class="n">values</span><span class="p">():</span>
+            <span class="n">img_id</span> <span class="o">=</span> <span class="n">ann</span><span class="p">[</span><span class="s2">&quot;image_id&quot;</span><span class="p">]</span>
+            <span class="n">cat_id</span> <span class="o">=</span> <span class="n">ann</span><span class="p">[</span><span class="s2">&quot;category_id&quot;</span><span class="p">]</span>
+
+            <span class="c1"># img = self.ds.loadImgs(img_id)[0][&quot;file_name&quot;]  # Img Path</span>
+            <span class="n">cat</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">ds</span><span class="o">.</span><span class="n">loadCats</span><span class="p">(</span><span class="n">cat_id</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>  <span class="c1"># Get category</span>
+            <span class="n">target</span> <span class="o">=</span> <span class="n">cat</span><span class="p">[</span><span class="s2">&quot;name&quot;</span><span class="p">]</span>  <span class="c1"># Is subdirectory</span>
+            <span class="n">supcat</span> <span class="o">=</span> <span class="n">cat</span><span class="p">[</span><span class="s2">&quot;supercategory&quot;</span><span class="p">]</span>  <span class="c1"># Is parent directory</span>
+
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">supcats</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">or</span> <span class="n">supcat</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">supcats</span><span class="p">:</span>  <span class="c1"># Made selection</span>
+
+                <span class="c1"># Add category to supercategory</span>
+                <span class="k">if</span> <span class="n">supcat</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">cats_per_supcat</span><span class="p">:</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">cats_per_supcat</span><span class="p">[</span><span class="n">supcat</span><span class="p">]</span> <span class="o">=</span> <span class="nb">set</span><span class="p">()</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">cats_per_supcat</span><span class="p">[</span><span class="n">supcat</span><span class="p">]</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">target</span><span class="p">))</span>  <span class="c1"># Need int</span>
+
+                <span class="c1"># Add to list</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">img_ids</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">img_id</span><span class="p">)</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">targets</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">target</span><span class="p">)</span>
+                <span class="c1"># self.suptargets.append(supcat)</span>
+
+        <span class="n">cnt_per_supcat</span> <span class="o">=</span> <span class="p">{</span><span class="n">k</span><span class="p">:</span> <span class="nb">len</span><span class="p">(</span><span class="n">v</span><span class="p">)</span> <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">cats_per_supcat</span><span class="o">.</span><span class="n">items</span><span class="p">()}</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">log</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Classes per supercategories:&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">log</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="n">pprint</span><span class="o">.</span><span class="n">pformat</span><span class="p">(</span><span class="n">cnt_per_supcat</span><span class="p">,</span> <span class="n">indent</span><span class="o">=</span><span class="mi">2</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">log</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Images in total: </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="fm">__len__</span><span class="p">()</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">_load_image</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">img_id</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Image</span><span class="o">.</span><span class="n">Image</span><span class="p">:</span>
+        <span class="n">path</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">ds</span><span class="o">.</span><span class="n">loadImgs</span><span class="p">(</span><span class="n">img_id</span><span class="p">)[</span><span class="mi">0</span><span class="p">][</span><span class="s2">&quot;file_name&quot;</span><span class="p">]</span>
+        <span class="k">return</span> <span class="n">Image</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">root</span><span class="p">,</span> <span class="n">path</span><span class="p">))</span><span class="o">.</span><span class="n">convert</span><span class="p">(</span><span class="s2">&quot;RGB&quot;</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">_load_target</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">img_id</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="n">Any</span><span class="p">]:</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">ds</span><span class="o">.</span><span class="n">loadAnns</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">ds</span><span class="o">.</span><span class="n">getAnnIds</span><span class="p">(</span><span class="n">img_id</span><span class="p">))</span>
+
+<div class="viewcode-block" id="INATURALIST2018.__getitem__"><a class="viewcode-back" href="../../../../../../autoapi/avalanche/benchmarks/datasets/#avalanche.benchmarks.datasets.inaturalist.inaturalist.INATURALIST2018.__getitem__">[docs]</a>    <span class="k">def</span> <span class="fm">__getitem__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">index</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Args:</span>
+<span class="sd">            index (int): Index</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            tuple: (sample, target) where target is class_index of the target</span>
+<span class="sd">                class.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="nb">id</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">img_ids</span><span class="p">[</span><span class="n">index</span><span class="p">]</span>
+        <span class="n">img</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_load_image</span><span class="p">(</span><span class="nb">id</span><span class="p">)</span>
+        <span class="c1"># target = self._load_target(id)</span>
+        <span class="n">target</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">targets</span><span class="p">[</span><span class="n">index</span><span class="p">]</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">transform</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">img</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">transform</span><span class="p">(</span><span class="n">img</span><span class="p">)</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">target_transform</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">target</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">target_transform</span><span class="p">(</span><span class="n">target</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">img</span><span class="p">,</span> <span class="n">target</span></div>
+
+<div class="viewcode-block" id="INATURALIST2018.__len__"><a class="viewcode-back" href="../../../../../../autoapi/avalanche/benchmarks/datasets/#avalanche.benchmarks.datasets.inaturalist.inaturalist.INATURALIST2018.__len__">[docs]</a>    <span class="k">def</span> <span class="fm">__len__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">img_ids</span><span class="p">)</span></div></div>
+
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
+    <span class="c1"># this litte example script can be used to visualize the first image</span>
+    <span class="c1"># leaded from the dataset.</span>
+    <span class="kn">from</span> <span class="nn">torch.utils.data.dataloader</span> <span class="kn">import</span> <span class="n">DataLoader</span>
+    <span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+    <span class="kn">from</span> <span class="nn">torchvision</span> <span class="kn">import</span> <span class="n">transforms</span>
+    <span class="kn">import</span> <span class="nn">torch</span>
+
+    <span class="n">train_data</span> <span class="o">=</span> <span class="n">INATURALIST2018</span><span class="p">()</span>
+    <span class="n">test_data</span> <span class="o">=</span> <span class="n">INATURALIST2018</span><span class="p">(</span><span class="n">split</span><span class="o">=</span><span class="s1">&#39;val&#39;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;train size: &quot;</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">train_data</span><span class="p">))</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;test size: &quot;</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">test_data</span><span class="p">))</span>
+
+    <span class="n">dataloader</span> <span class="o">=</span> <span class="n">DataLoader</span><span class="p">(</span><span class="n">train_data</span><span class="p">,</span> <span class="n">batch_size</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+
+    <span class="k">for</span> <span class="n">batch_data</span> <span class="ow">in</span> <span class="n">dataloader</span><span class="p">:</span>
+        <span class="n">x</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="n">batch_data</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span>
+            <span class="n">transforms</span><span class="o">.</span><span class="n">ToPILImage</span><span class="p">()(</span><span class="n">torch</span><span class="o">.</span><span class="n">squeeze</span><span class="p">(</span><span class="n">x</span><span class="p">))</span>
+        <span class="p">)</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+        <span class="nb">print</span><span class="p">(</span><span class="n">x</span><span class="o">.</span><span class="n">size</span><span class="p">())</span>
+        <span class="nb">print</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">y</span><span class="p">))</span>
+        <span class="k">break</span>
+
+<span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="s1">&#39;INATURALIST2018&#39;</span>
+<span class="p">]</span>
+</pre></div>
+
+           </div>
+           
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &#169; Copyright 2021, ContinualAI.
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

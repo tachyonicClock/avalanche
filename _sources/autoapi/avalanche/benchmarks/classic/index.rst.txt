@@ -15,6 +15,7 @@ Submodules
    ccub200/index.rst
    cfashion_mnist/index.rst
    cimagenet/index.rst
+   cinaturalist/index.rst
    cmnist/index.rst
    comniglot/index.rst
    core50/index.rst
@@ -356,7 +357,7 @@ Functions
 
 .. function:: SplitImageNet(root, n_experiences=10, per_exp_classes=None, return_task_id=False, seed=0, fixed_class_order=None, train_transform=_default_train_transform, eval_transform=_default_eval_transform)
 
-   Creates a CL scenario using the Tiny ImageNet dataset.
+   Creates a CL scenario using the ImageNet dataset.
 
    If the dataset is not present in the computer, **this method will NOT be
    able automatically download** and store it.

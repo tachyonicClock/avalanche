@@ -195,6 +195,11 @@
 <li class="toctree-l2"><a class="reference internal" href="cub200/cub200/"><code class="xref py py-mod docutils literal notranslate"><span class="pre">avalanche.benchmarks.datasets.cub200.cub200</span></code></a></li>
 </ul>
 </li>
+<li class="toctree-l1"><a class="reference internal" href="inaturalist/"><code class="xref py py-mod docutils literal notranslate"><span class="pre">avalanche.benchmarks.datasets.inaturalist</span></code></a><ul>
+<li class="toctree-l2"><a class="reference internal" href="inaturalist/inaturalist/"><code class="xref py py-mod docutils literal notranslate"><span class="pre">avalanche.benchmarks.datasets.inaturalist.inaturalist</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="inaturalist/inaturalist_data/"><code class="xref py py-mod docutils literal notranslate"><span class="pre">avalanche.benchmarks.datasets.inaturalist.inaturalist_data</span></code></a></li>
+</ul>
+</li>
 <li class="toctree-l1"><a class="reference internal" href="mini_imagenet/"><code class="xref py py-mod docutils literal notranslate"><span class="pre">avalanche.benchmarks.datasets.mini_imagenet</span></code></a><ul>
 <li class="toctree-l2"><a class="reference internal" href="mini_imagenet/mini_imagenet/"><code class="xref py py-mod docutils literal notranslate"><span class="pre">avalanche.benchmarks.datasets.mini_imagenet.mini_imagenet</span></code></a></li>
 <li class="toctree-l2"><a class="reference internal" href="mini_imagenet/mini_imagenet_data/"><code class="xref py py-mod docutils literal notranslate"><span class="pre">avalanche.benchmarks.datasets.mini_imagenet.mini_imagenet_data</span></code></a></li>
@@ -257,6 +262,9 @@
 </tr>
 <tr class="row-odd"><td><p><a class="reference internal" href="#avalanche.benchmarks.datasets.Stream51" title="avalanche.benchmarks.datasets.Stream51"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Stream51</span></code></a></p></td>
 <td><p>Stream-51 Pytorch Dataset</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#avalanche.benchmarks.datasets.INATURALIST2018" title="avalanche.benchmarks.datasets.INATURALIST2018"><code class="xref py py-obj docutils literal notranslate"><span class="pre">INATURALIST2018</span></code></a></p></td>
+<td><p>INATURALIST Pytorch Dataset</p></td>
 </tr>
 </tbody>
 </table>
@@ -900,6 +908,62 @@ class.</p>
 <dt class="sig sig-object py" id="avalanche.benchmarks.datasets.CelebA">
 <span class="sig-prename descclassname"><span class="pre">avalanche.benchmarks.datasets.</span></span><span class="sig-name descname"><span class="pre">CelebA</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/avalanche/benchmarks/datasets/torchvision_wrapper/#CelebA"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.benchmarks.datasets.CelebA" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="avalanche.benchmarks.datasets.INATURALIST2018">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">avalanche.benchmarks.datasets.</span></span><span class="sig-name descname"><span class="pre">INATURALIST2018</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">root</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">expanduser('~')</span> <span class="pre">+</span> <span class="pre">'/.avalanche/data/inaturalist2018/'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">split</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'train'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">transform</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">ToTensor()</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">target_transform</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">loader</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">pil_loader</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">download</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">supcats</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/avalanche/benchmarks/datasets/inaturalist/inaturalist/#INATURALIST2018"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.benchmarks.datasets.INATURALIST2018" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">torch.utils.data.dataset.Dataset</span></code></p>
+<p>INATURALIST Pytorch Dataset</p>
+<p>For default selection of 10 supercategories:
+- Training Images in total: 428,830
+- Validation Images in total:  23,229
+- Shape of images: torch.Size([1, 3, 600, 800])
+- Class counts per supercategory (both train/val):</p>
+<blockquote>
+<div><dl class="simple">
+<dt>{ ‘Amphibia’: 144,</dt><dd><p>‘Animalia’: 178,
+‘Arachnida’: 114,
+‘Aves’: 1258,
+‘Fungi’: 321,
+‘Insecta’: 2031,
+‘Mammalia’: 234,
+‘Mollusca’: 262,
+‘Plantae’: 2917,
+‘Reptilia’: 284}</p>
+</dd>
+</dl>
+</div></blockquote>
+<p>Initialize self.  See help(type(self)) for accurate signature.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="avalanche.benchmarks.datasets.INATURALIST2018.splits">
+<span class="sig-name descname"><span class="pre">splits</span></span><em class="property"> <span class="pre">=</span> <span class="pre">['train',</span> <span class="pre">'val',</span> <span class="pre">'test']</span></em><a class="headerlink" href="#avalanche.benchmarks.datasets.INATURALIST2018.splits" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="avalanche.benchmarks.datasets.INATURALIST2018.def_supcats">
+<span class="sig-name descname"><span class="pre">def_supcats</span></span><em class="property"> <span class="pre">=</span> <span class="pre">['Amphibia',</span> <span class="pre">'Animalia',</span> <span class="pre">'Arachnida',</span> <span class="pre">'Aves',</span> <span class="pre">'Fungi',</span> <span class="pre">'Insecta',</span> <span class="pre">'Mammalia',</span> <span class="pre">'Mollusca',</span> <span class="pre">'Plantae',</span> <span class="pre">'Reptilia']</span></em><a class="headerlink" href="#avalanche.benchmarks.datasets.INATURALIST2018.def_supcats" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="avalanche.benchmarks.datasets.INATURALIST2018.__getitem__">
+<span class="sig-name descname"><span class="pre">__getitem__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">index</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/avalanche/benchmarks/datasets/inaturalist/inaturalist/#INATURALIST2018.__getitem__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.benchmarks.datasets.INATURALIST2018.__getitem__" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="simple">
+<dt>Args:</dt><dd><p>index (int): Index</p>
+</dd>
+<dt>Returns:</dt><dd><dl class="simple">
+<dt>tuple: (sample, target) where target is class_index of the target</dt><dd><p>class.</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="avalanche.benchmarks.datasets.INATURALIST2018.__len__">
+<span class="sig-name descname"><span class="pre">__len__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/avalanche/benchmarks/datasets/inaturalist/inaturalist/#INATURALIST2018.__len__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.benchmarks.datasets.INATURALIST2018.__len__" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
 
 </div>
 </div>

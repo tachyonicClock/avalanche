@@ -1,0 +1,83 @@
+:mod:`avalanche.benchmarks.datasets.inaturalist.inaturalist`
+============================================================
+
+.. py:module:: avalanche.benchmarks.datasets.inaturalist.inaturalist
+
+.. autoapi-nested-parse::
+
+   INATURALIST2018 Pytorch Dataset
+   Info: https://www.kaggle.com/c/inaturalist-2018/data
+   Download: https://github.com/visipedia/inat_comp/tree/master/2018
+   Based on survey in CL: https://ieeexplore.ieee.org/document/9349197
+
+   Images have a max dimension of 800px and have been converted to JPEG format
+   You can select supercategories to include. By default 10 Super categories are
+   selected from the 14 available, based on at least having 100 categories (leaving
+   out Chromista, Protozoa, Bacteria), and omitting a random super category from
+   the remainder (Actinopterygii).
+
+   Example filename from the JSON:
+    "file_name": "train_val2018/Insecta/1455/994fa5...f1e360d34aae943.jpg"
+
+
+
+Module Contents
+---------------
+
+Classes
+~~~~~~~
+
+.. autoapisummary::
+
+   avalanche.benchmarks.datasets.inaturalist.inaturalist.INATURALIST2018
+
+
+
+.. py:class:: INATURALIST2018(root=expanduser('~') + '/.avalanche/data/inaturalist2018/', split='train', transform=ToTensor(), target_transform=None, loader=pil_loader, download=True, supcats=None)
+
+   Bases: :class:`torch.utils.data.dataset.Dataset`
+
+   INATURALIST Pytorch Dataset
+
+   For default selection of 10 supercategories:
+   - Training Images in total: 428,830
+   - Validation Images in total:  23,229
+   - Shape of images: torch.Size([1, 3, 600, 800])
+   - Class counts per supercategory (both train/val):
+    { 'Amphibia': 144,
+     'Animalia': 178,
+     'Arachnida': 114,
+     'Aves': 1258,
+     'Fungi': 321,
+     'Insecta': 2031,
+     'Mammalia': 234,
+     'Mollusca': 262,
+     'Plantae': 2917,
+     'Reptilia': 284}
+
+   Initialize self.  See help(type(self)) for accurate signature.
+
+   .. attribute:: splits
+      :annotation: = ['train', 'val', 'test']
+
+      
+
+   .. attribute:: def_supcats
+      :annotation: = ['Amphibia', 'Animalia', 'Arachnida', 'Aves', 'Fungi', 'Insecta', 'Mammalia', 'Mollusca', 'Plantae', 'Reptilia']
+
+      
+
+   .. method:: __getitem__(self, index)
+
+      Args:
+          index (int): Index
+
+      Returns:
+          tuple: (sample, target) where target is class_index of the target
+              class.
+
+
+   .. method:: __len__(self)
+
+
+

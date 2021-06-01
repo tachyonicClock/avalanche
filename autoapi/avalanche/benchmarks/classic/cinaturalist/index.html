@@ -1,0 +1,326 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>avalanche.benchmarks.classic.cinaturalist &mdash; Avalanche 0.1 documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="../../../../../_static/css/mystyle.css" type="text/css" />
+  <link rel="stylesheet" href="../../../../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../../../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../../../../_static/css/mystyle.css" type="text/css" />
+  <link rel="stylesheet" href="../../../../../_static/graphviz.css" type="text/css" />
+
+  
+  
+
+  
+  
+
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../../../../" src="../../../../../_static/documentation_options.js"></script>
+        <script data-url_root="../../../../../" id="documentation_options" src="../../../../../_static/documentation_options.js"></script>
+        <script src="../../../../../_static/jquery.js"></script>
+        <script src="../../../../../_static/underscore.js"></script>
+        <script src="../../../../../_static/doctools.js"></script>
+    
+    <script type="text/javascript" src="../../../../../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="../../../../../genindex/" />
+    <link rel="search" title="Search" href="../../../../../search/" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../../../../">
+          
+
+          
+            
+            <img src="../../../../../_static/avalanche_logo.png" class="logo" alt="Logo"/>
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../../../search/" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Avalanche API:</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="../../../../">API Reference</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="../../../"><code class="xref py py-mod docutils literal notranslate"><span class="pre">avalanche</span></code></a><ul class="current">
+<li class="toctree-l3 current"><a class="reference internal" href="../../../#subpackages">Subpackages</a><ul class="current">
+<li class="toctree-l4 current"><a class="reference internal" href="../../"><code class="xref py py-mod docutils literal notranslate"><span class="pre">avalanche.benchmarks</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../evaluation/"><code class="xref py py-mod docutils literal notranslate"><span class="pre">avalanche.evaluation</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../logging/"><code class="xref py py-mod docutils literal notranslate"><span class="pre">avalanche.logging</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../models/"><code class="xref py py-mod docutils literal notranslate"><span class="pre">avalanche.models</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../training/"><code class="xref py py-mod docutils literal notranslate"><span class="pre">avalanche.training</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../../#submodules">Submodules</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../core/"><code class="xref py py-mod docutils literal notranslate"><span class="pre">avalanche.core</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../../#package-contents">Package Contents</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../#avalanche.__version__">__version__</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../../../">Avalanche</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../../../../" class="icon icon-home"></a> &raquo;</li>
+        
+      <li><code class="xref py py-mod docutils literal notranslate"><span class="pre">avalanche.benchmarks.classic.cinaturalist</span></code></li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+          
+            <a href="../../../../../_sources/autoapi/avalanche/benchmarks/classic/cinaturalist/index.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="module-avalanche.benchmarks.classic.cinaturalist">
+<span id="avalanche-benchmarks-classic-cinaturalist"></span><h1><a class="reference internal" href="#module-avalanche.benchmarks.classic.cinaturalist" title="avalanche.benchmarks.classic.cinaturalist"><code class="xref py py-mod docutils literal notranslate"><span class="pre">avalanche.benchmarks.classic.cinaturalist</span></code></a><a class="headerlink" href="#module-avalanche.benchmarks.classic.cinaturalist" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="module-contents">
+<h2>Module Contents<a class="headerlink" href="#module-contents" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="functions">
+<h3>Functions<a class="headerlink" href="#functions" title="Permalink to this headline">¶</a></h3>
+<table class="longtable docutils align-default">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 90%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="#avalanche.benchmarks.classic.cinaturalist.SplitInaturalist" title="avalanche.benchmarks.classic.cinaturalist.SplitInaturalist"><code class="xref py py-obj docutils literal notranslate"><span class="pre">SplitInaturalist</span></code></a>(root, super_categories=None, return_task_id=False, download=False, seed=0, train_transform=_default_train_transform, eval_transform=_default_eval_transform)</p></td>
+<td><p>Creates a CL scenario using the iNaturalist2018 dataset.</p></td>
+</tr>
+</tbody>
+</table>
+<dl class="py function">
+<dt class="sig sig-object py" id="avalanche.benchmarks.classic.cinaturalist.SplitInaturalist">
+<span class="sig-prename descclassname"><span class="pre">avalanche.benchmarks.classic.cinaturalist.</span></span><span class="sig-name descname"><span class="pre">SplitInaturalist</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">root</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">super_categories</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">return_task_id</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">download</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">seed</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">train_transform</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">_default_train_transform</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">eval_transform</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">_default_eval_transform</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../_modules/avalanche/benchmarks/classic/cinaturalist/#SplitInaturalist"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.benchmarks.classic.cinaturalist.SplitInaturalist" title="Permalink to this definition">¶</a></dt>
+<dd><p>Creates a CL scenario using the iNaturalist2018 dataset.
+A selection of supercategories (by default 10) define the experiences.
+Note that the supercategories are highly imbalanced in the number of classes
+and the amount of data available.</p>
+<p>If the dataset is not present in the computer, <strong>this method will
+automatically download</strong> and store it if <cite>download=True</cite>
+(120Gtrain/val).</p>
+<p>To parse the dataset jsons you need to install an additional dependency:
+“pycocotools”. You can install it like this:</p>
+<blockquote>
+<div><p>“conda install -c conda-forge pycocotools”</p>
+</div></blockquote>
+<p>Implementation is based on the CL survey
+(<a class="reference external" href="https://ieeexplore.ieee.org/document/9349197">https://ieeexplore.ieee.org/document/9349197</a>) but differs slightly.
+The survey uses only the original iNaturalist2018 training dataset split
+into 70/10/20 for train/val/test streams. This method instead uses the full
+iNaturalist2018 training set to make the <cite>train_stream</cite>, whereas the
+<cite>test_stream</cite> is defined by the original iNaturalist2018 validation data.</p>
+<p>The returned scenario will return experiences containing all patterns of a
+subset of classes, which means that each class is only seen “once”.
+This is one of the most common scenarios in the Continual Learning
+literature. Common names used in literature to describe this kind of
+scenario are “Class Incremental”, “New Classes”, etc. By default,
+an equal amount of classes will be assigned to each experience.</p>
+<p>This generator doesn’t force a choice on the availability of task labels,
+a choice that is left to the user (see the <cite>return_task_id</cite> parameter for
+more info on task labels).</p>
+<p>The scenario instance returned by this method will have two fields,
+<cite>train_stream</cite> and <cite>test_stream</cite>, which can be iterated to obtain
+training and test <code class="xref py py-class docutils literal notranslate"><span class="pre">Experience</span></code>. Each Experience contains the
+<cite>dataset</cite> and the associated task label.</p>
+<p>The scenario API is quite simple and is uniform across all scenario
+generators. It is recommended to check the tutorial of the “benchmark” API,
+which contains usage examples ranging from “basic” to “advanced”.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>root</strong> – Base path where Inaturalist data is stored.</p></li>
+<li><p><strong>super_categories</strong> – The list of supercategories which define the</p></li>
+</ul>
+</dd>
+</dl>
+<p>tasks, i.e. each task consists of all classes in a super-category.
+:param download: If true and the dataset is not present in the computer,
+this method will automatically download and store it. This will take 120G
+for the train/val set.
+:param return_task_id: if True, a progressive task id is returned for every</p>
+<blockquote>
+<div><p>experience. If False, all experiences will have a task ID of 0.</p>
+</div></blockquote>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>seed</strong> – A valid int used to initialize the random number generator.
+Can be None.</p></li>
+<li><p><strong>train_transform</strong> – The transformation to apply to the training data,
+e.g. a random crop, a normalization or a concatenation of different
+transformations (see torchvision.transform documentation for a
+comprehensive list of possible transformations).
+If no transformation is passed, the default train transformation
+will be used.</p></li>
+<li><p><strong>eval_transform</strong> – The transformation to apply to the test data,
+e.g. a random crop, a normalization or a concatenation of different
+transformations (see torchvision.transform documentation for a
+comprehensive list of possible transformations).
+If no transformation is passed, the default test transformation
+will be used.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>A properly initialized <code class="xref py py-class docutils literal notranslate"><span class="pre">NCScenario</span></code> instance.</p>
+</dd>
+</dl>
+</dd></dl>
+
+</div>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &#169; Copyright 2021, ContinualAI.
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

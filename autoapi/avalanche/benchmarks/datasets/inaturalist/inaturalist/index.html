@@ -1,0 +1,317 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>avalanche.benchmarks.datasets.inaturalist.inaturalist &mdash; Avalanche 0.1 documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="../../../../../../_static/css/mystyle.css" type="text/css" />
+  <link rel="stylesheet" href="../../../../../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../../../../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../../../../../_static/css/mystyle.css" type="text/css" />
+  <link rel="stylesheet" href="../../../../../../_static/graphviz.css" type="text/css" />
+
+  
+  
+
+  
+  
+
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../../../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../../../../../" src="../../../../../../_static/documentation_options.js"></script>
+        <script data-url_root="../../../../../../" id="documentation_options" src="../../../../../../_static/documentation_options.js"></script>
+        <script src="../../../../../../_static/jquery.js"></script>
+        <script src="../../../../../../_static/underscore.js"></script>
+        <script src="../../../../../../_static/doctools.js"></script>
+    
+    <script type="text/javascript" src="../../../../../../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="../../../../../../genindex/" />
+    <link rel="search" title="Search" href="../../../../../../search/" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../../../../../">
+          
+
+          
+            
+            <img src="../../../../../../_static/avalanche_logo.png" class="logo" alt="Logo"/>
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../../../../search/" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Avalanche API:</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="../../../../../">API Reference</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="../../../../"><code class="xref py py-mod docutils literal notranslate"><span class="pre">avalanche</span></code></a><ul class="current">
+<li class="toctree-l3 current"><a class="reference internal" href="../../../../#subpackages">Subpackages</a><ul class="current">
+<li class="toctree-l4 current"><a class="reference internal" href="../../../"><code class="xref py py-mod docutils literal notranslate"><span class="pre">avalanche.benchmarks</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../evaluation/"><code class="xref py py-mod docutils literal notranslate"><span class="pre">avalanche.evaluation</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../logging/"><code class="xref py py-mod docutils literal notranslate"><span class="pre">avalanche.logging</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../models/"><code class="xref py py-mod docutils literal notranslate"><span class="pre">avalanche.models</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../training/"><code class="xref py py-mod docutils literal notranslate"><span class="pre">avalanche.training</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../#submodules">Submodules</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../../core/"><code class="xref py py-mod docutils literal notranslate"><span class="pre">avalanche.core</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../#package-contents">Package Contents</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../../#avalanche.__version__">__version__</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../../../../">Avalanche</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../../../../../" class="icon icon-home"></a> &raquo;</li>
+        
+      <li><code class="xref py py-mod docutils literal notranslate"><span class="pre">avalanche.benchmarks.datasets.inaturalist.inaturalist</span></code></li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+          
+            <a href="../../../../../../_sources/autoapi/avalanche/benchmarks/datasets/inaturalist/inaturalist/index.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="module-avalanche.benchmarks.datasets.inaturalist.inaturalist">
+<span id="avalanche-benchmarks-datasets-inaturalist-inaturalist"></span><h1><a class="reference internal" href="#module-avalanche.benchmarks.datasets.inaturalist.inaturalist" title="avalanche.benchmarks.datasets.inaturalist.inaturalist"><code class="xref py py-mod docutils literal notranslate"><span class="pre">avalanche.benchmarks.datasets.inaturalist.inaturalist</span></code></a><a class="headerlink" href="#module-avalanche.benchmarks.datasets.inaturalist.inaturalist" title="Permalink to this headline">¶</a></h1>
+<p>INATURALIST2018 Pytorch Dataset
+Info: <a class="reference external" href="https://www.kaggle.com/c/inaturalist-2018/data">https://www.kaggle.com/c/inaturalist-2018/data</a>
+Download: <a class="reference external" href="https://github.com/visipedia/inat_comp/tree/master/2018">https://github.com/visipedia/inat_comp/tree/master/2018</a>
+Based on survey in CL: <a class="reference external" href="https://ieeexplore.ieee.org/document/9349197">https://ieeexplore.ieee.org/document/9349197</a></p>
+<p>Images have a max dimension of 800px and have been converted to JPEG format
+You can select supercategories to include. By default 10 Super categories are
+selected from the 14 available, based on at least having 100 categories (leaving
+out Chromista, Protozoa, Bacteria), and omitting a random super category from
+the remainder (Actinopterygii).</p>
+<dl class="simple">
+<dt>Example filename from the JSON:</dt><dd><p>“file_name”: “train_val2018/Insecta/1455/994fa5…f1e360d34aae943.jpg”</p>
+</dd>
+</dl>
+<div class="section" id="module-contents">
+<h2>Module Contents<a class="headerlink" href="#module-contents" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="classes">
+<h3>Classes<a class="headerlink" href="#classes" title="Permalink to this headline">¶</a></h3>
+<table class="longtable docutils align-default">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 90%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="#avalanche.benchmarks.datasets.inaturalist.inaturalist.INATURALIST2018" title="avalanche.benchmarks.datasets.inaturalist.inaturalist.INATURALIST2018"><code class="xref py py-obj docutils literal notranslate"><span class="pre">INATURALIST2018</span></code></a></p></td>
+<td><p>INATURALIST Pytorch Dataset</p></td>
+</tr>
+</tbody>
+</table>
+<dl class="py class">
+<dt class="sig sig-object py" id="avalanche.benchmarks.datasets.inaturalist.inaturalist.INATURALIST2018">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">avalanche.benchmarks.datasets.inaturalist.inaturalist.</span></span><span class="sig-name descname"><span class="pre">INATURALIST2018</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">root</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">expanduser('~')</span> <span class="pre">+</span> <span class="pre">'/.avalanche/data/inaturalist2018/'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">split</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'train'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">transform</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">ToTensor()</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">target_transform</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">loader</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">pil_loader</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">download</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">supcats</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../../_modules/avalanche/benchmarks/datasets/inaturalist/inaturalist/#INATURALIST2018"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.benchmarks.datasets.inaturalist.inaturalist.INATURALIST2018" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">torch.utils.data.dataset.Dataset</span></code></p>
+<p>INATURALIST Pytorch Dataset</p>
+<p>For default selection of 10 supercategories:
+- Training Images in total: 428,830
+- Validation Images in total:  23,229
+- Shape of images: torch.Size([1, 3, 600, 800])
+- Class counts per supercategory (both train/val):</p>
+<blockquote>
+<div><dl class="simple">
+<dt>{ ‘Amphibia’: 144,</dt><dd><p>‘Animalia’: 178,
+‘Arachnida’: 114,
+‘Aves’: 1258,
+‘Fungi’: 321,
+‘Insecta’: 2031,
+‘Mammalia’: 234,
+‘Mollusca’: 262,
+‘Plantae’: 2917,
+‘Reptilia’: 284}</p>
+</dd>
+</dl>
+</div></blockquote>
+<p>Initialize self.  See help(type(self)) for accurate signature.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="avalanche.benchmarks.datasets.inaturalist.inaturalist.INATURALIST2018.splits">
+<span class="sig-name descname"><span class="pre">splits</span></span><em class="property"> <span class="pre">=</span> <span class="pre">['train',</span> <span class="pre">'val',</span> <span class="pre">'test']</span></em><a class="headerlink" href="#avalanche.benchmarks.datasets.inaturalist.inaturalist.INATURALIST2018.splits" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="avalanche.benchmarks.datasets.inaturalist.inaturalist.INATURALIST2018.def_supcats">
+<span class="sig-name descname"><span class="pre">def_supcats</span></span><em class="property"> <span class="pre">=</span> <span class="pre">['Amphibia',</span> <span class="pre">'Animalia',</span> <span class="pre">'Arachnida',</span> <span class="pre">'Aves',</span> <span class="pre">'Fungi',</span> <span class="pre">'Insecta',</span> <span class="pre">'Mammalia',</span> <span class="pre">'Mollusca',</span> <span class="pre">'Plantae',</span> <span class="pre">'Reptilia']</span></em><a class="headerlink" href="#avalanche.benchmarks.datasets.inaturalist.inaturalist.INATURALIST2018.def_supcats" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="avalanche.benchmarks.datasets.inaturalist.inaturalist.INATURALIST2018.__getitem__">
+<span class="sig-name descname"><span class="pre">__getitem__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">index</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../../_modules/avalanche/benchmarks/datasets/inaturalist/inaturalist/#INATURALIST2018.__getitem__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.benchmarks.datasets.inaturalist.inaturalist.INATURALIST2018.__getitem__" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="simple">
+<dt>Args:</dt><dd><p>index (int): Index</p>
+</dd>
+<dt>Returns:</dt><dd><dl class="simple">
+<dt>tuple: (sample, target) where target is class_index of the target</dt><dd><p>class.</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="avalanche.benchmarks.datasets.inaturalist.inaturalist.INATURALIST2018.__len__">
+<span class="sig-name descname"><span class="pre">__len__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../../_modules/avalanche/benchmarks/datasets/inaturalist/inaturalist/#INATURALIST2018.__len__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.benchmarks.datasets.inaturalist.inaturalist.INATURALIST2018.__len__" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &#169; Copyright 2021, ContinualAI.
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

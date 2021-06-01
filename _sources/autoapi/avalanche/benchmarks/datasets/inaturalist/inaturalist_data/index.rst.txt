@@ -1,0 +1,100 @@
+:mod:`avalanche.benchmarks.datasets.inaturalist.inaturalist_data`
+=================================================================
+
+.. py:module:: avalanche.benchmarks.datasets.inaturalist.inaturalist_data
+
+.. autoapi-nested-parse::
+
+   INATURALIST2018 Data handling utilities
+   For more info see: https://github.com/visipedia/inat_comp/tree/master/2018
+   There are a total of 8,142 species in the dataset, with 437,513 training and
+   24,426 validation images. We only use the imbalanced training data.
+   Images are 800x600.
+   Un-tarring the images creates a directory structure like
+   train_val2018/<supercategory>/<category>/<image>.jpg. This may take a while.
+
+
+   JSON is in COCO format like:
+       {
+         "info" : info,
+         "images" : [image],
+         "categories" : [category],
+         "annotations" : [annotation],
+         "licenses" : [license]
+       }
+
+       info{
+         "year" : int,
+         "version" : str,
+         "description" : str,
+         "contributor" : str,
+         "url" : str,
+         "date_created" : datetime,
+       }
+
+       image{
+         "id" : int,
+         "width" : int,
+         "height" : int,
+         "file_name" : str,
+         "license" : int,
+         "rights_holder" : str
+       }
+
+       category{
+         "id" : int,
+         "name" : str,
+         "supercategory" : str,
+         "kingdom" : str,
+         "phylum" : str,
+         "class" : str,
+         "order" : str,
+         "family" : str,
+         "genus" : str
+       }
+
+       annotation{
+         "id" : int,
+         "image_id" : int,
+         "category_id" : int
+       }
+
+       license{
+         "id" : int,
+         "name" : str,
+         "url" : str
+       }
+
+
+
+Module Contents
+---------------
+
+Classes
+~~~~~~~
+
+.. autoapisummary::
+
+   avalanche.benchmarks.datasets.inaturalist.inaturalist_data.INATURALIST_DATA
+
+
+
+.. py:class:: INATURALIST_DATA(data_folder='data/', trainval=True)
+
+   Bases: :class:`object`
+
+   INATURALIST downloader.
+
+   Args:
+       data_folder (string): folder in which to download
+       inaturalist dataset.
+
+   .. method:: download_inaturalist(self)
+
+      Download and extract inaturalist data
+
+      :param extra: download also additional INATURALIST data not strictly
+          required by the data loader.
+
+
+

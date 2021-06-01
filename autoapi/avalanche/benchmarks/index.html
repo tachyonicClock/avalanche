@@ -199,6 +199,7 @@ made available.</p>
 <li class="toctree-l2"><a class="reference internal" href="classic/ccub200/"><code class="xref py py-mod docutils literal notranslate"><span class="pre">avalanche.benchmarks.classic.ccub200</span></code></a></li>
 <li class="toctree-l2"><a class="reference internal" href="classic/cfashion_mnist/"><code class="xref py py-mod docutils literal notranslate"><span class="pre">avalanche.benchmarks.classic.cfashion_mnist</span></code></a></li>
 <li class="toctree-l2"><a class="reference internal" href="classic/cimagenet/"><code class="xref py py-mod docutils literal notranslate"><span class="pre">avalanche.benchmarks.classic.cimagenet</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="classic/cinaturalist/"><code class="xref py py-mod docutils literal notranslate"><span class="pre">avalanche.benchmarks.classic.cinaturalist</span></code></a></li>
 <li class="toctree-l2"><a class="reference internal" href="classic/cmnist/"><code class="xref py py-mod docutils literal notranslate"><span class="pre">avalanche.benchmarks.classic.cmnist</span></code></a></li>
 <li class="toctree-l2"><a class="reference internal" href="classic/comniglot/"><code class="xref py py-mod docutils literal notranslate"><span class="pre">avalanche.benchmarks.classic.comniglot</span></code></a></li>
 <li class="toctree-l2"><a class="reference internal" href="classic/core50/"><code class="xref py py-mod docutils literal notranslate"><span class="pre">avalanche.benchmarks.classic.core50</span></code></a></li>
@@ -215,6 +216,11 @@ made available.</p>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="datasets/cub200/"><code class="xref py py-mod docutils literal notranslate"><span class="pre">avalanche.benchmarks.datasets.cub200</span></code></a><ul>
 <li class="toctree-l3"><a class="reference internal" href="datasets/cub200/cub200/"><code class="xref py py-mod docutils literal notranslate"><span class="pre">avalanche.benchmarks.datasets.cub200.cub200</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="datasets/inaturalist/"><code class="xref py py-mod docutils literal notranslate"><span class="pre">avalanche.benchmarks.datasets.inaturalist</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="datasets/inaturalist/inaturalist/"><code class="xref py py-mod docutils literal notranslate"><span class="pre">avalanche.benchmarks.datasets.inaturalist.inaturalist</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="datasets/inaturalist/inaturalist_data/"><code class="xref py py-mod docutils literal notranslate"><span class="pre">avalanche.benchmarks.datasets.inaturalist.inaturalist_data</span></code></a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="datasets/mini_imagenet/"><code class="xref py py-mod docutils literal notranslate"><span class="pre">avalanche.benchmarks.datasets.mini_imagenet</span></code></a><ul>
@@ -401,7 +407,7 @@ made available.</p>
 <td><p>Creates a CL scenario using the Fashion MNIST dataset.</p></td>
 </tr>
 <tr class="row-odd"><td><p><a class="reference internal" href="#avalanche.benchmarks.SplitImageNet" title="avalanche.benchmarks.SplitImageNet"><code class="xref py py-obj docutils literal notranslate"><span class="pre">SplitImageNet</span></code></a>(root, n_experiences=10, per_exp_classes=None, return_task_id=False, seed=0, fixed_class_order=None, train_transform=_default_train_transform, eval_transform=_default_eval_transform)</p></td>
-<td><p>Creates a CL scenario using the Tiny ImageNet dataset.</p></td>
+<td><p>Creates a CL scenario using the ImageNet dataset.</p></td>
 </tr>
 <tr class="row-even"><td><p><a class="reference internal" href="#avalanche.benchmarks.SplitMNIST" title="avalanche.benchmarks.SplitMNIST"><code class="xref py py-obj docutils literal notranslate"><span class="pre">SplitMNIST</span></code></a>(n_experiences: int, return_task_id=False, seed: Optional[int] = None, fixed_class_order: Optional[Sequence[int]] = None, train_transform=_default_mnist_train_transform, eval_transform=_default_mnist_eval_transform)</p></td>
 <td><p>Creates a CL scenario using the MNIST dataset.</p></td>
@@ -2715,7 +2721,7 @@ will be used.</p></li>
 <dl class="py function">
 <dt class="sig sig-object py" id="avalanche.benchmarks.SplitImageNet">
 <span class="sig-prename descclassname"><span class="pre">avalanche.benchmarks.</span></span><span class="sig-name descname"><span class="pre">SplitImageNet</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">root</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n_experiences</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">10</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">per_exp_classes</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">return_task_id</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">seed</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fixed_class_order</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">train_transform</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">_default_train_transform</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">eval_transform</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">_default_eval_transform</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../_modules/avalanche/benchmarks/classic/cimagenet/#SplitImageNet"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.benchmarks.SplitImageNet" title="Permalink to this definition">¶</a></dt>
-<dd><p>Creates a CL scenario using the Tiny ImageNet dataset.</p>
+<dd><p>Creates a CL scenario using the ImageNet dataset.</p>
 <p>If the dataset is not present in the computer, <strong>this method will NOT be
 able automatically download</strong> and store it.</p>
 <p>The returned scenario will return experiences containing all patterns of a

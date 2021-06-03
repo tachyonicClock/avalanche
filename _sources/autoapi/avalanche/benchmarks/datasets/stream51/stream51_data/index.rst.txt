@@ -7,25 +7,8 @@
 Module Contents
 ---------------
 
-Classes
-~~~~~~~
+.. data:: name
+   :annotation: = ['Stream-51.zip', 'http://klab.cis.rit.edu/files/Stream-51.zip', '5f34d542b71af7e5ecb2226d1bc7297c']
 
-.. autoapisummary::
-
-   avalanche.benchmarks.datasets.stream51.stream51_data.STREAM51_DATA
-
-
-
-.. py:class:: STREAM51_DATA(data_folder='data/')
-
-   Bases: :class:`object`
-
-   STREAM51 downloader.
-
-   Args:
-       data_folder (string): folder in which to download stream51 dataset.
-
-   .. method:: download_stream51(self)
-
-
+   
 

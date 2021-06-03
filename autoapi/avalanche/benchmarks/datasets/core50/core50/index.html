@@ -193,16 +193,31 @@
 <col style="width: 90%" />
 </colgroup>
 <tbody>
-<tr class="row-odd"><td><p><a class="reference internal" href="#avalanche.benchmarks.datasets.core50.core50.CORe50" title="avalanche.benchmarks.datasets.core50.core50.CORe50"><code class="xref py py-obj docutils literal notranslate"><span class="pre">CORe50</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#avalanche.benchmarks.datasets.core50.core50.CORe50Dataset" title="avalanche.benchmarks.datasets.core50.core50.CORe50Dataset"><code class="xref py py-obj docutils literal notranslate"><span class="pre">CORe50Dataset</span></code></a></p></td>
 <td><p>CORe50 Pytorch Dataset</p></td>
 </tr>
 </tbody>
 </table>
+</div>
+<div class="section" id="functions">
+<h3>Functions<a class="headerlink" href="#functions" title="Permalink to this headline">¶</a></h3>
+<table class="longtable docutils align-default">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 90%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="#avalanche.benchmarks.datasets.core50.core50.CORe50" title="avalanche.benchmarks.datasets.core50.core50.CORe50"><code class="xref py py-obj docutils literal notranslate"><span class="pre">CORe50</span></code></a>(*args, **kwargs)</p></td>
+<td><p></p></td>
+</tr>
+</tbody>
+</table>
 <dl class="py class">
-<dt class="sig sig-object py" id="avalanche.benchmarks.datasets.core50.core50.CORe50">
-<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">avalanche.benchmarks.datasets.core50.core50.</span></span><span class="sig-name descname"><span class="pre">CORe50</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">root</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">expanduser('~')</span> <span class="pre">+</span> <span class="pre">'/.avalanche/data/core50/'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">train</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">transform</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">ToTensor()</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">target_transform</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">loader</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">pil_loader</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">download</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mini</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">object_level</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../../_modules/avalanche/benchmarks/datasets/core50/core50/#CORe50"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.benchmarks.datasets.core50.core50.CORe50" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">torch.utils.data.dataset.Dataset</span></code></p>
+<dt class="sig sig-object py" id="avalanche.benchmarks.datasets.core50.core50.CORe50Dataset">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">avalanche.benchmarks.datasets.core50.core50.</span></span><span class="sig-name descname"><span class="pre">CORe50Dataset</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">root</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span> </span><span class="pre">Path</span><span class="p"><span class="pre">]</span></span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">get_default_dataset_location('core50')</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">train</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">transform</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">target_transform</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">loader</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">default_loader</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">download</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mini</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">object_level</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../../_modules/avalanche/benchmarks/datasets/core50/core50/#CORe50Dataset"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.benchmarks.datasets.core50.core50.CORe50Dataset" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="../../downloadable_dataset/#avalanche.benchmarks.datasets.downloadable_dataset.DownloadableDataset" title="avalanche.benchmarks.datasets.downloadable_dataset.DownloadableDataset"><code class="xref py py-class docutils literal notranslate"><span class="pre">avalanche.benchmarks.datasets.downloadable_dataset.DownloadableDataset</span></code></a></p>
 <p>CORe50 Pytorch Dataset</p>
+<p>Creates an instance of the CORe50 dataset.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
@@ -211,7 +226,7 @@
 <li><p><strong>transform</strong> – eventual transformations to be applied.</p></li>
 <li><p><strong>target_transform</strong> – eventual transformation to be applied to the
 targets.</p></li>
-<li><p><strong>loader</strong> – data loader method from disk.</p></li>
+<li><p><strong>loader</strong> – the procedure to load the instance from the storage.</p></li>
 <li><p><strong>download</strong> – boolean to automatically download data. Default to
 True.</p></li>
 <li><p><strong>mini</strong> – boolean to use the 32x32 version instead of the 128x128.
@@ -223,8 +238,8 @@ category based: 50 or 10 way classification problem. Default to True
 </dd>
 </dl>
 <dl class="py method">
-<dt class="sig sig-object py" id="avalanche.benchmarks.datasets.core50.core50.CORe50.__getitem__">
-<span class="sig-name descname"><span class="pre">__getitem__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">index</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../../_modules/avalanche/benchmarks/datasets/core50/core50/#CORe50.__getitem__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.benchmarks.datasets.core50.core50.CORe50.__getitem__" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="avalanche.benchmarks.datasets.core50.core50.CORe50Dataset.__getitem__">
+<span class="sig-name descname"><span class="pre">__getitem__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">index</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../../_modules/avalanche/benchmarks/datasets/core50/core50/#CORe50Dataset.__getitem__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.benchmarks.datasets.core50.core50.CORe50Dataset.__getitem__" title="Permalink to this definition">¶</a></dt>
 <dd><dl class="simple">
 <dt>Args:</dt><dd><p>index (int): Index</p>
 </dd>
@@ -237,11 +252,16 @@ category based: 50 or 10 way classification problem. Default to True
 </dd></dl>
 
 <dl class="py method">
-<dt class="sig sig-object py" id="avalanche.benchmarks.datasets.core50.core50.CORe50.__len__">
-<span class="sig-name descname"><span class="pre">__len__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../../_modules/avalanche/benchmarks/datasets/core50/core50/#CORe50.__len__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.benchmarks.datasets.core50.core50.CORe50.__len__" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="avalanche.benchmarks.datasets.core50.core50.CORe50Dataset.__len__">
+<span class="sig-name descname"><span class="pre">__len__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../../_modules/avalanche/benchmarks/datasets/core50/core50/#CORe50Dataset.__len__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.benchmarks.datasets.core50.core50.CORe50Dataset.__len__" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 </dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="avalanche.benchmarks.datasets.core50.core50.CORe50">
+<span class="sig-prename descclassname"><span class="pre">avalanche.benchmarks.datasets.core50.core50.</span></span><span class="sig-name descname"><span class="pre">CORe50</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../../_modules/avalanche/benchmarks/datasets/core50/core50/#CORe50"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.benchmarks.datasets.core50.core50.CORe50" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
 
 </div>
 </div>

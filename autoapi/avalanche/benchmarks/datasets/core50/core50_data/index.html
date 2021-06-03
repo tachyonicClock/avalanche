@@ -182,51 +182,29 @@
             
   <div class="section" id="module-avalanche.benchmarks.datasets.core50.core50_data">
 <span id="avalanche-benchmarks-datasets-core50-core50-data"></span><h1><a class="reference internal" href="#module-avalanche.benchmarks.datasets.core50.core50_data" title="avalanche.benchmarks.datasets.core50.core50_data"><code class="xref py py-mod docutils literal notranslate"><span class="pre">avalanche.benchmarks.datasets.core50.core50_data</span></code></a><a class="headerlink" href="#module-avalanche.benchmarks.datasets.core50.core50_data" title="Permalink to this headline">¶</a></h1>
-<p>CORe50 Data handling utilities</p>
+<p>CORe50 Metadata</p>
 <div class="section" id="module-contents">
 <h2>Module Contents<a class="headerlink" href="#module-contents" title="Permalink to this headline">¶</a></h2>
-<div class="section" id="classes">
-<h3>Classes<a class="headerlink" href="#classes" title="Permalink to this headline">¶</a></h3>
-<table class="longtable docutils align-default">
-<colgroup>
-<col style="width: 10%" />
-<col style="width: 90%" />
-</colgroup>
-<tbody>
-<tr class="row-odd"><td><p><a class="reference internal" href="#avalanche.benchmarks.datasets.core50.core50_data.CORE50_DATA" title="avalanche.benchmarks.datasets.core50.core50_data.CORE50_DATA"><code class="xref py py-obj docutils literal notranslate"><span class="pre">CORE50_DATA</span></code></a></p></td>
-<td><p>CORE50 downloader.</p></td>
-</tr>
-</tbody>
-</table>
-<dl class="py class">
-<dt class="sig sig-object py" id="avalanche.benchmarks.datasets.core50.core50_data.CORE50_DATA">
-<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">avalanche.benchmarks.datasets.core50.core50_data.</span></span><span class="sig-name descname"><span class="pre">CORE50_DATA</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data_folder</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'data/'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mini</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">obj_lvl</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../../_modules/avalanche/benchmarks/datasets/core50/core50_data/#CORE50_DATA"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.benchmarks.datasets.core50.core50_data.CORE50_DATA" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
-<p>CORE50 downloader.</p>
-<dl>
-<dt>Args:</dt><dd><p>data_folder (string): folder in which to download core50 dataset.
-mini (bool): if we need to download/use only 32x32 data.
-obj_lvl: classification level (object or categories level).</p>
-<blockquote>
-<div><p>Default to objec-level (50 classes).</p>
-</div></blockquote>
-</dd>
-</dl>
-<dl class="py method">
-<dt class="sig sig-object py" id="avalanche.benchmarks.datasets.core50.core50_data.CORE50_DATA.download_core50">
-<span class="sig-name descname"><span class="pre">download_core50</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">extra</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../../_modules/avalanche/benchmarks/datasets/core50/core50_data/#CORE50_DATA.download_core50"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.benchmarks.datasets.core50.core50_data.CORE50_DATA.download_core50" title="Permalink to this definition">¶</a></dt>
-<dd><p>Download and extract CORe50 data</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>extra</strong> – download also additional CORe50 data not strictly
-required by the data loader.</p>
-</dd>
-</dl>
-</dd></dl>
+<dl class="py data">
+<dt class="sig sig-object py" id="avalanche.benchmarks.datasets.core50.core50_data.data">
+<span class="sig-prename descclassname"><span class="pre">avalanche.benchmarks.datasets.core50.core50_data.</span></span><span class="sig-name descname"><span class="pre">data</span></span><em class="property"> <span class="pre">=</span> <span class="pre">[['core50_128x128.zip',</span> <span class="pre">'http://bias.csr.unibo.it/maltoni/download/core50/core50_128x128.zip',</span> <span class="pre">'745f3373fed08d69343f1058ee559e13'],</span> <span class="pre">['batches_filelists.zip',</span> <span class="pre">'https://vlomonaco.github.io/core50/data/batches_filelists.zip',</span> <span class="pre">'e3297508a8998ba0c99a83d6b36bde62'],</span> <span class="pre">['batches_filelists_NICv2.zip',</span> <span class="pre">'https://vlomonaco.github.io/core50/data/batches_filelists_NICv2.zip',</span> <span class="pre">'460f980a6c85b86b1ec8e7c6067bb7a3'],</span> <span class="pre">['paths.pkl',</span> <span class="pre">'https://vlomonaco.github.io/core50/data/paths.pkl',</span> <span class="pre">'b568f86998849184df3ec3465290f1b0'],</span> <span class="pre">['LUP.pkl',</span> <span class="pre">'https://vlomonaco.github.io/core50/data/LUP.pkl',</span> <span class="pre">'33afc26faa460aca98739137fdfa606e'],</span> <span class="pre">['labels.pkl',</span> <span class="pre">'https://vlomonaco.github.io/core50/data/labels.pkl',</span> <span class="pre">'281c95774306a2196f4505f22fd60ab1'],</span> <span class="pre">['labels2names.pkl',</span> <span class="pre">'https://vlomonaco.github.io/core50/data/labels2names.pkl',</span> <span class="pre">'557d0b9f0ec32765ccea65624aa51b3b']]</span></em><a class="headerlink" href="#avalanche.benchmarks.datasets.core50.core50_data.data" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
 
-</dd></dl>
+<dl class="py data">
+<dt class="sig sig-object py" id="avalanche.benchmarks.datasets.core50.core50_data.extra_data">
+<span class="sig-prename descclassname"><span class="pre">avalanche.benchmarks.datasets.core50.core50_data.</span></span><span class="sig-name descname"><span class="pre">extra_data</span></span><em class="property"> <span class="pre">=</span> <span class="pre">[['core50_imgs.npz',</span> <span class="pre">'http://bias.csr.unibo.it/maltoni/download/core50/core50_imgs.npz'],</span> <span class="pre">['core50_32x32.zip',</span> <span class="pre">'http://vps.continualai.org/data/core50_32x32.zip',</span> <span class="pre">'d89d34cdc0281fa84074430e9a22b728']]</span></em><a class="headerlink" href="#avalanche.benchmarks.datasets.core50.core50_data.extra_data" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
 
-</div>
+<dl class="py data">
+<dt class="sig sig-object py" id="avalanche.benchmarks.datasets.core50.core50_data.scen2dirs">
+<span class="sig-prename descclassname"><span class="pre">avalanche.benchmarks.datasets.core50.core50_data.</span></span><span class="sig-name descname"><span class="pre">scen2dirs</span></span><a class="headerlink" href="#avalanche.benchmarks.datasets.core50.core50_data.scen2dirs" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py data">
+<dt class="sig sig-object py" id="avalanche.benchmarks.datasets.core50.core50_data.name2cat">
+<span class="sig-prename descclassname"><span class="pre">avalanche.benchmarks.datasets.core50.core50_data.</span></span><span class="sig-name descname"><span class="pre">name2cat</span></span><a class="headerlink" href="#avalanche.benchmarks.datasets.core50.core50_data.name2cat" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
 </div>
 </div>
 

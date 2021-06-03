@@ -193,12 +193,15 @@
 <span class="sd">&quot;&quot;&quot; This module contains the high-level CORe50 scenario generator. It</span>
 <span class="sd">basically returns a iterable scenario object ``GenericCLScenario`` given a</span>
 <span class="sd">number of configuration parameters.&quot;&quot;&quot;</span>
+<span class="kn">from</span> <span class="nn">pathlib</span> <span class="kn">import</span> <span class="n">Path</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Union</span>
+
 <span class="kn">from</span> <span class="nn">torchvision.transforms</span> <span class="kn">import</span> <span class="n">ToTensor</span>
 
-<span class="kn">from</span> <span class="nn">avalanche.benchmarks.datasets.core50.core50_data</span> <span class="kn">import</span> <span class="n">CORE50_DATA</span>
+<span class="kn">from</span> <span class="nn">avalanche.benchmarks.datasets</span> <span class="kn">import</span> <span class="n">get_default_dataset_location</span>
 <span class="kn">from</span> <span class="nn">avalanche.benchmarks.scenarios.generic_benchmark_creation</span> <span class="kn">import</span> \
     <span class="n">create_generic_benchmark_from_filelists</span>
-<span class="kn">from</span> <span class="nn">os.path</span> <span class="kn">import</span> <span class="n">expanduser</span>
+<span class="kn">from</span> <span class="nn">avalanche.benchmarks.datasets.core50.core50</span> <span class="kn">import</span> <span class="n">CORe50Dataset</span>
 
 <span class="n">nbatch</span> <span class="o">=</span> <span class="p">{</span>
     <span class="s1">&#39;ni&#39;</span><span class="p">:</span> <span class="mi">8</span><span class="p">,</span>
@@ -219,11 +222,11 @@
 <span class="p">}</span>
 
 
-<div class="viewcode-block" id="CORe50"><a class="viewcode-back" href="../../../../../autoapi/avalanche/benchmarks/#avalanche.benchmarks.classic.core50.CORe50">[docs]</a><span class="k">def</span> <span class="nf">CORe50</span><span class="p">(</span><span class="n">root</span><span class="o">=</span><span class="n">expanduser</span><span class="p">(</span><span class="s2">&quot;~&quot;</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot;/.avalanche/data/core50/&quot;</span><span class="p">,</span>
-           <span class="n">scenario</span><span class="o">=</span><span class="s2">&quot;nicv2_391&quot;</span><span class="p">,</span>
-           <span class="n">run</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>
-           <span class="n">object_lvl</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
-           <span class="n">mini</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+<div class="viewcode-block" id="CORe50"><a class="viewcode-back" href="../../../../../autoapi/avalanche/benchmarks/#avalanche.benchmarks.classic.core50.CORe50">[docs]</a><span class="k">def</span> <span class="nf">CORe50</span><span class="p">(</span><span class="n">root</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Path</span><span class="p">]</span> <span class="o">=</span> <span class="n">get_default_dataset_location</span><span class="p">(</span><span class="s1">&#39;core50&#39;</span><span class="p">),</span>
+           <span class="n">scenario</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;nicv2_391&quot;</span><span class="p">,</span>
+           <span class="n">run</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span>
+           <span class="n">object_lvl</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
+           <span class="n">mini</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
            <span class="n">train_transform</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
            <span class="n">eval_transform</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
@@ -274,32 +277,31 @@
                                         <span class="s2">&quot;recognized: it should be &#39;ni&#39;, &#39;nc&#39;,&quot;</span> \
                                         <span class="s2">&quot;&#39;nic&#39;, &#39;nicv2_79&#39;, &#39;nicv2_196&#39; or &quot;</span> \
                                         <span class="s2">&quot;&#39;nicv2_391&#39;.&quot;</span>
-    <span class="k">if</span> <span class="n">root</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="n">core_data</span> <span class="o">=</span> <span class="n">CORE50_DATA</span><span class="p">(</span><span class="n">mini</span><span class="o">=</span><span class="n">mini</span><span class="p">)</span>
-    <span class="k">else</span><span class="p">:</span>
-        <span class="n">core_data</span> <span class="o">=</span> <span class="n">CORE50_DATA</span><span class="p">(</span><span class="n">data_folder</span><span class="o">=</span><span class="n">root</span><span class="p">,</span> <span class="n">mini</span><span class="o">=</span><span class="n">mini</span><span class="p">)</span>
 
-    <span class="n">root</span> <span class="o">=</span> <span class="n">core_data</span><span class="o">.</span><span class="n">data_folder</span>
+    <span class="c1"># Download the dataset and initialize filelists</span>
+    <span class="n">core_data</span> <span class="o">=</span> <span class="n">CORe50Dataset</span><span class="p">(</span><span class="n">root</span><span class="o">=</span><span class="n">root</span><span class="p">,</span> <span class="n">mini</span><span class="o">=</span><span class="n">mini</span><span class="p">)</span>
+
+    <span class="n">root</span> <span class="o">=</span> <span class="n">core_data</span><span class="o">.</span><span class="n">root</span>
     <span class="k">if</span> <span class="n">mini</span><span class="p">:</span>
-        <span class="n">bp</span> <span class="o">=</span> <span class="s2">&quot;core50_32x32/&quot;</span>
+        <span class="n">bp</span> <span class="o">=</span> <span class="s2">&quot;core50_32x32&quot;</span>
     <span class="k">else</span><span class="p">:</span>
-        <span class="n">bp</span> <span class="o">=</span> <span class="s2">&quot;core50_128x128/&quot;</span>
-    <span class="n">root_img</span> <span class="o">=</span> <span class="n">root</span> <span class="o">+</span> <span class="n">bp</span>
+        <span class="n">bp</span> <span class="o">=</span> <span class="s2">&quot;core50_128x128&quot;</span>
+    <span class="n">root_img</span> <span class="o">=</span> <span class="n">root</span> <span class="o">/</span> <span class="n">bp</span>
 
     <span class="k">if</span> <span class="n">object_lvl</span><span class="p">:</span>
         <span class="n">suffix</span> <span class="o">=</span> <span class="s2">&quot;/&quot;</span>
     <span class="k">else</span><span class="p">:</span>
         <span class="n">suffix</span> <span class="o">=</span> <span class="s2">&quot;_cat/&quot;</span>
-    <span class="n">filelists_bp</span> <span class="o">=</span> <span class="n">scen2dirs</span><span class="p">[</span><span class="n">scenario</span><span class="p">][:</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="n">suffix</span> <span class="o">+</span> <span class="s2">&quot;run&quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">run</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot;/&quot;</span>
+    <span class="n">filelists_bp</span> <span class="o">=</span> <span class="n">scen2dirs</span><span class="p">[</span><span class="n">scenario</span><span class="p">][:</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="n">suffix</span> <span class="o">+</span> <span class="s2">&quot;run&quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">run</span><span class="p">)</span>
     <span class="n">train_failists_paths</span> <span class="o">=</span> <span class="p">[]</span>
-    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">nbatch</span><span class="p">[</span><span class="n">scenario</span><span class="p">]):</span>
+    <span class="k">for</span> <span class="n">batch_id</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">nbatch</span><span class="p">[</span><span class="n">scenario</span><span class="p">]):</span>
         <span class="n">train_failists_paths</span><span class="o">.</span><span class="n">append</span><span class="p">(</span>
-            <span class="n">root</span> <span class="o">+</span> <span class="n">filelists_bp</span> <span class="o">+</span> <span class="s2">&quot;train_batch_&quot;</span> <span class="o">+</span>
-            <span class="nb">str</span><span class="p">(</span><span class="n">i</span><span class="p">)</span><span class="o">.</span><span class="n">zfill</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot;_filelist.txt&quot;</span><span class="p">)</span>
+            <span class="n">root</span> <span class="o">/</span> <span class="n">filelists_bp</span> <span class="o">/</span> <span class="p">(</span><span class="s2">&quot;train_batch_&quot;</span> <span class="o">+</span>
+                                   <span class="nb">str</span><span class="p">(</span><span class="n">batch_id</span><span class="p">)</span><span class="o">.</span><span class="n">zfill</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot;_filelist.txt&quot;</span><span class="p">))</span>
 
     <span class="n">scenario_obj</span> <span class="o">=</span> <span class="n">create_generic_benchmark_from_filelists</span><span class="p">(</span>
         <span class="n">root_img</span><span class="p">,</span> <span class="n">train_failists_paths</span><span class="p">,</span>
-        <span class="p">[</span><span class="n">root</span> <span class="o">+</span> <span class="n">filelists_bp</span> <span class="o">+</span> <span class="s2">&quot;test_filelist.txt&quot;</span><span class="p">],</span>
+        <span class="p">[</span><span class="n">root</span> <span class="o">/</span> <span class="n">filelists_bp</span> <span class="o">/</span> <span class="s2">&quot;test_filelist.txt&quot;</span><span class="p">],</span>
         <span class="n">task_labels</span><span class="o">=</span><span class="p">[</span><span class="mi">0</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">nbatch</span><span class="p">[</span><span class="n">scenario</span><span class="p">])],</span>
         <span class="n">complete_test_set_only</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
         <span class="n">train_transform</span><span class="o">=</span><span class="n">train_transform</span><span class="p">,</span>
@@ -320,7 +322,7 @@
 
     <span class="n">scenario</span> <span class="o">=</span> <span class="n">CORe50</span><span class="p">(</span><span class="n">scenario</span><span class="o">=</span><span class="s2">&quot;nicv2_79&quot;</span><span class="p">,</span>
                       <span class="n">train_transform</span><span class="o">=</span><span class="n">ToTensor</span><span class="p">(),</span>
-                      <span class="n">eval_transform</span><span class="o">=</span><span class="n">ToTensor</span><span class="p">())</span>
+                      <span class="n">eval_transform</span><span class="o">=</span><span class="n">ToTensor</span><span class="p">(),</span> <span class="n">mini</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
     <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">batch</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">scenario</span><span class="o">.</span><span class="n">train_stream</span><span class="p">):</span>
         <span class="nb">print</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">batch</span><span class="p">)</span>
         <span class="n">dataset</span><span class="p">,</span> <span class="n">t</span> <span class="o">=</span> <span class="n">batch</span><span class="o">.</span><span class="n">dataset</span><span class="p">,</span> <span class="n">batch</span><span class="o">.</span><span class="n">task_label</span>

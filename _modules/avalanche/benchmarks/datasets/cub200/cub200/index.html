@@ -199,17 +199,20 @@
 <span class="sd">&quot;&quot;&quot;</span>
 
 <span class="kn">import</span> <span class="nn">csv</span>
+<span class="kn">from</span> <span class="nn">pathlib</span> <span class="kn">import</span> <span class="n">Path</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Union</span>
+
 <span class="kn">import</span> <span class="nn">gdown</span>
 <span class="kn">import</span> <span class="nn">os</span>
 <span class="kn">from</span> <span class="nn">collections</span> <span class="kn">import</span> <span class="n">OrderedDict</span>
-<span class="kn">from</span> <span class="nn">os.path</span> <span class="kn">import</span> <span class="n">expanduser</span>
 <span class="kn">from</span> <span class="nn">torchvision.datasets.folder</span> <span class="kn">import</span> <span class="n">default_loader</span>
-<span class="kn">from</span> <span class="nn">torchvision.datasets.utils</span> <span class="kn">import</span> <span class="n">extract_archive</span>
 
+<span class="kn">from</span> <span class="nn">avalanche.benchmarks.datasets</span> <span class="kn">import</span> <span class="n">get_default_dataset_location</span><span class="p">,</span> \
+    <span class="n">DownloadableDataset</span>
 <span class="kn">from</span> <span class="nn">avalanche.benchmarks.utils</span> <span class="kn">import</span> <span class="n">PathsDataset</span>
 
 
-<div class="viewcode-block" id="CUB200"><a class="viewcode-back" href="../../../../../../autoapi/avalanche/benchmarks/datasets/#avalanche.benchmarks.datasets.cub200.cub200.CUB200">[docs]</a><span class="k">class</span> <span class="nc">CUB200</span><span class="p">(</span><span class="n">PathsDataset</span><span class="p">):</span>
+<div class="viewcode-block" id="CUB200"><a class="viewcode-back" href="../../../../../../autoapi/avalanche/benchmarks/datasets/#avalanche.benchmarks.datasets.cub200.cub200.CUB200">[docs]</a><span class="k">class</span> <span class="nc">CUB200</span><span class="p">(</span><span class="n">PathsDataset</span><span class="p">,</span> <span class="n">DownloadableDataset</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot; Basic CUB200 PathsDataset to be used as a standard PyTorch Dataset.</span>
 <span class="sd">        A classic continual learning benchmark built on top of this dataset</span>
 <span class="sd">        can be found in &#39;benchmarks.classic&#39;, while for more custom benchmark</span>
@@ -224,7 +227,10 @@
     <span class="n">tgz_md5</span> <span class="o">=</span> <span class="s1">&#39;97eceeb196236b17998738112f37df78&#39;</span>
 
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span>
-            <span class="bp">self</span><span class="p">,</span> <span class="n">root</span><span class="o">=</span><span class="n">expanduser</span><span class="p">(</span><span class="s2">&quot;~&quot;</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot;/.avalanche/data/CUB_200_2011/&quot;</span><span class="p">,</span>
+            <span class="bp">self</span><span class="p">,</span>
+            <span class="n">root</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Path</span><span class="p">]</span> <span class="o">=</span>
+            <span class="n">get_default_dataset_location</span><span class="p">(</span><span class="s1">&#39;CUB_200_2011&#39;</span><span class="p">),</span>
+            <span class="o">*</span><span class="p">,</span>
             <span class="n">train</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">transform</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">target_transform</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
             <span class="n">loader</span><span class="o">=</span><span class="n">default_loader</span><span class="p">,</span> <span class="n">download</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
@@ -243,31 +249,47 @@
 <span class="sd">            downloaded it will skip the download.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
 
-        <span class="bp">self</span><span class="o">.</span><span class="n">root</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">expanduser</span><span class="p">(</span><span class="n">root</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">train</span> <span class="o">=</span> <span class="n">train</span>
 
-        <span class="c1"># we create the dir if it does not exists</span>
-        <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">root</span><span class="p">):</span>
-            <span class="n">os</span><span class="o">.</span><span class="n">makedirs</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">root</span><span class="p">)</span>
+        <span class="n">DownloadableDataset</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span>
+            <span class="bp">self</span><span class="p">,</span> <span class="n">root</span><span class="p">,</span> <span class="n">download</span><span class="o">=</span><span class="n">download</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_load_dataset</span><span class="p">()</span>
 
-        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">_check_integrity</span><span class="p">():</span>
-            <span class="k">if</span> <span class="n">download</span><span class="p">:</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">_download</span><span class="p">()</span>
-            <span class="k">else</span><span class="p">:</span>
-                <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span><span class="s1">&#39;Dataset not found or corrupted. &#39;</span><span class="p">)</span>
-
-        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span>
-            <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">root</span><span class="p">,</span> <span class="n">CUB200</span><span class="o">.</span><span class="n">images_folder</span><span class="p">),</span> <span class="bp">self</span><span class="o">.</span><span class="n">_images</span><span class="p">,</span>
+        <span class="n">PathsDataset</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span>
+            <span class="bp">self</span><span class="p">,</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">root</span><span class="p">,</span> <span class="n">CUB200</span><span class="o">.</span><span class="n">images_folder</span><span class="p">),</span> <span class="bp">self</span><span class="o">.</span><span class="n">_images</span><span class="p">,</span>
             <span class="n">transform</span><span class="o">=</span><span class="n">transform</span><span class="p">,</span> <span class="n">target_transform</span><span class="o">=</span><span class="n">target_transform</span><span class="p">,</span>
             <span class="n">loader</span><span class="o">=</span><span class="n">loader</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">_download_dataset</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_download_and_extract_archive</span><span class="p">(</span>
+                    <span class="n">CUB200</span><span class="o">.</span><span class="n">official_url</span><span class="p">,</span> <span class="n">CUB200</span><span class="o">.</span><span class="n">filename</span><span class="p">,</span>
+                    <span class="n">checksum</span><span class="o">=</span><span class="n">CUB200</span><span class="o">.</span><span class="n">tgz_md5</span><span class="p">)</span>
+        <span class="k">except</span> <span class="ne">Exception</span><span class="p">:</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">verbose</span><span class="p">:</span>
+                <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;[CUB200] Direct download may no longer be possible, &#39;</span>
+                      <span class="s1">&#39;will try GDrive.&#39;</span><span class="p">)</span>
+
+        <span class="n">filepath</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">root</span> <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">filename</span>
+        <span class="n">gdown</span><span class="o">.</span><span class="n">download</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">gdrive_url</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="n">filepath</span><span class="p">),</span> <span class="n">quiet</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+        <span class="n">gdown</span><span class="o">.</span><span class="n">cached_download</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">gdrive_url</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="n">filepath</span><span class="p">),</span> <span class="n">md5</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">tgz_md5</span>
+        <span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">_extract_archive</span><span class="p">(</span><span class="n">filepath</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">_download_error_message</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+        <span class="k">return</span> <span class="s1">&#39;[CUB200] Error downloading the dataset. Consider downloading &#39;</span> \
+               <span class="s1">&#39;it manually at: &#39;</span> <span class="o">+</span> <span class="n">CUB200</span><span class="o">.</span><span class="n">official_url</span> <span class="o">+</span> <span class="s1">&#39; and placing it &#39;</span> \
+               <span class="s1">&#39;in: &#39;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">root</span><span class="p">)</span>
 
     <span class="k">def</span> <span class="nf">_load_metadata</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot; Main method to load the CUB200 metadata &quot;&quot;&quot;</span>
 
-        <span class="n">cub_dir</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">root</span><span class="p">,</span> <span class="s1">&#39;CUB_200_2011&#39;</span><span class="p">)</span>
+        <span class="n">cub_dir</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">root</span> <span class="o">/</span> <span class="s1">&#39;CUB_200_2011&#39;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_images</span> <span class="o">=</span> <span class="n">OrderedDict</span><span class="p">()</span>
 
-        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">cub_dir</span><span class="p">,</span> <span class="s1">&#39;train_test_split.txt&#39;</span><span class="p">))</span> <span class="k">as</span> <span class="n">csv_file</span><span class="p">:</span>
+        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">cub_dir</span> <span class="o">/</span> <span class="s1">&#39;train_test_split.txt&#39;</span><span class="p">))</span> <span class="k">as</span> <span class="n">csv_file</span><span class="p">:</span>
             <span class="n">csv_reader</span> <span class="o">=</span> <span class="n">csv</span><span class="o">.</span><span class="n">reader</span><span class="p">(</span><span class="n">csv_file</span><span class="p">,</span> <span class="n">delimiter</span><span class="o">=</span><span class="s1">&#39; &#39;</span><span class="p">)</span>
             <span class="k">for</span> <span class="n">row</span> <span class="ow">in</span> <span class="n">csv_reader</span><span class="p">:</span>
                 <span class="n">img_id</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">row</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
@@ -275,14 +297,14 @@
                 <span class="k">if</span> <span class="n">is_train_instance</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">train</span><span class="p">:</span>
                     <span class="bp">self</span><span class="o">.</span><span class="n">_images</span><span class="p">[</span><span class="n">img_id</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>
 
-        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">cub_dir</span><span class="p">,</span> <span class="s1">&#39;images.txt&#39;</span><span class="p">))</span> <span class="k">as</span> <span class="n">csv_file</span><span class="p">:</span>
+        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">cub_dir</span> <span class="o">/</span> <span class="s1">&#39;images.txt&#39;</span><span class="p">))</span> <span class="k">as</span> <span class="n">csv_file</span><span class="p">:</span>
             <span class="n">csv_reader</span> <span class="o">=</span> <span class="n">csv</span><span class="o">.</span><span class="n">reader</span><span class="p">(</span><span class="n">csv_file</span><span class="p">,</span> <span class="n">delimiter</span><span class="o">=</span><span class="s1">&#39; &#39;</span><span class="p">)</span>
             <span class="k">for</span> <span class="n">row</span> <span class="ow">in</span> <span class="n">csv_reader</span><span class="p">:</span>
                 <span class="n">img_id</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">row</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
                 <span class="k">if</span> <span class="n">img_id</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_images</span><span class="p">:</span>
                     <span class="bp">self</span><span class="o">.</span><span class="n">_images</span><span class="p">[</span><span class="n">img_id</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">row</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
 
-        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">cub_dir</span><span class="p">,</span> <span class="s1">&#39;image_class_labels.txt&#39;</span><span class="p">))</span> <span class="k">as</span> <span class="n">csv_file</span><span class="p">:</span>
+        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">cub_dir</span> <span class="o">/</span> <span class="s1">&#39;image_class_labels.txt&#39;</span><span class="p">))</span> <span class="k">as</span> <span class="n">csv_file</span><span class="p">:</span>
             <span class="n">csv_reader</span> <span class="o">=</span> <span class="n">csv</span><span class="o">.</span><span class="n">reader</span><span class="p">(</span><span class="n">csv_file</span><span class="p">,</span> <span class="n">delimiter</span><span class="o">=</span><span class="s1">&#39; &#39;</span><span class="p">)</span>
             <span class="k">for</span> <span class="n">row</span> <span class="ow">in</span> <span class="n">csv_reader</span><span class="p">:</span>
                 <span class="n">img_id</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">row</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
@@ -290,7 +312,7 @@
                     <span class="c1"># CUB starts counting classes from 1 ...</span>
                     <span class="bp">self</span><span class="o">.</span><span class="n">_images</span><span class="p">[</span><span class="n">img_id</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">row</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span>
 
-        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">cub_dir</span><span class="p">,</span> <span class="s1">&#39;bounding_boxes.txt&#39;</span><span class="p">))</span> <span class="k">as</span> <span class="n">csv_file</span><span class="p">:</span>
+        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">cub_dir</span> <span class="o">/</span> <span class="s1">&#39;bounding_boxes.txt&#39;</span><span class="p">))</span> <span class="k">as</span> <span class="n">csv_file</span><span class="p">:</span>
             <span class="n">csv_reader</span> <span class="o">=</span> <span class="n">csv</span><span class="o">.</span><span class="n">reader</span><span class="p">(</span><span class="n">csv_file</span><span class="p">,</span> <span class="n">delimiter</span><span class="o">=</span><span class="s1">&#39; &#39;</span><span class="p">)</span>
             <span class="k">for</span> <span class="n">row</span> <span class="ow">in</span> <span class="n">csv_reader</span><span class="p">:</span>
                 <span class="n">img_id</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">row</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
@@ -305,37 +327,15 @@
             <span class="n">images_tuples</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="nb">tuple</span><span class="p">(</span><span class="n">img_tuple</span><span class="p">))</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_images</span> <span class="o">=</span> <span class="n">images_tuples</span>
 
-    <span class="k">def</span> <span class="nf">_check_integrity</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot; Checks if the data is already available and intact &quot;&quot;&quot;</span>
-
-        <span class="k">try</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">_load_metadata</span><span class="p">()</span>
-        <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">_</span><span class="p">:</span>
-            <span class="k">return</span> <span class="kc">False</span>
-
+        <span class="c1"># Integrity check</span>
         <span class="k">for</span> <span class="n">row</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_images</span><span class="p">:</span>
-            <span class="n">filepath</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">root</span><span class="p">,</span> <span class="n">CUB200</span><span class="o">.</span><span class="n">images_folder</span><span class="p">,</span> <span class="n">row</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
-            <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isfile</span><span class="p">(</span><span class="n">filepath</span><span class="p">):</span>
-                <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;[CUB200] Error checking integrity of:&#39;</span><span class="p">,</span> <span class="n">filepath</span><span class="p">)</span>
+            <span class="n">filepath</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">root</span> <span class="o">/</span> <span class="n">CUB200</span><span class="o">.</span><span class="n">images_folder</span> <span class="o">/</span> <span class="n">row</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">filepath</span><span class="o">.</span><span class="n">is_file</span><span class="p">():</span>
+                <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">verbose</span><span class="p">:</span>
+                    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;[CUB200] Error checking integrity of:&#39;</span><span class="p">,</span> <span class="n">filepath</span><span class="p">)</span>
                 <span class="k">return</span> <span class="kc">False</span>
-        <span class="k">return</span> <span class="kc">True</span>
 
-    <span class="k">def</span> <span class="nf">_download</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_check_integrity</span><span class="p">():</span>
-            <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Files already downloaded and verified&#39;</span><span class="p">)</span>
-            <span class="k">return</span>
-
-        <span class="k">try</span><span class="p">:</span>
-            <span class="n">filepath</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">root</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">filename</span><span class="p">)</span>
-            <span class="n">gdown</span><span class="o">.</span><span class="n">download</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">gdrive_url</span><span class="p">,</span> <span class="n">filepath</span><span class="p">,</span> <span class="n">quiet</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
-            <span class="n">gdown</span><span class="o">.</span><span class="n">cached_download</span><span class="p">(</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">gdrive_url</span><span class="p">,</span> <span class="n">filepath</span><span class="p">,</span> <span class="n">md5</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">tgz_md5</span>
-            <span class="p">)</span>
-        <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
-            <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;[CUB200] Direct download may no longer be supported!&#39;</span><span class="p">)</span>
-            <span class="k">raise</span> <span class="n">e</span>
-
-        <span class="n">extract_archive</span><span class="p">(</span><span class="n">filepath</span><span class="p">,</span> <span class="n">to_path</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">root</span><span class="p">)</span></div>
+        <span class="k">return</span> <span class="kc">True</span></div>
 
 
 <span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>

@@ -182,45 +182,19 @@
             
   <div class="section" id="module-avalanche.benchmarks.datasets.openloris.openloris_data">
 <span id="avalanche-benchmarks-datasets-openloris-openloris-data"></span><h1><a class="reference internal" href="#module-avalanche.benchmarks.datasets.openloris.openloris_data" title="avalanche.benchmarks.datasets.openloris.openloris_data"><code class="xref py py-mod docutils literal notranslate"><span class="pre">avalanche.benchmarks.datasets.openloris.openloris_data</span></code></a><a class="headerlink" href="#module-avalanche.benchmarks.datasets.openloris.openloris_data" title="Permalink to this headline">¶</a></h1>
-<p>OpenLoris raw data handling module. It can support automatic download.</p>
+<p>OpenLoris data.</p>
 <div class="section" id="module-contents">
 <h2>Module Contents<a class="headerlink" href="#module-contents" title="Permalink to this headline">¶</a></h2>
-<div class="section" id="classes">
-<h3>Classes<a class="headerlink" href="#classes" title="Permalink to this headline">¶</a></h3>
-<table class="longtable docutils align-default">
-<colgroup>
-<col style="width: 10%" />
-<col style="width: 90%" />
-</colgroup>
-<tbody>
-<tr class="row-odd"><td><p><a class="reference internal" href="#avalanche.benchmarks.datasets.openloris.openloris_data.OPENLORIS_DATA" title="avalanche.benchmarks.datasets.openloris.openloris_data.OPENLORIS_DATA"><code class="xref py py-obj docutils literal notranslate"><span class="pre">OPENLORIS_DATA</span></code></a></p></td>
-<td><p>OpenlORIS downloader.</p></td>
-</tr>
-</tbody>
-</table>
-<dl class="py class">
-<dt class="sig sig-object py" id="avalanche.benchmarks.datasets.openloris.openloris_data.OPENLORIS_DATA">
-<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">avalanche.benchmarks.datasets.openloris.openloris_data.</span></span><span class="sig-name descname"><span class="pre">OPENLORIS_DATA</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">root</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">expanduser('~')</span> <span class="pre">+</span> <span class="pre">'/.avalanche/data/openloris/'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../../_modules/avalanche/benchmarks/datasets/openloris/openloris_data/#OPENLORIS_DATA"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.benchmarks.datasets.openloris.openloris_data.OPENLORIS_DATA" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
-<p>OpenlORIS downloader.</p>
-<dl class="simple">
-<dt>Args:</dt><dd><p>root (string): folder in which to download openloris dataset.</p>
-</dd>
-</dl>
-<dl class="py attribute">
-<dt class="sig sig-object py" id="avalanche.benchmarks.datasets.openloris.openloris_data.OPENLORIS_DATA.filename">
-<span class="sig-name descname"><span class="pre">filename</span></span><em class="property"> <span class="pre">=</span> <span class="pre">[['train.zip',</span> <span class="pre">'11jgiPB2Z9WRI3bW6VSN8fJZgwFl5mLsF'],</span> <span class="pre">['valid.zip',</span> <span class="pre">'1ChoBAGcQ_wkclPXsel8CjJHC0tD7b4ga'],</span> <span class="pre">['test.zip',</span> <span class="pre">'1J7_ljcwSZNXo6KwlhRZoG0kiEcRK7U6x'],</span> <span class="pre">['LUP.pkl',</span> <span class="pre">'1Os8T30NZ3ZU8liHQPeVbo2nlOoPZuDSV'],</span> <span class="pre">['Paths.pkl',</span> <span class="pre">'1KnuYLdlG3VQrhgbtIANLki81ah8Thezj'],</span> <span class="pre">['Labels.pkl',</span> <span class="pre">'1GkmOxIAvmjSwo22UzmZTSlw8NSmU5Q9H'],</span> <span class="pre">['batches_filelists.zip',</span> <span class="pre">'1r0gbo5_Qlzrdet1GPIrJpVSGRgFU7NEp']]</span></em><a class="headerlink" href="#avalanche.benchmarks.datasets.openloris.openloris_data.OPENLORIS_DATA.filename" title="Permalink to this definition">¶</a></dt>
+<dl class="py data">
+<dt class="sig sig-object py" id="avalanche.benchmarks.datasets.openloris.openloris_data.base_gdrive_url">
+<span class="sig-prename descclassname"><span class="pre">avalanche.benchmarks.datasets.openloris.openloris_data.</span></span><span class="sig-name descname"><span class="pre">base_gdrive_url</span></span><em class="property"> <span class="pre">=</span> <span class="pre">https://drive.google.com/u/0/uc?id=</span></em><a class="headerlink" href="#avalanche.benchmarks.datasets.openloris.openloris_data.base_gdrive_url" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
-<dl class="py method">
-<dt class="sig sig-object py" id="avalanche.benchmarks.datasets.openloris.openloris_data.OPENLORIS_DATA.download">
-<span class="sig-name descname"><span class="pre">download</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../../_modules/avalanche/benchmarks/datasets/openloris/openloris_data/#OPENLORIS_DATA.download"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.benchmarks.datasets.openloris.openloris_data.OPENLORIS_DATA.download" title="Permalink to this definition">¶</a></dt>
-<dd><p>Download from google drive official repositories.</p>
-</dd></dl>
+<dl class="py data">
+<dt class="sig sig-object py" id="avalanche.benchmarks.datasets.openloris.openloris_data.filename">
+<span class="sig-prename descclassname"><span class="pre">avalanche.benchmarks.datasets.openloris.openloris_data.</span></span><span class="sig-name descname"><span class="pre">filename</span></span><em class="property"> <span class="pre">=</span> <span class="pre">[['train.zip',</span> <span class="pre">'11jgiPB2Z9WRI3bW6VSN8fJZgwFl5mLsF'],</span> <span class="pre">['valid.zip',</span> <span class="pre">'1ChoBAGcQ_wkclPXsel8CjJHC0tD7b4ga'],</span> <span class="pre">['test.zip',</span> <span class="pre">'1J7_ljcwSZNXo6KwlhRZoG0kiEcRK7U6x'],</span> <span class="pre">['LUP.pkl',</span> <span class="pre">'1Os8T30NZ3ZU8liHQPeVbo2nlOoPZuDSV'],</span> <span class="pre">['Paths.pkl',</span> <span class="pre">'1KnuYLdlG3VQrhgbtIANLki81ah8Thezj'],</span> <span class="pre">['Labels.pkl',</span> <span class="pre">'1GkmOxIAvmjSwo22UzmZTSlw8NSmU5Q9H'],</span> <span class="pre">['batches_filelists.zip',</span> <span class="pre">'1r0gbo5_Qlzrdet1GPIrJpVSGRgFU7NEp']]</span></em><a class="headerlink" href="#avalanche.benchmarks.datasets.openloris.openloris_data.filename" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
 
-</dd></dl>
-
-</div>
 </div>
 </div>
 

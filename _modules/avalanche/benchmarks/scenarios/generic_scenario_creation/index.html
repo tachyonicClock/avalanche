@@ -273,7 +273,8 @@
 <span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="n">warnings</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span><span class="s1">&#39;create_multi_dataset_generic_scenario is deprecated in favor&#39;</span>
-                  <span class="s1">&#39; of create_multi_dataset_generic_benchmark.&#39;</span><span class="p">)</span>
+                  <span class="s1">&#39; of create_multi_dataset_generic_benchmark.&#39;</span><span class="p">,</span>
+                  <span class="ne">DeprecationWarning</span><span class="p">)</span>
 
     <span class="n">transform_groups</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span>
         <span class="n">train</span><span class="o">=</span><span class="p">(</span><span class="n">train_transform</span><span class="p">,</span> <span class="n">train_target_transform</span><span class="p">),</span>
@@ -391,7 +392,8 @@
 <span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="n">warnings</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span><span class="s1">&#39;create_generic_scenario_from_filelists is deprecated in &#39;</span>
-                  <span class="s1">&#39;favor of create_generic_benchmark_from_filelists.&#39;</span><span class="p">)</span>
+                  <span class="s1">&#39;favor of create_generic_benchmark_from_filelists.&#39;</span><span class="p">,</span>
+                  <span class="ne">DeprecationWarning</span><span class="p">)</span>
 
     <span class="n">train_datasets</span><span class="p">,</span> <span class="n">test_dataset</span> <span class="o">=</span> <span class="n">datasets_from_filelists</span><span class="p">(</span>
         <span class="n">root</span><span class="p">,</span> <span class="n">train_file_lists</span><span class="p">,</span> <span class="n">test_file_lists</span><span class="p">,</span>
@@ -487,7 +489,8 @@
 <span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="n">warnings</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span><span class="s1">&#39;create_generic_scenario_from_paths is deprecated in favor&#39;</span>
-                  <span class="s1">&#39; of create_generic_benchmark_from_paths.&#39;</span><span class="p">)</span>
+                  <span class="s1">&#39; of create_generic_benchmark_from_paths.&#39;</span><span class="p">,</span>
+                  <span class="ne">DeprecationWarning</span><span class="p">)</span>
 
     <span class="n">train_datasets</span><span class="p">,</span> <span class="n">test_dataset</span> <span class="o">=</span> <span class="n">datasets_from_paths</span><span class="p">(</span>
         <span class="n">train_list_of_files</span><span class="p">,</span> <span class="n">test_list_of_files</span><span class="p">,</span>
@@ -578,7 +581,8 @@
 <span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="n">warnings</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span><span class="s1">&#39;create_generic_scenario_from_tensor_lists is deprecated in &#39;</span>
-                  <span class="s1">&#39;favor of create_generic_benchmark_from_tensor_lists.&#39;</span><span class="p">)</span>
+                  <span class="s1">&#39;favor of create_generic_benchmark_from_tensor_lists.&#39;</span><span class="p">,</span>
+                  <span class="ne">DeprecationWarning</span><span class="p">)</span>
 
     <span class="n">train_datasets</span> <span class="o">=</span> <span class="p">[</span>
         <span class="n">AvalancheTensorDataset</span><span class="p">(</span><span class="o">*</span><span class="n">exp_tensors</span><span class="p">,</span> <span class="n">dataset_type</span><span class="o">=</span><span class="n">dataset_type</span><span class="p">)</span>
@@ -674,7 +678,8 @@
 <span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="n">warnings</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span><span class="s1">&#39;create_generic_scenario_from_tensors is deprecated in favor &#39;</span>
-                  <span class="s1">&#39;of create_generic_benchmark_from_tensor_lists.&#39;</span><span class="p">)</span>
+                  <span class="s1">&#39;of create_generic_benchmark_from_tensor_lists.&#39;</span><span class="p">,</span>
+                  <span class="ne">DeprecationWarning</span><span class="p">)</span>
 
     <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">train_data_x</span><span class="p">)</span> <span class="o">!=</span> <span class="nb">len</span><span class="p">(</span><span class="n">train_data_y</span><span class="p">):</span>
         <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;train_data_x and train_data_y must contain&#39;</span>

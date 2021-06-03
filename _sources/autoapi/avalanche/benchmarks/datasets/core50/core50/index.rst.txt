@@ -17,22 +17,32 @@ Classes
 
 .. autoapisummary::
 
+   avalanche.benchmarks.datasets.core50.core50.CORe50Dataset
+
+
+
+Functions
+~~~~~~~~~
+
+.. autoapisummary::
+
    avalanche.benchmarks.datasets.core50.core50.CORe50
 
 
+.. py:class:: CORe50Dataset(root: Union[str, Path] = get_default_dataset_location('core50'), *, train=True, transform=None, target_transform=None, loader=default_loader, download=True, mini=False, object_level=True)
 
-.. py:class:: CORe50(root=expanduser('~') + '/.avalanche/data/core50/', train=True, transform=ToTensor(), target_transform=None, loader=pil_loader, download=True, mini=False, object_level=True)
-
-   Bases: :class:`torch.utils.data.dataset.Dataset`
+   Bases: :class:`avalanche.benchmarks.datasets.downloadable_dataset.DownloadableDataset`
 
    CORe50 Pytorch Dataset 
+
+   Creates an instance of the CORe50 dataset.
 
    :param root: root for the datasets data.
    :param train: train or test split.
    :param transform: eventual transformations to be applied.
    :param target_transform: eventual transformation to be applied to the
        targets.
-   :param loader: data loader method from disk.
+   :param loader: the procedure to load the instance from the storage.
    :param download: boolean to automatically download data. Default to
        True.
    :param mini: boolean to use the 32x32 version instead of the 128x128.
@@ -53,5 +63,8 @@ Classes
 
    .. method:: __len__(self)
 
+
+
+.. function:: CORe50(*args, **kwargs)
 
 

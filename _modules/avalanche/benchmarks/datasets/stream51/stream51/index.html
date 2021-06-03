@@ -193,65 +193,97 @@
 <span class="sd">&quot;&quot;&quot; Stream-51 Pytorch Dataset &quot;&quot;&quot;</span>
 
 <span class="kn">import</span> <span class="nn">os</span>
-<span class="kn">import</span> <span class="nn">logging</span>
-<span class="kn">from</span> <span class="nn">torch.utils.data.dataset</span> <span class="kn">import</span> <span class="n">Dataset</span>
-<span class="kn">from</span> <span class="nn">torchvision.transforms</span> <span class="kn">import</span> <span class="n">ToTensor</span>
-<span class="kn">from</span> <span class="nn">PIL</span> <span class="kn">import</span> <span class="n">Image</span>
+
+<span class="kn">import</span> <span class="nn">shutil</span>
 <span class="kn">import</span> <span class="nn">json</span>
 <span class="kn">import</span> <span class="nn">random</span>
-<span class="kn">from</span> <span class="nn">avalanche.benchmarks.datasets.stream51.stream51_data</span> <span class="kn">import</span> <span class="n">STREAM51_DATA</span>
+
+<span class="kn">from</span> <span class="nn">torchvision.datasets.folder</span> <span class="kn">import</span> <span class="n">default_loader</span>
+<span class="kn">from</span> <span class="nn">zipfile</span> <span class="kn">import</span> <span class="n">ZipFile</span>
+
+<span class="kn">from</span> <span class="nn">torchvision.transforms</span> <span class="kn">import</span> <span class="n">ToTensor</span>
+
+<span class="kn">from</span> <span class="nn">avalanche.benchmarks.datasets</span> <span class="kn">import</span> <span class="n">DownloadableDataset</span><span class="p">,</span> \
+    <span class="n">get_default_dataset_location</span>
+<span class="kn">from</span> <span class="nn">avalanche.benchmarks.datasets.stream51</span> <span class="kn">import</span> <span class="n">stream51_data</span>
 
 
-<span class="k">def</span> <span class="nf">pil_loader</span><span class="p">(</span><span class="n">path</span><span class="p">):</span>
-    <span class="c1"># open path as file to avoid ResourceWarning</span>
-    <span class="c1"># (https://github.com/python-pillow/Pillow/issues/835)</span>
-    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="s1">&#39;rb&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
-        <span class="n">img</span> <span class="o">=</span> <span class="n">Image</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
-        <span class="k">return</span> <span class="n">img</span><span class="o">.</span><span class="n">convert</span><span class="p">(</span><span class="s1">&#39;RGB&#39;</span><span class="p">)</span>
-
-
-<span class="k">def</span> <span class="nf">default_loader</span><span class="p">(</span><span class="n">path</span><span class="p">):</span>
-    <span class="k">return</span> <span class="n">pil_loader</span><span class="p">(</span><span class="n">path</span><span class="p">)</span>
-
-
-<div class="viewcode-block" id="Stream51"><a class="viewcode-back" href="../../../../../../autoapi/avalanche/benchmarks/#avalanche.benchmarks.classic.Stream51">[docs]</a><span class="k">class</span> <span class="nc">Stream51</span><span class="p">(</span><span class="n">Dataset</span><span class="p">):</span>
+<div class="viewcode-block" id="Stream51"><a class="viewcode-back" href="../../../../../../autoapi/avalanche/benchmarks/#avalanche.benchmarks.classic.Stream51">[docs]</a><span class="k">class</span> <span class="nc">Stream51</span><span class="p">(</span><span class="n">DownloadableDataset</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot; Stream-51 Pytorch Dataset &quot;&quot;&quot;</span>
 
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">root</span><span class="p">,</span> <span class="n">train</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">transform</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
-                 <span class="n">target_transform</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">loader</span><span class="o">=</span><span class="n">pil_loader</span><span class="p">,</span> <span class="n">download</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">root</span><span class="o">=</span><span class="n">get_default_dataset_location</span><span class="p">(</span><span class="s1">&#39;stream51&#39;</span><span class="p">),</span>
+                 <span class="o">*</span><span class="p">,</span>
+                 <span class="n">train</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">transform</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                 <span class="n">target_transform</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">loader</span><span class="o">=</span><span class="n">default_loader</span><span class="p">,</span> <span class="n">download</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">train</span> <span class="o">=</span> <span class="n">train</span>  <span class="c1"># training set or test set</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">transform</span> <span class="o">=</span> <span class="n">transform</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">target_transform</span> <span class="o">=</span> <span class="n">target_transform</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">root</span> <span class="o">=</span> <span class="n">root</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">loader</span> <span class="o">=</span> <span class="n">loader</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">log</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="s2">&quot;avalanche&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">transform</span> <span class="o">=</span> <span class="n">transform</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">target_transform</span> <span class="o">=</span> <span class="n">target_transform</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">bbox_crop</span> <span class="o">=</span> <span class="kc">True</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">ratio</span> <span class="o">=</span> <span class="mf">1.1</span>
 
-        <span class="k">if</span> <span class="n">download</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">log</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Downloading Stream-51...&quot;</span><span class="p">)</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">stream51_data</span> <span class="o">=</span> <span class="n">STREAM51_DATA</span><span class="p">(</span><span class="n">data_folder</span><span class="o">=</span><span class="n">root</span><span class="p">)</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">Stream51</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">root</span><span class="p">,</span> <span class="n">download</span><span class="o">=</span><span class="n">download</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 
-        <span class="bp">self</span><span class="o">.</span><span class="n">log</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Loading files...&quot;</span><span class="p">)</span>
-        <span class="k">if</span> <span class="n">train</span><span class="p">:</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_load_dataset</span><span class="p">()</span>
+
+    <span class="k">def</span> <span class="nf">_download_dataset</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_download_file</span><span class="p">(</span><span class="n">stream51_data</span><span class="o">.</span><span class="n">name</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">stream51_data</span><span class="o">.</span><span class="n">name</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span>
+                            <span class="n">stream51_data</span><span class="o">.</span><span class="n">name</span><span class="p">[</span><span class="mi">2</span><span class="p">])</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">verbose</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;[Stream-51] Extracting dataset...&#39;</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">stream51_data</span><span class="o">.</span><span class="n">name</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">endswith</span><span class="p">(</span><span class="s1">&#39;.zip&#39;</span><span class="p">):</span>
+            <span class="n">lfilename</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">root</span> <span class="o">/</span> <span class="n">stream51_data</span><span class="o">.</span><span class="n">name</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+            <span class="k">with</span> <span class="n">ZipFile</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">lfilename</span><span class="p">),</span> <span class="s1">&#39;r&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">zipf</span><span class="p">:</span>
+                <span class="k">for</span> <span class="n">member</span> <span class="ow">in</span> <span class="n">zipf</span><span class="o">.</span><span class="n">namelist</span><span class="p">():</span>
+                    <span class="n">filename</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">basename</span><span class="p">(</span><span class="n">member</span><span class="p">)</span>
+                    <span class="c1"># skip directories</span>
+                    <span class="k">if</span> <span class="ow">not</span> <span class="n">filename</span><span class="p">:</span>
+                        <span class="k">continue</span>
+
+                    <span class="c1"># copy file (taken from zipfile&#39;s extract)</span>
+                    <span class="n">source</span> <span class="o">=</span> <span class="n">zipf</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="n">member</span><span class="p">)</span>
+                    <span class="k">if</span> <span class="s1">&#39;json&#39;</span> <span class="ow">in</span> <span class="n">filename</span><span class="p">:</span>
+                        <span class="n">target</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">root</span> <span class="o">/</span> <span class="n">filename</span><span class="p">),</span> <span class="s2">&quot;wb&quot;</span><span class="p">)</span>
+                    <span class="k">else</span><span class="p">:</span>
+                        <span class="n">dest_folder</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span>
+                            <span class="o">*</span><span class="p">(</span><span class="n">member</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">sep</span><span class="p">)[</span><span class="mi">1</span><span class="p">:</span><span class="o">-</span><span class="mi">1</span><span class="p">]))</span>
+                        <span class="n">dest_folder</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">root</span> <span class="o">/</span> <span class="n">dest_folder</span>
+                        <span class="n">dest_folder</span><span class="o">.</span><span class="n">mkdir</span><span class="p">(</span><span class="n">exist_ok</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">parents</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+                        <span class="n">target</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">dest_folder</span> <span class="o">/</span> <span class="n">filename</span><span class="p">),</span> <span class="s2">&quot;wb&quot;</span><span class="p">)</span>
+                    <span class="k">with</span> <span class="n">source</span><span class="p">,</span> <span class="n">target</span><span class="p">:</span>
+                        <span class="n">shutil</span><span class="o">.</span><span class="n">copyfileobj</span><span class="p">(</span><span class="n">source</span><span class="p">,</span> <span class="n">target</span><span class="p">)</span>
+
+            <span class="c1"># lfilename.unlink()</span>
+
+    <span class="k">def</span> <span class="nf">_load_metadata</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">train</span><span class="p">:</span>
             <span class="n">data_list</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">load</span><span class="p">(</span>
-                <span class="nb">open</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">root</span><span class="p">,</span> <span class="s1">&#39;Stream-51_meta_train.json&#39;</span><span class="p">)))</span>
+                <span class="nb">open</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">root</span> <span class="o">/</span> <span class="s1">&#39;Stream-51_meta_train.json&#39;</span><span class="p">)))</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="n">data_list</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">load</span><span class="p">(</span>
-                <span class="nb">open</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">root</span><span class="p">,</span> <span class="s1">&#39;Stream-51_meta_test.json&#39;</span><span class="p">)))</span>
-
-        <span class="bp">self</span><span class="o">.</span><span class="n">root</span> <span class="o">=</span> <span class="n">root</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">loader</span> <span class="o">=</span> <span class="n">default_loader</span>
+                <span class="nb">open</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">root</span> <span class="o">/</span> <span class="s1">&#39;Stream-51_meta_test.json&#39;</span><span class="p">)))</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">samples</span> <span class="o">=</span> <span class="n">data_list</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">targets</span> <span class="o">=</span> <span class="p">[</span><span class="n">s</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="k">for</span> <span class="n">s</span> <span class="ow">in</span> <span class="n">data_list</span><span class="p">]</span>
 
-        <span class="bp">self</span><span class="o">.</span><span class="n">transform</span> <span class="o">=</span> <span class="n">transform</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">target_transform</span> <span class="o">=</span> <span class="n">target_transform</span>
-
         <span class="bp">self</span><span class="o">.</span><span class="n">bbox_crop</span> <span class="o">=</span> <span class="kc">True</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">ratio</span> <span class="o">=</span> <span class="mf">1.1</span>
 
-    <span class="k">def</span> <span class="nf">_instance_ordering</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data_list</span><span class="p">,</span> <span class="n">seed</span><span class="p">):</span>
+        <span class="k">return</span> <span class="kc">True</span>
+
+    <span class="k">def</span> <span class="nf">_download_error_message</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+        <span class="k">return</span> <span class="s1">&#39;[Stream-51] Error downloading the dataset. Consider &#39;</span> \
+               <span class="s1">&#39;downloading it manually at: &#39;</span> <span class="o">+</span> <span class="n">stream51_data</span><span class="o">.</span><span class="n">name</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">+</span> \
+               <span class="s1">&#39; and placing it in: &#39;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">root</span><span class="p">)</span>
+
+    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">_instance_ordering</span><span class="p">(</span><span class="n">data_list</span><span class="p">,</span> <span class="n">seed</span><span class="p">):</span>
         <span class="c1"># organize data by video</span>
         <span class="n">total_videos</span> <span class="o">=</span> <span class="mi">0</span>
         <span class="n">new_data_list</span> <span class="o">=</span> <span class="p">[]</span>
@@ -275,7 +307,8 @@
                 <span class="n">data_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">data_list</span>
 
-    <span class="k">def</span> <span class="nf">_class_ordering</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data_list</span><span class="p">,</span> <span class="n">class_type</span><span class="p">,</span> <span class="n">seed</span><span class="p">):</span>
+    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">_class_ordering</span><span class="p">(</span><span class="n">data_list</span><span class="p">,</span> <span class="n">class_type</span><span class="p">,</span> <span class="n">seed</span><span class="p">):</span>
         <span class="c1"># organize data by class</span>
         <span class="n">new_data_list</span> <span class="o">=</span> <span class="p">[]</span>
         <span class="k">for</span> <span class="n">class_id</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">data_list</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span> <span class="o">+</span> <span class="mi">1</span><span class="p">):</span>
@@ -286,7 +319,8 @@
                 <span class="n">random</span><span class="o">.</span><span class="n">shuffle</span><span class="p">(</span><span class="n">class_data_list</span><span class="p">)</span>
             <span class="k">else</span><span class="p">:</span>
                 <span class="c1"># shuffle clips within class</span>
-                <span class="n">class_data_list</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_instance_ordering</span><span class="p">(</span><span class="n">class_data_list</span><span class="p">,</span> <span class="n">seed</span><span class="p">)</span>
+                <span class="n">class_data_list</span> <span class="o">=</span> <span class="n">Stream51</span><span class="o">.</span><span class="n">_instance_ordering</span><span class="p">(</span>
+                    <span class="n">class_data_list</span><span class="p">,</span> <span class="n">seed</span><span class="p">)</span>
             <span class="n">new_data_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">class_data_list</span><span class="p">)</span>
         <span class="c1"># shuffle classes</span>
         <span class="n">random</span><span class="o">.</span><span class="n">seed</span><span class="p">(</span><span class="n">seed</span><span class="p">)</span>
@@ -298,7 +332,8 @@
                 <span class="n">data_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">data_list</span>
 
-    <span class="k">def</span> <span class="nf">_make_dataset</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data_list</span><span class="p">,</span> <span class="n">ordering</span><span class="o">=</span><span class="s1">&#39;class_instance&#39;</span><span class="p">,</span> <span class="n">seed</span><span class="o">=</span><span class="mi">666</span><span class="p">):</span>
+<div class="viewcode-block" id="Stream51.make_dataset"><a class="viewcode-back" href="../../../../../../autoapi/avalanche/benchmarks/#avalanche.benchmarks.classic.Stream51.make_dataset">[docs]</a>    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">make_dataset</span><span class="p">(</span><span class="n">data_list</span><span class="p">,</span> <span class="n">ordering</span><span class="o">=</span><span class="s1">&#39;class_instance&#39;</span><span class="p">,</span> <span class="n">seed</span><span class="o">=</span><span class="mi">666</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        data_list</span>
 <span class="sd">        for train: [class_id, clip_num, video_num, frame_num, bbox, file_loc]</span>
@@ -316,9 +351,9 @@
             <span class="n">random</span><span class="o">.</span><span class="n">shuffle</span><span class="p">(</span><span class="n">data_list</span><span class="p">)</span>
             <span class="k">return</span> <span class="n">data_list</span>
         <span class="k">elif</span> <span class="n">ordering</span> <span class="o">==</span> <span class="s1">&#39;instance&#39;</span><span class="p">:</span>
-            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_instance_ordering</span><span class="p">(</span><span class="n">data_list</span><span class="p">,</span> <span class="n">seed</span><span class="p">)</span>
+            <span class="k">return</span> <span class="n">Stream51</span><span class="o">.</span><span class="n">_instance_ordering</span><span class="p">(</span><span class="n">data_list</span><span class="p">,</span> <span class="n">seed</span><span class="p">)</span>
         <span class="k">elif</span> <span class="s1">&#39;class&#39;</span> <span class="ow">in</span> <span class="n">ordering</span><span class="p">:</span>
-            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_class_ordering</span><span class="p">(</span><span class="n">data_list</span><span class="p">,</span> <span class="n">ordering</span><span class="p">,</span> <span class="n">seed</span><span class="p">)</span>
+            <span class="k">return</span> <span class="n">Stream51</span><span class="o">.</span><span class="n">_class_ordering</span><span class="p">(</span><span class="n">data_list</span><span class="p">,</span> <span class="n">ordering</span><span class="p">,</span> <span class="n">seed</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="Stream51.__getitem__"><a class="viewcode-back" href="../../../../../../autoapi/avalanche/benchmarks/#avalanche.benchmarks.classic.Stream51.__getitem__">[docs]</a>    <span class="k">def</span> <span class="fm">__getitem__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">index</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
@@ -330,7 +365,7 @@
 <span class="sd">            class.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">fpath</span><span class="p">,</span> <span class="n">target</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">samples</span><span class="p">[</span><span class="n">index</span><span class="p">][</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span> <span class="bp">self</span><span class="o">.</span><span class="n">targets</span><span class="p">[</span><span class="n">index</span><span class="p">]</span>
-        <span class="n">sample</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">loader</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">root</span><span class="p">,</span> <span class="n">fpath</span><span class="p">))</span>
+        <span class="n">sample</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">loader</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">root</span> <span class="o">/</span> <span class="n">fpath</span><span class="p">))</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">bbox_crop</span><span class="p">:</span>
             <span class="n">bbox</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">samples</span><span class="p">[</span><span class="n">index</span><span class="p">][</span><span class="o">-</span><span class="mi">2</span><span class="p">]</span>
             <span class="n">cw</span> <span class="o">=</span> <span class="n">bbox</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">-</span> <span class="n">bbox</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
@@ -381,9 +416,8 @@
     <span class="kn">from</span> <span class="nn">torchvision</span> <span class="kn">import</span> <span class="n">transforms</span>
     <span class="kn">import</span> <span class="nn">torch</span>
 
-    <span class="n">root_dir</span> <span class="o">=</span> <span class="s1">&#39;/home/tyler/codes/avalanche/avalanche/data/stream51&#39;</span>
-    <span class="n">train_data</span> <span class="o">=</span> <span class="n">Stream51</span><span class="p">(</span><span class="n">root</span><span class="o">=</span><span class="n">root_dir</span><span class="p">)</span>
-    <span class="n">test_data</span> <span class="o">=</span> <span class="n">Stream51</span><span class="p">(</span><span class="n">root</span><span class="o">=</span><span class="n">root_dir</span><span class="p">,</span> <span class="n">train</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+    <span class="n">train_data</span> <span class="o">=</span> <span class="n">Stream51</span><span class="p">(</span><span class="n">transform</span><span class="o">=</span><span class="n">ToTensor</span><span class="p">())</span>
+    <span class="n">test_data</span> <span class="o">=</span> <span class="n">Stream51</span><span class="p">(</span><span class="n">transform</span><span class="o">=</span><span class="n">ToTensor</span><span class="p">(),</span> <span class="n">train</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
     <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;train size: &quot;</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">train_data</span><span class="p">))</span>
     <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Test size: &quot;</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">test_data</span><span class="p">))</span>
     <span class="n">dataloader</span> <span class="o">=</span> <span class="n">DataLoader</span><span class="p">(</span><span class="n">train_data</span><span class="p">,</span> <span class="n">batch_size</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>

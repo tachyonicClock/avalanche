@@ -193,94 +193,76 @@
 <span class="sd">&quot;&quot;&quot; Tiny-Imagenet Pytorch Dataset &quot;&quot;&quot;</span>
 
 <span class="kn">import</span> <span class="nn">csv</span>
-<span class="kn">import</span> <span class="nn">os</span>
-<span class="kn">import</span> <span class="nn">logging</span>
-<span class="kn">import</span> <span class="nn">sys</span>
-<span class="kn">from</span> <span class="nn">zipfile</span> <span class="kn">import</span> <span class="n">ZipFile</span>
-<span class="kn">from</span> <span class="nn">os.path</span> <span class="kn">import</span> <span class="n">expanduser</span>
-<span class="kn">from</span> <span class="nn">torch.utils.data.dataset</span> <span class="kn">import</span> <span class="n">Dataset</span>
-<span class="kn">from</span> <span class="nn">PIL</span> <span class="kn">import</span> <span class="n">Image</span>
+<span class="kn">from</span> <span class="nn">pathlib</span> <span class="kn">import</span> <span class="n">Path</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Union</span>
+
+<span class="kn">from</span> <span class="nn">torchvision.datasets.folder</span> <span class="kn">import</span> <span class="n">default_loader</span>
 <span class="kn">from</span> <span class="nn">torchvision.transforms</span> <span class="kn">import</span> <span class="n">ToTensor</span>
 
-<span class="k">if</span> <span class="n">sys</span><span class="o">.</span><span class="n">version_info</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">&gt;=</span> <span class="mi">3</span><span class="p">:</span>
-    <span class="kn">from</span> <span class="nn">urllib.request</span> <span class="kn">import</span> <span class="n">urlretrieve</span>
-<span class="k">else</span><span class="p">:</span>
-    <span class="c1"># Not Python 3 - today, it is most likely to be Python 2</span>
-    <span class="c1"># But note that this might need an update when Python 4</span>
-    <span class="c1"># might be around one day</span>
-    <span class="kn">from</span> <span class="nn">urllib</span> <span class="kn">import</span> <span class="n">urlretrieve</span>
-
-<span class="n">filename</span> <span class="o">=</span> <span class="p">(</span><span class="s1">&#39;tiny-imagenet-200.zip&#39;</span><span class="p">,</span>
-            <span class="s1">&#39;http://cs231n.stanford.edu/tiny-imagenet-200.zip&#39;</span><span class="p">)</span>
+<span class="kn">from</span> <span class="nn">avalanche.benchmarks.datasets</span> <span class="kn">import</span> <span class="n">SimpleDownloadableDataset</span><span class="p">,</span> \
+    <span class="n">get_default_dataset_location</span>
 
 
-<div class="viewcode-block" id="TinyImagenet"><a class="viewcode-back" href="../../../../../../autoapi/avalanche/benchmarks/datasets/tiny_imagenet/tiny_imagenet/#avalanche.benchmarks.datasets.TinyImagenet">[docs]</a><span class="k">class</span> <span class="nc">TinyImagenet</span><span class="p">(</span><span class="n">Dataset</span><span class="p">):</span>
+<div class="viewcode-block" id="TinyImagenet"><a class="viewcode-back" href="../../../../../../autoapi/avalanche/benchmarks/datasets/tiny_imagenet/tiny_imagenet/#avalanche.benchmarks.datasets.TinyImagenet">[docs]</a><span class="k">class</span> <span class="nc">TinyImagenet</span><span class="p">(</span><span class="n">SimpleDownloadableDataset</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Tiny Imagenet Pytorch Dataset&quot;&quot;&quot;</span>
 
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data_folder</span><span class="o">=</span><span class="n">expanduser</span><span class="p">(</span><span class="s2">&quot;~&quot;</span><span class="p">)</span> <span class="o">+</span>
-                 <span class="s2">&quot;/.avalanche/data/tinyimagenet/&quot;</span><span class="p">,</span>
-                 <span class="n">train</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">transform</span><span class="o">=</span><span class="n">ToTensor</span><span class="p">(),</span>
-                 <span class="n">target_transform</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">download</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+    <span class="n">filename</span> <span class="o">=</span> <span class="p">(</span><span class="s1">&#39;tiny-imagenet-200.zip&#39;</span><span class="p">,</span>
+                <span class="s1">&#39;http://cs231n.stanford.edu/tiny-imagenet-200.zip&#39;</span><span class="p">)</span>
+    <span class="n">md5</span> <span class="o">=</span> <span class="s1">&#39;90528d7ca1a48142e341f4ef8d21d0de&#39;</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span>
+            <span class="bp">self</span><span class="p">,</span>
+            <span class="n">root</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Path</span><span class="p">]</span> <span class="o">=</span>
+            <span class="n">get_default_dataset_location</span><span class="p">(</span><span class="s1">&#39;tinyimagenet&#39;</span><span class="p">),</span>
+            <span class="o">*</span><span class="p">,</span>
+            <span class="n">train</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
+            <span class="n">transform</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+            <span class="n">target_transform</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+            <span class="n">loader</span><span class="o">=</span><span class="n">default_loader</span><span class="p">,</span>
+            <span class="n">download</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Args:</span>
-<span class="sd">            :param string data_folder: folder in which to download dataset</span>
-<span class="sd">            :param boolean train: True for train set, False for test set</span>
-<span class="sd">            :param fun transform: Pytorch transformation founction for x</span>
-<span class="sd">            :param fun target_transform: Pytorch transformation founction for y</span>
-<span class="sd">            :param bool download: True for downloading the dataset</span>
+<span class="sd">        Creates an instance of the Tiny Imagenet dataset.</span>
+
+<span class="sd">        :param root: folder in which to download dataset.</span>
+<span class="sd">        :param train: True for training set, False for test set.</span>
+<span class="sd">        :param transform: Pytorch transformation function for x.</span>
+<span class="sd">        :param target_transform: Pytorch transformation function for y.</span>
+<span class="sd">        :param loader: the procedure to load the instance from the storage.</span>
+<span class="sd">        :param bool download: If True, the dataset will be  downloaded if</span>
+<span class="sd">            needed.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">log</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="s2">&quot;avalanche&quot;</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">transform</span> <span class="o">=</span> <span class="n">transform</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">target_transform</span> <span class="o">=</span> <span class="n">target_transform</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">train</span> <span class="o">=</span> <span class="n">train</span>
-        <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isabs</span><span class="p">(</span><span class="n">data_folder</span><span class="p">):</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">data_folder</span> <span class="o">=</span> <span class="n">data_folder</span>
-        <span class="k">else</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">data_folder</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span>
-                <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="vm">__file__</span><span class="p">),</span>
-                <span class="n">data_folder</span>
-            <span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">loader</span> <span class="o">=</span> <span class="n">loader</span>
 
-        <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">data_folder</span><span class="p">):</span>
-            <span class="k">if</span> <span class="n">download</span><span class="p">:</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">log</span><span class="o">.</span><span class="n">info</span><span class="p">(</span>
-                    <span class="s2">&quot;Directory </span><span class="si">{}</span><span class="s2"> already exists&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">data_folder</span><span class="p">))</span>
-        <span class="k">else</span><span class="p">:</span>
-            <span class="c1"># Create target Directory for Tiny ImageNet data</span>
-            <span class="n">os</span><span class="o">.</span><span class="n">makedirs</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">data_folder</span><span class="p">)</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">log</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Directory </span><span class="si">{}</span><span class="s2"> created&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">data_folder</span><span class="p">))</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">download</span> <span class="o">=</span> <span class="n">download</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">download_tinyImageNet</span><span class="p">()</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">TinyImagenet</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span>
+            <span class="n">root</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">filename</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="bp">self</span><span class="o">.</span><span class="n">md5</span><span class="p">,</span> <span class="n">download</span><span class="o">=</span><span class="n">download</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 
-        <span class="bp">self</span><span class="o">.</span><span class="n">data_folder</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">data_folder</span><span class="p">,</span> <span class="s1">&#39;tiny-imagenet-200&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_load_dataset</span><span class="p">()</span>
 
-        <span class="bp">self</span><span class="o">.</span><span class="n">label2id</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">id2label</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">labels2dict</span><span class="p">()</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">targets</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">load_data</span><span class="p">(</span><span class="n">train</span><span class="o">=</span><span class="n">train</span><span class="p">)</span>
+    <span class="k">def</span> <span class="nf">_load_metadata</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">data_folder</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">root</span> <span class="o">/</span> <span class="s1">&#39;tiny-imagenet-200&#39;</span>
 
-<div class="viewcode-block" id="TinyImagenet.download_tinyImageNet"><a class="viewcode-back" href="../../../../../../autoapi/avalanche/benchmarks/datasets/tiny_imagenet/tiny_imagenet/#avalanche.benchmarks.datasets.TinyImagenet.download_tinyImageNet">[docs]</a>    <span class="k">def</span> <span class="nf">download_tinyImageNet</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot; Downloads the TintImagenet Dataset &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">label2id</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">id2label</span> <span class="o">=</span> <span class="n">TinyImagenet</span><span class="o">.</span><span class="n">labels2dict</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">data_folder</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">targets</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">load_data</span><span class="p">()</span>
+        <span class="k">return</span> <span class="kc">True</span>
 
-        <span class="bp">self</span><span class="o">.</span><span class="n">log</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Downloading </span><span class="si">{}</span><span class="s2">...&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">filename</span><span class="p">[</span><span class="mi">1</span><span class="p">]))</span>
-        <span class="n">urlretrieve</span><span class="p">(</span><span class="n">filename</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">data_folder</span><span class="p">,</span> <span class="n">filename</span><span class="p">[</span><span class="mi">0</span><span class="p">]))</span>
-
-        <span class="k">with</span> <span class="n">ZipFile</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">data_folder</span><span class="p">,</span> <span class="n">filename</span><span class="p">[</span><span class="mi">0</span><span class="p">]),</span> <span class="s1">&#39;r&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">zipf</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">log</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;Extracting Tiny ImageNet images...&#39;</span><span class="p">)</span>
-            <span class="n">zipf</span><span class="o">.</span><span class="n">extractall</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">data_folder</span><span class="p">)</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">log</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;Done!&#39;</span><span class="p">)</span>
-
-        <span class="bp">self</span><span class="o">.</span><span class="n">log</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Download complete.&quot;</span><span class="p">)</span></div>
-
-<div class="viewcode-block" id="TinyImagenet.labels2dict"><a class="viewcode-back" href="../../../../../../autoapi/avalanche/benchmarks/datasets/tiny_imagenet/tiny_imagenet/#avalanche.benchmarks.datasets.TinyImagenet.labels2dict">[docs]</a>    <span class="k">def</span> <span class="nf">labels2dict</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="TinyImagenet.labels2dict"><a class="viewcode-back" href="../../../../../../autoapi/avalanche/benchmarks/datasets/tiny_imagenet/tiny_imagenet/#avalanche.benchmarks.datasets.TinyImagenet.labels2dict">[docs]</a>    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">labels2dict</span><span class="p">(</span><span class="n">data_folder</span><span class="p">:</span> <span class="n">Path</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Returns dictionaries to convert class names into progressive ids</span>
 <span class="sd">        and viceversa.</span>
+
+<span class="sd">        :param data_folder: The root path of tiny imagenet</span>
 <span class="sd">        :returns: label2id, id2label: two Python dictionaries.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
 
         <span class="n">label2id</span> <span class="o">=</span> <span class="p">{}</span>
         <span class="n">id2label</span> <span class="o">=</span> <span class="p">{}</span>
 
-        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">data_folder</span><span class="p">,</span> <span class="s1">&#39;wnids.txt&#39;</span><span class="p">),</span> <span class="s1">&#39;r&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">data_folder</span> <span class="o">/</span> <span class="s1">&#39;wnids.txt&#39;</span><span class="p">),</span> <span class="s1">&#39;r&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
 
             <span class="n">reader</span> <span class="o">=</span> <span class="n">csv</span><span class="o">.</span><span class="n">reader</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
             <span class="n">curr_idx</span> <span class="o">=</span> <span class="mi">0</span>
@@ -292,12 +274,10 @@
 
         <span class="k">return</span> <span class="n">label2id</span><span class="p">,</span> <span class="n">id2label</span></div>
 
-<div class="viewcode-block" id="TinyImagenet.load_data"><a class="viewcode-back" href="../../../../../../autoapi/avalanche/benchmarks/datasets/tiny_imagenet/tiny_imagenet/#avalanche.benchmarks.datasets.TinyImagenet.load_data">[docs]</a>    <span class="k">def</span> <span class="nf">load_data</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">train</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+<div class="viewcode-block" id="TinyImagenet.load_data"><a class="viewcode-back" href="../../../../../../autoapi/avalanche/benchmarks/datasets/tiny_imagenet/tiny_imagenet/#avalanche.benchmarks.datasets.TinyImagenet.load_data">[docs]</a>    <span class="k">def</span> <span class="nf">load_data</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Load all images paths and targets.</span>
 
-<span class="sd">        :param bool train: True for loading the training set, False for the</span>
-<span class="sd">            test set.</span>
 <span class="sd">        :return: train_set, test_set: (train_X_paths, train_y).</span>
 <span class="sd">        &quot;&quot;&quot;</span>
 
@@ -307,7 +287,7 @@
         <span class="k">for</span> <span class="n">class_id</span> <span class="ow">in</span> <span class="n">classes</span><span class="p">:</span>
             <span class="n">class_name</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">id2label</span><span class="p">[</span><span class="n">class_id</span><span class="p">]</span>
 
-            <span class="k">if</span> <span class="n">train</span><span class="p">:</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">train</span><span class="p">:</span>
                 <span class="n">X</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_train_images_paths</span><span class="p">(</span><span class="n">class_name</span><span class="p">)</span>
                 <span class="n">Y</span> <span class="o">=</span> <span class="p">[</span><span class="n">class_id</span><span class="p">]</span> <span class="o">*</span> <span class="nb">len</span><span class="p">(</span><span class="n">X</span><span class="p">)</span>
             <span class="k">else</span><span class="p">:</span>
@@ -321,48 +301,47 @@
         <span class="k">return</span> <span class="n">data</span></div>
 
 <div class="viewcode-block" id="TinyImagenet.get_train_images_paths"><a class="viewcode-back" href="../../../../../../autoapi/avalanche/benchmarks/datasets/tiny_imagenet/tiny_imagenet/#avalanche.benchmarks.datasets.TinyImagenet.get_train_images_paths">[docs]</a>    <span class="k">def</span> <span class="nf">get_train_images_paths</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">class_name</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot; Gets the training set image paths</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Gets the training set image paths.</span>
 
-<span class="sd">            :param class_name: names of the classes of the images to be</span>
-<span class="sd">                collected.</span>
-<span class="sd">            :returns img_paths: list of strings (paths)</span>
+<span class="sd">        :param class_name: names of the classes of the images to be</span>
+<span class="sd">            collected.</span>
+<span class="sd">        :returns img_paths: list of strings (paths)</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">train_img_folder</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">data_folder</span><span class="p">,</span>
-                                        <span class="s1">&#39;train&#39;</span><span class="p">,</span> <span class="n">class_name</span><span class="p">,</span> <span class="s1">&#39;images&#39;</span><span class="p">)</span>
+        <span class="n">train_img_folder</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">data_folder</span> <span class="o">/</span> <span class="s1">&#39;train&#39;</span> <span class="o">/</span> <span class="n">class_name</span> <span class="o">/</span> <span class="s1">&#39;images&#39;</span>
 
-        <span class="n">img_paths</span> <span class="o">=</span> <span class="p">[</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">train_img_folder</span><span class="p">,</span> <span class="n">f</span><span class="p">)</span>
-                     <span class="k">for</span> <span class="n">f</span> <span class="ow">in</span> <span class="n">os</span><span class="o">.</span><span class="n">listdir</span><span class="p">(</span><span class="n">train_img_folder</span><span class="p">)</span>
-                     <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isfile</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">train_img_folder</span><span class="p">,</span> <span class="n">f</span><span class="p">))]</span>
+        <span class="n">img_paths</span> <span class="o">=</span> <span class="p">[</span><span class="n">f</span> <span class="k">for</span> <span class="n">f</span> <span class="ow">in</span> <span class="n">train_img_folder</span><span class="o">.</span><span class="n">iterdir</span><span class="p">()</span> <span class="k">if</span> <span class="n">f</span><span class="o">.</span><span class="n">is_file</span><span class="p">()]</span>
 
         <span class="k">return</span> <span class="n">img_paths</span></div>
 
 <div class="viewcode-block" id="TinyImagenet.get_test_images_paths"><a class="viewcode-back" href="../../../../../../autoapi/avalanche/benchmarks/datasets/tiny_imagenet/tiny_imagenet/#avalanche.benchmarks.datasets.TinyImagenet.get_test_images_paths">[docs]</a>    <span class="k">def</span> <span class="nf">get_test_images_paths</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">class_name</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot; Gets the test set image paths</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Gets the test set image paths</span>
 
-<span class="sd">            :param class_name: names of the classes of the images to be</span>
-<span class="sd">                collected.</span>
-<span class="sd">            :returns img_paths: list of strings (paths)</span>
+<span class="sd">        :param class_name: names of the classes of the images to be</span>
+<span class="sd">            collected.</span>
+<span class="sd">        :returns img_paths: list of strings (paths)</span>
 <span class="sd">        &quot;&quot;&quot;</span>
 
-        <span class="n">val_img_folder</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">data_folder</span><span class="p">,</span> <span class="s1">&#39;val&#39;</span><span class="p">,</span> <span class="s1">&#39;images&#39;</span><span class="p">)</span>
+        <span class="n">val_img_folder</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">data_folder</span> <span class="o">/</span> <span class="s1">&#39;val&#39;</span> <span class="o">/</span> <span class="s1">&#39;images&#39;</span>
+        <span class="n">annotations_file</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">data_folder</span> <span class="o">/</span> <span class="s1">&#39;val&#39;</span> <span class="o">/</span> <span class="s1">&#39;val_annotations.txt&#39;</span>
 
         <span class="n">valid_names</span> <span class="o">=</span> <span class="p">[]</span>
+
         <span class="c1"># filter validation images by class using appropriate file</span>
-        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span>
-                <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">data_folder</span><span class="p">,</span> <span class="s1">&#39;val&#39;</span><span class="p">,</span> <span class="s1">&#39;val_annotations.txt&#39;</span><span class="p">),</span>
-                <span class="s1">&#39;r&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">annotations_file</span><span class="p">),</span> <span class="s1">&#39;r&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
 
             <span class="n">reader</span> <span class="o">=</span> <span class="n">csv</span><span class="o">.</span><span class="n">reader</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="n">dialect</span><span class="o">=</span><span class="s1">&#39;excel-tab&#39;</span><span class="p">)</span>
             <span class="k">for</span> <span class="n">ll</span> <span class="ow">in</span> <span class="n">reader</span><span class="p">:</span>
                 <span class="k">if</span> <span class="n">ll</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="n">class_name</span><span class="p">:</span>
                     <span class="n">valid_names</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">ll</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
 
-        <span class="n">img_paths</span> <span class="o">=</span> <span class="p">[</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">val_img_folder</span><span class="p">,</span> <span class="n">f</span><span class="p">)</span> <span class="k">for</span> <span class="n">f</span> <span class="ow">in</span> <span class="n">valid_names</span><span class="p">]</span>
+        <span class="n">img_paths</span> <span class="o">=</span> <span class="p">[</span><span class="n">val_img_folder</span> <span class="o">/</span> <span class="n">f</span> <span class="k">for</span> <span class="n">f</span> <span class="ow">in</span> <span class="n">valid_names</span><span class="p">]</span>
 
         <span class="k">return</span> <span class="n">img_paths</span></div>
 
 <div class="viewcode-block" id="TinyImagenet.__len__"><a class="viewcode-back" href="../../../../../../autoapi/avalanche/benchmarks/datasets/tiny_imagenet/tiny_imagenet/#avalanche.benchmarks.datasets.TinyImagenet.__len__">[docs]</a>    <span class="k">def</span> <span class="fm">__len__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot; Returns the lenght of the set &quot;&quot;&quot;</span>
+        <span class="sd">&quot;&quot;&quot; Returns the length of the set &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="TinyImagenet.__getitem__"><a class="viewcode-back" href="../../../../../../autoapi/avalanche/benchmarks/datasets/tiny_imagenet/tiny_imagenet/#avalanche.benchmarks.datasets.TinyImagenet.__getitem__">[docs]</a>    <span class="k">def</span> <span class="fm">__getitem__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">index</span><span class="p">):</span>
@@ -372,7 +351,7 @@
 
         <span class="c1"># doing this so that it is consistent with all other datasets</span>
         <span class="c1"># to return a PIL Image</span>
-        <span class="n">img</span> <span class="o">=</span> <span class="n">Image</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="n">path</span><span class="p">)</span><span class="o">.</span><span class="n">convert</span><span class="p">(</span><span class="s1">&#39;RGB&#39;</span><span class="p">)</span>
+        <span class="n">img</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">loader</span><span class="p">(</span><span class="n">path</span><span class="p">)</span>
 
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">transform</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
             <span class="n">img</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">transform</span><span class="p">(</span><span class="n">img</span><span class="p">)</span>
@@ -385,14 +364,14 @@
 
 <span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
 
-    <span class="c1"># this litte example script can be used to visualize the first image</span>
-    <span class="c1"># leaded from the dataset.</span>
+    <span class="c1"># this little example script can be used to visualize the first image</span>
+    <span class="c1"># loaded from the dataset.</span>
     <span class="kn">from</span> <span class="nn">torch.utils.data.dataloader</span> <span class="kn">import</span> <span class="n">DataLoader</span>
     <span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
     <span class="kn">from</span> <span class="nn">torchvision</span> <span class="kn">import</span> <span class="n">transforms</span>
     <span class="kn">import</span> <span class="nn">torch</span>
 
-    <span class="n">train_data</span> <span class="o">=</span> <span class="n">TinyImagenet</span><span class="p">()</span>
+    <span class="n">train_data</span> <span class="o">=</span> <span class="n">TinyImagenet</span><span class="p">(</span><span class="n">transform</span><span class="o">=</span><span class="n">ToTensor</span><span class="p">())</span>
     <span class="n">dataloader</span> <span class="o">=</span> <span class="n">DataLoader</span><span class="p">(</span><span class="n">train_data</span><span class="p">,</span> <span class="n">batch_size</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
 
     <span class="k">for</span> <span class="n">batch_data</span> <span class="ow">in</span> <span class="n">dataloader</span><span class="p">:</span>

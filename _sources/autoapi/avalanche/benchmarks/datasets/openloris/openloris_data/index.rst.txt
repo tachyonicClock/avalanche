@@ -5,39 +5,20 @@
 
 .. autoapi-nested-parse::
 
-   OpenLoris raw data handling module. It can support automatic download. 
+   OpenLoris data. 
 
 
 
 Module Contents
 ---------------
 
-Classes
-~~~~~~~
+.. data:: base_gdrive_url
+   :annotation: = https://drive.google.com/u/0/uc?id=
 
-.. autoapisummary::
+   
 
-   avalanche.benchmarks.datasets.openloris.openloris_data.OPENLORIS_DATA
+.. data:: filename
+   :annotation: = [['train.zip', '11jgiPB2Z9WRI3bW6VSN8fJZgwFl5mLsF'], ['valid.zip', '1ChoBAGcQ_wkclPXsel8CjJHC0tD7b4ga'], ['test.zip', '1J7_ljcwSZNXo6KwlhRZoG0kiEcRK7U6x'], ['LUP.pkl', '1Os8T30NZ3ZU8liHQPeVbo2nlOoPZuDSV'], ['Paths.pkl', '1KnuYLdlG3VQrhgbtIANLki81ah8Thezj'], ['Labels.pkl', '1GkmOxIAvmjSwo22UzmZTSlw8NSmU5Q9H'], ['batches_filelists.zip', '1r0gbo5_Qlzrdet1GPIrJpVSGRgFU7NEp']]
 
-
-
-.. py:class:: OPENLORIS_DATA(root=expanduser('~') + '/.avalanche/data/openloris/')
-
-   Bases: :class:`object`
-
-   OpenlORIS downloader.
-
-   Args:
-       root (string): folder in which to download openloris dataset.
-
-   .. attribute:: filename
-      :annotation: = [['train.zip', '11jgiPB2Z9WRI3bW6VSN8fJZgwFl5mLsF'], ['valid.zip', '1ChoBAGcQ_wkclPXsel8CjJHC0tD7b4ga'], ['test.zip', '1J7_ljcwSZNXo6KwlhRZoG0kiEcRK7U6x'], ['LUP.pkl', '1Os8T30NZ3ZU8liHQPeVbo2nlOoPZuDSV'], ['Paths.pkl', '1KnuYLdlG3VQrhgbtIANLki81ah8Thezj'], ['Labels.pkl', '1GkmOxIAvmjSwo22UzmZTSlw8NSmU5Q9H'], ['batches_filelists.zip', '1r0gbo5_Qlzrdet1GPIrJpVSGRgFU7NEp']]
-
-      
-
-   .. method:: download(self)
-
-      Download from google drive official repositories. 
-
-
+   
 

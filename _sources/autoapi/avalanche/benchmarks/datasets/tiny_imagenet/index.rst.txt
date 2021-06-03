@@ -25,43 +25,52 @@ Classes
 
 
 
-.. py:class:: TinyImagenet(data_folder=expanduser('~') + '/.avalanche/data/tinyimagenet/', train=True, transform=ToTensor(), target_transform=None, download=True)
+.. py:class:: TinyImagenet(root: Union[str, Path] = get_default_dataset_location('tinyimagenet'), *, train: bool = True, transform=None, target_transform=None, loader=default_loader, download=True)
 
-   Bases: :class:`torch.utils.data.dataset.Dataset`
+   Bases: :class:`avalanche.benchmarks.datasets.SimpleDownloadableDataset`
 
    Tiny Imagenet Pytorch Dataset
 
-   Args:
-       :param string data_folder: folder in which to download dataset
-       :param boolean train: True for train set, False for test set
-       :param fun transform: Pytorch transformation founction for x
-       :param fun target_transform: Pytorch transformation founction for y
-       :param bool download: True for downloading the dataset
+   Creates an instance of the Tiny Imagenet dataset.
 
-   .. method:: download_tinyImageNet(self)
+   :param root: folder in which to download dataset.
+   :param train: True for training set, False for test set.
+   :param transform: Pytorch transformation function for x.
+   :param target_transform: Pytorch transformation function for y.
+   :param loader: the procedure to load the instance from the storage.
+   :param bool download: If True, the dataset will be  downloaded if
+       needed.
 
-      Downloads the TintImagenet Dataset 
+   .. attribute:: filename
+      :annotation: = ['tiny-imagenet-200.zip', 'http://cs231n.stanford.edu/tiny-imagenet-200.zip']
 
+      
 
-   .. method:: labels2dict(self)
+   .. attribute:: md5
+      :annotation: = 90528d7ca1a48142e341f4ef8d21d0de
+
+      
+
+   .. method:: labels2dict(data_folder: Path)
+      :staticmethod:
 
       Returns dictionaries to convert class names into progressive ids
       and viceversa.
+
+      :param data_folder: The root path of tiny imagenet
       :returns: label2id, id2label: two Python dictionaries.
 
 
-   .. method:: load_data(self, train=True)
+   .. method:: load_data(self)
 
       Load all images paths and targets.
 
-      :param bool train: True for loading the training set, False for the
-          test set.
       :return: train_set, test_set: (train_X_paths, train_y).
 
 
    .. method:: get_train_images_paths(self, class_name)
 
-      Gets the training set image paths
+      Gets the training set image paths.
 
       :param class_name: names of the classes of the images to be
           collected.
@@ -79,7 +88,7 @@ Classes
 
    .. method:: __len__(self)
 
-      Returns the lenght of the set 
+      Returns the length of the set 
 
 
    .. method:: __getitem__(self, index)

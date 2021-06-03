@@ -192,40 +192,43 @@
 
 <span class="sd">&quot;&quot;&quot; CORe50 Pytorch Dataset &quot;&quot;&quot;</span>
 
-<span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">import</span> <span class="nn">glob</span>
 <span class="kn">import</span> <span class="nn">logging</span>
-<span class="kn">from</span> <span class="nn">torch.utils.data.dataset</span> <span class="kn">import</span> <span class="n">Dataset</span>
-<span class="kn">from</span> <span class="nn">torchvision.transforms</span> <span class="kn">import</span> <span class="n">ToTensor</span>
-<span class="kn">from</span> <span class="nn">PIL</span> <span class="kn">import</span> <span class="n">Image</span>
+<span class="kn">import</span> <span class="nn">os</span>
 <span class="kn">import</span> <span class="nn">pickle</span> <span class="k">as</span> <span class="nn">pkl</span>
-<span class="kn">from</span> <span class="nn">os.path</span> <span class="kn">import</span> <span class="n">expanduser</span>
-<span class="kn">from</span> <span class="nn">.core50_data</span> <span class="kn">import</span> <span class="n">CORE50_DATA</span>
+<span class="kn">from</span> <span class="nn">pathlib</span> <span class="kn">import</span> <span class="n">Path</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Union</span>
+<span class="kn">from</span> <span class="nn">warnings</span> <span class="kn">import</span> <span class="n">warn</span>
+
+<span class="kn">from</span> <span class="nn">torchvision.datasets.folder</span> <span class="kn">import</span> <span class="n">default_loader</span>
+<span class="kn">from</span> <span class="nn">torchvision.transforms</span> <span class="kn">import</span> <span class="n">ToTensor</span>
+
+<span class="kn">from</span> <span class="nn">avalanche.benchmarks.datasets.core50</span> <span class="kn">import</span> <span class="n">core50_data</span>
+<span class="kn">from</span> <span class="nn">avalanche.benchmarks.datasets</span> <span class="kn">import</span> <span class="n">get_default_dataset_location</span>
+<span class="kn">from</span> <span class="nn">avalanche.benchmarks.datasets.downloadable_dataset</span> <span class="kn">import</span> \
+    <span class="n">DownloadableDataset</span>
 
 
-<span class="k">def</span> <span class="nf">pil_loader</span><span class="p">(</span><span class="n">path</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot; Load an Image with PIL &quot;&quot;&quot;</span>
-    <span class="c1"># open path as file to avoid ResourceWarning</span>
-    <span class="c1"># (https://github.com/python-pillow/Pillow/issues/835)</span>
-    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="s1">&#39;rb&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
-        <span class="n">img</span> <span class="o">=</span> <span class="n">Image</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
-        <span class="k">return</span> <span class="n">img</span><span class="o">.</span><span class="n">convert</span><span class="p">(</span><span class="s1">&#39;RGB&#39;</span><span class="p">)</span>
-
-
-<div class="viewcode-block" id="CORe50"><a class="viewcode-back" href="../../../../../../autoapi/avalanche/benchmarks/datasets/#avalanche.benchmarks.datasets.core50.core50.CORe50">[docs]</a><span class="k">class</span> <span class="nc">CORe50</span><span class="p">(</span><span class="n">Dataset</span><span class="p">):</span>
+<div class="viewcode-block" id="CORe50Dataset"><a class="viewcode-back" href="../../../../../../autoapi/avalanche/benchmarks/datasets/#avalanche.benchmarks.datasets.core50.core50.CORe50Dataset">[docs]</a><span class="k">class</span> <span class="nc">CORe50Dataset</span><span class="p">(</span><span class="n">DownloadableDataset</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot; CORe50 Pytorch Dataset &quot;&quot;&quot;</span>
 
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">root</span><span class="o">=</span><span class="n">expanduser</span><span class="p">(</span><span class="s2">&quot;~&quot;</span><span class="p">)</span><span class="o">+</span><span class="s2">&quot;/.avalanche/data/core50/&quot;</span><span class="p">,</span>
-                 <span class="n">train</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">transform</span><span class="o">=</span><span class="n">ToTensor</span><span class="p">(),</span> <span class="n">target_transform</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
-                 <span class="n">loader</span><span class="o">=</span><span class="n">pil_loader</span><span class="p">,</span> <span class="n">download</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">mini</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
-                 <span class="n">object_level</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span>
+            <span class="bp">self</span><span class="p">,</span>
+            <span class="n">root</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Path</span><span class="p">]</span> <span class="o">=</span> <span class="n">get_default_dataset_location</span><span class="p">(</span><span class="s1">&#39;core50&#39;</span><span class="p">),</span>
+            <span class="o">*</span><span class="p">,</span>
+            <span class="n">train</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">transform</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">target_transform</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+            <span class="n">loader</span><span class="o">=</span><span class="n">default_loader</span><span class="p">,</span> <span class="n">download</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">mini</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+            <span class="n">object_level</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+
         <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Creates an instance of the CORe50 dataset.</span>
 
 <span class="sd">        :param root: root for the datasets data.</span>
 <span class="sd">        :param train: train or test split.</span>
 <span class="sd">        :param transform: eventual transformations to be applied.</span>
 <span class="sd">        :param target_transform: eventual transformation to be applied to the</span>
 <span class="sd">            targets.</span>
-<span class="sd">        :param loader: data loader method from disk.</span>
+<span class="sd">        :param loader: the procedure to load the instance from the storage.</span>
 <span class="sd">        :param download: boolean to automatically download data. Default to</span>
 <span class="sd">            True.</span>
 <span class="sd">        :param mini: boolean to use the 32x32 version instead of the 128x128.</span>
@@ -235,49 +238,112 @@
 <span class="sd">            (50-way object classification problem)</span>
 <span class="sd">        &quot;&quot;&quot;</span>
 
+        <span class="nb">super</span><span class="p">(</span><span class="n">CORe50Dataset</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span>
+            <span class="n">root</span><span class="p">,</span> <span class="n">download</span><span class="o">=</span><span class="n">download</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
         <span class="bp">self</span><span class="o">.</span><span class="n">train</span> <span class="o">=</span> <span class="n">train</span>  <span class="c1"># training set or test set</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">transform</span> <span class="o">=</span> <span class="n">transform</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">target_transform</span> <span class="o">=</span> <span class="n">target_transform</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">root</span> <span class="o">=</span> <span class="n">root</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">loader</span> <span class="o">=</span> <span class="n">loader</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">object_level</span> <span class="o">=</span> <span class="n">object_level</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">mini</span> <span class="o">=</span> <span class="n">mini</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">log</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="s2">&quot;avalanche&quot;</span><span class="p">)</span>
 
         <span class="c1"># any scenario and run is good here since we want just to load the</span>
         <span class="c1"># train images and targets with no particular order</span>
-        <span class="n">scen</span> <span class="o">=</span> <span class="s1">&#39;ni&#39;</span>
-        <span class="n">run</span> <span class="o">=</span> <span class="mi">0</span>
-        <span class="n">nbatch</span> <span class="o">=</span> <span class="mi">8</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_scen</span> <span class="o">=</span> <span class="s1">&#39;ni&#39;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_run</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_nbatch</span> <span class="o">=</span> <span class="mi">8</span>
 
-        <span class="k">if</span> <span class="n">download</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">core_data</span> <span class="o">=</span> <span class="n">CORE50_DATA</span><span class="p">(</span><span class="n">data_folder</span><span class="o">=</span><span class="n">root</span><span class="p">,</span> <span class="n">mini</span><span class="o">=</span><span class="n">mini</span><span class="p">)</span>
+        <span class="c1"># Download the dataset and initialize metadata</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_load_dataset</span><span class="p">()</span>
 
-        <span class="bp">self</span><span class="o">.</span><span class="n">log</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Loading paths...&quot;</span><span class="p">)</span>
-        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">root</span><span class="p">,</span> <span class="s1">&#39;paths.pkl&#39;</span><span class="p">),</span> <span class="s1">&#39;rb&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+<div class="viewcode-block" id="CORe50Dataset.__getitem__"><a class="viewcode-back" href="../../../../../../autoapi/avalanche/benchmarks/datasets/#avalanche.benchmarks.datasets.core50.core50.CORe50Dataset.__getitem__">[docs]</a>    <span class="k">def</span> <span class="fm">__getitem__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">index</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Args:</span>
+<span class="sd">            index (int): Index</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            tuple: (sample, target) where target is class_index of the target</span>
+<span class="sd">                class.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="n">target</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">targets</span><span class="p">[</span><span class="n">index</span><span class="p">]</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">mini</span><span class="p">:</span>
+            <span class="n">bp</span> <span class="o">=</span> <span class="s2">&quot;core50_32x32&quot;</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">bp</span> <span class="o">=</span> <span class="s2">&quot;core50_128x128&quot;</span>
+
+        <span class="n">img</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">loader</span><span class="p">(</span>
+            <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">root</span> <span class="o">/</span> <span class="n">bp</span> <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">paths</span><span class="p">[</span><span class="n">index</span><span class="p">])</span>
+        <span class="p">)</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">transform</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">img</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">transform</span><span class="p">(</span><span class="n">img</span><span class="p">)</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">target_transform</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">target</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">target_transform</span><span class="p">(</span><span class="n">target</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">img</span><span class="p">,</span> <span class="n">target</span></div>
+
+<div class="viewcode-block" id="CORe50Dataset.__len__"><a class="viewcode-back" href="../../../../../../autoapi/avalanche/benchmarks/datasets/#avalanche.benchmarks.datasets.core50.core50.CORe50Dataset.__len__">[docs]</a>    <span class="k">def</span> <span class="fm">__len__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">targets</span><span class="p">)</span></div>
+
+    <span class="k">def</span> <span class="nf">_download_dataset</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">data2download</span> <span class="o">=</span> <span class="n">core50_data</span><span class="o">.</span><span class="n">data</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">mini</span><span class="p">:</span>
+            <span class="n">data2download</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">data2download</span><span class="p">)</span>
+            <span class="n">data2download</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">core50_data</span><span class="o">.</span><span class="n">extra_data</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+
+        <span class="k">for</span> <span class="n">name</span> <span class="ow">in</span> <span class="n">data2download</span><span class="p">:</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">verbose</span><span class="p">:</span>
+                <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Downloading &quot;</span> <span class="o">+</span> <span class="n">name</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="s2">&quot;...&quot;</span><span class="p">)</span>
+            <span class="n">file</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_download_file</span><span class="p">(</span><span class="n">name</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">name</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">name</span><span class="p">[</span><span class="mi">2</span><span class="p">])</span>
+            <span class="k">if</span> <span class="n">name</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">endswith</span><span class="p">(</span><span class="s1">&#39;.zip&#39;</span><span class="p">):</span>
+                <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">verbose</span><span class="p">:</span>
+                    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Extracting </span><span class="si">{</span><span class="n">name</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="si">}</span><span class="s1">...&#39;</span><span class="p">)</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_extract_archive</span><span class="p">(</span><span class="n">file</span><span class="p">)</span>
+                <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">verbose</span><span class="p">:</span>
+                    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Extraction completed!&#39;</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">_load_metadata</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">mini</span><span class="p">:</span>
+            <span class="n">bp</span> <span class="o">=</span> <span class="s2">&quot;core50_32x32&quot;</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">bp</span> <span class="o">=</span> <span class="s2">&quot;core50_128x128&quot;</span>
+
+        <span class="k">if</span> <span class="ow">not</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">root</span> <span class="o">/</span> <span class="n">bp</span><span class="p">)</span><span class="o">.</span><span class="n">exists</span><span class="p">():</span>
+            <span class="k">return</span> <span class="kc">False</span>
+
+        <span class="k">if</span> <span class="ow">not</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">root</span> <span class="o">/</span> <span class="s1">&#39;batches_filelists&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">exists</span><span class="p">():</span>
+            <span class="k">return</span> <span class="kc">False</span>
+
+        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">root</span> <span class="o">/</span> <span class="s1">&#39;paths.pkl&#39;</span><span class="p">,</span> <span class="s1">&#39;rb&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">train_test_paths</span> <span class="o">=</span> <span class="n">pkl</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
 
-        <span class="bp">self</span><span class="o">.</span><span class="n">log</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Loading labels...&quot;</span><span class="p">)</span>
-        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">root</span><span class="p">,</span> <span class="s1">&#39;labels.pkl&#39;</span><span class="p">),</span> <span class="s1">&#39;rb&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">verbose</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Loading labels...&quot;</span><span class="p">)</span>
+        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">root</span> <span class="o">/</span> <span class="s1">&#39;labels.pkl&#39;</span><span class="p">,</span> <span class="s1">&#39;rb&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">all_targets</span> <span class="o">=</span> <span class="n">pkl</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">train_test_targets</span> <span class="o">=</span> <span class="p">[]</span>
-            <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">nbatch</span> <span class="o">+</span> <span class="mi">1</span><span class="p">):</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">train_test_targets</span> <span class="o">+=</span> <span class="bp">self</span><span class="o">.</span><span class="n">all_targets</span><span class="p">[</span><span class="n">scen</span><span class="p">][</span><span class="n">run</span><span class="p">][</span><span class="n">i</span><span class="p">]</span>
+            <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_nbatch</span> <span class="o">+</span> <span class="mi">1</span><span class="p">):</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">train_test_targets</span> <span class="o">+=</span> \
+                    <span class="bp">self</span><span class="o">.</span><span class="n">all_targets</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">_scen</span><span class="p">][</span><span class="bp">self</span><span class="o">.</span><span class="n">_run</span><span class="p">][</span><span class="n">i</span><span class="p">]</span>
 
-        <span class="bp">self</span><span class="o">.</span><span class="n">log</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Loading LUP...&quot;</span><span class="p">)</span>
-        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">root</span><span class="p">,</span> <span class="s1">&#39;LUP.pkl&#39;</span><span class="p">),</span> <span class="s1">&#39;rb&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">verbose</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Loading LUP...&quot;</span><span class="p">)</span>
+        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">root</span> <span class="o">/</span> <span class="s1">&#39;LUP.pkl&#39;</span><span class="p">,</span> <span class="s1">&#39;rb&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">LUP</span> <span class="o">=</span> <span class="n">pkl</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
 
-        <span class="bp">self</span><span class="o">.</span><span class="n">log</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Loading labels names...&quot;</span><span class="p">)</span>
-        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">root</span><span class="p">,</span> <span class="s1">&#39;labels2names.pkl&#39;</span><span class="p">),</span> <span class="s1">&#39;rb&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">verbose</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Loading labels names...&quot;</span><span class="p">)</span>
+        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">root</span> <span class="o">/</span> <span class="s1">&#39;labels2names.pkl&#39;</span><span class="p">,</span> <span class="s1">&#39;rb&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">labels2names</span> <span class="o">=</span> <span class="n">pkl</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">idx_list</span> <span class="o">=</span> <span class="p">[]</span>
-        <span class="k">if</span> <span class="n">train</span><span class="p">:</span>
-            <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">nbatch</span> <span class="o">+</span> <span class="mi">1</span><span class="p">):</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">idx_list</span> <span class="o">+=</span> <span class="bp">self</span><span class="o">.</span><span class="n">LUP</span><span class="p">[</span><span class="n">scen</span><span class="p">][</span><span class="n">run</span><span class="p">][</span><span class="n">i</span><span class="p">]</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">train</span><span class="p">:</span>
+            <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_nbatch</span> <span class="o">+</span> <span class="mi">1</span><span class="p">):</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">idx_list</span> <span class="o">+=</span> <span class="bp">self</span><span class="o">.</span><span class="n">LUP</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">_scen</span><span class="p">][</span><span class="bp">self</span><span class="o">.</span><span class="n">_run</span><span class="p">][</span><span class="n">i</span><span class="p">]</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">idx_list</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">LUP</span><span class="p">[</span><span class="n">scen</span><span class="p">][</span><span class="n">run</span><span class="p">][</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">idx_list</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">LUP</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">_scen</span><span class="p">][</span><span class="bp">self</span><span class="o">.</span><span class="n">_run</span><span class="p">][</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">paths</span> <span class="o">=</span> <span class="p">[]</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">targets</span> <span class="o">=</span> <span class="p">[]</span>
@@ -289,36 +355,72 @@
                 <span class="n">div</span> <span class="o">=</span> <span class="mi">5</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">targets</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">train_test_targets</span><span class="p">[</span><span class="n">idx</span><span class="p">]</span> <span class="o">//</span> <span class="n">div</span><span class="p">)</span>
 
-<div class="viewcode-block" id="CORe50.__getitem__"><a class="viewcode-back" href="../../../../../../autoapi/avalanche/benchmarks/datasets/#avalanche.benchmarks.datasets.core50.core50.CORe50.__getitem__">[docs]</a>    <span class="k">def</span> <span class="fm">__getitem__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">index</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Args:</span>
-<span class="sd">            index (int): Index</span>
+        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">root</span> <span class="o">/</span> <span class="s1">&#39;labels2names.pkl&#39;</span><span class="p">,</span> <span class="s1">&#39;rb&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">labels2names</span> <span class="o">=</span> <span class="n">pkl</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
 
-<span class="sd">        Returns:</span>
-<span class="sd">            tuple: (sample, target) where target is class_index of the target</span>
-<span class="sd">                class.</span>
-<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">root</span> <span class="o">/</span> <span class="s1">&#39;NIC_v2_79_cat&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">exists</span><span class="p">():</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_create_cat_filelists</span><span class="p">()</span>
 
-        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">mini</span><span class="p">:</span>
-            <span class="n">bp</span> <span class="o">=</span> <span class="s2">&quot;core50_32x32&quot;</span>
+        <span class="k">return</span> <span class="kc">True</span>
+
+    <span class="k">def</span> <span class="nf">_download_error_message</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+        <span class="n">all_urls</span> <span class="o">=</span> <span class="p">[</span>
+            <span class="n">name_url</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="k">for</span> <span class="n">name_url</span> <span class="ow">in</span> <span class="n">core50_data</span><span class="o">.</span><span class="n">data</span>
+        <span class="p">]</span>
+
+        <span class="n">base_msg</span> <span class="o">=</span> \
+            <span class="s1">&#39;[CORe50] Error downloading the dataset!</span><span class="se">\n</span><span class="s1">&#39;</span> \
+            <span class="s1">&#39;You should download data manually using the following links:</span><span class="se">\n</span><span class="s1">&#39;</span>
+
+        <span class="k">for</span> <span class="n">url</span> <span class="ow">in</span> <span class="n">all_urls</span><span class="p">:</span>
+            <span class="n">base_msg</span> <span class="o">+=</span> <span class="n">url</span>
+            <span class="n">base_msg</span> <span class="o">+=</span> <span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span>
+
+        <span class="n">base_msg</span> <span class="o">+=</span> <span class="s1">&#39;and place these files in &#39;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">root</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">base_msg</span>
+
+    <span class="k">def</span> <span class="nf">_create_cat_filelists</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Generates corresponding filelists with category-wise labels. The</span>
+<span class="sd">        default one are based on the object-level labels from 0 to 49.&quot;&quot;&quot;</span>
+
+        <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">core50_data</span><span class="o">.</span><span class="n">scen2dirs</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+            <span class="n">orig_root_path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">root</span><span class="p">,</span> <span class="n">v</span><span class="p">)</span>
+            <span class="n">root_path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">root</span><span class="p">,</span> <span class="n">v</span><span class="p">[:</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="s2">&quot;_cat&quot;</span><span class="p">)</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">root_path</span><span class="p">):</span>
+                <span class="n">os</span><span class="o">.</span><span class="n">makedirs</span><span class="p">(</span><span class="n">root_path</span><span class="p">)</span>
+            <span class="k">for</span> <span class="n">run</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">10</span><span class="p">):</span>
+                <span class="n">cur_path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">root_path</span><span class="p">,</span> <span class="s2">&quot;run&quot;</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="n">run</span><span class="p">))</span>
+                <span class="n">orig_cur_path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">orig_root_path</span><span class="p">,</span> <span class="s2">&quot;run&quot;</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="n">run</span><span class="p">))</span>
+                <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">cur_path</span><span class="p">):</span>
+                    <span class="n">os</span><span class="o">.</span><span class="n">makedirs</span><span class="p">(</span><span class="n">cur_path</span><span class="p">)</span>
+                <span class="k">for</span> <span class="n">file</span> <span class="ow">in</span> <span class="n">glob</span><span class="o">.</span><span class="n">glob</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">orig_cur_path</span><span class="p">,</span> <span class="s2">&quot;*.txt&quot;</span><span class="p">)):</span>
+                    <span class="n">o_filename</span> <span class="o">=</span> <span class="n">file</span>
+                    <span class="n">_</span><span class="p">,</span> <span class="n">d_filename</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="n">o_filename</span><span class="p">)</span>
+                    <span class="n">orig_f</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="n">o_filename</span><span class="p">,</span> <span class="s2">&quot;r&quot;</span><span class="p">)</span>
+                    <span class="n">dst_f</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">cur_path</span><span class="p">,</span> <span class="n">d_filename</span><span class="p">),</span> <span class="s2">&quot;w&quot;</span><span class="p">)</span>
+                    <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">orig_f</span><span class="p">:</span>
+                        <span class="n">path</span><span class="p">,</span> <span class="n">label</span> <span class="o">=</span> <span class="n">line</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot; &quot;</span><span class="p">)</span>
+                        <span class="n">new_label</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_objlab2cat</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">label</span><span class="p">),</span> <span class="n">k</span><span class="p">,</span> <span class="n">run</span><span class="p">)</span>
+                        <span class="n">dst_f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">path</span> <span class="o">+</span> <span class="s2">&quot; &quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">new_label</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+                    <span class="n">orig_f</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+                    <span class="n">dst_f</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+
+    <span class="k">def</span> <span class="nf">_objlab2cat</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">label</span><span class="p">,</span> <span class="n">scen</span><span class="p">,</span> <span class="n">run</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Mapping an object label into its corresponding category label</span>
+<span class="sd">        based on the scenario. &quot;&quot;&quot;</span>
+
+        <span class="k">if</span> <span class="n">scen</span> <span class="o">==</span> <span class="s2">&quot;nc&quot;</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">core50_data</span><span class="o">.</span><span class="n">name2cat</span><span class="p">[</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">labels2names</span><span class="p">[</span><span class="s1">&#39;nc&#39;</span><span class="p">][</span><span class="n">run</span><span class="p">][</span><span class="n">label</span><span class="p">][:</span><span class="o">-</span><span class="mi">1</span><span class="p">]]</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="n">bp</span> <span class="o">=</span> <span class="s2">&quot;core50_128x128&quot;</span>
+            <span class="k">return</span> <span class="nb">int</span><span class="p">(</span><span class="n">label</span><span class="p">)</span> <span class="o">//</span> <span class="mi">5</span></div>
 
-        <span class="n">target</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">targets</span><span class="p">[</span><span class="n">index</span><span class="p">]</span>
-        <span class="n">img</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">loader</span><span class="p">(</span>
-            <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">root</span><span class="p">,</span> <span class="n">bp</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">paths</span><span class="p">[</span><span class="n">index</span><span class="p">]</span>
-            <span class="p">)</span>
-        <span class="p">)</span>
-        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">transform</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="n">img</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">transform</span><span class="p">(</span><span class="n">img</span><span class="p">)</span>
-        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">target_transform</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="n">target</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">target_transform</span><span class="p">(</span><span class="n">target</span><span class="p">)</span>
 
-        <span class="k">return</span> <span class="n">img</span><span class="p">,</span> <span class="n">target</span></div>
-
-<div class="viewcode-block" id="CORe50.__len__"><a class="viewcode-back" href="../../../../../../autoapi/avalanche/benchmarks/datasets/#avalanche.benchmarks.datasets.core50.core50.CORe50.__len__">[docs]</a>    <span class="k">def</span> <span class="fm">__len__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="k">return</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">targets</span><span class="p">)</span></div></div>
+<div class="viewcode-block" id="CORe50"><a class="viewcode-back" href="../../../../../../autoapi/avalanche/benchmarks/datasets/core50/core50/#avalanche.benchmarks.datasets.core50.core50.CORe50">[docs]</a><span class="k">def</span> <span class="nf">CORe50</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+    <span class="n">warn</span><span class="p">(</span><span class="s2">&quot;Dataset CORe50 has been renamed CORe50Dataset to prevent confusion &quot;</span>
+         <span class="s2">&quot;with the CORe50 classic benchmark&quot;</span><span class="p">,</span> <span class="ne">DeprecationWarning</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">CORe50Dataset</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></div>
 
 
 <span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
@@ -330,8 +432,8 @@
     <span class="kn">from</span> <span class="nn">torchvision</span> <span class="kn">import</span> <span class="n">transforms</span>
     <span class="kn">import</span> <span class="nn">torch</span>
 
-    <span class="n">train_data</span> <span class="o">=</span> <span class="n">CORe50</span><span class="p">()</span>
-    <span class="n">test_data</span> <span class="o">=</span> <span class="n">CORe50</span><span class="p">(</span><span class="n">train</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+    <span class="n">train_data</span> <span class="o">=</span> <span class="n">CORe50Dataset</span><span class="p">(</span><span class="n">transform</span><span class="o">=</span><span class="n">ToTensor</span><span class="p">())</span>
+    <span class="n">test_data</span> <span class="o">=</span> <span class="n">CORe50Dataset</span><span class="p">(</span><span class="n">train</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">transform</span><span class="o">=</span><span class="n">ToTensor</span><span class="p">())</span>
     <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;train size: &quot;</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">train_data</span><span class="p">))</span>
     <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Test size: &quot;</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">test_data</span><span class="p">))</span>
     <span class="nb">print</span><span class="p">(</span><span class="n">train_data</span><span class="o">.</span><span class="n">labels2names</span><span class="p">)</span>
@@ -349,6 +451,7 @@
 
 
 <span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="s1">&#39;CORe50Dataset&#39;</span><span class="p">,</span>
     <span class="s1">&#39;CORe50&#39;</span>
 <span class="p">]</span>
 </pre></div>

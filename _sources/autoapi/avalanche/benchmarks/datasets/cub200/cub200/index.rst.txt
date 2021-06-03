@@ -25,9 +25,9 @@ Classes
 
 
 
-.. py:class:: CUB200(root=expanduser('~') + '/.avalanche/data/CUB_200_2011/', train=True, transform=None, target_transform=None, loader=default_loader, download=True)
+.. py:class:: CUB200(root: Union[str, Path] = get_default_dataset_location('CUB_200_2011'), *, train=True, transform=None, target_transform=None, loader=default_loader, download=True)
 
-   Bases: :class:`avalanche.benchmarks.utils.PathsDataset`
+   Bases: :class:`avalanche.benchmarks.utils.PathsDataset`, :class:`avalanche.benchmarks.datasets.DownloadableDataset`
 
    Basic CUB200 PathsDataset to be used as a standard PyTorch Dataset.
    A classic continual learning benchmark built on top of this dataset

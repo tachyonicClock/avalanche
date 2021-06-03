@@ -23,7 +23,7 @@ Functions
    avalanche.benchmarks.classic.core50.CORe50
 
 
-.. function:: CORe50(root=expanduser('~') + '/.avalanche/data/core50/', scenario='nicv2_391', run=0, object_lvl=True, mini=False, train_transform=None, eval_transform=None)
+.. function:: CORe50(root: Union[str, Path] = get_default_dataset_location('core50'), scenario: str = 'nicv2_391', run: int = 0, object_lvl: bool = True, mini: bool = False, train_transform=None, eval_transform=None)
 
    Creates a CL scenario for CORe50.
 

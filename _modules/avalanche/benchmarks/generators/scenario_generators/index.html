@@ -310,7 +310,8 @@
 <span class="sd">    :return: A properly initialized :class:`NCScenario` instance.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
-    <span class="n">warnings</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span><span class="s1">&#39;nc_scenario is deprecated in favor of nc_benchmark.&#39;</span><span class="p">)</span>
+    <span class="n">warnings</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span><span class="s1">&#39;nc_scenario is deprecated in favor of nc_benchmark.&#39;</span><span class="p">,</span>
+                  <span class="ne">DeprecationWarning</span><span class="p">)</span>
 
     <span class="k">if</span> <span class="n">class_ids_from_zero_from_first_exp</span> <span class="ow">and</span> <span class="n">class_ids_from_zero_in_each_exp</span><span class="p">:</span>
         <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;Invalid mutually exclusive options &#39;</span>
@@ -435,7 +436,8 @@
 <span class="sd">    :return: A properly initialized :class:`NIScenario` instance.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
-    <span class="n">warnings</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span><span class="s1">&#39;ni_scenario is deprecated in favor of ni_benchmark.&#39;</span><span class="p">)</span>
+    <span class="n">warnings</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span><span class="s1">&#39;ni_scenario is deprecated in favor of ni_benchmark.&#39;</span><span class="p">,</span>
+                  <span class="ne">DeprecationWarning</span><span class="p">)</span>
 
     <span class="n">seq_train_dataset</span><span class="p">,</span> <span class="n">seq_test_dataset</span> <span class="o">=</span> <span class="n">train_dataset</span><span class="p">,</span> <span class="n">test_dataset</span>
     <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">train_dataset</span><span class="p">,</span> <span class="nb">list</span><span class="p">)</span> <span class="ow">or</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">train_dataset</span><span class="p">,</span> <span class="nb">tuple</span><span class="p">):</span>
@@ -513,7 +515,7 @@
 <span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="n">warnings</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span><span class="s1">&#39;dataset_scenario is deprecated in favor of &#39;</span>
-                  <span class="s1">&#39;dataset_benchmark.&#39;</span><span class="p">)</span>
+                  <span class="s1">&#39;dataset_benchmark.&#39;</span><span class="p">,</span> <span class="ne">DeprecationWarning</span><span class="p">)</span>
 
     <span class="k">return</span> <span class="n">create_multi_dataset_generic_scenario</span><span class="p">(</span>
         <span class="n">train_dataset_list</span><span class="o">=</span><span class="n">train_dataset_list</span><span class="p">,</span>
@@ -586,7 +588,7 @@
 <span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="n">warnings</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span><span class="s1">&#39;filelist_scenario is deprecated in favor of &#39;</span>
-                  <span class="s1">&#39;filelist_benchmark.&#39;</span><span class="p">)</span>
+                  <span class="s1">&#39;filelist_benchmark.&#39;</span><span class="p">,</span> <span class="ne">DeprecationWarning</span><span class="p">)</span>
 
     <span class="k">return</span> <span class="n">create_generic_scenario_from_filelists</span><span class="p">(</span>
         <span class="n">root</span><span class="o">=</span><span class="n">root</span><span class="p">,</span>
@@ -679,7 +681,8 @@
 <span class="sd">    :returns: A properly initialized :class:`GenericCLScenario` instance.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
-    <span class="n">warnings</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span><span class="s1">&#39;paths_scenario is deprecated in favor of paths_benchmark.&#39;</span><span class="p">)</span>
+    <span class="n">warnings</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span><span class="s1">&#39;paths_scenario is deprecated in favor of paths_benchmark.&#39;</span><span class="p">,</span>
+                  <span class="ne">DeprecationWarning</span><span class="p">)</span>
 
     <span class="k">return</span> <span class="n">create_generic_scenario_from_paths</span><span class="p">(</span>
         <span class="n">train_list_of_files</span><span class="o">=</span><span class="n">train_list_of_files</span><span class="p">,</span>
@@ -764,7 +767,7 @@
 <span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="n">warnings</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span><span class="s1">&#39;tensors_scenario is deprecated in favor of &#39;</span>
-                  <span class="s1">&#39;tensors_benchmark.&#39;</span><span class="p">)</span>
+                  <span class="s1">&#39;tensors_benchmark.&#39;</span><span class="p">,</span> <span class="ne">DeprecationWarning</span><span class="p">)</span>
 
     <span class="k">return</span> <span class="n">create_generic_scenario_from_tensor_lists</span><span class="p">(</span>
         <span class="n">train_tensors</span><span class="o">=</span><span class="n">train_tensors</span><span class="p">,</span>
@@ -857,7 +860,8 @@
     <span class="n">warnings</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span><span class="s1">&#39;tensor_scenario is deprecated in favor &#39;</span>
                   <span class="s1">&#39;of tensors_benchmark. When switching&#39;</span>
                   <span class="s1">&#39; to the new function, please keep in mind that the format of&#39;</span>
-                  <span class="s1">&#39; the parameters is completely different!&#39;</span><span class="p">)</span>
+                  <span class="s1">&#39; the parameters is completely different!&#39;</span><span class="p">,</span>
+                  <span class="ne">DeprecationWarning</span><span class="p">)</span>
 
     <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">test_data_x</span><span class="p">,</span> <span class="n">Tensor</span><span class="p">):</span>
         <span class="n">test_data_x</span> <span class="o">=</span> <span class="p">[</span><span class="n">test_data_x</span><span class="p">]</span>

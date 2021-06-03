@@ -248,6 +248,8 @@
 <span class="kn">import</span> <span class="nn">glob</span>
 <span class="kn">from</span> <span class="nn">pathlib</span> <span class="kn">import</span> <span class="n">Path</span>
 <span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Union</span><span class="p">,</span> <span class="n">List</span><span class="p">,</span> <span class="n">Tuple</span><span class="p">,</span> <span class="n">Dict</span>
+
+<span class="kn">from</span> <span class="nn">torchvision.datasets.folder</span> <span class="kn">import</span> <span class="n">default_loader</span>
 <span class="kn">from</span> <span class="nn">typing_extensions</span> <span class="kn">import</span> <span class="n">Literal</span>
 
 <span class="kn">import</span> <span class="nn">PIL</span>
@@ -259,14 +261,6 @@
 <span class="kn">from</span> <span class="nn">avalanche.benchmarks.datasets.mini_imagenet.mini_imagenet_data</span> <span class="kn">import</span> \
     <span class="n">MINI_IMAGENET_WNIDS</span><span class="p">,</span> <span class="n">MINI_IMAGENET_WNID_TO_IDX</span><span class="p">,</span> <span class="n">MINI_IMAGENET_CLASSES</span><span class="p">,</span> \
     <span class="n">MINI_IMAGENET_CLASS_TO_IDX</span>
-
-
-<span class="k">def</span> <span class="nf">pil_loader</span><span class="p">(</span><span class="n">path</span><span class="p">):</span>
-    <span class="c1"># open path as file to avoid ResourceWarning</span>
-    <span class="c1"># (https://github.com/python-pillow/Pillow/issues/835)</span>
-    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="s1">&#39;rb&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
-        <span class="n">img</span> <span class="o">=</span> <span class="n">Image</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
-        <span class="k">return</span> <span class="n">img</span><span class="o">.</span><span class="n">convert</span><span class="p">(</span><span class="s1">&#39;RGB&#39;</span><span class="p">)</span>
 
 
 <div class="viewcode-block" id="MiniImageNetDataset"><a class="viewcode-back" href="../../../../../../autoapi/avalanche/benchmarks/datasets/mini_imagenet/mini_imagenet/#avalanche.benchmarks.datasets.MiniImageNetDataset">[docs]</a><span class="k">class</span> <span class="nc">MiniImageNetDataset</span><span class="p">(</span><span class="n">Dataset</span><span class="p">):</span>
@@ -291,7 +285,8 @@
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">imagenet_path</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Path</span><span class="p">],</span>
                  <span class="n">split</span><span class="p">:</span> <span class="n">Literal</span><span class="p">[</span><span class="s1">&#39;all&#39;</span><span class="p">,</span> <span class="s1">&#39;train&#39;</span><span class="p">,</span> <span class="s1">&#39;val&#39;</span><span class="p">,</span> <span class="s1">&#39;test&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;all&#39;</span><span class="p">,</span>
-                 <span class="n">resize_to</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="n">Tuple</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">int</span><span class="p">]]</span> <span class="o">=</span> <span class="mi">84</span><span class="p">):</span>
+                 <span class="n">resize_to</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="n">Tuple</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">int</span><span class="p">]]</span> <span class="o">=</span> <span class="mi">84</span><span class="p">,</span>
+                 <span class="n">loader</span><span class="o">=</span><span class="n">default_loader</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Creates an instance of the Mini ImageNet dataset.</span>
 
@@ -372,6 +367,8 @@
 <span class="sd">        field to their numerical label. That is, this dictionary contains the </span>
 <span class="sd">        inverse mapping of classes field.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">loader</span> <span class="o">=</span> <span class="n">loader</span>
 
         <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">imagenet_path</span><span class="o">.</span><span class="n">exists</span><span class="p">():</span>
             <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;The provided directory does not exist.&#39;</span><span class="p">)</span>
@@ -460,7 +457,7 @@
         <span class="k">return</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">targets</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="MiniImageNetDataset.__getitem__"><a class="viewcode-back" href="../../../../../../autoapi/avalanche/benchmarks/datasets/mini_imagenet/mini_imagenet/#avalanche.benchmarks.datasets.MiniImageNetDataset.__getitem__">[docs]</a>    <span class="k">def</span> <span class="fm">__getitem__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">item</span><span class="p">):</span>
-        <span class="n">img</span> <span class="o">=</span> <span class="n">pil_loader</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">image_paths</span><span class="p">[</span><span class="n">item</span><span class="p">])</span>
+        <span class="n">img</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">loader</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">image_paths</span><span class="p">[</span><span class="n">item</span><span class="p">])</span>
         <span class="n">img</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_transform</span><span class="p">(</span><span class="n">img</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">img</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">targets</span><span class="p">[</span><span class="n">item</span><span class="p">]</span></div></div>
 

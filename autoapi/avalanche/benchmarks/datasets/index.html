@@ -226,6 +226,8 @@
 <h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this headline">¶</a></h2>
 <div class="toctree-wrapper compound">
 <ul>
+<li class="toctree-l1"><a class="reference internal" href="dataset_utils/"><code class="xref py py-mod docutils literal notranslate"><span class="pre">avalanche.benchmarks.datasets.dataset_utils</span></code></a></li>
+<li class="toctree-l1"><a class="reference internal" href="downloadable_dataset/"><code class="xref py py-mod docutils literal notranslate"><span class="pre">avalanche.benchmarks.datasets.downloadable_dataset</span></code></a></li>
 <li class="toctree-l1"><a class="reference internal" href="imagenet_data/"><code class="xref py py-mod docutils literal notranslate"><span class="pre">avalanche.benchmarks.datasets.imagenet_data</span></code></a></li>
 <li class="toctree-l1"><a class="reference internal" href="omniglot/"><code class="xref py py-mod docutils literal notranslate"><span class="pre">avalanche.benchmarks.datasets.omniglot</span></code></a></li>
 <li class="toctree-l1"><a class="reference internal" href="torchvision_wrapper/"><code class="xref py py-mod docutils literal notranslate"><span class="pre">avalanche.benchmarks.datasets.torchvision_wrapper</span></code></a></li>
@@ -242,7 +244,13 @@
 <col style="width: 90%" />
 </colgroup>
 <tbody>
-<tr class="row-odd"><td><p><a class="reference internal" href="#avalanche.benchmarks.datasets.CORe50" title="avalanche.benchmarks.datasets.CORe50"><code class="xref py py-obj docutils literal notranslate"><span class="pre">CORe50</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#avalanche.benchmarks.datasets.DownloadableDataset" title="avalanche.benchmarks.datasets.DownloadableDataset"><code class="xref py py-obj docutils literal notranslate"><span class="pre">DownloadableDataset</span></code></a></p></td>
+<td><p>Base class for a downloadable dataset.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#avalanche.benchmarks.datasets.SimpleDownloadableDataset" title="avalanche.benchmarks.datasets.SimpleDownloadableDataset"><code class="xref py py-obj docutils literal notranslate"><span class="pre">SimpleDownloadableDataset</span></code></a></p></td>
+<td><p>Base class for a downloadable dataset consisting of a single archive file.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#avalanche.benchmarks.datasets.CORe50Dataset" title="avalanche.benchmarks.datasets.CORe50Dataset"><code class="xref py py-obj docutils literal notranslate"><span class="pre">CORe50Dataset</span></code></a></p></td>
 <td><p>CORe50 Pytorch Dataset</p></td>
 </tr>
 <tr class="row-even"><td><p><a class="reference internal" href="#avalanche.benchmarks.datasets.CUB200" title="avalanche.benchmarks.datasets.CUB200"><code class="xref py py-obj docutils literal notranslate"><span class="pre">CUB200</span></code></a></p></td>
@@ -277,103 +285,247 @@
 <col style="width: 90%" />
 </colgroup>
 <tbody>
-<tr class="row-odd"><td><p><a class="reference internal" href="#avalanche.benchmarks.datasets.MNIST" title="avalanche.benchmarks.datasets.MNIST"><code class="xref py py-obj docutils literal notranslate"><span class="pre">MNIST</span></code></a>(*args, **kwargs)</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#avalanche.benchmarks.datasets.get_default_dataset_location" title="avalanche.benchmarks.datasets.get_default_dataset_location"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_default_dataset_location</span></code></a>(dataset_name: str) → Path</p></td>
+<td><p>Return the default location of a dataset.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#avalanche.benchmarks.datasets.MNIST" title="avalanche.benchmarks.datasets.MNIST"><code class="xref py py-obj docutils literal notranslate"><span class="pre">MNIST</span></code></a>(*args, **kwargs)</p></td>
 <td><p></p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#avalanche.benchmarks.datasets.FashionMNIST" title="avalanche.benchmarks.datasets.FashionMNIST"><code class="xref py py-obj docutils literal notranslate"><span class="pre">FashionMNIST</span></code></a>(*args, **kwargs)</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#avalanche.benchmarks.datasets.FashionMNIST" title="avalanche.benchmarks.datasets.FashionMNIST"><code class="xref py py-obj docutils literal notranslate"><span class="pre">FashionMNIST</span></code></a>(*args, **kwargs)</p></td>
 <td><p></p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#avalanche.benchmarks.datasets.KMNIST" title="avalanche.benchmarks.datasets.KMNIST"><code class="xref py py-obj docutils literal notranslate"><span class="pre">KMNIST</span></code></a>(*args, **kwargs)</p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#avalanche.benchmarks.datasets.KMNIST" title="avalanche.benchmarks.datasets.KMNIST"><code class="xref py py-obj docutils literal notranslate"><span class="pre">KMNIST</span></code></a>(*args, **kwargs)</p></td>
 <td><p></p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#avalanche.benchmarks.datasets.EMNIST" title="avalanche.benchmarks.datasets.EMNIST"><code class="xref py py-obj docutils literal notranslate"><span class="pre">EMNIST</span></code></a>(*args, **kwargs)</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#avalanche.benchmarks.datasets.EMNIST" title="avalanche.benchmarks.datasets.EMNIST"><code class="xref py py-obj docutils literal notranslate"><span class="pre">EMNIST</span></code></a>(*args, **kwargs)</p></td>
 <td><p></p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#avalanche.benchmarks.datasets.QMNIST" title="avalanche.benchmarks.datasets.QMNIST"><code class="xref py py-obj docutils literal notranslate"><span class="pre">QMNIST</span></code></a>(*args, **kwargs)</p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#avalanche.benchmarks.datasets.QMNIST" title="avalanche.benchmarks.datasets.QMNIST"><code class="xref py py-obj docutils literal notranslate"><span class="pre">QMNIST</span></code></a>(*args, **kwargs)</p></td>
 <td><p></p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#avalanche.benchmarks.datasets.FakeData" title="avalanche.benchmarks.datasets.FakeData"><code class="xref py py-obj docutils literal notranslate"><span class="pre">FakeData</span></code></a>(*args, **kwargs)</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#avalanche.benchmarks.datasets.FakeData" title="avalanche.benchmarks.datasets.FakeData"><code class="xref py py-obj docutils literal notranslate"><span class="pre">FakeData</span></code></a>(*args, **kwargs)</p></td>
 <td><p></p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#avalanche.benchmarks.datasets.CocoCaptions" title="avalanche.benchmarks.datasets.CocoCaptions"><code class="xref py py-obj docutils literal notranslate"><span class="pre">CocoCaptions</span></code></a>(*args, **kwargs)</p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#avalanche.benchmarks.datasets.CocoCaptions" title="avalanche.benchmarks.datasets.CocoCaptions"><code class="xref py py-obj docutils literal notranslate"><span class="pre">CocoCaptions</span></code></a>(*args, **kwargs)</p></td>
 <td><p></p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#avalanche.benchmarks.datasets.CocoDetection" title="avalanche.benchmarks.datasets.CocoDetection"><code class="xref py py-obj docutils literal notranslate"><span class="pre">CocoDetection</span></code></a>(*args, **kwargs)</p></td>
-<td><p></p></td>
-</tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#id0" title="avalanche.benchmarks.datasets.LSUN"><code class="xref py py-obj docutils literal notranslate"><span class="pre">LSUN</span></code></a>(*args, **kwargs)</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#avalanche.benchmarks.datasets.CocoDetection" title="avalanche.benchmarks.datasets.CocoDetection"><code class="xref py py-obj docutils literal notranslate"><span class="pre">CocoDetection</span></code></a>(*args, **kwargs)</p></td>
 <td><p></p></td>
 </tr>
 <tr class="row-even"><td><p><a class="reference internal" href="#id0" title="avalanche.benchmarks.datasets.LSUN"><code class="xref py py-obj docutils literal notranslate"><span class="pre">LSUN</span></code></a>(*args, **kwargs)</p></td>
 <td><p></p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#avalanche.benchmarks.datasets.ImageFolder" title="avalanche.benchmarks.datasets.ImageFolder"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ImageFolder</span></code></a>(*args, **kwargs)</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#id0" title="avalanche.benchmarks.datasets.LSUN"><code class="xref py py-obj docutils literal notranslate"><span class="pre">LSUN</span></code></a>(*args, **kwargs)</p></td>
 <td><p></p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#avalanche.benchmarks.datasets.DatasetFolder" title="avalanche.benchmarks.datasets.DatasetFolder"><code class="xref py py-obj docutils literal notranslate"><span class="pre">DatasetFolder</span></code></a>(*args, **kwargs)</p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#avalanche.benchmarks.datasets.ImageFolder" title="avalanche.benchmarks.datasets.ImageFolder"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ImageFolder</span></code></a>(*args, **kwargs)</p></td>
 <td><p></p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#avalanche.benchmarks.datasets.ImageNet" title="avalanche.benchmarks.datasets.ImageNet"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ImageNet</span></code></a>(*args, **kwargs)</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#avalanche.benchmarks.datasets.DatasetFolder" title="avalanche.benchmarks.datasets.DatasetFolder"><code class="xref py py-obj docutils literal notranslate"><span class="pre">DatasetFolder</span></code></a>(*args, **kwargs)</p></td>
 <td><p></p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#avalanche.benchmarks.datasets.CIFAR10" title="avalanche.benchmarks.datasets.CIFAR10"><code class="xref py py-obj docutils literal notranslate"><span class="pre">CIFAR10</span></code></a>(*args, **kwargs)</p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#avalanche.benchmarks.datasets.ImageNet" title="avalanche.benchmarks.datasets.ImageNet"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ImageNet</span></code></a>(*args, **kwargs)</p></td>
 <td><p></p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#avalanche.benchmarks.datasets.CIFAR100" title="avalanche.benchmarks.datasets.CIFAR100"><code class="xref py py-obj docutils literal notranslate"><span class="pre">CIFAR100</span></code></a>(*args, **kwargs)</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#avalanche.benchmarks.datasets.CIFAR10" title="avalanche.benchmarks.datasets.CIFAR10"><code class="xref py py-obj docutils literal notranslate"><span class="pre">CIFAR10</span></code></a>(*args, **kwargs)</p></td>
 <td><p></p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#avalanche.benchmarks.datasets.STL10" title="avalanche.benchmarks.datasets.STL10"><code class="xref py py-obj docutils literal notranslate"><span class="pre">STL10</span></code></a>(*args, **kwargs)</p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#avalanche.benchmarks.datasets.CIFAR100" title="avalanche.benchmarks.datasets.CIFAR100"><code class="xref py py-obj docutils literal notranslate"><span class="pre">CIFAR100</span></code></a>(*args, **kwargs)</p></td>
 <td><p></p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#avalanche.benchmarks.datasets.SVHN" title="avalanche.benchmarks.datasets.SVHN"><code class="xref py py-obj docutils literal notranslate"><span class="pre">SVHN</span></code></a>(*args, **kwargs)</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#avalanche.benchmarks.datasets.STL10" title="avalanche.benchmarks.datasets.STL10"><code class="xref py py-obj docutils literal notranslate"><span class="pre">STL10</span></code></a>(*args, **kwargs)</p></td>
 <td><p></p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#avalanche.benchmarks.datasets.PhotoTour" title="avalanche.benchmarks.datasets.PhotoTour"><code class="xref py py-obj docutils literal notranslate"><span class="pre">PhotoTour</span></code></a>(*args, **kwargs)</p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#avalanche.benchmarks.datasets.SVHN" title="avalanche.benchmarks.datasets.SVHN"><code class="xref py py-obj docutils literal notranslate"><span class="pre">SVHN</span></code></a>(*args, **kwargs)</p></td>
 <td><p></p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#avalanche.benchmarks.datasets.SBU" title="avalanche.benchmarks.datasets.SBU"><code class="xref py py-obj docutils literal notranslate"><span class="pre">SBU</span></code></a>(*args, **kwargs)</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#avalanche.benchmarks.datasets.PhotoTour" title="avalanche.benchmarks.datasets.PhotoTour"><code class="xref py py-obj docutils literal notranslate"><span class="pre">PhotoTour</span></code></a>(*args, **kwargs)</p></td>
 <td><p></p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#avalanche.benchmarks.datasets.Flickr8k" title="avalanche.benchmarks.datasets.Flickr8k"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Flickr8k</span></code></a>(*args, **kwargs)</p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#avalanche.benchmarks.datasets.SBU" title="avalanche.benchmarks.datasets.SBU"><code class="xref py py-obj docutils literal notranslate"><span class="pre">SBU</span></code></a>(*args, **kwargs)</p></td>
 <td><p></p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#avalanche.benchmarks.datasets.Flickr30k" title="avalanche.benchmarks.datasets.Flickr30k"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Flickr30k</span></code></a>(*args, **kwargs)</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#avalanche.benchmarks.datasets.Flickr8k" title="avalanche.benchmarks.datasets.Flickr8k"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Flickr8k</span></code></a>(*args, **kwargs)</p></td>
 <td><p></p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#avalanche.benchmarks.datasets.VOCDetection" title="avalanche.benchmarks.datasets.VOCDetection"><code class="xref py py-obj docutils literal notranslate"><span class="pre">VOCDetection</span></code></a>(*args, **kwargs)</p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#avalanche.benchmarks.datasets.Flickr30k" title="avalanche.benchmarks.datasets.Flickr30k"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Flickr30k</span></code></a>(*args, **kwargs)</p></td>
 <td><p></p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#avalanche.benchmarks.datasets.VOCSegmentation" title="avalanche.benchmarks.datasets.VOCSegmentation"><code class="xref py py-obj docutils literal notranslate"><span class="pre">VOCSegmentation</span></code></a>(*args, **kwargs)</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#avalanche.benchmarks.datasets.VOCDetection" title="avalanche.benchmarks.datasets.VOCDetection"><code class="xref py py-obj docutils literal notranslate"><span class="pre">VOCDetection</span></code></a>(*args, **kwargs)</p></td>
 <td><p></p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#avalanche.benchmarks.datasets.Cityscapes" title="avalanche.benchmarks.datasets.Cityscapes"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Cityscapes</span></code></a>(*args, **kwargs)</p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#avalanche.benchmarks.datasets.VOCSegmentation" title="avalanche.benchmarks.datasets.VOCSegmentation"><code class="xref py py-obj docutils literal notranslate"><span class="pre">VOCSegmentation</span></code></a>(*args, **kwargs)</p></td>
 <td><p></p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#avalanche.benchmarks.datasets.SBDataset" title="avalanche.benchmarks.datasets.SBDataset"><code class="xref py py-obj docutils literal notranslate"><span class="pre">SBDataset</span></code></a>(*args, **kwargs)</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#avalanche.benchmarks.datasets.Cityscapes" title="avalanche.benchmarks.datasets.Cityscapes"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Cityscapes</span></code></a>(*args, **kwargs)</p></td>
 <td><p></p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#avalanche.benchmarks.datasets.USPS" title="avalanche.benchmarks.datasets.USPS"><code class="xref py py-obj docutils literal notranslate"><span class="pre">USPS</span></code></a>(*args, **kwargs)</p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#avalanche.benchmarks.datasets.SBDataset" title="avalanche.benchmarks.datasets.SBDataset"><code class="xref py py-obj docutils literal notranslate"><span class="pre">SBDataset</span></code></a>(*args, **kwargs)</p></td>
 <td><p></p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#avalanche.benchmarks.datasets.Kinetics400" title="avalanche.benchmarks.datasets.Kinetics400"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Kinetics400</span></code></a>(*args, **kwargs)</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#avalanche.benchmarks.datasets.USPS" title="avalanche.benchmarks.datasets.USPS"><code class="xref py py-obj docutils literal notranslate"><span class="pre">USPS</span></code></a>(*args, **kwargs)</p></td>
 <td><p></p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#avalanche.benchmarks.datasets.HMDB51" title="avalanche.benchmarks.datasets.HMDB51"><code class="xref py py-obj docutils literal notranslate"><span class="pre">HMDB51</span></code></a>(*args, **kwargs)</p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#avalanche.benchmarks.datasets.Kinetics400" title="avalanche.benchmarks.datasets.Kinetics400"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Kinetics400</span></code></a>(*args, **kwargs)</p></td>
 <td><p></p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#avalanche.benchmarks.datasets.UCF101" title="avalanche.benchmarks.datasets.UCF101"><code class="xref py py-obj docutils literal notranslate"><span class="pre">UCF101</span></code></a>(*args, **kwargs)</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#avalanche.benchmarks.datasets.HMDB51" title="avalanche.benchmarks.datasets.HMDB51"><code class="xref py py-obj docutils literal notranslate"><span class="pre">HMDB51</span></code></a>(*args, **kwargs)</p></td>
 <td><p></p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#avalanche.benchmarks.datasets.CelebA" title="avalanche.benchmarks.datasets.CelebA"><code class="xref py py-obj docutils literal notranslate"><span class="pre">CelebA</span></code></a>(*args, **kwargs)</p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#avalanche.benchmarks.datasets.UCF101" title="avalanche.benchmarks.datasets.UCF101"><code class="xref py py-obj docutils literal notranslate"><span class="pre">UCF101</span></code></a>(*args, **kwargs)</p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#avalanche.benchmarks.datasets.CelebA" title="avalanche.benchmarks.datasets.CelebA"><code class="xref py py-obj docutils literal notranslate"><span class="pre">CelebA</span></code></a>(*args, **kwargs)</p></td>
 <td><p></p></td>
 </tr>
 </tbody>
 </table>
+<dl class="py function">
+<dt class="sig sig-object py" id="avalanche.benchmarks.datasets.get_default_dataset_location">
+<span class="sig-prename descclassname"><span class="pre">avalanche.benchmarks.datasets.</span></span><span class="sig-name descname"><span class="pre">get_default_dataset_location</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dataset_name</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">Path</span><a class="reference internal" href="../../../../_modules/avalanche/benchmarks/datasets/dataset_utils/#get_default_dataset_location"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.benchmarks.datasets.get_default_dataset_location" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return the default location of a dataset.</p>
+<p>This currently returns “~/.avalanche/data/&lt;dataset_name&gt;” but in the future
+an environment variable bay be introduced to change the root path.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>dataset_name</strong> – The name of the dataset. Consider using a string that
+can be used to name a directory in most filesystems!</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>The default path for the dataset.</p>
+</dd>
+</dl>
+</dd></dl>
+
 <dl class="py class">
-<dt class="sig sig-object py" id="avalanche.benchmarks.datasets.CORe50">
-<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">avalanche.benchmarks.datasets.</span></span><span class="sig-name descname"><span class="pre">CORe50</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">root</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">expanduser('~')</span> <span class="pre">+</span> <span class="pre">'/.avalanche/data/core50/'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">train</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">transform</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">ToTensor()</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">target_transform</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">loader</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">pil_loader</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">download</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mini</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">object_level</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/avalanche/benchmarks/datasets/core50/core50/#CORe50"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.benchmarks.datasets.CORe50" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">torch.utils.data.dataset.Dataset</span></code></p>
+<dt class="sig sig-object py" id="avalanche.benchmarks.datasets.DownloadableDataset">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">avalanche.benchmarks.datasets.</span></span><span class="sig-name descname"><span class="pre">DownloadableDataset</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">root</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span> </span><span class="pre">Path</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">download</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">bool</span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">verbose</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">bool</span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/avalanche/benchmarks/datasets/downloadable_dataset/#DownloadableDataset"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.benchmarks.datasets.DownloadableDataset" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">Dataset[T_co]</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">abc.ABC</span></code></p>
+<p>Base class for a downloadable dataset.</p>
+<p>It is recommended to extend this class if a dataset can be downloaded from
+the internet. This implementation codes the recommended behaviour for
+downloading and verifying the dataset.</p>
+<p>The dataset child class must implement the <cite>_download_dataset</cite>,
+<cite>_load_metadata</cite> and <cite>_download_error_message</cite> methods</p>
+<p>The child class, in its constructor, must call the already implemented
+<cite>_load_dataset</cite> method (otherwise nothing will happen).</p>
+<p>A further simplification can be obtained by extending
+<a class="reference internal" href="#avalanche.benchmarks.datasets.SimpleDownloadableDataset" title="avalanche.benchmarks.datasets.SimpleDownloadableDataset"><code class="xref py py-class docutils literal notranslate"><span class="pre">SimpleDownloadableDataset</span></code></a> instead of this class.
+<a class="reference internal" href="#avalanche.benchmarks.datasets.SimpleDownloadableDataset" title="avalanche.benchmarks.datasets.SimpleDownloadableDataset"><code class="xref py py-class docutils literal notranslate"><span class="pre">SimpleDownloadableDataset</span></code></a> is recommended if a single archive is to
+be downloaded and extracted to the root folder “as is”.</p>
+<p>The standardized procedure coded by <cite>_load_dataset</cite> is as follows:</p>
+<ul class="simple">
+<li><p>First, <cite>_load_metadata</cite> is called to check if the dataset can be correctly
+loaded at the <cite>root</cite> path. This method must check if the data found
+at the <cite>root</cite> path is correct and that metadata can be correctly loaded.
+If this method succeeds (by returning True) the process is completed.</p></li>
+<li><p>If <cite>_load_metadata</cite> fails (by returning False or by raising an error),
+then a download will be attempted if the download flag was set to True.
+The download must be implemented in <cite>_download_dataset</cite>. The
+procedure can be drastically simplified by using the <cite>_download_file</cite>,
+<cite>_extract_archive</cite> and <cite>_download_and_extract_archive</cite> helpers.</p></li>
+<li><p>If the download succeeds (doesn’t raise an error), then <cite>_load_metadata</cite>
+will be called again.</p></li>
+</ul>
+<p>If an error occurs, the <cite>_download_error_message</cite> will be called to obtain
+a message (a string) to show to the user. That message should contain
+instructions on how to download and prepare the dataset manually.</p>
+<p>Creates an instance of a downloadable dataset.</p>
+<p>Consider looking at the class documentation for the precise details on
+how to extend this class.</p>
+<p>Beware that calling this constructor only fills the <cite>root</cite> field. The
+download and metadata loading procedures are triggered only by
+calling <cite>_load_dataset</cite>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>root</strong> – The root path where the dataset will be downloaded.
+Consider passing a path obtained by calling
+<cite>get_default_dataset_location</cite> with the name of the dataset.</p></li>
+<li><p><strong>download</strong> – If True, the dataset will be downloaded if needed.
+If False and the dataset can’t be loaded from the provided root
+path, an error will be raised when calling the <cite>_load_dataset</cite>
+method. Defaults to True.</p></li>
+<li><p><strong>verbose</strong> – If True, some info about the download process will be
+printed. Defaults to False.</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="avalanche.benchmarks.datasets.DownloadableDataset.root">
+<span class="sig-name descname"><span class="pre">root</span></span><em class="property"> <span class="pre">:Path</span></em><a class="headerlink" href="#avalanche.benchmarks.datasets.DownloadableDataset.root" title="Permalink to this definition">¶</a></dt>
+<dd><p>The path to the dataset.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="avalanche.benchmarks.datasets.DownloadableDataset.download">
+<span class="sig-name descname"><span class="pre">download</span></span><em class="property"> <span class="pre">:bool</span></em><a class="headerlink" href="#avalanche.benchmarks.datasets.DownloadableDataset.download" title="Permalink to this definition">¶</a></dt>
+<dd><p>If True, the dataset will be downloaded (only if needed).</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="avalanche.benchmarks.datasets.DownloadableDataset.verbose">
+<span class="sig-name descname"><span class="pre">verbose</span></span><em class="property"> <span class="pre">:bool</span></em><a class="headerlink" href="#avalanche.benchmarks.datasets.DownloadableDataset.verbose" title="Permalink to this definition">¶</a></dt>
+<dd><p>If True, some info about the download process will be printed.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="avalanche.benchmarks.datasets.SimpleDownloadableDataset">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">avalanche.benchmarks.datasets.</span></span><span class="sig-name descname"><span class="pre">SimpleDownloadableDataset</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">root_or_dataset_name</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">url</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">checksum</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">download</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">bool</span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">verbose</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">bool</span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/avalanche/benchmarks/datasets/downloadable_dataset/#SimpleDownloadableDataset"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.benchmarks.datasets.SimpleDownloadableDataset" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">DownloadableDataset[T_co]</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">abc.ABC</span></code></p>
+<p>Base class for a downloadable dataset consisting of a single archive file.</p>
+<p>It is recommended to extend this class if a dataset can be downloaded from
+the internet as a single archive. For multi-file implementation or if
+a more fine-grained control is required, consider extending
+<a class="reference internal" href="#avalanche.benchmarks.datasets.DownloadableDataset" title="avalanche.benchmarks.datasets.DownloadableDataset"><code class="xref py py-class docutils literal notranslate"><span class="pre">DownloadableDataset</span></code></a> instead.</p>
+<p>This is a simplified version of <a class="reference internal" href="#avalanche.benchmarks.datasets.DownloadableDataset" title="avalanche.benchmarks.datasets.DownloadableDataset"><code class="xref py py-class docutils literal notranslate"><span class="pre">DownloadableDataset</span></code></a> where the
+following assumptions must hold:
+- The dataset is made of a single archive.
+- The archive must be extracted to the root folder “as is” (which means</p>
+<blockquote>
+<div><p>that no subdirectories must be created).</p>
+</div></blockquote>
+<p>The child class is only required to extend the <cite>_load_metadata</cite> method,
+which must check the dataset integrity and load the dataset metadata.</p>
+<p>Apart from that, the same assumptions of <a class="reference internal" href="#avalanche.benchmarks.datasets.DownloadableDataset" title="avalanche.benchmarks.datasets.DownloadableDataset"><code class="xref py py-class docutils literal notranslate"><span class="pre">DownloadableDataset</span></code></a> hold.
+Remember to call the <cite>_load_dataset</cite> method in the child class constructor.</p>
+<p>Creates an instance of a simple downloadable dataset.</p>
+<p>Consider looking at the class documentation for the precise details on
+how to extend this class.</p>
+<p>Beware that calling this constructor only fills the <cite>root</cite> field. The
+download and metadata loading procedures are triggered only by
+calling <cite>_load_dataset</cite>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>root_or_dataset_name</strong> – The root path where the dataset will be
+downloaded. If a directory name is passed, then the root obtained by
+calling <cite>get_default_dataset_location</cite> will be used (recommended).
+To check if this parameter is a path, the constructor will check if
+it contains the ‘’ or ‘/’ characters or if it is a Path instance.</p></li>
+<li><p><strong>url</strong> – The url of the archive.</p></li>
+<li><p><strong>checksum</strong> – The MD5 hash to use when verifying the downloaded
+archive. Can be None, in which case the check will be skipped.
+It is recommended to always fill this parameter.</p></li>
+<li><p><strong>download</strong> – If True, the dataset will be downloaded if needed.
+If False and the dataset can’t be loaded from the provided root
+path, an error will be raised when calling the <cite>_load_dataset</cite>
+method. Defaults to False.</p></li>
+<li><p><strong>verbose</strong> – If True, some info about the download process will be
+printed. Defaults to False.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="avalanche.benchmarks.datasets.CORe50Dataset">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">avalanche.benchmarks.datasets.</span></span><span class="sig-name descname"><span class="pre">CORe50Dataset</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">root</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span> </span><span class="pre">Path</span><span class="p"><span class="pre">]</span></span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">get_default_dataset_location('core50')</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">train</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">transform</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">target_transform</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">loader</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">default_loader</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">download</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mini</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">object_level</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/avalanche/benchmarks/datasets/core50/core50/#CORe50Dataset"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.benchmarks.datasets.CORe50Dataset" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="downloadable_dataset/#avalanche.benchmarks.datasets.downloadable_dataset.DownloadableDataset" title="avalanche.benchmarks.datasets.downloadable_dataset.DownloadableDataset"><code class="xref py py-class docutils literal notranslate"><span class="pre">avalanche.benchmarks.datasets.downloadable_dataset.DownloadableDataset</span></code></a></p>
 <p>CORe50 Pytorch Dataset</p>
+<p>Creates an instance of the CORe50 dataset.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
@@ -382,7 +534,7 @@
 <li><p><strong>transform</strong> – eventual transformations to be applied.</p></li>
 <li><p><strong>target_transform</strong> – eventual transformation to be applied to the
 targets.</p></li>
-<li><p><strong>loader</strong> – data loader method from disk.</p></li>
+<li><p><strong>loader</strong> – the procedure to load the instance from the storage.</p></li>
 <li><p><strong>download</strong> – boolean to automatically download data. Default to
 True.</p></li>
 <li><p><strong>mini</strong> – boolean to use the 32x32 version instead of the 128x128.
@@ -394,8 +546,8 @@ category based: 50 or 10 way classification problem. Default to True
 </dd>
 </dl>
 <dl class="py method">
-<dt class="sig sig-object py" id="avalanche.benchmarks.datasets.CORe50.__getitem__">
-<span class="sig-name descname"><span class="pre">__getitem__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">index</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/avalanche/benchmarks/datasets/core50/core50/#CORe50.__getitem__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.benchmarks.datasets.CORe50.__getitem__" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="avalanche.benchmarks.datasets.CORe50Dataset.__getitem__">
+<span class="sig-name descname"><span class="pre">__getitem__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">index</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/avalanche/benchmarks/datasets/core50/core50/#CORe50Dataset.__getitem__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.benchmarks.datasets.CORe50Dataset.__getitem__" title="Permalink to this definition">¶</a></dt>
 <dd><dl class="simple">
 <dt>Args:</dt><dd><p>index (int): Index</p>
 </dd>
@@ -408,16 +560,16 @@ category based: 50 or 10 way classification problem. Default to True
 </dd></dl>
 
 <dl class="py method">
-<dt class="sig sig-object py" id="avalanche.benchmarks.datasets.CORe50.__len__">
-<span class="sig-name descname"><span class="pre">__len__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/avalanche/benchmarks/datasets/core50/core50/#CORe50.__len__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.benchmarks.datasets.CORe50.__len__" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="avalanche.benchmarks.datasets.CORe50Dataset.__len__">
+<span class="sig-name descname"><span class="pre">__len__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/avalanche/benchmarks/datasets/core50/core50/#CORe50Dataset.__len__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.benchmarks.datasets.CORe50Dataset.__len__" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 </dd></dl>
 
 <dl class="py class">
 <dt class="sig sig-object py" id="avalanche.benchmarks.datasets.CUB200">
-<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">avalanche.benchmarks.datasets.</span></span><span class="sig-name descname"><span class="pre">CUB200</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">root</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">expanduser('~')</span> <span class="pre">+</span> <span class="pre">'/.avalanche/data/CUB_200_2011/'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">train</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">transform</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">target_transform</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">loader</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">default_loader</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">download</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/avalanche/benchmarks/datasets/cub200/cub200/#CUB200"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.benchmarks.datasets.CUB200" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <a class="reference internal" href="../utils/#avalanche.benchmarks.utils.PathsDataset" title="avalanche.benchmarks.utils.PathsDataset"><code class="xref py py-class docutils literal notranslate"><span class="pre">avalanche.benchmarks.utils.PathsDataset</span></code></a></p>
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">avalanche.benchmarks.datasets.</span></span><span class="sig-name descname"><span class="pre">CUB200</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">root</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span> </span><span class="pre">Path</span><span class="p"><span class="pre">]</span></span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">get_default_dataset_location('CUB_200_2011')</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">train</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">transform</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">target_transform</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">loader</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">default_loader</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">download</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/avalanche/benchmarks/datasets/cub200/cub200/#CUB200"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.benchmarks.datasets.CUB200" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="../utils/#avalanche.benchmarks.utils.PathsDataset" title="avalanche.benchmarks.utils.PathsDataset"><code class="xref py py-class docutils literal notranslate"><span class="pre">avalanche.benchmarks.utils.PathsDataset</span></code></a>, <a class="reference internal" href="#avalanche.benchmarks.datasets.DownloadableDataset" title="avalanche.benchmarks.datasets.DownloadableDataset"><code class="xref py py-class docutils literal notranslate"><span class="pre">avalanche.benchmarks.datasets.DownloadableDataset</span></code></a></p>
 <p>Basic CUB200 PathsDataset to be used as a standard PyTorch Dataset.
 A classic continual learning benchmark built on top of this dataset
 can be found in ‘benchmarks.classic’, while for more custom benchmark
@@ -469,7 +621,7 @@ downloaded it will skip the download.</p></li>
 
 <dl class="py class">
 <dt class="sig sig-object py" id="avalanche.benchmarks.datasets.MiniImageNetDataset">
-<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">avalanche.benchmarks.datasets.</span></span><span class="sig-name descname"><span class="pre">MiniImageNetDataset</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">imagenet_path</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span> </span><span class="pre">Path</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">split</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Literal</span><span class="p"><span class="pre">[</span></span><span class="pre">all</span><span class="p"><span class="pre">,</span> </span><span class="pre">train</span><span class="p"><span class="pre">,</span> </span><span class="pre">val</span><span class="p"><span class="pre">,</span> </span><span class="pre">test</span><span class="p"><span class="pre">]</span></span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">'all'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">resize_to</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">,</span> </span><span class="pre">Tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">,</span> </span><span class="pre">int</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">84</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/avalanche/benchmarks/datasets/mini_imagenet/mini_imagenet/#MiniImageNetDataset"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.benchmarks.datasets.MiniImageNetDataset" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">avalanche.benchmarks.datasets.</span></span><span class="sig-name descname"><span class="pre">MiniImageNetDataset</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">imagenet_path</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span> </span><span class="pre">Path</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">split</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Literal</span><span class="p"><span class="pre">[</span></span><span class="pre">all</span><span class="p"><span class="pre">,</span> </span><span class="pre">train</span><span class="p"><span class="pre">,</span> </span><span class="pre">val</span><span class="p"><span class="pre">,</span> </span><span class="pre">test</span><span class="p"><span class="pre">]</span></span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">'all'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">resize_to</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">,</span> </span><span class="pre">Tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">,</span> </span><span class="pre">int</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">84</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">loader</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">default_loader</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/avalanche/benchmarks/datasets/mini_imagenet/mini_imagenet/#MiniImageNetDataset"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.benchmarks.datasets.MiniImageNetDataset" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">torch.utils.data.dataset.Dataset</span></code></p>
 <p>The MiniImageNet dataset.</p>
 <p>This implementation is based on the one from
@@ -591,23 +743,34 @@ inverse mapping of classes field.</p>
 
 <dl class="py class">
 <dt class="sig sig-object py" id="avalanche.benchmarks.datasets.OpenLORIS">
-<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">avalanche.benchmarks.datasets.</span></span><span class="sig-name descname"><span class="pre">OpenLORIS</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">root</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">expanduser('~')</span> <span class="pre">+</span> <span class="pre">'/.avalanche/data/openloris/'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">train</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">transform</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">ToTensor()</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">target_transform</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">loader</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">pil_loader</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">download</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/avalanche/benchmarks/datasets/openloris/openloris/#OpenLORIS"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.benchmarks.datasets.OpenLORIS" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">torch.utils.data.Dataset</span></code></p>
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">avalanche.benchmarks.datasets.</span></span><span class="sig-name descname"><span class="pre">OpenLORIS</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">root</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">get_default_dataset_location('openloris')</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">train</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">transform</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">target_transform</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">loader</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">default_loader</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">download</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/avalanche/benchmarks/datasets/openloris/openloris/#OpenLORIS"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.benchmarks.datasets.OpenLORIS" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#avalanche.benchmarks.datasets.DownloadableDataset" title="avalanche.benchmarks.datasets.DownloadableDataset"><code class="xref py py-class docutils literal notranslate"><span class="pre">avalanche.benchmarks.datasets.DownloadableDataset</span></code></a></p>
 <p>OpenLORIS Pytorch Dataset</p>
-<p>Initialize self.  See help(type(self)) for accurate signature.</p>
+<p>Creates an instance of a downloadable dataset.</p>
+<p>Consider looking at the class documentation for the precise details on
+how to extend this class.</p>
+<p>Beware that calling this constructor only fills the <cite>root</cite> field. The
+download and metadata loading procedures are triggered only by
+calling <cite>_load_dataset</cite>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>root</strong> – The root path where the dataset will be downloaded.
+Consider passing a path obtained by calling
+<cite>get_default_dataset_location</cite> with the name of the dataset.</p></li>
+<li><p><strong>download</strong> – If True, the dataset will be downloaded if needed.
+If False and the dataset can’t be loaded from the provided root
+path, an error will be raised when calling the <cite>_load_dataset</cite>
+method. Defaults to True.</p></li>
+<li><p><strong>verbose</strong> – If True, some info about the download process will be
+printed. Defaults to False.</p></li>
+</ul>
+</dd>
+</dl>
 <dl class="py method">
 <dt class="sig sig-object py" id="avalanche.benchmarks.datasets.OpenLORIS.__getitem__">
 <span class="sig-name descname"><span class="pre">__getitem__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">index</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/avalanche/benchmarks/datasets/openloris/openloris/#OpenLORIS.__getitem__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.benchmarks.datasets.OpenLORIS.__getitem__" title="Permalink to this definition">¶</a></dt>
-<dd><dl class="simple">
-<dt>Args:</dt><dd><p>index (int): Index</p>
-</dd>
-<dt>Returns:</dt><dd><dl class="simple">
-<dt>tuple: (sample, target) where target is class_index of the target</dt><dd><p>class.</p>
-</dd>
-</dl>
-</dd>
-</dl>
-</dd></dl>
+<dd></dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="avalanche.benchmarks.datasets.OpenLORIS.__len__">
@@ -618,54 +781,55 @@ inverse mapping of classes field.</p>
 
 <dl class="py class">
 <dt class="sig sig-object py" id="avalanche.benchmarks.datasets.TinyImagenet">
-<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">avalanche.benchmarks.datasets.</span></span><span class="sig-name descname"><span class="pre">TinyImagenet</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data_folder</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">expanduser('~')</span> <span class="pre">+</span> <span class="pre">'/.avalanche/data/tinyimagenet/'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">train</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">transform</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">ToTensor()</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">target_transform</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">download</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/avalanche/benchmarks/datasets/tiny_imagenet/tiny_imagenet/#TinyImagenet"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.benchmarks.datasets.TinyImagenet" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">torch.utils.data.dataset.Dataset</span></code></p>
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">avalanche.benchmarks.datasets.</span></span><span class="sig-name descname"><span class="pre">TinyImagenet</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">root</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span> </span><span class="pre">Path</span><span class="p"><span class="pre">]</span></span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">get_default_dataset_location('tinyimagenet')</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">train</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">bool</span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">transform</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">target_transform</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">loader</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">default_loader</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">download</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/avalanche/benchmarks/datasets/tiny_imagenet/tiny_imagenet/#TinyImagenet"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.benchmarks.datasets.TinyImagenet" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#avalanche.benchmarks.datasets.SimpleDownloadableDataset" title="avalanche.benchmarks.datasets.SimpleDownloadableDataset"><code class="xref py py-class docutils literal notranslate"><span class="pre">avalanche.benchmarks.datasets.SimpleDownloadableDataset</span></code></a></p>
 <p>Tiny Imagenet Pytorch Dataset</p>
-<dl class="simple">
-<dt>Args:</dt><dd><dl class="field-list simple">
-<dt class="field-odd">param string data_folder</dt>
-<dd class="field-odd"><p>folder in which to download dataset</p>
-</dd>
-<dt class="field-even">param boolean train</dt>
-<dd class="field-even"><p>True for train set, False for test set</p>
-</dd>
-<dt class="field-odd">param fun transform</dt>
-<dd class="field-odd"><p>Pytorch transformation founction for x</p>
-</dd>
-<dt class="field-even">param fun target_transform</dt>
-<dd class="field-even"><p>Pytorch transformation founction for y</p>
-</dd>
-<dt class="field-odd">param bool download</dt>
-<dd class="field-odd"><p>True for downloading the dataset</p>
+<p>Creates an instance of the Tiny Imagenet dataset.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>root</strong> – folder in which to download dataset.</p></li>
+<li><p><strong>train</strong> – True for training set, False for test set.</p></li>
+<li><p><strong>transform</strong> – Pytorch transformation function for x.</p></li>
+<li><p><strong>target_transform</strong> – Pytorch transformation function for y.</p></li>
+<li><p><strong>loader</strong> – the procedure to load the instance from the storage.</p></li>
+<li><p><strong>download</strong> (<em>bool</em>) – If True, the dataset will be  downloaded if
+needed.</p></li>
+</ul>
 </dd>
 </dl>
-</dd>
-</dl>
-<dl class="py method">
-<dt class="sig sig-object py" id="avalanche.benchmarks.datasets.TinyImagenet.download_tinyImageNet">
-<span class="sig-name descname"><span class="pre">download_tinyImageNet</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/avalanche/benchmarks/datasets/tiny_imagenet/tiny_imagenet/#TinyImagenet.download_tinyImageNet"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.benchmarks.datasets.TinyImagenet.download_tinyImageNet" title="Permalink to this definition">¶</a></dt>
-<dd><p>Downloads the TintImagenet Dataset</p>
-</dd></dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="avalanche.benchmarks.datasets.TinyImagenet.filename">
+<span class="sig-name descname"><span class="pre">filename</span></span><em class="property"> <span class="pre">=</span> <span class="pre">['tiny-imagenet-200.zip',</span> <span class="pre">'http://cs231n.stanford.edu/tiny-imagenet-200.zip']</span></em><a class="headerlink" href="#avalanche.benchmarks.datasets.TinyImagenet.filename" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="avalanche.benchmarks.datasets.TinyImagenet.md5">
+<span class="sig-name descname"><span class="pre">md5</span></span><em class="property"> <span class="pre">=</span> <span class="pre">90528d7ca1a48142e341f4ef8d21d0de</span></em><a class="headerlink" href="#avalanche.benchmarks.datasets.TinyImagenet.md5" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="avalanche.benchmarks.datasets.TinyImagenet.labels2dict">
-<span class="sig-name descname"><span class="pre">labels2dict</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/avalanche/benchmarks/datasets/tiny_imagenet/tiny_imagenet/#TinyImagenet.labels2dict"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.benchmarks.datasets.TinyImagenet.labels2dict" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">static</span> </em><span class="sig-name descname"><span class="pre">labels2dict</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data_folder</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Path</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/avalanche/benchmarks/datasets/tiny_imagenet/tiny_imagenet/#TinyImagenet.labels2dict"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.benchmarks.datasets.TinyImagenet.labels2dict" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns dictionaries to convert class names into progressive ids
-and viceversa.
-:returns: label2id, id2label: two Python dictionaries.</p>
+and viceversa.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>data_folder</strong> – The root path of tiny imagenet</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>label2id, id2label: two Python dictionaries.</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="avalanche.benchmarks.datasets.TinyImagenet.load_data">
-<span class="sig-name descname"><span class="pre">load_data</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">train</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/avalanche/benchmarks/datasets/tiny_imagenet/tiny_imagenet/#TinyImagenet.load_data"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.benchmarks.datasets.TinyImagenet.load_data" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">load_data</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/avalanche/benchmarks/datasets/tiny_imagenet/tiny_imagenet/#TinyImagenet.load_data"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.benchmarks.datasets.TinyImagenet.load_data" title="Permalink to this definition">¶</a></dt>
 <dd><p>Load all images paths and targets.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>train</strong> (<em>bool</em>) – True for loading the training set, False for the
-test set.</p>
-</dd>
-<dt class="field-even">Returns</dt>
-<dd class="field-even"><p>train_set, test_set: (train_X_paths, train_y).</p>
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>train_set, test_set: (train_X_paths, train_y).</p>
 </dd>
 </dl>
 </dd></dl>
@@ -673,7 +837,7 @@ test set.</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="avalanche.benchmarks.datasets.TinyImagenet.get_train_images_paths">
 <span class="sig-name descname"><span class="pre">get_train_images_paths</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">class_name</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/avalanche/benchmarks/datasets/tiny_imagenet/tiny_imagenet/#TinyImagenet.get_train_images_paths"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.benchmarks.datasets.TinyImagenet.get_train_images_paths" title="Permalink to this definition">¶</a></dt>
-<dd><p>Gets the training set image paths</p>
+<dd><p>Gets the training set image paths.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><p><strong>class_name</strong> – names of the classes of the images to be
@@ -703,7 +867,7 @@ collected.</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="avalanche.benchmarks.datasets.TinyImagenet.__len__">
 <span class="sig-name descname"><span class="pre">__len__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/avalanche/benchmarks/datasets/tiny_imagenet/tiny_imagenet/#TinyImagenet.__len__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.benchmarks.datasets.TinyImagenet.__len__" title="Permalink to this definition">¶</a></dt>
-<dd><p>Returns the lenght of the set</p>
+<dd><p>Returns the length of the set</p>
 </dd></dl>
 
 <dl class="py method">
@@ -730,10 +894,38 @@ compatible with the Avalanche API.</p>
 
 <dl class="py class">
 <dt class="sig sig-object py" id="avalanche.benchmarks.datasets.Stream51">
-<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">avalanche.benchmarks.datasets.</span></span><span class="sig-name descname"><span class="pre">Stream51</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">root</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">train</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">transform</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">target_transform</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">loader</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">pil_loader</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">download</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/avalanche/benchmarks/datasets/stream51/stream51/#Stream51"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.benchmarks.datasets.Stream51" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">torch.utils.data.dataset.Dataset</span></code></p>
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">avalanche.benchmarks.datasets.</span></span><span class="sig-name descname"><span class="pre">Stream51</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">root</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">get_default_dataset_location('stream51')</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">train</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">transform</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">target_transform</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">loader</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">default_loader</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">download</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/avalanche/benchmarks/datasets/stream51/stream51/#Stream51"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.benchmarks.datasets.Stream51" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#avalanche.benchmarks.datasets.DownloadableDataset" title="avalanche.benchmarks.datasets.DownloadableDataset"><code class="xref py py-class docutils literal notranslate"><span class="pre">avalanche.benchmarks.datasets.DownloadableDataset</span></code></a></p>
 <p>Stream-51 Pytorch Dataset</p>
-<p>Initialize self.  See help(type(self)) for accurate signature.</p>
+<p>Creates an instance of a downloadable dataset.</p>
+<p>Consider looking at the class documentation for the precise details on
+how to extend this class.</p>
+<p>Beware that calling this constructor only fills the <cite>root</cite> field. The
+download and metadata loading procedures are triggered only by
+calling <cite>_load_dataset</cite>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>root</strong> – The root path where the dataset will be downloaded.
+Consider passing a path obtained by calling
+<cite>get_default_dataset_location</cite> with the name of the dataset.</p></li>
+<li><p><strong>download</strong> – If True, the dataset will be downloaded if needed.
+If False and the dataset can’t be loaded from the provided root
+path, an error will be raised when calling the <cite>_load_dataset</cite>
+method. Defaults to True.</p></li>
+<li><p><strong>verbose</strong> – If True, some info about the download process will be
+printed. Defaults to False.</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="avalanche.benchmarks.datasets.Stream51.make_dataset">
+<em class="property"><span class="pre">static</span> </em><span class="sig-name descname"><span class="pre">make_dataset</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data_list</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ordering</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'class_instance'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">seed</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">666</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/avalanche/benchmarks/datasets/stream51/stream51/#Stream51.make_dataset"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.benchmarks.datasets.Stream51.make_dataset" title="Permalink to this definition">¶</a></dt>
+<dd><p>data_list
+for train: [class_id, clip_num, video_num, frame_num, bbox, file_loc]
+for test: [class_id, bbox, file_loc]</p>
+</dd></dl>
+
 <dl class="py method">
 <dt class="sig sig-object py" id="avalanche.benchmarks.datasets.Stream51.__getitem__">
 <span class="sig-name descname"><span class="pre">__getitem__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">index</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/avalanche/benchmarks/datasets/stream51/stream51/#Stream51.__getitem__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.benchmarks.datasets.Stream51.__getitem__" title="Permalink to this definition">¶</a></dt>

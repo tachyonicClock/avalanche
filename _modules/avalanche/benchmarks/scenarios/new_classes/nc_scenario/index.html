@@ -638,12 +638,12 @@
         <span class="k">if</span> <span class="n">exp_end</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
             <span class="k">return</span> <span class="p">[</span>
                 <span class="n">item</span> <span class="k">for</span> <span class="n">sublist</span> <span class="ow">in</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">classes_in_experience</span><span class="p">[</span><span class="n">exp_start</span><span class="p">:]</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">classes_in_experience</span><span class="p">[</span><span class="s1">&#39;train&#39;</span><span class="p">][</span><span class="n">exp_start</span><span class="p">:]</span>
                 <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">sublist</span><span class="p">]</span>
 
         <span class="k">return</span> <span class="p">[</span>
             <span class="n">item</span> <span class="k">for</span> <span class="n">sublist</span> <span class="ow">in</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">classes_in_experience</span><span class="p">[</span><span class="n">exp_start</span><span class="p">:</span><span class="n">exp_end</span><span class="p">]</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">classes_in_experience</span><span class="p">[</span><span class="s1">&#39;train&#39;</span><span class="p">][</span><span class="n">exp_start</span><span class="p">:</span><span class="n">exp_end</span><span class="p">]</span>
             <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">sublist</span><span class="p">]</span></div></div>
 
 

@@ -202,6 +202,7 @@
 <span class="kn">from</span> <span class="nn">collections</span> <span class="kn">import</span> <span class="n">OrderedDict</span><span class="p">,</span> <span class="n">defaultdict</span><span class="p">,</span> <span class="n">deque</span>
 <span class="kn">from</span> <span class="nn">enum</span> <span class="kn">import</span> <span class="n">Enum</span><span class="p">,</span> <span class="n">auto</span>
 
+<span class="kn">import</span> <span class="nn">torch</span>
 <span class="kn">from</span> <span class="nn">torch.utils.data.dataloader</span> <span class="kn">import</span> <span class="n">default_collate</span>
 <span class="kn">from</span> <span class="nn">torch.utils.data.dataset</span> <span class="kn">import</span> <span class="n">Dataset</span><span class="p">,</span> <span class="n">Subset</span><span class="p">,</span> <span class="n">ConcatDataset</span>
 <span class="kn">from</span> <span class="nn">torchvision.transforms</span> <span class="kn">import</span> <span class="n">Compose</span>
@@ -1264,7 +1265,10 @@
 <span class="sd">            of ints, one for each instance in the dataset. This can either be a</span>
 <span class="sd">            list of task labels for the original dataset or the list of task</span>
 <span class="sd">            labels for the instances of the subset (an automatic detection will</span>
-<span class="sd">            be made). Alternatively can be a single int value, in which case</span>
+<span class="sd">            be made). In the unfortunate case in which the original dataset and</span>
+<span class="sd">            the subset contain the same amount of instances, then this parameter</span>
+<span class="sd">            is considered to contain the task labels of the subset.</span>
+<span class="sd">            Alternatively can be a single int value, in which case</span>
 <span class="sd">            that value will be used as the task label for all the instances.</span>
 <span class="sd">            Defaults to None, which means that the dataset will try to</span>
 <span class="sd">            obtain the task labels from the original dataset. If no task labels</span>
@@ -1272,9 +1276,12 @@
 <span class="sd">            instances.</span>
 <span class="sd">        :param targets: The label of each pattern. Defaults to None, which</span>
 <span class="sd">            means that the targets will be retrieved from the dataset (if</span>
-<span class="sd">            possible). This can either be a list of labels for the original</span>
-<span class="sd">            dataset or the list of labels for the patterns of the subset (an</span>
-<span class="sd">            automatic detection will be made).</span>
+<span class="sd">            possible). This can either be a list of target labels for the</span>
+<span class="sd">            original dataset or the list of target labels for the instances of</span>
+<span class="sd">            the subset (an automatic detection will be made). In the unfortunate</span>
+<span class="sd">            case in which the original dataset and the subset contain the same</span>
+<span class="sd">            amount of instances, then this parameter is considered to contain</span>
+<span class="sd">            the target labels of the subset.</span>
 <span class="sd">        :param dataset_type: The type of the dataset. Defaults to None,</span>
 <span class="sd">            which means that the type will be inferred from the input dataset.</span>
 <span class="sd">            When the `dataset_type` is different than UNDEFINED, a</span>
@@ -1369,17 +1376,17 @@
             <span class="c1"># For the reasoning behind this, have a look at</span>
             <span class="c1"># _initialize_task_labels_sequence (it&#39;s basically the same).</span>
 
-            <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">targets</span><span class="p">)</span> <span class="o">==</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_original_dataset</span><span class="p">):</span>
+            <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">targets</span><span class="p">)</span> <span class="o">==</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_original_dataset</span><span class="p">)</span> <span class="ow">and</span> \
+                    <span class="ow">not</span> <span class="nb">len</span><span class="p">(</span><span class="n">targets</span><span class="p">)</span> <span class="o">==</span> <span class="nb">len</span><span class="p">(</span><span class="n">dataset</span><span class="p">):</span>
                 <span class="k">return</span> <span class="n">SubSequence</span><span class="p">(</span><span class="n">targets</span><span class="p">,</span> <span class="n">indices</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_indices</span><span class="p">)</span>
             <span class="k">elif</span> <span class="nb">len</span><span class="p">(</span><span class="n">targets</span><span class="p">)</span> <span class="o">==</span> <span class="nb">len</span><span class="p">(</span><span class="n">dataset</span><span class="p">):</span>
                 <span class="k">return</span> <span class="n">targets</span>
             <span class="k">else</span><span class="p">:</span>
                 <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
                     <span class="s1">&#39;Invalid amount of targets. It must be equal to the &#39;</span>
-                    <span class="s1">&#39;number of patterns in the dataset or of the desired &#39;</span>
-                    <span class="s1">&#39;subset. Got </span><span class="si">{}</span><span class="s1">, expected </span><span class="si">{}</span><span class="s1"> or </span><span class="si">{}</span><span class="s1">!&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
-                        <span class="nb">len</span><span class="p">(</span><span class="n">targets</span><span class="p">),</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_original_dataset</span><span class="p">),</span>
-                        <span class="nb">len</span><span class="p">(</span><span class="n">dataset</span><span class="p">)))</span>
+                    <span class="s1">&#39;number of patterns in the subset. &#39;</span>
+                    <span class="s1">&#39;Got </span><span class="si">{}</span><span class="s1">, expected </span><span class="si">{}</span><span class="s1">!&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+                        <span class="nb">len</span><span class="p">(</span><span class="n">targets</span><span class="p">),</span> <span class="nb">len</span><span class="p">(</span><span class="n">dataset</span><span class="p">)))</span>
 
         <span class="k">return</span> <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">_initialize_targets_sequence</span><span class="p">(</span>
             <span class="n">dataset</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="n">dataset_type</span><span class="p">,</span> <span class="n">targets_adapter</span><span class="p">)</span>
@@ -1393,28 +1400,27 @@
             <span class="c1"># it may either be the list of task labels of the required subset</span>
             <span class="c1"># or it may be the list of task labels of the original dataset.</span>
             <span class="c1"># Simple solution: check the length of task_labels!</span>
+            <span class="c1"># However, if task_labels, the original dataset and this subset have</span>
+            <span class="c1"># the same size, then task_labels is considered to contain the task</span>
+            <span class="c1"># labels for the subset!</span>
 
             <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">task_labels</span><span class="p">,</span> <span class="nb">int</span><span class="p">):</span>
                 <span class="c1"># Simplest case: constant task label</span>
                 <span class="k">return</span> <span class="n">ConstantSequence</span><span class="p">(</span><span class="n">task_labels</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">dataset</span><span class="p">))</span>
-            <span class="k">elif</span> <span class="nb">len</span><span class="p">(</span><span class="n">task_labels</span><span class="p">)</span> <span class="o">==</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_original_dataset</span><span class="p">):</span>
+            <span class="k">elif</span> <span class="nb">len</span><span class="p">(</span><span class="n">task_labels</span><span class="p">)</span> <span class="o">==</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_original_dataset</span><span class="p">)</span> <span class="ow">and</span> \
+                    <span class="ow">not</span> <span class="nb">len</span><span class="p">(</span><span class="n">task_labels</span><span class="p">)</span> <span class="o">==</span> <span class="nb">len</span><span class="p">(</span><span class="n">dataset</span><span class="p">):</span>
                 <span class="c1"># task_labels refers to the original dataset ...</span>
-                <span class="c1"># or, corner case, len(original) == len(subset), in which</span>
-                <span class="c1"># case the user just wants to obtain a dataset in which the</span>
-                <span class="c1"># position of the patterns has been changed according to</span>
-                <span class="c1"># &quot;indices&quot;. This &quot;if&quot; will take care of the corner case, too.</span>
                 <span class="k">return</span> <span class="n">SubSequence</span><span class="p">(</span><span class="n">task_labels</span><span class="p">,</span> <span class="n">indices</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_indices</span><span class="p">,</span>
                                    <span class="n">converter</span><span class="o">=</span><span class="nb">int</span><span class="p">)</span>
             <span class="k">elif</span> <span class="nb">len</span><span class="p">(</span><span class="n">task_labels</span><span class="p">)</span> <span class="o">==</span> <span class="nb">len</span><span class="p">(</span><span class="n">dataset</span><span class="p">):</span>
-                <span class="c1"># task_labels refers to the subset</span>
+                <span class="c1"># One label for each instance</span>
                 <span class="k">return</span> <span class="n">SubSequence</span><span class="p">(</span><span class="n">task_labels</span><span class="p">,</span> <span class="n">converter</span><span class="o">=</span><span class="nb">int</span><span class="p">)</span>
             <span class="k">else</span><span class="p">:</span>
                 <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
                     <span class="s1">&#39;Invalid amount of task labels. It must be equal to the &#39;</span>
-                    <span class="s1">&#39;number of patterns in the dataset or of the desired &#39;</span>
-                    <span class="s1">&#39;subset. Got </span><span class="si">{}</span><span class="s1">, expected </span><span class="si">{}</span><span class="s1"> or </span><span class="si">{}</span><span class="s1">!&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
-                        <span class="nb">len</span><span class="p">(</span><span class="n">task_labels</span><span class="p">),</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_original_dataset</span><span class="p">),</span>
-                        <span class="nb">len</span><span class="p">(</span><span class="n">dataset</span><span class="p">)))</span>
+                    <span class="s1">&#39;number of patterns in the subset. &#39;</span>
+                    <span class="s1">&#39;Got </span><span class="si">{}</span><span class="s1">, expected </span><span class="si">{}</span><span class="s1">!&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+                        <span class="nb">len</span><span class="p">(</span><span class="n">task_labels</span><span class="p">),</span> <span class="nb">len</span><span class="p">(</span><span class="n">dataset</span><span class="p">)))</span>
 
         <span class="k">return</span> <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">_initialize_task_labels_sequence</span><span class="p">(</span><span class="n">dataset</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
 
@@ -2061,7 +2067,7 @@
         <span class="n">last_c_idxs</span> <span class="o">=</span> <span class="p">[]</span>
         <span class="n">last_c_targets</span> <span class="o">=</span> <span class="p">[]</span>
         <span class="n">last_c_tasks</span> <span class="o">=</span> <span class="p">[]</span>
-        <span class="k">for</span> <span class="n">idx</span> <span class="ow">in</span> <span class="n">dataset</span><span class="o">.</span><span class="n">_indices</span><span class="p">:</span>
+        <span class="k">for</span> <span class="n">subset_idx</span><span class="p">,</span> <span class="n">idx</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">dataset</span><span class="o">.</span><span class="n">_indices</span><span class="p">):</span>
             <span class="n">dataset_idx</span><span class="p">,</span> <span class="n">internal_idx</span> <span class="o">=</span> <span class="n">find_list_from_index</span><span class="p">(</span>
                 <span class="n">idx</span><span class="p">,</span> <span class="n">concat_dataset</span><span class="o">.</span><span class="n">_datasets_lengths</span><span class="p">,</span>
                 <span class="n">concat_dataset</span><span class="o">.</span><span class="n">_overall_length</span><span class="p">,</span>
@@ -2082,8 +2088,8 @@
                 <span class="n">last_c_tasks</span> <span class="o">=</span> <span class="p">[]</span>
 
             <span class="n">last_c_idxs</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">internal_idx</span><span class="p">)</span>
-            <span class="n">last_c_targets</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">dataset</span><span class="o">.</span><span class="n">targets</span><span class="p">[</span><span class="n">idx</span><span class="p">])</span>
-            <span class="n">last_c_tasks</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">dataset</span><span class="o">.</span><span class="n">targets_task_labels</span><span class="p">[</span><span class="n">idx</span><span class="p">])</span>
+            <span class="n">last_c_targets</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">dataset</span><span class="o">.</span><span class="n">targets</span><span class="p">[</span><span class="n">subset_idx</span><span class="p">])</span>
+            <span class="n">last_c_tasks</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">dataset</span><span class="o">.</span><span class="n">targets_task_labels</span><span class="p">[</span><span class="n">subset_idx</span><span class="p">])</span>
 
         <span class="k">if</span> <span class="n">last_c_dataset</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
             <span class="n">result</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">AvalancheConcatDataset</span><span class="o">.</span><span class="n">_make_similar_subset</span><span class="p">(</span>

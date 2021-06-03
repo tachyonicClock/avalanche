@@ -478,7 +478,10 @@ Functions
        of ints, one for each instance in the dataset. This can either be a
        list of task labels for the original dataset or the list of task
        labels for the instances of the subset (an automatic detection will
-       be made). Alternatively can be a single int value, in which case
+       be made). In the unfortunate case in which the original dataset and
+       the subset contain the same amount of instances, then this parameter
+       is considered to contain the task labels of the subset.
+       Alternatively can be a single int value, in which case
        that value will be used as the task label for all the instances.
        Defaults to None, which means that the dataset will try to
        obtain the task labels from the original dataset. If no task labels
@@ -486,9 +489,12 @@ Functions
        instances.
    :param targets: The label of each pattern. Defaults to None, which
        means that the targets will be retrieved from the dataset (if
-       possible). This can either be a list of labels for the original
-       dataset or the list of labels for the patterns of the subset (an
-       automatic detection will be made).
+       possible). This can either be a list of target labels for the
+       original dataset or the list of target labels for the instances of
+       the subset (an automatic detection will be made). In the unfortunate
+       case in which the original dataset and the subset contain the same
+       amount of instances, then this parameter is considered to contain
+       the target labels of the subset.
    :param dataset_type: The type of the dataset. Defaults to None,
        which means that the type will be inferred from the input dataset.
        When the `dataset_type` is different than UNDEFINED, a

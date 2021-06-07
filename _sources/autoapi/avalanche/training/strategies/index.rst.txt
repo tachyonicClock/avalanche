@@ -21,6 +21,7 @@ Submodules
    base_strategy/index.rst
    cumulative/index.rst
    deep_slda/index.rst
+   icarl/index.rst
    joint_training/index.rst
    strategy_wrappers/index.rst
 

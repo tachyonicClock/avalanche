@@ -1,0 +1,40 @@
+:mod:`avalanche.training.losses`
+================================
+
+.. py:module:: avalanche.training.losses
+
+
+Module Contents
+---------------
+
+Classes
+~~~~~~~
+
+.. autoapisummary::
+
+   avalanche.training.losses.ICaRLLossPlugin
+
+
+
+.. py:class:: ICaRLLossPlugin
+
+   Bases: :class:`avalanche.training.plugins.StrategyPlugin`
+
+   ICaRLLossPlugin
+   Similar to the Knowledge Distillation Loss. Works as follows:
+       The target is constructed by taking the one-hot vector target for the
+       current sample and assigning to the position corresponding to the
+       past classes the output of the old model on the current sample.
+       Doesn't work if classes observed in previous experiences might be
+       observed again in future training experiences.
+
+   .. method:: before_forward(self, strategy, **kwargs)
+
+
+   .. method:: __call__(self, logits, targets)
+
+
+   .. method:: after_training_exp(self, strategy, **kwargs)
+
+
+

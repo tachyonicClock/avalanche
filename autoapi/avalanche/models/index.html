@@ -193,8 +193,10 @@ the near future.</p>
 <li class="toctree-l1"><a class="reference internal" href="batch_renorm/"><code class="xref py py-mod docutils literal notranslate"><span class="pre">avalanche.models.batch_renorm</span></code></a></li>
 <li class="toctree-l1"><a class="reference internal" href="dynamic_modules/"><code class="xref py py-mod docutils literal notranslate"><span class="pre">avalanche.models.dynamic_modules</span></code></a></li>
 <li class="toctree-l1"><a class="reference internal" href="dynamic_optimizers/"><code class="xref py py-mod docutils literal notranslate"><span class="pre">avalanche.models.dynamic_optimizers</span></code></a></li>
+<li class="toctree-l1"><a class="reference internal" href="icarl_resnet/"><code class="xref py py-mod docutils literal notranslate"><span class="pre">avalanche.models.icarl_resnet</span></code></a></li>
 <li class="toctree-l1"><a class="reference internal" href="mlp_tiny_imagenet/"><code class="xref py py-mod docutils literal notranslate"><span class="pre">avalanche.models.mlp_tiny_imagenet</span></code></a></li>
 <li class="toctree-l1"><a class="reference internal" href="mobilenetv1/"><code class="xref py py-mod docutils literal notranslate"><span class="pre">avalanche.models.mobilenetv1</span></code></a></li>
+<li class="toctree-l1"><a class="reference internal" href="ncm_classifier/"><code class="xref py py-mod docutils literal notranslate"><span class="pre">avalanche.models.ncm_classifier</span></code></a></li>
 <li class="toctree-l1"><a class="reference internal" href="pytorchcv_wrapper/"><code class="xref py py-mod docutils literal notranslate"><span class="pre">avalanche.models.pytorchcv_wrapper</span></code></a></li>
 <li class="toctree-l1"><a class="reference internal" href="simple_cnn/"><code class="xref py py-mod docutils literal notranslate"><span class="pre">avalanche.models.simple_cnn</span></code></a></li>
 <li class="toctree-l1"><a class="reference internal" href="simple_mlp/"><code class="xref py py-mod docutils literal notranslate"><span class="pre">avalanche.models.simple_mlp</span></code></a></li>
@@ -243,11 +245,20 @@ the near future.</p>
 <tr class="row-even"><td><p><a class="reference internal" href="#avalanche.models.MultiHeadClassifier" title="avalanche.models.MultiHeadClassifier"><code class="xref py py-obj docutils literal notranslate"><span class="pre">MultiHeadClassifier</span></code></a></p></td>
 <td><p>Base class for all neural network modules.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#avalanche.models.FeatureExtractorBackbone" title="avalanche.models.FeatureExtractorBackbone"><code class="xref py py-obj docutils literal notranslate"><span class="pre">FeatureExtractorBackbone</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#avalanche.models.TrainEvalModel" title="avalanche.models.TrainEvalModel"><code class="xref py py-obj docutils literal notranslate"><span class="pre">TrainEvalModel</span></code></a></p></td>
+<td><p>TrainEvalModel.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#avalanche.models.FeatureExtractorBackbone" title="avalanche.models.FeatureExtractorBackbone"><code class="xref py py-obj docutils literal notranslate"><span class="pre">FeatureExtractorBackbone</span></code></a></p></td>
 <td><p>This PyTorch module allows us to extract features from a backbone network</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#avalanche.models.SLDAResNetModel" title="avalanche.models.SLDAResNetModel"><code class="xref py py-obj docutils literal notranslate"><span class="pre">SLDAResNetModel</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#avalanche.models.SLDAResNetModel" title="avalanche.models.SLDAResNetModel"><code class="xref py py-obj docutils literal notranslate"><span class="pre">SLDAResNetModel</span></code></a></p></td>
 <td><p>This is a model wrapper to reproduce experiments from the original</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#avalanche.models.IcarlNet" title="avalanche.models.IcarlNet"><code class="xref py py-obj docutils literal notranslate"><span class="pre">IcarlNet</span></code></a></p></td>
+<td><p>Base class for all neural network modules.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#avalanche.models.NCMClassifier" title="avalanche.models.NCMClassifier"><code class="xref py py-obj docutils literal notranslate"><span class="pre">NCMClassifier</span></code></a></p></td>
+<td><p>NCM Classifier.</p></td>
 </tr>
 </tbody>
 </table>
@@ -261,6 +272,12 @@ the near future.</p>
 </colgroup>
 <tbody>
 <tr class="row-odd"><td><p><a class="reference internal" href="#avalanche.models.avalanche_forward" title="avalanche.models.avalanche_forward"><code class="xref py py-obj docutils literal notranslate"><span class="pre">avalanche_forward</span></code></a>(model, x, task_labels)</p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#avalanche.models.initialize_icarl_net" title="avalanche.models.initialize_icarl_net"><code class="xref py py-obj docutils literal notranslate"><span class="pre">initialize_icarl_net</span></code></a>(m: Module)</p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#avalanche.models.make_icarl_net" title="avalanche.models.make_icarl_net"><code class="xref py py-obj docutils literal notranslate"><span class="pre">make_icarl_net</span></code></a>(num_classes: int, n=5, c=3) → IcarlNet</p></td>
 <td><p></p></td>
 </tr>
 </tbody>
@@ -555,7 +572,7 @@ classifiers, progressive networks, …).</p>
 current experience.</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="avalanche.models.DynamicModule.adaptation">
-<span class="sig-name descname"><span class="pre">adaptation</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dataset</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">AvalancheDataset</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../_modules/avalanche/models/dynamic_modules/#DynamicModule.adaptation"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.models.DynamicModule.adaptation" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">adaptation</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dataset</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">AvalancheDataset</span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../_modules/avalanche/models/dynamic_modules/#DynamicModule.adaptation"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.models.DynamicModule.adaptation" title="Permalink to this definition">¶</a></dt>
 <dd><p>Adapt the module (freeze units, add units…) using the current
 data. Optimizers must be updated after the model adaptation.</p>
 <p>Avalanche strategies call this method to adapt the architecture
@@ -821,6 +838,57 @@ label to activate the correct head.</p>
 
 </dd></dl>
 
+<dl class="py class">
+<dt class="sig sig-object py" id="avalanche.models.TrainEvalModel">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">avalanche.models.</span></span><span class="sig-name descname"><span class="pre">TrainEvalModel</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">feature_extractor</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">train_classifier</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">eval_classifier</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../_modules/avalanche/models/dynamic_modules/#TrainEvalModel"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.models.TrainEvalModel" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="dynamic_modules/#avalanche.models.dynamic_modules.DynamicModule" title="avalanche.models.dynamic_modules.DynamicModule"><code class="xref py py-class docutils literal notranslate"><span class="pre">avalanche.models.dynamic_modules.DynamicModule</span></code></a></p>
+<p>TrainEvalModel.
+This module allows to wrap together a common feature extractor and
+two classifiers: one used during training time and another
+used at test time. The classifier is switched when <cite>self.adaptation()</cite>
+is called.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>feature_extractor</strong> – a differentiable feature extractor</p></li>
+<li><p><strong>train_classifier</strong> – a differentiable classifier used
+during training</p></li>
+<li><p><strong>eval_classifier</strong> – a classifier used during testing.
+Doesn’t have to be differentiable.</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="avalanche.models.TrainEvalModel.forward">
+<span class="sig-name descname"><span class="pre">forward</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">x</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../_modules/avalanche/models/dynamic_modules/#TrainEvalModel.forward"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.models.TrainEvalModel.forward" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="avalanche.models.TrainEvalModel.train_adaptation">
+<span class="sig-name descname"><span class="pre">train_adaptation</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dataset</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">AvalancheDataset</span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../_modules/avalanche/models/dynamic_modules/#TrainEvalModel.train_adaptation"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.models.TrainEvalModel.train_adaptation" title="Permalink to this definition">¶</a></dt>
+<dd><p>Module’s adaptation at training time.</p>
+<p>Avalanche strategies automatically call this method <em>before</em> training
+on each experience.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="avalanche.models.TrainEvalModel.eval_adaptation">
+<span class="sig-name descname"><span class="pre">eval_adaptation</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dataset</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">AvalancheDataset</span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../_modules/avalanche/models/dynamic_modules/#TrainEvalModel.eval_adaptation"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.models.TrainEvalModel.eval_adaptation" title="Permalink to this definition">¶</a></dt>
+<dd><p>Module’s adaptation at evaluation time.</p>
+<p>Avalanche strategies automatically call this method <em>before</em> evaluating
+on each experience.</p>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>This method receives the experience’s data at evaluation time
+because some dynamic models need it for adaptation. For example,
+an incremental classifier needs to be expanded even at evaluation
+time if new classes are available. However, you should <strong>never</strong>
+use this data to <strong>train</strong> the module’s parameters.</p>
+</div>
+</dd></dl>
+
+</dd></dl>
+
 <dl class="py function">
 <dt class="sig sig-object py" id="avalanche.models.avalanche_forward">
 <span class="sig-prename descclassname"><span class="pre">avalanche.models.</span></span><span class="sig-name descname"><span class="pre">avalanche_forward</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">model</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">x</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">task_labels</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../_modules/avalanche/models/utils/#avalanche_forward"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.models.avalanche_forward" title="Permalink to this definition">¶</a></dt>
@@ -898,6 +966,75 @@ pre-trained weights else False
 </dd>
 </dl>
 </dd></dl>
+
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="avalanche.models.initialize_icarl_net">
+<span class="sig-prename descclassname"><span class="pre">avalanche.models.</span></span><span class="sig-name descname"><span class="pre">initialize_icarl_net</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">m</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Module</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../_modules/avalanche/models/icarl_resnet/#initialize_icarl_net"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.models.initialize_icarl_net" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="avalanche.models.make_icarl_net">
+<span class="sig-prename descclassname"><span class="pre">avalanche.models.</span></span><span class="sig-name descname"><span class="pre">make_icarl_net</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">num_classes</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">5</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">c</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">3</span></span></em><span class="sig-paren">)</span> &#x2192; <a class="reference internal" href="#avalanche.models.IcarlNet" title="avalanche.models.IcarlNet"><span class="pre">IcarlNet</span></a><a class="reference internal" href="../../../_modules/avalanche/models/icarl_resnet/#make_icarl_net"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.models.make_icarl_net" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="avalanche.models.IcarlNet">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">avalanche.models.</span></span><span class="sig-name descname"><span class="pre">IcarlNet</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">num_classes</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">5</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">c</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">3</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../_modules/avalanche/models/icarl_resnet/#IcarlNet"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.models.IcarlNet" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">torch.nn.Module</span></code></p>
+<p>Base class for all neural network modules.</p>
+<p>Your models should also subclass this class.</p>
+<p>Modules can also contain other Modules, allowing to nest them in
+a tree structure. You can assign the submodules as regular attributes:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">torch.nn</span> <span class="k">as</span> <span class="nn">nn</span>
+<span class="kn">import</span> <span class="nn">torch.nn.functional</span> <span class="k">as</span> <span class="nn">F</span>
+
+<span class="k">class</span> <span class="nc">Model</span><span class="p">(</span><span class="n">nn</span><span class="o">.</span><span class="n">Module</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">Model</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">conv1</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">Conv2d</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">20</span><span class="p">,</span> <span class="mi">5</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">conv2</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">Conv2d</span><span class="p">(</span><span class="mi">20</span><span class="p">,</span> <span class="mi">20</span><span class="p">,</span> <span class="mi">5</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">forward</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">):</span>
+        <span class="n">x</span> <span class="o">=</span> <span class="n">F</span><span class="o">.</span><span class="n">relu</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">conv1</span><span class="p">(</span><span class="n">x</span><span class="p">))</span>
+        <span class="k">return</span> <span class="n">F</span><span class="o">.</span><span class="n">relu</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">conv2</span><span class="p">(</span><span class="n">x</span><span class="p">))</span>
+</pre></div>
+</div>
+<p>Submodules assigned in this way will be registered, and will have their
+parameters converted too when you call <code class="xref py py-meth docutils literal notranslate"><span class="pre">to()</span></code>, etc.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Variables</dt>
+<dd class="field-odd"><p><strong>training</strong> (<em>bool</em>) – Boolean represents whether this module is in training or
+evaluation mode.</p>
+</dd>
+</dl>
+<p>Initializes internal Module state, shared by both nn.Module and ScriptModule.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="avalanche.models.IcarlNet.forward">
+<span class="sig-name descname"><span class="pre">forward</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">x</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../_modules/avalanche/models/icarl_resnet/#IcarlNet.forward"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.models.IcarlNet.forward" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="avalanche.models.NCMClassifier">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">avalanche.models.</span></span><span class="sig-name descname"><span class="pre">NCMClassifier</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">class_mean</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../_modules/avalanche/models/ncm_classifier/#NCMClassifier"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.models.NCMClassifier" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">torch.nn.Module</span></code></p>
+<p>NCM Classifier.
+NCMClassifier performs nearest class mean classification
+measuring the distance between the input tensor and the
+ones stored in ‘self.class_means’.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>class_mean</strong> – tensor of dimension (num_classes x feature_size)
+used to classify input patterns.</p>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="avalanche.models.NCMClassifier.forward">
+<span class="sig-name descname"><span class="pre">forward</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">x</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../_modules/avalanche/models/ncm_classifier/#NCMClassifier.forward"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.models.NCMClassifier.forward" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
 
 </dd></dl>
 

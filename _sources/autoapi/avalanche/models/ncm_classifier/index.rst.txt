@@ -1,0 +1,34 @@
+:mod:`avalanche.models.ncm_classifier`
+======================================
+
+.. py:module:: avalanche.models.ncm_classifier
+
+
+Module Contents
+---------------
+
+Classes
+~~~~~~~
+
+.. autoapisummary::
+
+   avalanche.models.ncm_classifier.NCMClassifier
+
+
+
+.. py:class:: NCMClassifier(class_mean=None)
+
+   Bases: :class:`torch.nn.Module`
+
+   NCM Classifier.
+   NCMClassifier performs nearest class mean classification
+   measuring the distance between the input tensor and the
+   ones stored in 'self.class_means'.
+
+   :param class_mean: tensor of dimension (num_classes x feature_size)
+       used to classify input patterns.
+
+   .. method:: forward(self, x)
+
+
+

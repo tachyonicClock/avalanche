@@ -29,6 +29,7 @@ Submodules
    :titlesonly:
    :maxdepth: 1
 
+   losses/index.rst
    utils/index.rst
 
 

@@ -23,8 +23,10 @@ Submodules
    batch_renorm/index.rst
    dynamic_modules/index.rst
    dynamic_optimizers/index.rst
+   icarl_resnet/index.rst
    mlp_tiny_imagenet/index.rst
    mobilenetv1/index.rst
+   ncm_classifier/index.rst
    pytorchcv_wrapper/index.rst
    simple_cnn/index.rst
    simple_mlp/index.rst
@@ -50,8 +52,11 @@ Classes
    avalanche.models.MultiTaskModule
    avalanche.models.IncrementalClassifier
    avalanche.models.MultiHeadClassifier
+   avalanche.models.TrainEvalModel
    avalanche.models.FeatureExtractorBackbone
    avalanche.models.SLDAResNetModel
+   avalanche.models.IcarlNet
+   avalanche.models.NCMClassifier
 
 
 
@@ -61,6 +66,8 @@ Functions
 .. autoapisummary::
 
    avalanche.models.avalanche_forward
+   avalanche.models.initialize_icarl_net
+   avalanche.models.make_icarl_net
 
 
 .. py:class:: SimpleCNN(num_classes=10)
@@ -336,7 +343,7 @@ Functions
    `model_adaptation`, which adapts the model given data from the
    current experience.
 
-   .. method:: adaptation(self, dataset: AvalancheDataset)
+   .. method:: adaptation(self, dataset: AvalancheDataset = None)
 
       Adapt the module (freeze units, add units...) using the current
       data. Optimizers must be updated after the model adaptation.
@@ -542,6 +549,49 @@ Functions
 
 
 
+.. py:class:: TrainEvalModel(feature_extractor, train_classifier, eval_classifier)
+
+   Bases: :class:`avalanche.models.dynamic_modules.DynamicModule`
+
+   TrainEvalModel.
+   This module allows to wrap together a common feature extractor and
+   two classifiers: one used during training time and another
+   used at test time. The classifier is switched when `self.adaptation()`
+   is called.
+
+   :param feature_extractor: a differentiable feature extractor
+   :param train_classifier: a differentiable classifier used
+       during training
+   :param eval_classifier: a classifier used during testing.
+       Doesn't have to be differentiable.
+
+   .. method:: forward(self, x)
+
+
+   .. method:: train_adaptation(self, dataset: AvalancheDataset = None)
+
+      Module's adaptation at training time.
+
+      Avalanche strategies automatically call this method *before* training
+      on each experience.
+
+
+   .. method:: eval_adaptation(self, dataset: AvalancheDataset = None)
+
+      Module's adaptation at evaluation time.
+
+      Avalanche strategies automatically call this method *before* evaluating
+      on each experience.
+
+      .. warning::
+          This method receives the experience's data at evaluation time
+          because some dynamic models need it for adaptation. For example,
+          an incremental classifier needs to be expanded even at evaluation
+          time if new classes are available. However, you should **never**
+          use this data to **train** the module's parameters.
+
+
+
 .. function:: avalanche_forward(model, x, task_labels)
 
 
@@ -596,6 +646,65 @@ Functions
    .. method:: forward(self, x)
 
       :param x: raw x data
+
+
+
+.. function:: initialize_icarl_net(m: Module)
+
+
+.. function:: make_icarl_net(num_classes: int, n=5, c=3) -> IcarlNet
+
+
+.. py:class:: IcarlNet(num_classes: int, n=5, c=3)
+
+   Bases: :class:`torch.nn.Module`
+
+   Base class for all neural network modules.
+
+   Your models should also subclass this class.
+
+   Modules can also contain other Modules, allowing to nest them in
+   a tree structure. You can assign the submodules as regular attributes::
+
+       import torch.nn as nn
+       import torch.nn.functional as F
+
+       class Model(nn.Module):
+           def __init__(self):
+               super(Model, self).__init__()
+               self.conv1 = nn.Conv2d(1, 20, 5)
+               self.conv2 = nn.Conv2d(20, 20, 5)
+
+           def forward(self, x):
+               x = F.relu(self.conv1(x))
+               return F.relu(self.conv2(x))
+
+   Submodules assigned in this way will be registered, and will have their
+   parameters converted too when you call :meth:`to`, etc.
+
+   :ivar training: Boolean represents whether this module is in training or
+                   evaluation mode.
+   :vartype training: bool
+
+   Initializes internal Module state, shared by both nn.Module and ScriptModule.
+
+   .. method:: forward(self, x)
+
+
+
+.. py:class:: NCMClassifier(class_mean=None)
+
+   Bases: :class:`torch.nn.Module`
+
+   NCM Classifier.
+   NCMClassifier performs nearest class mean classification
+   measuring the distance between the input tensor and the
+   ones stored in 'self.class_means'.
+
+   :param class_mean: tensor of dimension (num_classes x feature_size)
+       used to classify input patterns.
+
+   .. method:: forward(self, x)
 
 
 

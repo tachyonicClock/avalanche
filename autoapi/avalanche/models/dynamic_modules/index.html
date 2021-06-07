@@ -207,6 +207,9 @@ networks, …).</p>
 <tr class="row-even"><td><p><a class="reference internal" href="#avalanche.models.dynamic_modules.MultiHeadClassifier" title="avalanche.models.dynamic_modules.MultiHeadClassifier"><code class="xref py py-obj docutils literal notranslate"><span class="pre">MultiHeadClassifier</span></code></a></p></td>
 <td><p>Base class for all neural network modules.</p></td>
 </tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#avalanche.models.dynamic_modules.TrainEvalModel" title="avalanche.models.dynamic_modules.TrainEvalModel"><code class="xref py py-obj docutils literal notranslate"><span class="pre">TrainEvalModel</span></code></a></p></td>
+<td><p>TrainEvalModel.</p></td>
+</tr>
 </tbody>
 </table>
 <dl class="py class">
@@ -247,7 +250,7 @@ classifiers, progressive networks, …).</p>
 current experience.</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="avalanche.models.dynamic_modules.DynamicModule.adaptation">
-<span class="sig-name descname"><span class="pre">adaptation</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dataset</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">AvalancheDataset</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/avalanche/models/dynamic_modules/#DynamicModule.adaptation"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.models.dynamic_modules.DynamicModule.adaptation" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">adaptation</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dataset</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">AvalancheDataset</span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/avalanche/models/dynamic_modules/#DynamicModule.adaptation"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.models.dynamic_modules.DynamicModule.adaptation" title="Permalink to this definition">¶</a></dt>
 <dd><p>Adapt the module (freeze units, add units…) using the current
 data. Optimizers must be updated after the model adaptation.</p>
 <p>Avalanche strategies call this method to adapt the architecture
@@ -509,6 +512,57 @@ label to activate the correct head.</p>
 <dd class="field-even"><p></p>
 </dd>
 </dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="avalanche.models.dynamic_modules.TrainEvalModel">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">avalanche.models.dynamic_modules.</span></span><span class="sig-name descname"><span class="pre">TrainEvalModel</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">feature_extractor</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">train_classifier</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">eval_classifier</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/avalanche/models/dynamic_modules/#TrainEvalModel"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.models.dynamic_modules.TrainEvalModel" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#avalanche.models.dynamic_modules.DynamicModule" title="avalanche.models.dynamic_modules.DynamicModule"><code class="xref py py-class docutils literal notranslate"><span class="pre">avalanche.models.dynamic_modules.DynamicModule</span></code></a></p>
+<p>TrainEvalModel.
+This module allows to wrap together a common feature extractor and
+two classifiers: one used during training time and another
+used at test time. The classifier is switched when <cite>self.adaptation()</cite>
+is called.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>feature_extractor</strong> – a differentiable feature extractor</p></li>
+<li><p><strong>train_classifier</strong> – a differentiable classifier used
+during training</p></li>
+<li><p><strong>eval_classifier</strong> – a classifier used during testing.
+Doesn’t have to be differentiable.</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="avalanche.models.dynamic_modules.TrainEvalModel.forward">
+<span class="sig-name descname"><span class="pre">forward</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">x</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/avalanche/models/dynamic_modules/#TrainEvalModel.forward"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.models.dynamic_modules.TrainEvalModel.forward" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="avalanche.models.dynamic_modules.TrainEvalModel.train_adaptation">
+<span class="sig-name descname"><span class="pre">train_adaptation</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dataset</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">AvalancheDataset</span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/avalanche/models/dynamic_modules/#TrainEvalModel.train_adaptation"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.models.dynamic_modules.TrainEvalModel.train_adaptation" title="Permalink to this definition">¶</a></dt>
+<dd><p>Module’s adaptation at training time.</p>
+<p>Avalanche strategies automatically call this method <em>before</em> training
+on each experience.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="avalanche.models.dynamic_modules.TrainEvalModel.eval_adaptation">
+<span class="sig-name descname"><span class="pre">eval_adaptation</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dataset</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">AvalancheDataset</span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/avalanche/models/dynamic_modules/#TrainEvalModel.eval_adaptation"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.models.dynamic_modules.TrainEvalModel.eval_adaptation" title="Permalink to this definition">¶</a></dt>
+<dd><p>Module’s adaptation at evaluation time.</p>
+<p>Avalanche strategies automatically call this method <em>before</em> evaluating
+on each experience.</p>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>This method receives the experience’s data at evaluation time
+because some dynamic models need it for adaptation. For example,
+an incremental classifier needs to be expanded even at evaluation
+time if new classes are available. However, you should <strong>never</strong>
+use this data to <strong>train</strong> the module’s parameters.</p>
+</div>
 </dd></dl>
 
 </dd></dl>

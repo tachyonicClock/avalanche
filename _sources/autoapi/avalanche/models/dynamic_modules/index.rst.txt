@@ -23,6 +23,7 @@ Classes
    avalanche.models.dynamic_modules.MultiTaskModule
    avalanche.models.dynamic_modules.IncrementalClassifier
    avalanche.models.dynamic_modules.MultiHeadClassifier
+   avalanche.models.dynamic_modules.TrainEvalModel
 
 
 
@@ -65,7 +66,7 @@ Classes
    `model_adaptation`, which adapts the model given data from the
    current experience.
 
-   .. method:: adaptation(self, dataset: AvalancheDataset)
+   .. method:: adaptation(self, dataset: AvalancheDataset = None)
 
       Adapt the module (freeze units, add units...) using the current
       data. Optimizers must be updated after the model adaptation.
@@ -268,6 +269,49 @@ Classes
       :param x:
       :param task_label:
       :return:
+
+
+
+.. py:class:: TrainEvalModel(feature_extractor, train_classifier, eval_classifier)
+
+   Bases: :class:`avalanche.models.dynamic_modules.DynamicModule`
+
+   TrainEvalModel.
+   This module allows to wrap together a common feature extractor and
+   two classifiers: one used during training time and another
+   used at test time. The classifier is switched when `self.adaptation()`
+   is called.
+
+   :param feature_extractor: a differentiable feature extractor
+   :param train_classifier: a differentiable classifier used
+       during training
+   :param eval_classifier: a classifier used during testing.
+       Doesn't have to be differentiable.
+
+   .. method:: forward(self, x)
+
+
+   .. method:: train_adaptation(self, dataset: AvalancheDataset = None)
+
+      Module's adaptation at training time.
+
+      Avalanche strategies automatically call this method *before* training
+      on each experience.
+
+
+   .. method:: eval_adaptation(self, dataset: AvalancheDataset = None)
+
+      Module's adaptation at evaluation time.
+
+      Avalanche strategies automatically call this method *before* evaluating
+      on each experience.
+
+      .. warning::
+          This method receives the experience's data at evaluation time
+          because some dynamic models need it for adaptation. For example,
+          an incremental classifier needs to be expanded even at evaluation
+          time if new classes are available. However, you should **never**
+          use this data to **train** the module's parameters.
 
 
 

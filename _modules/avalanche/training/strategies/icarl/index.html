@@ -1,0 +1,480 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>avalanche.training.strategies.icarl &mdash; Avalanche 0.1 documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="../../../../../_static/css/mystyle.css" type="text/css" />
+  <link rel="stylesheet" href="../../../../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../../../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../../../../_static/css/mystyle.css" type="text/css" />
+  <link rel="stylesheet" href="../../../../../_static/graphviz.css" type="text/css" />
+
+  
+  
+
+  
+  
+
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../../../../" src="../../../../../_static/documentation_options.js"></script>
+        <script data-url_root="../../../../../" id="documentation_options" src="../../../../../_static/documentation_options.js"></script>
+        <script src="../../../../../_static/jquery.js"></script>
+        <script src="../../../../../_static/underscore.js"></script>
+        <script src="../../../../../_static/doctools.js"></script>
+    
+    <script type="text/javascript" src="../../../../../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="../../../../../genindex/" />
+    <link rel="search" title="Search" href="../../../../../search/" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../../../../">
+          
+
+          
+            
+            <img src="../../../../../_static/avalanche_logo.png" class="logo" alt="Logo"/>
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../../../search/" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Avalanche API:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../autoapi/">API Reference</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../autoapi/avalanche/"><code class="xref py py-mod docutils literal notranslate"><span class="pre">avalanche</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../../../autoapi/avalanche/#subpackages">Subpackages</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../../../autoapi/avalanche/benchmarks/"><code class="xref py py-mod docutils literal notranslate"><span class="pre">avalanche.benchmarks</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../../autoapi/avalanche/evaluation/"><code class="xref py py-mod docutils literal notranslate"><span class="pre">avalanche.evaluation</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../../autoapi/avalanche/logging/"><code class="xref py py-mod docutils literal notranslate"><span class="pre">avalanche.logging</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../../autoapi/avalanche/models/"><code class="xref py py-mod docutils literal notranslate"><span class="pre">avalanche.models</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../../autoapi/avalanche/training/"><code class="xref py py-mod docutils literal notranslate"><span class="pre">avalanche.training</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../../autoapi/avalanche/#submodules">Submodules</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../../../autoapi/avalanche/core/"><code class="xref py py-mod docutils literal notranslate"><span class="pre">avalanche.core</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../../autoapi/avalanche/#package-contents">Package Contents</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../../../autoapi/avalanche/#avalanche.__version__">__version__</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../../../">Avalanche</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../../../../" class="icon icon-home"></a> &raquo;</li>
+        
+          <li><a href="../../../../">Module code</a> &raquo;</li>
+        
+      <li>avalanche.training.strategies.icarl</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for avalanche.training.strategies.icarl</h1><div class="highlight"><pre>
+<span></span><span class="kn">import</span> <span class="nn">copy</span>
+<span class="kn">import</span> <span class="nn">itertools</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">TYPE_CHECKING</span><span class="p">,</span> <span class="n">Optional</span><span class="p">,</span> <span class="n">List</span>
+<span class="kn">import</span> <span class="nn">torch</span>
+<span class="kn">from</span> <span class="nn">torch.optim</span> <span class="kn">import</span> <span class="n">Optimizer</span>
+
+<span class="kn">from</span> <span class="nn">avalanche.benchmarks.utils</span> <span class="kn">import</span> <span class="n">AvalancheConcatDataset</span><span class="p">,</span> \
+    <span class="n">AvalancheTensorDataset</span><span class="p">,</span> <span class="n">AvalancheSubset</span>
+<span class="kn">from</span> <span class="nn">math</span> <span class="kn">import</span> <span class="n">ceil</span>
+
+<span class="kn">from</span> <span class="nn">avalanche.models</span> <span class="kn">import</span> <span class="n">TrainEvalModel</span><span class="p">,</span> <span class="n">NCMClassifier</span>
+<span class="kn">from</span> <span class="nn">avalanche.training</span> <span class="kn">import</span> <span class="n">EvaluationPlugin</span><span class="p">,</span> <span class="n">default_logger</span>
+<span class="kn">from</span> <span class="nn">avalanche.training.losses</span> <span class="kn">import</span> <span class="n">ICaRLLossPlugin</span>
+<span class="kn">from</span> <span class="nn">avalanche.training.plugins.strategy_plugin</span> <span class="kn">import</span> <span class="n">StrategyPlugin</span>
+<span class="kn">from</span> <span class="nn">torch.nn</span> <span class="kn">import</span> <span class="n">Module</span>
+<span class="kn">from</span> <span class="nn">torch.utils.data</span> <span class="kn">import</span> <span class="n">DataLoader</span>
+<span class="kn">from</span> <span class="nn">avalanche.training.strategies</span> <span class="kn">import</span> <span class="n">BaseStrategy</span>
+
+
+<div class="viewcode-block" id="ICaRL"><a class="viewcode-back" href="../../../../../autoapi/avalanche/training/strategies/icarl/#avalanche.training.strategies.icarl.ICaRL">[docs]</a><span class="k">class</span> <span class="nc">ICaRL</span><span class="p">(</span><span class="n">BaseStrategy</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">feature_extractor</span><span class="p">:</span> <span class="n">Module</span><span class="p">,</span> <span class="n">classifier</span><span class="p">:</span> <span class="n">Module</span><span class="p">,</span>
+                 <span class="n">optimizer</span><span class="p">:</span> <span class="n">Optimizer</span><span class="p">,</span> <span class="n">memory_size</span><span class="p">,</span> <span class="n">buffer_transform</span><span class="p">,</span>
+                 <span class="n">fixed_memory</span><span class="p">,</span> <span class="n">criterion</span><span class="o">=</span><span class="n">ICaRLLossPlugin</span><span class="p">(),</span>
+                 <span class="n">train_mb_size</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span> <span class="n">train_epochs</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span>
+                 <span class="n">eval_mb_size</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">device</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                 <span class="n">plugins</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="n">StrategyPlugin</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+                 <span class="n">evaluator</span><span class="p">:</span> <span class="n">EvaluationPlugin</span> <span class="o">=</span> <span class="n">default_logger</span><span class="p">,</span> <span class="n">eval_every</span><span class="o">=-</span><span class="mi">1</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; iCaRL Strategy.</span>
+<span class="sd">        This strategy does not use task identities.</span>
+
+<span class="sd">        :param feature_extractor: The feature extractor.</span>
+<span class="sd">        :param classifier: The differentiable classifier that takes as input</span>
+<span class="sd">            the output of the feature extractor.</span>
+<span class="sd">        :param optimizer: The optimizer to use.</span>
+<span class="sd">        :param memory_size: The nuber of patterns saved in the memory.</span>
+<span class="sd">        :param buffer_transform: transform applied on buffer elements already</span>
+<span class="sd">            modified by test_transform (if specified) before being used for</span>
+<span class="sd">             replay</span>
+<span class="sd">        :param fixed_memory: If True a memory of size memory_size is</span>
+<span class="sd">            allocated and partitioned between samples from the observed</span>
+<span class="sd">            experiences. If False every time a new class is observed</span>
+<span class="sd">            memory_size samples of that class are added to the memory.</span>
+<span class="sd">        :param train_mb_size: The train minibatch size. Defaults to 1.</span>
+<span class="sd">        :param train_epochs: The number of training epochs. Defaults to 1.</span>
+<span class="sd">        :param eval_mb_size: The eval minibatch size. Defaults to 1.</span>
+<span class="sd">        :param device: The device to use. Defaults to None (cpu).</span>
+<span class="sd">        :param plugins: Plugins to be added. Defaults to None.</span>
+<span class="sd">        :param evaluator: (optional) instance of EvaluationPlugin for logging</span>
+<span class="sd">            and metric computations.</span>
+<span class="sd">        :param eval_every: the frequency of the calls to `eval` inside the</span>
+<span class="sd">            training loop.</span>
+<span class="sd">                if -1: no evaluation during training.</span>
+<span class="sd">                if  0: calls `eval` after the final epoch of each training</span>
+<span class="sd">                    experience.</span>
+<span class="sd">                if &gt;0: calls `eval` every `eval_every` epochs and at the end</span>
+<span class="sd">                    of all the epochs for a single experience.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">model</span> <span class="o">=</span> <span class="n">TrainEvalModel</span><span class="p">(</span><span class="n">feature_extractor</span><span class="p">,</span>
+                               <span class="n">train_classifier</span><span class="o">=</span><span class="n">classifier</span><span class="p">,</span>
+                               <span class="n">eval_classifier</span><span class="o">=</span><span class="n">NCMClassifier</span><span class="p">())</span>
+
+        <span class="n">icarl</span> <span class="o">=</span> <span class="n">_ICaRLPlugin</span><span class="p">(</span><span class="n">memory_size</span><span class="p">,</span> <span class="n">buffer_transform</span><span class="p">,</span> <span class="n">fixed_memory</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">plugins</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">plugins</span> <span class="o">=</span> <span class="p">[</span><span class="n">icarl</span><span class="p">]</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">plugins</span> <span class="o">+=</span> <span class="p">[</span><span class="n">icarl</span><span class="p">]</span>
+
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">criterion</span><span class="p">,</span> <span class="n">StrategyPlugin</span><span class="p">):</span>
+            <span class="n">plugins</span> <span class="o">+=</span> <span class="p">[</span><span class="n">criterion</span><span class="p">]</span>
+
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span>
+            <span class="n">model</span><span class="p">,</span> <span class="n">optimizer</span><span class="p">,</span> <span class="n">criterion</span><span class="o">=</span><span class="n">criterion</span><span class="p">,</span>
+            <span class="n">train_mb_size</span><span class="o">=</span><span class="n">train_mb_size</span><span class="p">,</span> <span class="n">train_epochs</span><span class="o">=</span><span class="n">train_epochs</span><span class="p">,</span>
+            <span class="n">eval_mb_size</span><span class="o">=</span><span class="n">eval_mb_size</span><span class="p">,</span> <span class="n">device</span><span class="o">=</span><span class="n">device</span><span class="p">,</span> <span class="n">plugins</span><span class="o">=</span><span class="n">plugins</span><span class="p">,</span>
+            <span class="n">evaluator</span><span class="o">=</span><span class="n">evaluator</span><span class="p">,</span> <span class="n">eval_every</span><span class="o">=</span><span class="n">eval_every</span><span class="p">)</span></div>
+
+
+<span class="k">class</span> <span class="nc">_ICaRLPlugin</span><span class="p">(</span><span class="n">StrategyPlugin</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        iCaRL Plugin.</span>
+<span class="sd">        iCaRL uses nearest class exemplar classification to prevent</span>
+<span class="sd">        forgetting to occur at the classification layer. The feature extractor</span>
+<span class="sd">        is continually learned using replay and distillation. The exemplars</span>
+<span class="sd">        used for replay and classification are selected through herding.</span>
+<span class="sd">        This plugin does not use task identities.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">memory_size</span><span class="p">,</span> <span class="n">buffer_transform</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">fixed_memory</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        :param memory_size: amount of patterns saved in the memory.</span>
+<span class="sd">        :param buffer_transform: transform applied on buffer elements already</span>
+<span class="sd">            modified by test_transform (if specified) before being used for</span>
+<span class="sd">             replay</span>
+<span class="sd">        :param fixed_memory: If True a memory of size memory_size is</span>
+<span class="sd">            allocated and partitioned between samples from the observed</span>
+<span class="sd">            experiences. If False every time a new class is observed</span>
+<span class="sd">            memory_size samples of that class are added to the memory.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">memory_size</span> <span class="o">=</span> <span class="n">memory_size</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">buffer_transform</span> <span class="o">=</span> <span class="n">buffer_transform</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">fixed_memory</span> <span class="o">=</span> <span class="n">fixed_memory</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">x_memory</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">y_memory</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">order</span> <span class="o">=</span> <span class="p">[]</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">old_model</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">observed_classes</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">class_means</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">embedding_size</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">output_size</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">input_size</span> <span class="o">=</span> <span class="kc">None</span>
+
+    <span class="k">def</span> <span class="nf">after_train_dataset_adaptation</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">strategy</span><span class="p">:</span> <span class="s1">&#39;BaseStrategy&#39;</span><span class="p">,</span>
+                                       <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">strategy</span><span class="o">.</span><span class="n">training_exp_counter</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="n">memory</span> <span class="o">=</span> <span class="n">AvalancheTensorDataset</span><span class="p">(</span>
+                <span class="n">torch</span><span class="o">.</span><span class="n">cat</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">x_memory</span><span class="p">)</span><span class="o">.</span><span class="n">cpu</span><span class="p">(),</span>
+                <span class="nb">list</span><span class="p">(</span><span class="n">itertools</span><span class="o">.</span><span class="n">chain</span><span class="o">.</span><span class="n">from_iterable</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">y_memory</span><span class="p">)),</span>
+                <span class="n">transform</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">buffer_transform</span><span class="p">,</span> <span class="n">target_transform</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
+
+            <span class="n">strategy</span><span class="o">.</span><span class="n">adapted_dataset</span> <span class="o">=</span> \
+                <span class="n">AvalancheConcatDataset</span><span class="p">((</span><span class="n">strategy</span><span class="o">.</span><span class="n">adapted_dataset</span><span class="p">,</span> <span class="n">memory</span><span class="p">))</span>
+
+    <span class="k">def</span> <span class="nf">before_training_exp</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">strategy</span><span class="p">:</span> <span class="s1">&#39;BaseStrategy&#39;</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="n">tid</span> <span class="o">=</span> <span class="n">strategy</span><span class="o">.</span><span class="n">training_exp_counter</span>
+        <span class="n">scenario</span> <span class="o">=</span> <span class="n">strategy</span><span class="o">.</span><span class="n">experience</span><span class="o">.</span><span class="n">scenario</span>
+        <span class="n">nb_cl</span> <span class="o">=</span> <span class="n">scenario</span><span class="o">.</span><span class="n">n_classes_per_exp</span><span class="p">[</span><span class="n">tid</span><span class="p">]</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">observed_classes</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span>
+            <span class="n">scenario</span><span class="o">.</span><span class="n">classes_order</span><span class="p">[</span><span class="n">tid</span> <span class="o">*</span> <span class="n">nb_cl</span><span class="p">:(</span><span class="n">tid</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span> <span class="o">*</span> <span class="n">nb_cl</span><span class="p">])</span>
+
+    <span class="k">def</span> <span class="nf">before_forward</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">strategy</span><span class="p">:</span> <span class="s1">&#39;BaseStrategy&#39;</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">input_size</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">with</span> <span class="n">torch</span><span class="o">.</span><span class="n">no_grad</span><span class="p">():</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">input_size</span> <span class="o">=</span> <span class="n">strategy</span><span class="o">.</span><span class="n">mb_x</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">:]</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">output_size</span> <span class="o">=</span> <span class="n">strategy</span><span class="o">.</span><span class="n">model</span><span class="p">(</span><span class="n">strategy</span><span class="o">.</span><span class="n">mb_x</span><span class="p">)</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">embedding_size</span> <span class="o">=</span> <span class="n">strategy</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">feature_extractor</span><span class="p">(</span>
+                    <span class="n">strategy</span><span class="o">.</span><span class="n">mb_x</span><span class="p">)</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+
+    <span class="k">def</span> <span class="nf">after_training_exp</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">strategy</span><span class="p">:</span> <span class="s1">&#39;BaseStrategy&#39;</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="n">strategy</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">eval</span><span class="p">()</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">construct_exemplar_set</span><span class="p">(</span><span class="n">strategy</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">reduce_exemplar_set</span><span class="p">(</span><span class="n">strategy</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">compute_class_means</span><span class="p">(</span><span class="n">strategy</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">compute_class_means</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">strategy</span><span class="p">):</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">class_means</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">n_classes</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">(</span><span class="n">strategy</span><span class="o">.</span><span class="n">experience</span><span class="o">.</span><span class="n">scenario</span><span class="o">.</span><span class="n">n_classes_per_exp</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">class_means</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span>
+                <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">embedding_size</span><span class="p">,</span> <span class="n">n_classes</span><span class="p">))</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="n">strategy</span><span class="o">.</span><span class="n">device</span><span class="p">)</span>
+
+        <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">class_samples</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">x_memory</span><span class="p">):</span>
+            <span class="n">label</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">y_memory</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span>
+            <span class="n">class_samples</span> <span class="o">=</span> <span class="n">class_samples</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="n">strategy</span><span class="o">.</span><span class="n">device</span><span class="p">)</span>
+
+            <span class="k">with</span> <span class="n">torch</span><span class="o">.</span><span class="n">no_grad</span><span class="p">():</span>
+                <span class="n">mapped_prototypes</span> <span class="o">=</span> <span class="n">strategy</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">feature_extractor</span><span class="p">(</span>
+                    <span class="n">class_samples</span><span class="p">)</span><span class="o">.</span><span class="n">detach</span><span class="p">()</span>
+            <span class="n">D</span> <span class="o">=</span> <span class="n">mapped_prototypes</span><span class="o">.</span><span class="n">T</span>
+            <span class="n">D</span> <span class="o">=</span> <span class="n">D</span> <span class="o">/</span> <span class="n">torch</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">D</span><span class="p">,</span> <span class="n">dim</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+
+            <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">class_samples</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span> <span class="o">==</span> <span class="mi">4</span><span class="p">:</span>
+                <span class="n">class_samples</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">flip</span><span class="p">(</span><span class="n">class_samples</span><span class="p">,</span> <span class="p">[</span><span class="mi">3</span><span class="p">])</span>
+
+            <span class="k">with</span> <span class="n">torch</span><span class="o">.</span><span class="n">no_grad</span><span class="p">():</span>
+                <span class="n">mapped_prototypes2</span> <span class="o">=</span> <span class="n">strategy</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">feature_extractor</span><span class="p">(</span>
+                    <span class="n">class_samples</span><span class="p">)</span><span class="o">.</span><span class="n">detach</span><span class="p">()</span>
+
+            <span class="n">D2</span> <span class="o">=</span> <span class="n">mapped_prototypes2</span><span class="o">.</span><span class="n">T</span>
+            <span class="n">D2</span> <span class="o">=</span> <span class="n">D2</span> <span class="o">/</span> <span class="n">torch</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">D2</span><span class="p">,</span> <span class="n">dim</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+
+            <span class="n">div</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span><span class="n">class_samples</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">device</span><span class="o">=</span><span class="n">strategy</span><span class="o">.</span><span class="n">device</span><span class="p">)</span>
+            <span class="n">div</span> <span class="o">=</span> <span class="n">div</span> <span class="o">/</span> <span class="n">class_samples</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+
+            <span class="n">m1</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">mm</span><span class="p">(</span><span class="n">D</span><span class="p">,</span> <span class="n">div</span><span class="o">.</span><span class="n">unsqueeze</span><span class="p">(</span><span class="mi">1</span><span class="p">))</span><span class="o">.</span><span class="n">squeeze</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+            <span class="n">m2</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">mm</span><span class="p">(</span><span class="n">D2</span><span class="p">,</span> <span class="n">div</span><span class="o">.</span><span class="n">unsqueeze</span><span class="p">(</span><span class="mi">1</span><span class="p">))</span><span class="o">.</span><span class="n">squeeze</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">class_means</span><span class="p">[:,</span> <span class="n">label</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="n">m1</span> <span class="o">+</span> <span class="n">m2</span><span class="p">)</span> <span class="o">/</span> <span class="mi">2</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">class_means</span><span class="p">[:,</span> <span class="n">label</span><span class="p">]</span> <span class="o">/=</span> <span class="n">torch</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">class_means</span><span class="p">[:,</span> <span class="n">label</span><span class="p">])</span>
+
+            <span class="n">strategy</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">eval_classifier</span><span class="o">.</span><span class="n">class_means</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">class_means</span>
+
+    <span class="k">def</span> <span class="nf">construct_exemplar_set</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">strategy</span><span class="p">):</span>
+        <span class="n">tid</span> <span class="o">=</span> <span class="n">strategy</span><span class="o">.</span><span class="n">training_exp_counter</span>
+        <span class="n">nb_cl</span> <span class="o">=</span> <span class="n">strategy</span><span class="o">.</span><span class="n">experience</span><span class="o">.</span><span class="n">scenario</span><span class="o">.</span><span class="n">n_classes_per_exp</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">fixed_memory</span><span class="p">:</span>
+            <span class="n">nb_protos_cl</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">ceil</span><span class="p">(</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">memory_size</span> <span class="o">/</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">observed_classes</span><span class="p">)))</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">nb_protos_cl</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">memory_size</span>
+        <span class="n">new_classes</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">observed_classes</span><span class="p">[</span><span class="n">tid</span> <span class="o">*</span> <span class="n">nb_cl</span><span class="p">[</span><span class="n">tid</span><span class="p">]:</span>
+                                            <span class="p">(</span><span class="n">tid</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span> <span class="o">*</span> <span class="n">nb_cl</span><span class="p">[</span><span class="n">tid</span><span class="p">]]</span>
+
+        <span class="n">dataset</span> <span class="o">=</span> <span class="n">strategy</span><span class="o">.</span><span class="n">experience</span><span class="o">.</span><span class="n">dataset</span>
+        <span class="n">targets</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">tensor</span><span class="p">(</span><span class="n">dataset</span><span class="o">.</span><span class="n">targets</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">iter_dico</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">nb_cl</span><span class="p">[</span><span class="n">tid</span><span class="p">]):</span>
+            <span class="n">cd</span> <span class="o">=</span> <span class="n">AvalancheSubset</span><span class="p">(</span><span class="n">dataset</span><span class="p">,</span>
+                                 <span class="n">torch</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">targets</span> <span class="o">==</span> <span class="n">new_classes</span><span class="p">[</span><span class="n">iter_dico</span><span class="p">])</span>
+                                 <span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+
+            <span class="n">class_patterns</span><span class="p">,</span> <span class="n">_</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="nb">next</span><span class="p">(</span><span class="nb">iter</span><span class="p">(</span>
+                <span class="n">DataLoader</span><span class="p">(</span><span class="n">cd</span><span class="o">.</span><span class="n">eval</span><span class="p">(),</span> <span class="n">batch_size</span><span class="o">=</span><span class="nb">len</span><span class="p">(</span><span class="n">cd</span><span class="p">))))</span>
+            <span class="n">class_patterns</span> <span class="o">=</span> <span class="n">class_patterns</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="n">strategy</span><span class="o">.</span><span class="n">device</span><span class="p">)</span>
+
+            <span class="k">with</span> <span class="n">torch</span><span class="o">.</span><span class="n">no_grad</span><span class="p">():</span>
+                <span class="n">mapped_prototypes</span> <span class="o">=</span> <span class="n">strategy</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">feature_extractor</span><span class="p">(</span>
+                    <span class="n">class_patterns</span><span class="p">)</span><span class="o">.</span><span class="n">detach</span><span class="p">()</span>
+            <span class="n">D</span> <span class="o">=</span> <span class="n">mapped_prototypes</span><span class="o">.</span><span class="n">T</span>
+            <span class="n">D</span> <span class="o">=</span> <span class="n">D</span> <span class="o">/</span> <span class="n">torch</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">D</span><span class="p">,</span> <span class="n">dim</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+
+            <span class="n">mu</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">D</span><span class="p">,</span> <span class="n">dim</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+            <span class="n">order</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">class_patterns</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+            <span class="n">w_t</span> <span class="o">=</span> <span class="n">mu</span>
+
+            <span class="n">i</span><span class="p">,</span> <span class="n">added</span><span class="p">,</span> <span class="n">selected</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="p">[]</span>
+            <span class="k">while</span> <span class="ow">not</span> <span class="n">added</span> <span class="o">==</span> <span class="n">nb_protos_cl</span> <span class="ow">and</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="mi">1000</span><span class="p">:</span>
+                <span class="n">tmp_t</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">mm</span><span class="p">(</span><span class="n">w_t</span><span class="o">.</span><span class="n">unsqueeze</span><span class="p">(</span><span class="mi">0</span><span class="p">),</span> <span class="n">D</span><span class="p">)</span>
+                <span class="n">ind_max</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">argmax</span><span class="p">(</span><span class="n">tmp_t</span><span class="p">)</span>
+
+                <span class="k">if</span> <span class="n">ind_max</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">selected</span><span class="p">:</span>
+                    <span class="n">order</span><span class="p">[</span><span class="n">ind_max</span><span class="p">]</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">+</span> <span class="n">added</span>
+                    <span class="n">added</span> <span class="o">+=</span> <span class="mi">1</span>
+                    <span class="n">selected</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">ind_max</span><span class="o">.</span><span class="n">item</span><span class="p">())</span>
+
+                <span class="n">w_t</span> <span class="o">=</span> <span class="n">w_t</span> <span class="o">+</span> <span class="n">mu</span> <span class="o">-</span> <span class="n">D</span><span class="p">[:,</span> <span class="n">ind_max</span><span class="p">]</span>
+                <span class="n">i</span> <span class="o">+=</span> <span class="mi">1</span>
+
+            <span class="n">pick</span> <span class="o">=</span> <span class="p">(</span><span class="n">order</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">)</span> <span class="o">*</span> <span class="p">(</span><span class="n">order</span> <span class="o">&lt;</span> <span class="n">nb_protos_cl</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span> <span class="o">*</span> <span class="mf">1.</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">x_memory</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">class_patterns</span><span class="p">[</span><span class="n">torch</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">pick</span> <span class="o">==</span> <span class="mi">1</span><span class="p">)[</span><span class="mi">0</span><span class="p">]])</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">y_memory</span><span class="o">.</span><span class="n">append</span><span class="p">(</span>
+                <span class="p">[</span><span class="n">new_classes</span><span class="p">[</span><span class="n">iter_dico</span><span class="p">]]</span> <span class="o">*</span> <span class="nb">len</span><span class="p">(</span><span class="n">torch</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">pick</span> <span class="o">==</span> <span class="mi">1</span><span class="p">)[</span><span class="mi">0</span><span class="p">]))</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">order</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">order</span><span class="p">[</span><span class="n">torch</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">pick</span> <span class="o">==</span> <span class="mi">1</span><span class="p">)[</span><span class="mi">0</span><span class="p">]])</span>
+
+    <span class="k">def</span> <span class="nf">reduce_exemplar_set</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">strategy</span><span class="p">):</span>
+        <span class="n">tid</span> <span class="o">=</span> <span class="n">strategy</span><span class="o">.</span><span class="n">training_exp_counter</span>
+        <span class="n">nb_cl</span> <span class="o">=</span> <span class="n">strategy</span><span class="o">.</span><span class="n">experience</span><span class="o">.</span><span class="n">scenario</span><span class="o">.</span><span class="n">n_classes_per_exp</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">fixed_memory</span><span class="p">:</span>
+            <span class="n">nb_protos_cl</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">ceil</span><span class="p">(</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">memory_size</span> <span class="o">/</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">observed_classes</span><span class="p">)))</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">nb_protos_cl</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">memory_size</span>
+
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">x_memory</span><span class="p">)</span> <span class="o">-</span> <span class="n">nb_cl</span><span class="p">[</span><span class="n">tid</span><span class="p">]):</span>
+            <span class="n">pick</span> <span class="o">=</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">order</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">&lt;</span> <span class="n">nb_protos_cl</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span> <span class="o">*</span> <span class="mf">1.</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">x_memory</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">x_memory</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">torch</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">pick</span> <span class="o">==</span> <span class="mi">1</span><span class="p">)[</span><span class="mi">0</span><span class="p">]]</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">y_memory</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">y_memory</span><span class="p">[</span><span class="n">i</span><span class="p">][:</span><span class="nb">len</span><span class="p">(</span><span class="n">torch</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">pick</span> <span class="o">==</span> <span class="mi">1</span><span class="p">)[</span><span class="mi">0</span><span class="p">])]</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">order</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">order</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">torch</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">pick</span> <span class="o">==</span> <span class="mi">1</span><span class="p">)[</span><span class="mi">0</span><span class="p">]]</span>
+</pre></div>
+
+           </div>
+           
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &#169; Copyright 2021, ContinualAI.
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

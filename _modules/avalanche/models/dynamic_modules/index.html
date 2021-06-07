@@ -214,7 +214,7 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
 
-<div class="viewcode-block" id="DynamicModule.adaptation"><a class="viewcode-back" href="../../../../autoapi/avalanche/models/#avalanche.models.dynamic_modules.DynamicModule.adaptation">[docs]</a>    <span class="k">def</span> <span class="nf">adaptation</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dataset</span><span class="p">:</span> <span class="n">AvalancheDataset</span><span class="p">):</span>
+<div class="viewcode-block" id="DynamicModule.adaptation"><a class="viewcode-back" href="../../../../autoapi/avalanche/models/#avalanche.models.dynamic_modules.DynamicModule.adaptation">[docs]</a>    <span class="k">def</span> <span class="nf">adaptation</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dataset</span><span class="p">:</span> <span class="n">AvalancheDataset</span> <span class="o">=</span> <span class="kc">None</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot; Adapt the module (freeze units, add units...) using the current</span>
 <span class="sd">        data. Optimizers must be updated after the model adaptation.</span>
 
@@ -417,11 +417,46 @@
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">classifiers</span><span class="p">[</span><span class="nb">str</span><span class="p">(</span><span class="n">task_label</span><span class="p">)](</span><span class="n">x</span><span class="p">)</span></div></div>
 
 
+<div class="viewcode-block" id="TrainEvalModel"><a class="viewcode-back" href="../../../../autoapi/avalanche/models/#avalanche.models.dynamic_modules.TrainEvalModel">[docs]</a><span class="k">class</span> <span class="nc">TrainEvalModel</span><span class="p">(</span><span class="n">DynamicModule</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        TrainEvalModel.</span>
+<span class="sd">        This module allows to wrap together a common feature extractor and</span>
+<span class="sd">        two classifiers: one used during training time and another</span>
+<span class="sd">        used at test time. The classifier is switched when `self.adaptation()`</span>
+<span class="sd">        is called.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">feature_extractor</span><span class="p">,</span> <span class="n">train_classifier</span><span class="p">,</span> <span class="n">eval_classifier</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        :param feature_extractor: a differentiable feature extractor</span>
+<span class="sd">        :param train_classifier: a differentiable classifier used</span>
+<span class="sd">            during training</span>
+<span class="sd">        :param eval_classifier: a classifier used during testing.</span>
+<span class="sd">            Doesn&#39;t have to be differentiable.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">feature_extractor</span> <span class="o">=</span> <span class="n">feature_extractor</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">train_classifier</span> <span class="o">=</span> <span class="n">train_classifier</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">eval_classifier</span> <span class="o">=</span> <span class="n">eval_classifier</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">classifier</span> <span class="o">=</span> <span class="n">train_classifier</span>
+
+<div class="viewcode-block" id="TrainEvalModel.forward"><a class="viewcode-back" href="../../../../autoapi/avalanche/models/#avalanche.models.dynamic_modules.TrainEvalModel.forward">[docs]</a>    <span class="k">def</span> <span class="nf">forward</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">):</span>
+        <span class="n">x</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">feature_extractor</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">classifier</span><span class="p">(</span><span class="n">x</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="TrainEvalModel.train_adaptation"><a class="viewcode-back" href="../../../../autoapi/avalanche/models/#avalanche.models.dynamic_modules.TrainEvalModel.train_adaptation">[docs]</a>    <span class="k">def</span> <span class="nf">train_adaptation</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dataset</span><span class="p">:</span> <span class="n">AvalancheDataset</span> <span class="o">=</span> <span class="kc">None</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">classifier</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">train_classifier</span></div>
+
+<div class="viewcode-block" id="TrainEvalModel.eval_adaptation"><a class="viewcode-back" href="../../../../autoapi/avalanche/models/#avalanche.models.dynamic_modules.TrainEvalModel.eval_adaptation">[docs]</a>    <span class="k">def</span> <span class="nf">eval_adaptation</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dataset</span><span class="p">:</span> <span class="n">AvalancheDataset</span> <span class="o">=</span> <span class="kc">None</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">classifier</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">eval_classifier</span></div></div>
+
+
 <span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span>
     <span class="s1">&#39;DynamicModule&#39;</span><span class="p">,</span>
     <span class="s1">&#39;MultiTaskModule&#39;</span><span class="p">,</span>
     <span class="s1">&#39;IncrementalClassifier&#39;</span><span class="p">,</span>
-    <span class="s1">&#39;MultiHeadClassifier&#39;</span>
+    <span class="s1">&#39;MultiHeadClassifier&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;TrainEvalModel&#39;</span>
 <span class="p">]</span>
 </pre></div>
 

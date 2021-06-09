@@ -447,8 +447,9 @@
             <span class="c1"># by the number of experiences</span>
             <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">n_classes</span> <span class="o">%</span> <span class="n">n_experiences</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
                 <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
-                    <span class="s1">&#39;Invalid number of experiences: classes contained in &#39;</span>
-                    <span class="s1">&#39;dataset cannot be divided by n_experiences&#39;</span><span class="p">)</span>
+                    <span class="sa">f</span><span class="s1">&#39;Invalid number of experiences: classes contained in &#39;</span>
+                    <span class="sa">f</span><span class="s1">&#39;dataset (</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">n_classes</span><span class="si">}</span><span class="s1">) cannot be divided by &#39;</span>
+                    <span class="sa">f</span><span class="s1">&#39;n_experiences (</span><span class="si">{</span><span class="n">n_experiences</span><span class="si">}</span><span class="s1">)&#39;</span><span class="p">)</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">n_classes_per_exp</span> <span class="o">=</span> \
                 <span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">n_classes</span> <span class="o">//</span> <span class="n">n_experiences</span><span class="p">]</span> <span class="o">*</span> <span class="n">n_experiences</span>
 

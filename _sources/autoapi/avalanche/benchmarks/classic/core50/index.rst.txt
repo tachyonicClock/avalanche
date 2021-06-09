@@ -23,7 +23,7 @@ Functions
    avalanche.benchmarks.classic.core50.CORe50
 
 
-.. function:: CORe50(root: Union[str, Path] = get_default_dataset_location('core50'), scenario: str = 'nicv2_391', run: int = 0, object_lvl: bool = True, mini: bool = False, train_transform=None, eval_transform=None)
+.. function:: CORe50(*, scenario: str = 'nicv2_391', run: int = 0, object_lvl: bool = True, mini: bool = False, train_transform: Optional[Any] = _default_train_transform, eval_transform: Optional[Any] = _default_eval_transform, dataset_root: Union[str, Path] = None)
 
    Creates a CL scenario for CORe50.
 
@@ -43,9 +43,6 @@ Functions
    generators. It is recommended to check the tutorial of the "benchmark" API,
    which contains usage examples ranging from "basic" to "advanced".
 
-   :param root: Absolute path indicating where to store the dataset and related
-       metadata. By default they will be stored in
-       "~/.avalanche/datasets/core50/data/".
    :param scenario: CORe50 main scenario. It can be chosen between 'ni', 'nc',
        'nic', 'nicv2_79', 'nicv2_196' or 'nicv2_391.'
    :param run: number of run for the scenario. Each run defines a different
@@ -62,6 +59,10 @@ Functions
        e.g. a random crop, a normalization or a concatenation of different
        transformations (see torchvision.transform documentation for a
        comprehensive list of possible transformations). Defaults to None.
+   :param dataset_root: Absolute path indicating where to store the dataset
+       and related metadata. Defaults to None, which means that the default
+       location for
+       'core50' will be used.
 
    :returns: a properly initialized :class:`GenericCLScenario` instance.
 

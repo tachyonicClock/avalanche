@@ -207,7 +207,7 @@
 <span class="kn">from</span> <span class="nn">collections</span> <span class="kn">import</span> <span class="n">OrderedDict</span>
 <span class="kn">from</span> <span class="nn">torchvision.datasets.folder</span> <span class="kn">import</span> <span class="n">default_loader</span>
 
-<span class="kn">from</span> <span class="nn">avalanche.benchmarks.datasets</span> <span class="kn">import</span> <span class="n">get_default_dataset_location</span><span class="p">,</span> \
+<span class="kn">from</span> <span class="nn">avalanche.benchmarks.datasets</span> <span class="kn">import</span> <span class="n">default_dataset_location</span><span class="p">,</span> \
     <span class="n">DownloadableDataset</span>
 <span class="kn">from</span> <span class="nn">avalanche.benchmarks.utils</span> <span class="kn">import</span> <span class="n">PathsDataset</span>
 
@@ -228,15 +228,15 @@
 
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span>
             <span class="bp">self</span><span class="p">,</span>
-            <span class="n">root</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Path</span><span class="p">]</span> <span class="o">=</span>
-            <span class="n">get_default_dataset_location</span><span class="p">(</span><span class="s1">&#39;CUB_200_2011&#39;</span><span class="p">),</span>
+            <span class="n">root</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Path</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
             <span class="o">*</span><span class="p">,</span>
             <span class="n">train</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">transform</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">target_transform</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
             <span class="n">loader</span><span class="o">=</span><span class="n">default_loader</span><span class="p">,</span> <span class="n">download</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 
 <span class="sd">        :param root: root dir where the dataset can be found or downloaded.</span>
-<span class="sd">            Default to &#39;~/.avalanche/data/CUB_200_2011&#39;.</span>
+<span class="sd">            Defaults to None, which means that the default location for</span>
+<span class="sd">            &#39;CUB_200_2011&#39; will be used.</span>
 <span class="sd">        :param train: train or test subset of the original dataset. Default</span>
 <span class="sd">            to True.</span>
 <span class="sd">        :param transform: eventual input data transformations to apply.</span>
@@ -248,6 +248,9 @@
 <span class="sd">        :param download: default set to True. If the data is already</span>
 <span class="sd">            downloaded it will skip the download.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="k">if</span> <span class="n">root</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">root</span> <span class="o">=</span> <span class="n">default_dataset_location</span><span class="p">(</span><span class="s1">&#39;CUB_200_2011&#39;</span><span class="p">)</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">train</span> <span class="o">=</span> <span class="n">train</span>
 

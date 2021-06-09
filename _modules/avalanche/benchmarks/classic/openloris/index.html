@@ -193,12 +193,17 @@
 <span class="sd">&quot;&quot;&quot; This module contains the high-level OpenLORIS scenario/factor generator.</span>
 <span class="sd">It basically returns a iterable scenario object ``GenericCLScenario`` given</span>
 <span class="sd">a number of configuration parameters.&quot;&quot;&quot;</span>
+<span class="kn">from</span> <span class="nn">pathlib</span> <span class="kn">import</span> <span class="n">Path</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Union</span><span class="p">,</span> <span class="n">Any</span><span class="p">,</span> <span class="n">Optional</span>
+<span class="kn">from</span> <span class="nn">typing_extensions</span> <span class="kn">import</span> <span class="n">Literal</span>
 
+<span class="kn">from</span> <span class="nn">avalanche.benchmarks.classic.classic_benchmarks_utils</span> <span class="kn">import</span> \
+    <span class="n">check_vision_benchmark</span>
 <span class="kn">from</span> <span class="nn">avalanche.benchmarks.datasets.openloris</span> <span class="kn">import</span> <span class="n">OpenLORIS</span> <span class="k">as</span> \
     <span class="n">OpenLORISDataset</span>
 <span class="kn">from</span> <span class="nn">avalanche.benchmarks.scenarios.generic_benchmark_creation</span> <span class="kn">import</span> \
     <span class="n">create_generic_benchmark_from_filelists</span>
-<span class="kn">from</span> <span class="nn">os.path</span> <span class="kn">import</span> <span class="n">expanduser</span>
+
 
 <span class="n">nbatch</span> <span class="o">=</span> <span class="p">{</span>
     <span class="s1">&#39;clutter&#39;</span><span class="p">:</span> <span class="mi">9</span><span class="p">,</span>
@@ -217,10 +222,13 @@
 <span class="p">}</span>
 
 
-<div class="viewcode-block" id="OpenLORIS"><a class="viewcode-back" href="../../../../../autoapi/avalanche/benchmarks/#avalanche.benchmarks.classic.OpenLORIS">[docs]</a><span class="k">def</span> <span class="nf">OpenLORIS</span><span class="p">(</span><span class="n">root</span><span class="o">=</span><span class="n">expanduser</span><span class="p">(</span><span class="s2">&quot;~&quot;</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot;/.avalanche/data/openloris/&quot;</span><span class="p">,</span>
-              <span class="n">factor</span><span class="o">=</span><span class="s2">&quot;clutter&quot;</span><span class="p">,</span>
-              <span class="n">train_transform</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
-              <span class="n">eval_transform</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<div class="viewcode-block" id="OpenLORIS"><a class="viewcode-back" href="../../../../../autoapi/avalanche/benchmarks/#avalanche.benchmarks.classic.OpenLORIS">[docs]</a><span class="k">def</span> <span class="nf">OpenLORIS</span><span class="p">(</span>
+        <span class="o">*</span><span class="p">,</span>
+        <span class="n">factor</span><span class="p">:</span> <span class="n">Literal</span><span class="p">[</span><span class="s1">&#39;clutter&#39;</span><span class="p">,</span> <span class="s1">&#39;illumination&#39;</span><span class="p">,</span>
+                        <span class="s1">&#39;occlusion&#39;</span><span class="p">,</span> <span class="s1">&#39;pixel&#39;</span><span class="p">,</span> <span class="s1">&#39;mixture-iros&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;clutter&quot;</span><span class="p">,</span>
+        <span class="n">train_transform</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Any</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">eval_transform</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Any</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">dataset_root</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Path</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Creates a CL scenario for OpenLORIS.</span>
 
@@ -242,7 +250,6 @@
 <span class="sd">    generators. It is recommended to check the tutorial of the &quot;benchmark&quot; API,</span>
 <span class="sd">    which contains usage examples ranging from &quot;basic&quot; to &quot;advanced&quot;.</span>
 
-<span class="sd">    :param root: Base path where OpenLORIS data is stored.</span>
 <span class="sd">    :param factor: OpenLORIS main factors, indicating different environmental</span>
 <span class="sd">        variations. It can be chosen between &#39;clutter&#39;, &#39;illumination&#39;,</span>
 <span class="sd">        &#39;occlusion&#39;, &#39;pixel&#39;, or &#39;mixture-iros&#39;. The first three factors are</span>
@@ -256,6 +263,9 @@
 <span class="sd">        e.g. a random crop, a normalization or a concatenation of different</span>
 <span class="sd">        transformations (see torchvision.transform documentation for a</span>
 <span class="sd">        comprehensive list of possible transformations). Defaults to None.</span>
+<span class="sd">    :param dataset_root: The root path of the dataset.</span>
+<span class="sd">        Defaults to None, which means that the default location for</span>
+<span class="sd">        &#39;openloris&#39; will be used.</span>
 
 <span class="sd">    :returns: a properly initialized :class:`GenericCLScenario` instance.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
@@ -265,18 +275,19 @@
                                       <span class="s2">&quot;&#39;illumination&#39;, &#39;occlusion&#39;, &quot;</span> \
                                       <span class="s2">&quot;&#39;pixel&#39;, or &#39;mixture-iros&#39;.&quot;</span>
 
-    <span class="n">dataset</span> <span class="o">=</span> <span class="n">OpenLORISDataset</span><span class="p">(</span><span class="n">root</span><span class="p">)</span>
+    <span class="c1"># Dataset created just to download it</span>
+    <span class="n">dataset</span> <span class="o">=</span> <span class="n">OpenLORISDataset</span><span class="p">(</span><span class="n">dataset_root</span><span class="p">,</span> <span class="n">download</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 
     <span class="n">filelists_bp</span> <span class="o">=</span> <span class="n">fac2dirs</span><span class="p">[</span><span class="n">factor</span><span class="p">]</span> <span class="o">+</span> <span class="s2">&quot;/&quot;</span>
     <span class="n">train_failists_paths</span> <span class="o">=</span> <span class="p">[]</span>
     <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">nbatch</span><span class="p">[</span><span class="n">factor</span><span class="p">]):</span>
         <span class="n">train_failists_paths</span><span class="o">.</span><span class="n">append</span><span class="p">(</span>
-            <span class="n">root</span> <span class="o">+</span> <span class="n">filelists_bp</span> <span class="o">+</span> <span class="s2">&quot;train_batch_&quot;</span> <span class="o">+</span>
-            <span class="nb">str</span><span class="p">(</span><span class="n">i</span><span class="p">)</span><span class="o">.</span><span class="n">zfill</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot;.txt&quot;</span><span class="p">)</span>
+            <span class="n">dataset_root</span> <span class="o">/</span> <span class="n">filelists_bp</span> <span class="o">/</span> <span class="p">(</span><span class="s2">&quot;train_batch_&quot;</span> <span class="o">+</span>
+                                           <span class="nb">str</span><span class="p">(</span><span class="n">i</span><span class="p">)</span><span class="o">.</span><span class="n">zfill</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot;.txt&quot;</span><span class="p">))</span>
 
     <span class="n">factor_obj</span> <span class="o">=</span> <span class="n">create_generic_benchmark_from_filelists</span><span class="p">(</span>
-        <span class="n">root</span><span class="p">,</span> <span class="n">train_failists_paths</span><span class="p">,</span>
-        <span class="p">[</span><span class="n">root</span> <span class="o">+</span> <span class="n">filelists_bp</span> <span class="o">+</span> <span class="s2">&quot;test.txt&quot;</span><span class="p">],</span>
+        <span class="n">dataset_root</span><span class="p">,</span> <span class="n">train_failists_paths</span><span class="p">,</span>
+        <span class="p">[</span><span class="n">dataset_root</span> <span class="o">/</span> <span class="n">filelists_bp</span> <span class="o">/</span> <span class="s2">&quot;test.txt&quot;</span><span class="p">],</span>
         <span class="n">task_labels</span><span class="o">=</span><span class="p">[</span><span class="mi">0</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">nbatch</span><span class="p">[</span><span class="n">factor</span><span class="p">])],</span>
         <span class="n">complete_test_set_only</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
         <span class="n">train_transform</span><span class="o">=</span><span class="n">train_transform</span><span class="p">,</span>
@@ -290,22 +301,12 @@
 <span class="p">]</span>
 
 <span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
-
-    <span class="c1"># this below can be taken as a usage example or a simple test script</span>
     <span class="kn">import</span> <span class="nn">sys</span>
-    <span class="kn">from</span> <span class="nn">torch.utils.data.dataloader</span> <span class="kn">import</span> <span class="n">DataLoader</span>
 
-    <span class="n">factor</span> <span class="o">=</span> <span class="n">OpenLORIS</span><span class="p">(</span><span class="n">factor</span><span class="o">=</span><span class="s2">&quot;clutter&quot;</span><span class="p">)</span>
-    <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">batch</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">factor</span><span class="o">.</span><span class="n">train_stream</span><span class="p">):</span>
-        <span class="nb">print</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">batch</span><span class="p">)</span>
-        <span class="n">dataset</span><span class="p">,</span> <span class="n">t</span> <span class="o">=</span> <span class="n">batch</span><span class="o">.</span><span class="n">dataset</span><span class="p">,</span> <span class="n">batch</span><span class="o">.</span><span class="n">task_label</span>
-        <span class="n">dl</span> <span class="o">=</span> <span class="n">DataLoader</span><span class="p">(</span><span class="n">dataset</span><span class="p">,</span> <span class="n">batch_size</span><span class="o">=</span><span class="mi">128</span><span class="p">)</span>
-
-        <span class="k">for</span> <span class="n">mb</span> <span class="ow">in</span> <span class="n">dl</span><span class="p">:</span>
-            <span class="n">x</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="n">mb</span>
-            <span class="nb">print</span><span class="p">(</span><span class="n">x</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
-            <span class="nb">print</span><span class="p">(</span><span class="n">y</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
-        <span class="n">sys</span><span class="o">.</span><span class="n">exit</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+    <span class="c1"># Untested!</span>
+    <span class="n">benchmark_instance</span> <span class="o">=</span> <span class="n">OpenLORIS</span><span class="p">()</span>
+    <span class="n">check_vision_benchmark</span><span class="p">(</span><span class="n">benchmark_instance</span><span class="p">)</span>
+    <span class="n">sys</span><span class="o">.</span><span class="n">exit</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
 </pre></div>
 
            </div>

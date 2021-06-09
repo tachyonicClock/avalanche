@@ -189,8 +189,11 @@
 <span class="c1"># E-mail: contact@continualai.org                                              #</span>
 <span class="c1"># Website: continualai.org                                                     #</span>
 <span class="c1">################################################################################</span>
+<span class="kn">from</span> <span class="nn">pathlib</span> <span class="kn">import</span> <span class="n">Path</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Union</span><span class="p">,</span> <span class="n">Optional</span><span class="p">,</span> <span class="n">Any</span>
 
-
+<span class="kn">from</span> <span class="nn">avalanche.benchmarks.classic.classic_benchmarks_utils</span> <span class="kn">import</span> \
+    <span class="n">check_vision_benchmark</span>
 <span class="kn">from</span> <span class="nn">avalanche.benchmarks.datasets</span> <span class="kn">import</span> <span class="n">ImageNet</span>
 <span class="kn">from</span> <span class="nn">avalanche.benchmarks</span> <span class="kn">import</span> <span class="n">nc_benchmark</span>
 
@@ -214,14 +217,17 @@
 <span class="p">])</span>
 
 
-<div class="viewcode-block" id="SplitImageNet"><a class="viewcode-back" href="../../../../../autoapi/avalanche/benchmarks/#avalanche.benchmarks.classic.cimagenet.SplitImageNet">[docs]</a><span class="k">def</span> <span class="nf">SplitImageNet</span><span class="p">(</span><span class="n">root</span><span class="p">,</span>
-                  <span class="n">n_experiences</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span>
-                  <span class="n">per_exp_classes</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
-                  <span class="n">return_task_id</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
-                  <span class="n">seed</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>
-                  <span class="n">fixed_class_order</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
-                  <span class="n">train_transform</span><span class="o">=</span><span class="n">_default_train_transform</span><span class="p">,</span>
-                  <span class="n">eval_transform</span><span class="o">=</span><span class="n">_default_eval_transform</span><span class="p">):</span>
+<div class="viewcode-block" id="SplitImageNet"><a class="viewcode-back" href="../../../../../autoapi/avalanche/benchmarks/#avalanche.benchmarks.classic.cimagenet.SplitImageNet">[docs]</a><span class="k">def</span> <span class="nf">SplitImageNet</span><span class="p">(</span>
+        <span class="n">dataset_root</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Path</span><span class="p">],</span>
+        <span class="o">*</span><span class="p">,</span>
+        <span class="n">n_experiences</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span>
+        <span class="n">per_exp_classes</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+        <span class="n">return_task_id</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+        <span class="n">seed</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>
+        <span class="n">fixed_class_order</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+        <span class="n">shuffle</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
+        <span class="n">train_transform</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Any</span><span class="p">]</span> <span class="o">=</span> <span class="n">_default_train_transform</span><span class="p">,</span>
+        <span class="n">eval_transform</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Any</span><span class="p">]</span> <span class="o">=</span> <span class="n">_default_eval_transform</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Creates a CL scenario using the ImageNet dataset.</span>
 
@@ -248,7 +254,7 @@
 <span class="sd">    generators. It is recommended to check the tutorial of the &quot;benchmark&quot; API,</span>
 <span class="sd">    which contains usage examples ranging from &quot;basic&quot; to &quot;advanced&quot;.</span>
 
-<span class="sd">    :param root: Base path where Imagenet data is stored.</span>
+<span class="sd">    :param dataset_root: Base path where Imagenet data is stored.</span>
 <span class="sd">    :param n_experiences: The number of experiences in the current scenario.</span>
 <span class="sd">    :param per_exp_classes: Is not None, a dictionary whose keys are</span>
 <span class="sd">        (0-indexed) experience IDs and their values are the number of classes</span>
@@ -269,6 +275,8 @@
 <span class="sd">        order. If None, value of ``seed`` will be used to define the class</span>
 <span class="sd">        order. If non-None, ``seed`` parameter will be ignored.</span>
 <span class="sd">        Defaults to None.</span>
+<span class="sd">    :param shuffle: If true, the class order in the incremental experiences is</span>
+<span class="sd">        randomly shuffled. Default to false.</span>
 <span class="sd">    :param train_transform: The transformation to apply to the training data,</span>
 <span class="sd">        e.g. a random crop, a normalization or a concatenation of different</span>
 <span class="sd">        transformations (see torchvision.transform documentation for a</span>
@@ -285,7 +293,7 @@
 <span class="sd">    :returns: A properly initialized :class:`NCScenario` instance.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
-    <span class="n">train_set</span><span class="p">,</span> <span class="n">test_set</span> <span class="o">=</span> <span class="n">_get_imagenet_dataset</span><span class="p">(</span><span class="n">root</span><span class="p">)</span>
+    <span class="n">train_set</span><span class="p">,</span> <span class="n">test_set</span> <span class="o">=</span> <span class="n">_get_imagenet_dataset</span><span class="p">(</span><span class="n">dataset_root</span><span class="p">)</span>
 
     <span class="k">if</span> <span class="n">return_task_id</span><span class="p">:</span>
         <span class="k">return</span> <span class="n">nc_benchmark</span><span class="p">(</span>
@@ -296,6 +304,7 @@
             <span class="n">per_exp_classes</span><span class="o">=</span><span class="n">per_exp_classes</span><span class="p">,</span>
             <span class="n">seed</span><span class="o">=</span><span class="n">seed</span><span class="p">,</span>
             <span class="n">fixed_class_order</span><span class="o">=</span><span class="n">fixed_class_order</span><span class="p">,</span>
+            <span class="n">shuffle</span><span class="o">=</span><span class="n">shuffle</span><span class="p">,</span>
             <span class="n">class_ids_from_zero_in_each_exp</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
             <span class="n">train_transform</span><span class="o">=</span><span class="n">train_transform</span><span class="p">,</span>
             <span class="n">eval_transform</span><span class="o">=</span><span class="n">eval_transform</span><span class="p">)</span>
@@ -308,6 +317,7 @@
             <span class="n">per_exp_classes</span><span class="o">=</span><span class="n">per_exp_classes</span><span class="p">,</span>
             <span class="n">seed</span><span class="o">=</span><span class="n">seed</span><span class="p">,</span>
             <span class="n">fixed_class_order</span><span class="o">=</span><span class="n">fixed_class_order</span><span class="p">,</span>
+            <span class="n">shuffle</span><span class="o">=</span><span class="n">shuffle</span><span class="p">,</span>
             <span class="n">train_transform</span><span class="o">=</span><span class="n">train_transform</span><span class="p">,</span>
             <span class="n">eval_transform</span><span class="o">=</span><span class="n">eval_transform</span><span class="p">)</span></div>
 
@@ -324,12 +334,17 @@
     <span class="s1">&#39;SplitImageNet&#39;</span>
 <span class="p">]</span>
 
+
 <span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
-    <span class="n">scenario</span> <span class="o">=</span> <span class="n">SplitImageNet</span><span class="p">(</span><span class="s2">&quot;/ssd2/datasets/imagenet/&quot;</span><span class="p">)</span>
-    <span class="k">for</span> <span class="n">exp</span> <span class="ow">in</span> <span class="n">scenario</span><span class="o">.</span><span class="n">train_stream</span><span class="p">:</span>
-        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;experience: &quot;</span><span class="p">,</span> <span class="n">exp</span><span class="o">.</span><span class="n">current_experience</span><span class="p">)</span>
-        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;classes number: &quot;</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">exp</span><span class="o">.</span><span class="n">classes_in_this_experience</span><span class="p">))</span>
-        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;classes: &quot;</span><span class="p">,</span> <span class="n">exp</span><span class="o">.</span><span class="n">classes_in_this_experience</span><span class="p">)</span>
+    <span class="kn">import</span> <span class="nn">sys</span>
+
+    <span class="n">benchmark_instance</span> <span class="o">=</span> <span class="n">SplitImageNet</span><span class="p">(</span>
+        <span class="s2">&quot;/ssd2/datasets/imagenet/&quot;</span><span class="p">,</span> <span class="n">train_transform</span><span class="o">=</span><span class="n">transforms</span><span class="o">.</span><span class="n">Compose</span><span class="p">([</span>
+            <span class="n">transforms</span><span class="o">.</span><span class="n">Resize</span><span class="p">(</span><span class="mi">256</span><span class="p">),</span>
+            <span class="n">transforms</span><span class="o">.</span><span class="n">CenterCrop</span><span class="p">(</span><span class="mi">224</span><span class="p">),</span>
+            <span class="n">transforms</span><span class="o">.</span><span class="n">ToTensor</span><span class="p">()]))</span>
+    <span class="n">check_vision_benchmark</span><span class="p">(</span><span class="n">benchmark_instance</span><span class="p">,</span> <span class="n">show_without_transforms</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+    <span class="n">sys</span><span class="o">.</span><span class="n">exit</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
 </pre></div>
 
            </div>

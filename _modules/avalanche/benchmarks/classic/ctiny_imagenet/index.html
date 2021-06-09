@@ -189,8 +189,13 @@
 <span class="c1"># E-mail: contact@continualai.org                                              #</span>
 <span class="c1"># Website: continualai.org                                                     #</span>
 <span class="c1">################################################################################</span>
+<span class="kn">from</span> <span class="nn">pathlib</span> <span class="kn">import</span> <span class="n">Path</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Union</span><span class="p">,</span> <span class="n">Any</span><span class="p">,</span> <span class="n">Optional</span>
 
 <span class="kn">from</span> <span class="nn">torchvision</span> <span class="kn">import</span> <span class="n">transforms</span>
+
+<span class="kn">from</span> <span class="nn">avalanche.benchmarks.classic.classic_benchmarks_utils</span> <span class="kn">import</span> \
+    <span class="n">check_vision_benchmark</span>
 <span class="kn">from</span> <span class="nn">avalanche.benchmarks.datasets</span> <span class="kn">import</span> <span class="n">TinyImagenet</span>
 <span class="kn">from</span> <span class="nn">avalanche.benchmarks.generators</span> <span class="kn">import</span> <span class="n">nc_benchmark</span>
 
@@ -209,10 +214,16 @@
 <span class="p">])</span>
 
 
-<div class="viewcode-block" id="SplitTinyImageNet"><a class="viewcode-back" href="../../../../../autoapi/avalanche/benchmarks/#avalanche.benchmarks.classic.ctiny_imagenet.SplitTinyImageNet">[docs]</a><span class="k">def</span> <span class="nf">SplitTinyImageNet</span><span class="p">(</span><span class="n">n_experiences</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">return_task_id</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">seed</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>
-                      <span class="n">fixed_class_order</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
-                      <span class="n">train_transform</span><span class="o">=</span><span class="n">_default_train_transform</span><span class="p">,</span>
-                      <span class="n">eval_transform</span><span class="o">=</span><span class="n">_default_eval_transform</span><span class="p">):</span>
+<div class="viewcode-block" id="SplitTinyImageNet"><a class="viewcode-back" href="../../../../../autoapi/avalanche/benchmarks/#avalanche.benchmarks.classic.ctiny_imagenet.SplitTinyImageNet">[docs]</a><span class="k">def</span> <span class="nf">SplitTinyImageNet</span><span class="p">(</span>
+        <span class="n">n_experiences</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span>
+        <span class="o">*</span><span class="p">,</span>
+        <span class="n">return_task_id</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+        <span class="n">seed</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>
+        <span class="n">fixed_class_order</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+        <span class="n">shuffle</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
+        <span class="n">train_transform</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Any</span><span class="p">]</span> <span class="o">=</span> <span class="n">_default_train_transform</span><span class="p">,</span>
+        <span class="n">eval_transform</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Any</span><span class="p">]</span> <span class="o">=</span> <span class="n">_default_eval_transform</span><span class="p">,</span>
+        <span class="n">dataset_root</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Path</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Creates a CL scenario using the Tiny ImageNet dataset.</span>
 
@@ -248,6 +259,8 @@
 <span class="sd">        order. If None, value of ``seed`` will be used to define the class</span>
 <span class="sd">        order. If non-None, ``seed`` parameter will be ignored.</span>
 <span class="sd">        Defaults to None.</span>
+<span class="sd">    :param shuffle: If true, the class order in the incremental experiences is</span>
+<span class="sd">        randomly shuffled. Default to false.</span>
 <span class="sd">    :param train_transform: The transformation to apply to the training data,</span>
 <span class="sd">        e.g. a random crop, a normalization or a concatenation of different</span>
 <span class="sd">        transformations (see torchvision.transform documentation for a</span>
@@ -260,11 +273,14 @@
 <span class="sd">        comprehensive list of possible transformations).</span>
 <span class="sd">        If no transformation is passed, the default test transformation</span>
 <span class="sd">        will be used.</span>
+<span class="sd">    :param dataset_root: The root path of the dataset.</span>
+<span class="sd">        Defaults to None, which means that the default location for</span>
+<span class="sd">        &#39;tinyimagenet&#39; will be used.</span>
 
 <span class="sd">    :returns: A properly initialized :class:`NCScenario` instance.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
-    <span class="n">train_set</span><span class="p">,</span> <span class="n">test_set</span> <span class="o">=</span> <span class="n">_get_tiny_imagenet_dataset</span><span class="p">()</span>
+    <span class="n">train_set</span><span class="p">,</span> <span class="n">test_set</span> <span class="o">=</span> <span class="n">_get_tiny_imagenet_dataset</span><span class="p">(</span><span class="n">dataset_root</span><span class="p">)</span>
 
     <span class="k">if</span> <span class="n">return_task_id</span><span class="p">:</span>
         <span class="k">return</span> <span class="n">nc_benchmark</span><span class="p">(</span>
@@ -274,6 +290,7 @@
             <span class="n">task_labels</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
             <span class="n">seed</span><span class="o">=</span><span class="n">seed</span><span class="p">,</span>
             <span class="n">fixed_class_order</span><span class="o">=</span><span class="n">fixed_class_order</span><span class="p">,</span>
+            <span class="n">shuffle</span><span class="o">=</span><span class="n">shuffle</span><span class="p">,</span>
             <span class="n">class_ids_from_zero_in_each_exp</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
             <span class="n">train_transform</span><span class="o">=</span><span class="n">train_transform</span><span class="p">,</span>
             <span class="n">eval_transform</span><span class="o">=</span><span class="n">eval_transform</span><span class="p">)</span>
@@ -285,17 +302,25 @@
             <span class="n">task_labels</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
             <span class="n">seed</span><span class="o">=</span><span class="n">seed</span><span class="p">,</span>
             <span class="n">fixed_class_order</span><span class="o">=</span><span class="n">fixed_class_order</span><span class="p">,</span>
+            <span class="n">shuffle</span><span class="o">=</span><span class="n">shuffle</span><span class="p">,</span>
             <span class="n">train_transform</span><span class="o">=</span><span class="n">train_transform</span><span class="p">,</span>
             <span class="n">eval_transform</span><span class="o">=</span><span class="n">eval_transform</span><span class="p">)</span></div>
 
 
-<span class="k">def</span> <span class="nf">_get_tiny_imagenet_dataset</span><span class="p">():</span>
-    <span class="n">train_set</span> <span class="o">=</span> <span class="n">TinyImagenet</span><span class="p">(</span><span class="n">train</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">_get_tiny_imagenet_dataset</span><span class="p">(</span><span class="n">dataset_root</span><span class="p">):</span>
+    <span class="n">train_set</span> <span class="o">=</span> <span class="n">TinyImagenet</span><span class="p">(</span><span class="n">root</span><span class="o">=</span><span class="n">dataset_root</span><span class="p">,</span> <span class="n">train</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 
-    <span class="n">test_set</span> <span class="o">=</span> <span class="n">TinyImagenet</span><span class="p">(</span><span class="n">train</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+    <span class="n">test_set</span> <span class="o">=</span> <span class="n">TinyImagenet</span><span class="p">(</span><span class="n">root</span><span class="o">=</span><span class="n">dataset_root</span><span class="p">,</span> <span class="n">train</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
 
     <span class="k">return</span> <span class="n">train_set</span><span class="p">,</span> <span class="n">test_set</span>
 
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
+    <span class="kn">import</span> <span class="nn">sys</span>
+
+    <span class="n">benchmark_instance</span> <span class="o">=</span> <span class="n">SplitTinyImageNet</span><span class="p">()</span>
+    <span class="n">check_vision_benchmark</span><span class="p">(</span><span class="n">benchmark_instance</span><span class="p">)</span>
+    <span class="n">sys</span><span class="o">.</span><span class="n">exit</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
 
 <span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span>
     <span class="s1">&#39;SplitTinyImageNet&#39;</span>

@@ -13,10 +13,10 @@ Functions
 
 .. autoapisummary::
 
-   avalanche.benchmarks.datasets.dataset_utils.get_default_dataset_location
+   avalanche.benchmarks.datasets.dataset_utils.default_dataset_location
 
 
-.. function:: get_default_dataset_location(dataset_name: str) -> Path
+.. function:: default_dataset_location(dataset_name: str) -> Path
 
    Return the default location of a dataset.
 

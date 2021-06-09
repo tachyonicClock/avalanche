@@ -16,7 +16,7 @@ Functions
    avalanche.benchmarks.classic.cinaturalist.SplitInaturalist
 
 
-.. function:: SplitInaturalist(root, super_categories=None, return_task_id=False, download=False, seed=0, train_transform=_default_train_transform, eval_transform=_default_eval_transform)
+.. function:: SplitInaturalist(*, super_categories=None, return_task_id=False, download=False, seed=0, train_transform: Optional[Any] = _default_train_transform, eval_transform: Optional[Any] = _default_eval_transform, dataset_root: Union[str, Path] = None)
 
    Creates a CL scenario using the iNaturalist2018 dataset.
    A selection of supercategories (by default 10) define the experiences.
@@ -59,7 +59,6 @@ Functions
    generators. It is recommended to check the tutorial of the "benchmark" API,
    which contains usage examples ranging from "basic" to "advanced".
 
-   :param root: Base path where Inaturalist data is stored.
    :param super_categories: The list of supercategories which define the
    tasks, i.e. each task consists of all classes in a super-category.
    :param download: If true and the dataset is not present in the computer,
@@ -81,6 +80,9 @@ Functions
        comprehensive list of possible transformations).
        If no transformation is passed, the default test transformation
        will be used.
+   :param dataset_root: The root path of the dataset.
+       Defaults to None, which means that the default location for
+       'inatuarlist2018' will be used.
 
    :returns: A properly initialized :class:`NCScenario` instance.
 

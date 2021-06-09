@@ -18,7 +18,7 @@ Functions
    avalanche.benchmarks.classic.cmnist.RotatedMNIST
 
 
-.. function:: SplitMNIST(n_experiences: int, return_task_id=False, seed: Optional[int] = None, fixed_class_order: Optional[Sequence[int]] = None, train_transform=_default_mnist_train_transform, eval_transform=_default_mnist_eval_transform)
+.. function:: SplitMNIST(n_experiences: int, *, return_task_id=False, seed: Optional[int] = None, fixed_class_order: Optional[Sequence[int]] = None, shuffle: bool = True, train_transform: Optional[Any] = _default_mnist_train_transform, eval_transform: Optional[Any] = _default_mnist_eval_transform, dataset_root: Union[str, Path] = None)
 
    Creates a CL scenario using the MNIST dataset.
 
@@ -56,6 +56,8 @@ Functions
        order. If None, value of ``seed`` will be used to define the class
        order. If non-None, ``seed`` parameter will be ignored.
        Defaults to None.
+   :param shuffle: If true, the class order in the incremental experiences is
+       randomly shuffled. Default to false.
    :param train_transform: The transformation to apply to the training data,
        e.g. a random crop, a normalization or a concatenation of different
        transformations (see torchvision.transform documentation for a
@@ -68,11 +70,13 @@ Functions
        comprehensive list of possible transformations).
        If no transformation is passed, the default test transformation
        will be used.
+   :param dataset_root: The root path of the dataset. Defaults to None, which
+       means that the default location for 'mnist' will be used.
 
    :returns: A properly initialized :class:`NCScenario` instance.
 
 
-.. function:: PermutedMNIST(n_experiences: int, seed: Optional[int] = None, train_transform: Any = _default_mnist_train_transform, eval_transform: Any = _default_mnist_eval_transform) -> NCScenario
+.. function:: PermutedMNIST(n_experiences: int, *, seed: Optional[int] = None, train_transform: Optional[Any] = _default_mnist_train_transform, eval_transform: Optional[Any] = _default_mnist_eval_transform, dataset_root: Union[str, Path] = None) -> NCScenario
 
    Creates a Permuted MNIST scenario.
 
@@ -113,11 +117,13 @@ Functions
        documentation for a comprehensive list of possible transformations).
        If no transformation is passed, the default test transformation
        will be used.
+   :param dataset_root: The root path of the dataset. Defaults to None, which
+       means that the default location for 'mnist' will be used.
 
    :returns: A properly initialized :class:`NCScenario` instance.
 
 
-.. function:: RotatedMNIST(n_experiences: int, seed: Optional[int] = None, rotations_list: Optional[Sequence[int]] = None, train_transform=_default_mnist_train_transform, eval_transform=_default_mnist_eval_transform) -> NCScenario
+.. function:: RotatedMNIST(n_experiences: int, *, seed: Optional[int] = None, rotations_list: Optional[Sequence[int]] = None, train_transform: Optional[Any] = _default_mnist_train_transform, eval_transform: Optional[Any] = _default_mnist_eval_transform, dataset_root: Union[str, Path] = None) -> NCScenario
 
    Creates a Rotated MNIST scenario.
 
@@ -164,6 +170,8 @@ Functions
        documentation for a comprehensive list of possible transformations).
        If no transformation is passed, the default test transformation
        will be used.
+   :param dataset_root: The root path of the dataset. Defaults to None, which
+       means that the default location for 'mnist' will be used.
 
    :returns: A properly initialized :class:`NCScenario` instance.
 

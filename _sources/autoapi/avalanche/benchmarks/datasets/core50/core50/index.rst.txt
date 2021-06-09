@@ -29,7 +29,7 @@ Functions
    avalanche.benchmarks.datasets.core50.core50.CORe50
 
 
-.. py:class:: CORe50Dataset(root: Union[str, Path] = get_default_dataset_location('core50'), *, train=True, transform=None, target_transform=None, loader=default_loader, download=True, mini=False, object_level=True)
+.. py:class:: CORe50Dataset(root: Union[str, Path] = None, *, train=True, transform=None, target_transform=None, loader=default_loader, download=True, mini=False, object_level=True)
 
    Bases: :class:`avalanche.benchmarks.datasets.downloadable_dataset.DownloadableDataset`
 
@@ -37,7 +37,8 @@ Functions
 
    Creates an instance of the CORe50 dataset.
 
-   :param root: root for the datasets data.
+   :param root: root for the datasets data. Defaults to None, which means
+   that the default location for 'core50' will be used.
    :param train: train or test split.
    :param transform: eventual transformations to be applied.
    :param target_transform: eventual transformation to be applied to the

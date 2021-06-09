@@ -193,22 +193,40 @@
 <span class="sd">&quot;&quot;&quot; OpenLoris Pytorch Dataset &quot;&quot;&quot;</span>
 
 <span class="kn">import</span> <span class="nn">pickle</span> <span class="k">as</span> <span class="nn">pkl</span>
+<span class="kn">from</span> <span class="nn">pathlib</span> <span class="kn">import</span> <span class="n">Path</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Union</span>
 
 <span class="kn">from</span> <span class="nn">torchvision.datasets.folder</span> <span class="kn">import</span> <span class="n">default_loader</span>
 <span class="kn">from</span> <span class="nn">torchvision.transforms</span> <span class="kn">import</span> <span class="n">ToTensor</span>
 
 <span class="kn">from</span> <span class="nn">avalanche.benchmarks.datasets</span> <span class="kn">import</span> <span class="n">DownloadableDataset</span><span class="p">,</span> \
-    <span class="n">get_default_dataset_location</span>
+    <span class="n">default_dataset_location</span>
 <span class="kn">from</span> <span class="nn">avalanche.benchmarks.datasets.openloris</span> <span class="kn">import</span> <span class="n">openloris_data</span>
 
 
 <div class="viewcode-block" id="OpenLORIS"><a class="viewcode-back" href="../../../../../../autoapi/avalanche/benchmarks/datasets/openloris/openloris/#avalanche.benchmarks.datasets.OpenLORIS">[docs]</a><span class="k">class</span> <span class="nc">OpenLORIS</span><span class="p">(</span><span class="n">DownloadableDataset</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot; OpenLORIS Pytorch Dataset &quot;&quot;&quot;</span>
 
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">root</span><span class="o">=</span><span class="n">get_default_dataset_location</span><span class="p">(</span><span class="s1">&#39;openloris&#39;</span><span class="p">),</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">root</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Path</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
                  <span class="o">*</span><span class="p">,</span>
                  <span class="n">train</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">transform</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">target_transform</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
                  <span class="n">loader</span><span class="o">=</span><span class="n">default_loader</span><span class="p">,</span> <span class="n">download</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Creates an instance of the OpenLORIS dataset.</span>
+
+<span class="sd">        :param root: The directory where the dataset can be found or downloaded.</span>
+<span class="sd">            Defaults to None, which means that the default location for</span>
+<span class="sd">            &#39;openloris&#39; will be used.</span>
+<span class="sd">        :param train: If True, the training set will be returned. If False,</span>
+<span class="sd">            the test set will be returned.</span>
+<span class="sd">        :param transform: The transformations to apply to the X values.</span>
+<span class="sd">        :param target_transform: The transformations to apply to the Y values.</span>
+<span class="sd">        :param loader: The image loader to use.</span>
+<span class="sd">        :param download: If True, the dataset will be downloaded if needed.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="k">if</span> <span class="n">root</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">root</span> <span class="o">=</span> <span class="n">default_dataset_location</span><span class="p">(</span><span class="s1">&#39;openloris&#39;</span><span class="p">)</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">train</span> <span class="o">=</span> <span class="n">train</span>  <span class="c1"># training set or test set</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">transform</span> <span class="o">=</span> <span class="n">transform</span>

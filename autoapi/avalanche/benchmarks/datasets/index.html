@@ -285,7 +285,7 @@
 <col style="width: 90%" />
 </colgroup>
 <tbody>
-<tr class="row-odd"><td><p><a class="reference internal" href="#avalanche.benchmarks.datasets.get_default_dataset_location" title="avalanche.benchmarks.datasets.get_default_dataset_location"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_default_dataset_location</span></code></a>(dataset_name: str) → Path</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#avalanche.benchmarks.datasets.default_dataset_location" title="avalanche.benchmarks.datasets.default_dataset_location"><code class="xref py py-obj docutils literal notranslate"><span class="pre">default_dataset_location</span></code></a>(dataset_name: str) → Path</p></td>
 <td><p>Return the default location of a dataset.</p></td>
 </tr>
 <tr class="row-even"><td><p><a class="reference internal" href="#avalanche.benchmarks.datasets.MNIST" title="avalanche.benchmarks.datasets.MNIST"><code class="xref py py-obj docutils literal notranslate"><span class="pre">MNIST</span></code></a>(*args, **kwargs)</p></td>
@@ -381,8 +381,8 @@
 </tbody>
 </table>
 <dl class="py function">
-<dt class="sig sig-object py" id="avalanche.benchmarks.datasets.get_default_dataset_location">
-<span class="sig-prename descclassname"><span class="pre">avalanche.benchmarks.datasets.</span></span><span class="sig-name descname"><span class="pre">get_default_dataset_location</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dataset_name</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">Path</span><a class="reference internal" href="../../../../_modules/avalanche/benchmarks/datasets/dataset_utils/#get_default_dataset_location"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.benchmarks.datasets.get_default_dataset_location" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="avalanche.benchmarks.datasets.default_dataset_location">
+<span class="sig-prename descclassname"><span class="pre">avalanche.benchmarks.datasets.</span></span><span class="sig-name descname"><span class="pre">default_dataset_location</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dataset_name</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">Path</span><a class="reference internal" href="../../../../_modules/avalanche/benchmarks/datasets/dataset_utils/#default_dataset_location"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.benchmarks.datasets.default_dataset_location" title="Permalink to this definition">¶</a></dt>
 <dd><p>Return the default location of a dataset.</p>
 <p>This currently returns “~/.avalanche/data/&lt;dataset_name&gt;” but in the future
 an environment variable bay be introduced to change the root path.</p>
@@ -441,7 +441,7 @@ calling <cite>_load_dataset</cite>.</p>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>root</strong> – The root path where the dataset will be downloaded.
 Consider passing a path obtained by calling
-<cite>get_default_dataset_location</cite> with the name of the dataset.</p></li>
+<cite>default_dataset_location</cite> with the name of the dataset.</p></li>
 <li><p><strong>download</strong> – If True, the dataset will be downloaded if needed.
 If False and the dataset can’t be loaded from the provided root
 path, an error will be raised when calling the <cite>_load_dataset</cite>
@@ -502,7 +502,7 @@ calling <cite>_load_dataset</cite>.</p>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>root_or_dataset_name</strong> – The root path where the dataset will be
 downloaded. If a directory name is passed, then the root obtained by
-calling <cite>get_default_dataset_location</cite> will be used (recommended).
+calling <cite>default_dataset_location</cite> will be used (recommended).
 To check if this parameter is a path, the constructor will check if
 it contains the ‘’ or ‘/’ characters or if it is a Path instance.</p></li>
 <li><p><strong>url</strong> – The url of the archive.</p></li>
@@ -522,18 +522,25 @@ printed. Defaults to False.</p></li>
 
 <dl class="py class">
 <dt class="sig sig-object py" id="avalanche.benchmarks.datasets.CORe50Dataset">
-<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">avalanche.benchmarks.datasets.</span></span><span class="sig-name descname"><span class="pre">CORe50Dataset</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">root</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span> </span><span class="pre">Path</span><span class="p"><span class="pre">]</span></span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">get_default_dataset_location('core50')</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">train</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">transform</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">target_transform</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">loader</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">default_loader</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">download</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mini</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">object_level</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/avalanche/benchmarks/datasets/core50/core50/#CORe50Dataset"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.benchmarks.datasets.CORe50Dataset" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">avalanche.benchmarks.datasets.</span></span><span class="sig-name descname"><span class="pre">CORe50Dataset</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">root</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span> </span><span class="pre">Path</span><span class="p"><span class="pre">]</span></span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">train</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">transform</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">target_transform</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">loader</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">default_loader</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">download</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mini</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">object_level</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/avalanche/benchmarks/datasets/core50/core50/#CORe50Dataset"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.benchmarks.datasets.CORe50Dataset" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="downloadable_dataset/#avalanche.benchmarks.datasets.downloadable_dataset.DownloadableDataset" title="avalanche.benchmarks.datasets.downloadable_dataset.DownloadableDataset"><code class="xref py py-class docutils literal notranslate"><span class="pre">avalanche.benchmarks.datasets.downloadable_dataset.DownloadableDataset</span></code></a></p>
 <p>CORe50 Pytorch Dataset</p>
 <p>Creates an instance of the CORe50 dataset.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>root</strong> – root for the datasets data. Defaults to None, which means</p>
+</dd>
+</dl>
+<p>that the default location for ‘core50’ will be used.
+:param train: train or test split.
+:param transform: eventual transformations to be applied.
+:param target_transform: eventual transformation to be applied to the</p>
+<blockquote>
+<div><p>targets.</p>
+</div></blockquote>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>root</strong> – root for the datasets data.</p></li>
-<li><p><strong>train</strong> – train or test split.</p></li>
-<li><p><strong>transform</strong> – eventual transformations to be applied.</p></li>
-<li><p><strong>target_transform</strong> – eventual transformation to be applied to the
-targets.</p></li>
 <li><p><strong>loader</strong> – the procedure to load the instance from the storage.</p></li>
 <li><p><strong>download</strong> – boolean to automatically download data. Default to
 True.</p></li>
@@ -568,7 +575,7 @@ category based: 50 or 10 way classification problem. Default to True
 
 <dl class="py class">
 <dt class="sig sig-object py" id="avalanche.benchmarks.datasets.CUB200">
-<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">avalanche.benchmarks.datasets.</span></span><span class="sig-name descname"><span class="pre">CUB200</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">root</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span> </span><span class="pre">Path</span><span class="p"><span class="pre">]</span></span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">get_default_dataset_location('CUB_200_2011')</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">train</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">transform</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">target_transform</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">loader</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">default_loader</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">download</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/avalanche/benchmarks/datasets/cub200/cub200/#CUB200"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.benchmarks.datasets.CUB200" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">avalanche.benchmarks.datasets.</span></span><span class="sig-name descname"><span class="pre">CUB200</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">root</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span> </span><span class="pre">Path</span><span class="p"><span class="pre">]</span></span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">train</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">transform</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">target_transform</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">loader</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">default_loader</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">download</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/avalanche/benchmarks/datasets/cub200/cub200/#CUB200"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.benchmarks.datasets.CUB200" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="../utils/#avalanche.benchmarks.utils.PathsDataset" title="avalanche.benchmarks.utils.PathsDataset"><code class="xref py py-class docutils literal notranslate"><span class="pre">avalanche.benchmarks.utils.PathsDataset</span></code></a>, <a class="reference internal" href="#avalanche.benchmarks.datasets.DownloadableDataset" title="avalanche.benchmarks.datasets.DownloadableDataset"><code class="xref py py-class docutils literal notranslate"><span class="pre">avalanche.benchmarks.datasets.DownloadableDataset</span></code></a></p>
 <p>Basic CUB200 PathsDataset to be used as a standard PyTorch Dataset.
 A classic continual learning benchmark built on top of this dataset
@@ -578,7 +585,8 @@ design please use the ‘benchmarks.generators’.</p>
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>root</strong> – root dir where the dataset can be found or downloaded.
-Default to ‘~/.avalanche/data/CUB_200_2011’.</p></li>
+Defaults to None, which means that the default location for
+‘CUB_200_2011’ will be used.</p></li>
 <li><p><strong>train</strong> – train or test subset of the original dataset. Default
 to True.</p></li>
 <li><p><strong>transform</strong> – eventual input data transformations to apply.
@@ -743,27 +751,22 @@ inverse mapping of classes field.</p>
 
 <dl class="py class">
 <dt class="sig sig-object py" id="avalanche.benchmarks.datasets.OpenLORIS">
-<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">avalanche.benchmarks.datasets.</span></span><span class="sig-name descname"><span class="pre">OpenLORIS</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">root</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">get_default_dataset_location('openloris')</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">train</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">transform</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">target_transform</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">loader</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">default_loader</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">download</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/avalanche/benchmarks/datasets/openloris/openloris/#OpenLORIS"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.benchmarks.datasets.OpenLORIS" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">avalanche.benchmarks.datasets.</span></span><span class="sig-name descname"><span class="pre">OpenLORIS</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">root</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span> </span><span class="pre">Path</span><span class="p"><span class="pre">]</span></span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">train</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">transform</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">target_transform</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">loader</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">default_loader</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">download</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/avalanche/benchmarks/datasets/openloris/openloris/#OpenLORIS"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.benchmarks.datasets.OpenLORIS" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="#avalanche.benchmarks.datasets.DownloadableDataset" title="avalanche.benchmarks.datasets.DownloadableDataset"><code class="xref py py-class docutils literal notranslate"><span class="pre">avalanche.benchmarks.datasets.DownloadableDataset</span></code></a></p>
 <p>OpenLORIS Pytorch Dataset</p>
-<p>Creates an instance of a downloadable dataset.</p>
-<p>Consider looking at the class documentation for the precise details on
-how to extend this class.</p>
-<p>Beware that calling this constructor only fills the <cite>root</cite> field. The
-download and metadata loading procedures are triggered only by
-calling <cite>_load_dataset</cite>.</p>
+<p>Creates an instance of the OpenLORIS dataset.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>root</strong> – The root path where the dataset will be downloaded.
-Consider passing a path obtained by calling
-<cite>get_default_dataset_location</cite> with the name of the dataset.</p></li>
-<li><p><strong>download</strong> – If True, the dataset will be downloaded if needed.
-If False and the dataset can’t be loaded from the provided root
-path, an error will be raised when calling the <cite>_load_dataset</cite>
-method. Defaults to True.</p></li>
-<li><p><strong>verbose</strong> – If True, some info about the download process will be
-printed. Defaults to False.</p></li>
+<li><p><strong>root</strong> – The directory where the dataset can be found or downloaded.
+Defaults to None, which means that the default location for
+‘openloris’ will be used.</p></li>
+<li><p><strong>train</strong> – If True, the training set will be returned. If False,
+the test set will be returned.</p></li>
+<li><p><strong>transform</strong> – The transformations to apply to the X values.</p></li>
+<li><p><strong>target_transform</strong> – The transformations to apply to the Y values.</p></li>
+<li><p><strong>loader</strong> – The image loader to use.</p></li>
+<li><p><strong>download</strong> – If True, the dataset will be downloaded if needed.</p></li>
 </ul>
 </dd>
 </dl>
@@ -781,14 +784,16 @@ printed. Defaults to False.</p></li>
 
 <dl class="py class">
 <dt class="sig sig-object py" id="avalanche.benchmarks.datasets.TinyImagenet">
-<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">avalanche.benchmarks.datasets.</span></span><span class="sig-name descname"><span class="pre">TinyImagenet</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">root</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span> </span><span class="pre">Path</span><span class="p"><span class="pre">]</span></span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">get_default_dataset_location('tinyimagenet')</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">train</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">bool</span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">transform</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">target_transform</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">loader</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">default_loader</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">download</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/avalanche/benchmarks/datasets/tiny_imagenet/tiny_imagenet/#TinyImagenet"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.benchmarks.datasets.TinyImagenet" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">avalanche.benchmarks.datasets.</span></span><span class="sig-name descname"><span class="pre">TinyImagenet</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">root</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span> </span><span class="pre">Path</span><span class="p"><span class="pre">]</span></span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">train</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">bool</span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">transform</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">target_transform</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">loader</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">default_loader</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">download</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/avalanche/benchmarks/datasets/tiny_imagenet/tiny_imagenet/#TinyImagenet"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.benchmarks.datasets.TinyImagenet" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="#avalanche.benchmarks.datasets.SimpleDownloadableDataset" title="avalanche.benchmarks.datasets.SimpleDownloadableDataset"><code class="xref py py-class docutils literal notranslate"><span class="pre">avalanche.benchmarks.datasets.SimpleDownloadableDataset</span></code></a></p>
 <p>Tiny Imagenet Pytorch Dataset</p>
 <p>Creates an instance of the Tiny Imagenet dataset.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>root</strong> – folder in which to download dataset.</p></li>
+<li><p><strong>root</strong> – folder in which to download dataset. Defaults to None,
+which means that the default location for ‘tinyimagenet’ will be
+used.</p></li>
 <li><p><strong>train</strong> – True for training set, False for test set.</p></li>
 <li><p><strong>transform</strong> – Pytorch transformation function for x.</p></li>
 <li><p><strong>target_transform</strong> – Pytorch transformation function for y.</p></li>
@@ -894,27 +899,22 @@ compatible with the Avalanche API.</p>
 
 <dl class="py class">
 <dt class="sig sig-object py" id="avalanche.benchmarks.datasets.Stream51">
-<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">avalanche.benchmarks.datasets.</span></span><span class="sig-name descname"><span class="pre">Stream51</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">root</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">get_default_dataset_location('stream51')</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">train</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">transform</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">target_transform</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">loader</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">default_loader</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">download</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/avalanche/benchmarks/datasets/stream51/stream51/#Stream51"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.benchmarks.datasets.Stream51" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">avalanche.benchmarks.datasets.</span></span><span class="sig-name descname"><span class="pre">Stream51</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">root</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span> </span><span class="pre">Path</span><span class="p"><span class="pre">]</span></span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">train</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">transform</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">target_transform</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">loader</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">default_loader</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">download</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/avalanche/benchmarks/datasets/stream51/stream51/#Stream51"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.benchmarks.datasets.Stream51" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="#avalanche.benchmarks.datasets.DownloadableDataset" title="avalanche.benchmarks.datasets.DownloadableDataset"><code class="xref py py-class docutils literal notranslate"><span class="pre">avalanche.benchmarks.datasets.DownloadableDataset</span></code></a></p>
 <p>Stream-51 Pytorch Dataset</p>
-<p>Creates an instance of a downloadable dataset.</p>
-<p>Consider looking at the class documentation for the precise details on
-how to extend this class.</p>
-<p>Beware that calling this constructor only fills the <cite>root</cite> field. The
-download and metadata loading procedures are triggered only by
-calling <cite>_load_dataset</cite>.</p>
+<p>Creates an instance of the Stream-51 dataset.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>root</strong> – The root path where the dataset will be downloaded.
-Consider passing a path obtained by calling
-<cite>get_default_dataset_location</cite> with the name of the dataset.</p></li>
-<li><p><strong>download</strong> – If True, the dataset will be downloaded if needed.
-If False and the dataset can’t be loaded from the provided root
-path, an error will be raised when calling the <cite>_load_dataset</cite>
-method. Defaults to True.</p></li>
-<li><p><strong>verbose</strong> – If True, some info about the download process will be
-printed. Defaults to False.</p></li>
+<li><p><strong>root</strong> – The directory where the dataset can be found or downloaded.
+Defaults to None, which means that the default location for
+‘stream51’ will be used.</p></li>
+<li><p><strong>train</strong> – If True, the training set will be returned. If False,
+the test set will be returned.</p></li>
+<li><p><strong>transform</strong> – The transformations to apply to the X values.</p></li>
+<li><p><strong>target_transform</strong> – The transformations to apply to the Y values.</p></li>
+<li><p><strong>loader</strong> – The image loader to use.</p></li>
+<li><p><strong>download</strong> – If True, the dataset will be downloaded if needed.</p></li>
 </ul>
 </dd>
 </dl>

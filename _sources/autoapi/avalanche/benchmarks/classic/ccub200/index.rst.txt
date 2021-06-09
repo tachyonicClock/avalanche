@@ -16,7 +16,7 @@ Functions
    avalanche.benchmarks.classic.ccub200.SplitCUB200
 
 
-.. function:: SplitCUB200(root=expanduser('~') + '/.avalanche/data/CUB_200_2011/', n_experiences=11, classes_first_batch=100, return_task_id=False, seed=0, fixed_class_order=None, shuffle=False, train_transform=_default_train_transform, eval_transform=_default_eval_transform)
+.. function:: SplitCUB200(n_experiences=11, *, classes_first_batch=100, return_task_id=False, seed=0, fixed_class_order=None, shuffle=False, train_transform: Optional[Any] = _default_train_transform, eval_transform: Optional[Any] = _default_eval_transform, dataset_root: Union[str, Path] = None)
 
    Creates a CL scenario using the Cub-200 dataset.
 
@@ -43,7 +43,6 @@ Functions
    generators. It is recommended to check the tutorial of the "benchmark" API,
    which contains usage examples ranging from "basic" to "advanced".
 
-   :param root: Base path where Cub-200 data is stored.
    :param n_experiences: The number of experiences in the current scenario.
        Defaults to 11.
    :param classes_first_batch: Number of classes in the first batch.
@@ -70,6 +69,9 @@ Functions
        comprehensive list of possible transformations).
        If no transformation is passed, the default test transformation
        will be used.
+   :param dataset_root: The root path of the dataset.
+       Defaults to None, which means that the default location for
+       'CUB_200_2011' will be used.
 
    :returns: A properly initialized :class:`NCScenario` instance.
 

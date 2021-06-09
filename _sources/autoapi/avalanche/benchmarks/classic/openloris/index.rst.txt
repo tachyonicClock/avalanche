@@ -23,7 +23,7 @@ Functions
    avalanche.benchmarks.classic.openloris.OpenLORIS
 
 
-.. function:: OpenLORIS(root=expanduser('~') + '/.avalanche/data/openloris/', factor='clutter', train_transform=None, eval_transform=None)
+.. function:: OpenLORIS(*, factor: Literal['clutter', 'illumination', 'occlusion', 'pixel', 'mixture-iros'] = 'clutter', train_transform: Optional[Any] = None, eval_transform: Optional[Any] = None, dataset_root: Union[str, Path] = None)
 
    Creates a CL scenario for OpenLORIS.
 
@@ -45,7 +45,6 @@ Functions
    generators. It is recommended to check the tutorial of the "benchmark" API,
    which contains usage examples ranging from "basic" to "advanced".
 
-   :param root: Base path where OpenLORIS data is stored.
    :param factor: OpenLORIS main factors, indicating different environmental
        variations. It can be chosen between 'clutter', 'illumination',
        'occlusion', 'pixel', or 'mixture-iros'. The first three factors are
@@ -59,6 +58,9 @@ Functions
        e.g. a random crop, a normalization or a concatenation of different
        transformations (see torchvision.transform documentation for a
        comprehensive list of possible transformations). Defaults to None.
+   :param dataset_root: The root path of the dataset.
+       Defaults to None, which means that the default location for
+       'openloris' will be used.
 
    :returns: a properly initialized :class:`GenericCLScenario` instance.
 

@@ -25,7 +25,7 @@ Classes
 
 
 
-.. py:class:: TinyImagenet(root: Union[str, Path] = get_default_dataset_location('tinyimagenet'), *, train: bool = True, transform=None, target_transform=None, loader=default_loader, download=True)
+.. py:class:: TinyImagenet(root: Union[str, Path] = None, *, train: bool = True, transform=None, target_transform=None, loader=default_loader, download=True)
 
    Bases: :class:`avalanche.benchmarks.datasets.SimpleDownloadableDataset`
 
@@ -33,7 +33,9 @@ Classes
 
    Creates an instance of the Tiny Imagenet dataset.
 
-   :param root: folder in which to download dataset.
+   :param root: folder in which to download dataset. Defaults to None,
+       which means that the default location for 'tinyimagenet' will be
+       used.
    :param train: True for training set, False for test set.
    :param transform: Pytorch transformation function for x.
    :param target_transform: Pytorch transformation function for y.

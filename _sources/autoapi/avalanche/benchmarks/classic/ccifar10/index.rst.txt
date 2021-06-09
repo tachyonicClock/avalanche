@@ -16,7 +16,7 @@ Functions
    avalanche.benchmarks.classic.ccifar10.SplitCIFAR10
 
 
-.. function:: SplitCIFAR10(n_experiences: int, first_exp_with_half_classes: bool = False, return_task_id=False, seed: Optional[int] = None, fixed_class_order: Optional[Sequence[int]] = None, train_transform=_default_cifar10_train_transform, eval_transform=_default_cifar10_eval_transform) -> NCScenario
+.. function:: SplitCIFAR10(n_experiences: int, *, first_exp_with_half_classes: bool = False, return_task_id=False, seed: Optional[int] = None, fixed_class_order: Optional[Sequence[int]] = None, shuffle: bool = True, train_transform: Optional[Any] = _default_cifar10_train_transform, eval_transform: Optional[Any] = _default_cifar10_eval_transform, dataset_root: Union[str, Path] = None) -> NCScenario
 
    Creates a CL scenario using the CIFAR10 dataset.
 
@@ -60,6 +60,8 @@ Functions
        order. If None, value of ``seed`` will be used to define the class
        order. If not None, the ``seed`` parameter will be ignored.
        Defaults to None.
+   :param shuffle: If true, the class order in the incremental experiences is
+       randomly shuffled. Default to false.
    :param train_transform: The transformation to apply to the training data,
        e.g. a random crop, a normalization or a concatenation of different
        transformations (see torchvision.transform documentation for a
@@ -72,6 +74,8 @@ Functions
        comprehensive list of possible transformations).
        If no transformation is passed, the default eval transformation
        will be used.
+   :param dataset_root: The root path of the dataset. Defaults to None, which
+       means that the default location for 'cifar10' will be used.
 
    :returns: A properly initialized :class:`NCScenario` instance.
 

@@ -189,10 +189,8 @@
 <span class="c1"># E-mail: contact@continualai.org                                              #</span>
 <span class="c1"># Website: avalanche.continualai.org                                           #</span>
 <span class="c1">################################################################################</span>
-
-
+<span class="kn">from</span> <span class="nn">pathlib</span> <span class="kn">import</span> <span class="n">Path</span>
 <span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Optional</span><span class="p">,</span> <span class="n">Sequence</span><span class="p">,</span> <span class="n">Union</span><span class="p">,</span> <span class="n">Any</span>
-<span class="kn">from</span> <span class="nn">os.path</span> <span class="kn">import</span> <span class="n">expanduser</span>
 <span class="kn">import</span> <span class="nn">torch</span>
 <span class="kn">from</span> <span class="nn">PIL.Image</span> <span class="kn">import</span> <span class="n">Image</span>
 <span class="kn">from</span> <span class="nn">torch</span> <span class="kn">import</span> <span class="n">Tensor</span>
@@ -202,6 +200,9 @@
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 
 <span class="kn">from</span> <span class="nn">avalanche.benchmarks</span> <span class="kn">import</span> <span class="n">NCScenario</span><span class="p">,</span> <span class="n">nc_benchmark</span>
+<span class="kn">from</span> <span class="nn">avalanche.benchmarks.classic.classic_benchmarks_utils</span> <span class="kn">import</span> \
+    <span class="n">check_vision_benchmark</span>
+<span class="kn">from</span> <span class="nn">avalanche.benchmarks.datasets</span> <span class="kn">import</span> <span class="n">default_dataset_location</span>
 <span class="kn">from</span> <span class="nn">avalanche.benchmarks.utils</span> <span class="kn">import</span> <span class="n">AvalancheDataset</span>
 
 <span class="n">_default_mnist_train_transform</span> <span class="o">=</span> <span class="n">Compose</span><span class="p">([</span>
@@ -246,11 +247,14 @@
 
 <div class="viewcode-block" id="SplitMNIST"><a class="viewcode-back" href="../../../../../autoapi/avalanche/benchmarks/#avalanche.benchmarks.classic.cmnist.SplitMNIST">[docs]</a><span class="k">def</span> <span class="nf">SplitMNIST</span><span class="p">(</span>
         <span class="n">n_experiences</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
+        <span class="o">*</span><span class="p">,</span>
         <span class="n">return_task_id</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
         <span class="n">seed</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
         <span class="n">fixed_class_order</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Sequence</span><span class="p">[</span><span class="nb">int</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-        <span class="n">train_transform</span><span class="o">=</span><span class="n">_default_mnist_train_transform</span><span class="p">,</span>
-        <span class="n">eval_transform</span><span class="o">=</span><span class="n">_default_mnist_eval_transform</span><span class="p">):</span>
+        <span class="n">shuffle</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
+        <span class="n">train_transform</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Any</span><span class="p">]</span> <span class="o">=</span> <span class="n">_default_mnist_train_transform</span><span class="p">,</span>
+        <span class="n">eval_transform</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Any</span><span class="p">]</span> <span class="o">=</span> <span class="n">_default_mnist_eval_transform</span><span class="p">,</span>
+        <span class="n">dataset_root</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Path</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Creates a CL scenario using the MNIST dataset.</span>
 
@@ -288,6 +292,8 @@
 <span class="sd">        order. If None, value of ``seed`` will be used to define the class</span>
 <span class="sd">        order. If non-None, ``seed`` parameter will be ignored.</span>
 <span class="sd">        Defaults to None.</span>
+<span class="sd">    :param shuffle: If true, the class order in the incremental experiences is</span>
+<span class="sd">        randomly shuffled. Default to false.</span>
 <span class="sd">    :param train_transform: The transformation to apply to the training data,</span>
 <span class="sd">        e.g. a random crop, a normalization or a concatenation of different</span>
 <span class="sd">        transformations (see torchvision.transform documentation for a</span>
@@ -300,11 +306,13 @@
 <span class="sd">        comprehensive list of possible transformations).</span>
 <span class="sd">        If no transformation is passed, the default test transformation</span>
 <span class="sd">        will be used.</span>
+<span class="sd">    :param dataset_root: The root path of the dataset. Defaults to None, which</span>
+<span class="sd">        means that the default location for &#39;mnist&#39; will be used.</span>
 
 <span class="sd">    :returns: A properly initialized :class:`NCScenario` instance.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
-    <span class="n">mnist_train</span><span class="p">,</span> <span class="n">mnist_test</span> <span class="o">=</span> <span class="n">_get_mnist_dataset</span><span class="p">()</span>
+    <span class="n">mnist_train</span><span class="p">,</span> <span class="n">mnist_test</span> <span class="o">=</span> <span class="n">_get_mnist_dataset</span><span class="p">(</span><span class="n">dataset_root</span><span class="p">)</span>
 
     <span class="k">if</span> <span class="n">return_task_id</span><span class="p">:</span>
         <span class="k">return</span> <span class="n">nc_benchmark</span><span class="p">(</span>
@@ -314,6 +322,7 @@
             <span class="n">task_labels</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
             <span class="n">seed</span><span class="o">=</span><span class="n">seed</span><span class="p">,</span>
             <span class="n">fixed_class_order</span><span class="o">=</span><span class="n">fixed_class_order</span><span class="p">,</span>
+            <span class="n">shuffle</span><span class="o">=</span><span class="n">shuffle</span><span class="p">,</span>
             <span class="n">class_ids_from_zero_in_each_exp</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
             <span class="n">train_transform</span><span class="o">=</span><span class="n">train_transform</span><span class="p">,</span>
             <span class="n">eval_transform</span><span class="o">=</span><span class="n">eval_transform</span><span class="p">)</span>
@@ -325,15 +334,18 @@
             <span class="n">task_labels</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
             <span class="n">seed</span><span class="o">=</span><span class="n">seed</span><span class="p">,</span>
             <span class="n">fixed_class_order</span><span class="o">=</span><span class="n">fixed_class_order</span><span class="p">,</span>
+            <span class="n">shuffle</span><span class="o">=</span><span class="n">shuffle</span><span class="p">,</span>
             <span class="n">train_transform</span><span class="o">=</span><span class="n">train_transform</span><span class="p">,</span>
             <span class="n">eval_transform</span><span class="o">=</span><span class="n">eval_transform</span><span class="p">)</span></div>
 
 
 <div class="viewcode-block" id="PermutedMNIST"><a class="viewcode-back" href="../../../../../autoapi/avalanche/benchmarks/#avalanche.benchmarks.classic.cmnist.PermutedMNIST">[docs]</a><span class="k">def</span> <span class="nf">PermutedMNIST</span><span class="p">(</span>
         <span class="n">n_experiences</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
+        <span class="o">*</span><span class="p">,</span>
         <span class="n">seed</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-        <span class="n">train_transform</span><span class="p">:</span> <span class="n">Any</span> <span class="o">=</span> <span class="n">_default_mnist_train_transform</span><span class="p">,</span>
-        <span class="n">eval_transform</span><span class="p">:</span> <span class="n">Any</span> <span class="o">=</span> <span class="n">_default_mnist_eval_transform</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">NCScenario</span><span class="p">:</span>
+        <span class="n">train_transform</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Any</span><span class="p">]</span> <span class="o">=</span> <span class="n">_default_mnist_train_transform</span><span class="p">,</span>
+        <span class="n">eval_transform</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Any</span><span class="p">]</span> <span class="o">=</span> <span class="n">_default_mnist_eval_transform</span><span class="p">,</span>
+        <span class="n">dataset_root</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Path</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">NCScenario</span><span class="p">:</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Creates a Permuted MNIST scenario.</span>
 
@@ -374,6 +386,8 @@
 <span class="sd">        documentation for a comprehensive list of possible transformations).</span>
 <span class="sd">        If no transformation is passed, the default test transformation</span>
 <span class="sd">        will be used.</span>
+<span class="sd">    :param dataset_root: The root path of the dataset. Defaults to None, which</span>
+<span class="sd">        means that the default location for &#39;mnist&#39; will be used.</span>
 
 <span class="sd">    :returns: A properly initialized :class:`NCScenario` instance.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
@@ -382,7 +396,7 @@
     <span class="n">list_test_dataset</span> <span class="o">=</span> <span class="p">[]</span>
     <span class="n">rng_permute</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">RandomState</span><span class="p">(</span><span class="n">seed</span><span class="p">)</span>
 
-    <span class="n">mnist_train</span><span class="p">,</span> <span class="n">mnist_test</span> <span class="o">=</span> <span class="n">_get_mnist_dataset</span><span class="p">()</span>
+    <span class="n">mnist_train</span><span class="p">,</span> <span class="n">mnist_test</span> <span class="o">=</span> <span class="n">_get_mnist_dataset</span><span class="p">(</span><span class="n">dataset_root</span><span class="p">)</span>
 
     <span class="c1"># for every incremental experience</span>
     <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n_experiences</span><span class="p">):</span>
@@ -425,10 +439,12 @@
 
 <div class="viewcode-block" id="RotatedMNIST"><a class="viewcode-back" href="../../../../../autoapi/avalanche/benchmarks/#avalanche.benchmarks.classic.cmnist.RotatedMNIST">[docs]</a><span class="k">def</span> <span class="nf">RotatedMNIST</span><span class="p">(</span>
         <span class="n">n_experiences</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
+        <span class="o">*</span><span class="p">,</span>
         <span class="n">seed</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
         <span class="n">rotations_list</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Sequence</span><span class="p">[</span><span class="nb">int</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-        <span class="n">train_transform</span><span class="o">=</span><span class="n">_default_mnist_train_transform</span><span class="p">,</span>
-        <span class="n">eval_transform</span><span class="o">=</span><span class="n">_default_mnist_eval_transform</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">NCScenario</span><span class="p">:</span>
+        <span class="n">train_transform</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Any</span><span class="p">]</span> <span class="o">=</span> <span class="n">_default_mnist_train_transform</span><span class="p">,</span>
+        <span class="n">eval_transform</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Any</span><span class="p">]</span> <span class="o">=</span> <span class="n">_default_mnist_eval_transform</span><span class="p">,</span>
+        <span class="n">dataset_root</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Path</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">NCScenario</span><span class="p">:</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Creates a Rotated MNIST scenario.</span>
 
@@ -475,6 +491,8 @@
 <span class="sd">        documentation for a comprehensive list of possible transformations).</span>
 <span class="sd">        If no transformation is passed, the default test transformation</span>
 <span class="sd">        will be used.</span>
+<span class="sd">    :param dataset_root: The root path of the dataset. Defaults to None, which</span>
+<span class="sd">        means that the default location for &#39;mnist&#39; will be used.</span>
 
 <span class="sd">    :returns: A properly initialized :class:`NCScenario` instance.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
@@ -492,7 +510,7 @@
     <span class="n">list_test_dataset</span> <span class="o">=</span> <span class="p">[]</span>
     <span class="n">rng_rotate</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">RandomState</span><span class="p">(</span><span class="n">seed</span><span class="p">)</span>
 
-    <span class="n">mnist_train</span><span class="p">,</span> <span class="n">mnist_test</span> <span class="o">=</span> <span class="n">_get_mnist_dataset</span><span class="p">()</span>
+    <span class="n">mnist_train</span><span class="p">,</span> <span class="n">mnist_test</span> <span class="o">=</span> <span class="n">_get_mnist_dataset</span><span class="p">(</span><span class="n">dataset_root</span><span class="p">)</span>
 
     <span class="c1"># for every incremental experience</span>
     <span class="k">for</span> <span class="n">exp</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n_experiences</span><span class="p">):</span>
@@ -535,11 +553,14 @@
         <span class="n">eval_transform</span><span class="o">=</span><span class="n">eval_transform</span><span class="p">)</span></div>
 
 
-<span class="k">def</span> <span class="nf">_get_mnist_dataset</span><span class="p">():</span>
-    <span class="n">train_set</span> <span class="o">=</span> <span class="n">MNIST</span><span class="p">(</span><span class="n">root</span><span class="o">=</span><span class="n">expanduser</span><span class="p">(</span><span class="s2">&quot;~&quot;</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot;/.avalanche/data/mnist/&quot;</span><span class="p">,</span>
+<span class="k">def</span> <span class="nf">_get_mnist_dataset</span><span class="p">(</span><span class="n">dataset_root</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">dataset_root</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">dataset_root</span> <span class="o">=</span> <span class="n">default_dataset_location</span><span class="p">(</span><span class="s1">&#39;mnist&#39;</span><span class="p">)</span>
+
+    <span class="n">train_set</span> <span class="o">=</span> <span class="n">MNIST</span><span class="p">(</span><span class="n">root</span><span class="o">=</span><span class="n">dataset_root</span><span class="p">,</span>
                       <span class="n">train</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">download</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 
-    <span class="n">test_set</span> <span class="o">=</span> <span class="n">MNIST</span><span class="p">(</span><span class="n">root</span><span class="o">=</span><span class="n">expanduser</span><span class="p">(</span><span class="s2">&quot;~&quot;</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot;/.avalanche/data/mnist/&quot;</span><span class="p">,</span>
+    <span class="n">test_set</span> <span class="o">=</span> <span class="n">MNIST</span><span class="p">(</span><span class="n">root</span><span class="o">=</span><span class="n">dataset_root</span><span class="p">,</span>
                      <span class="n">train</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">download</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 
     <span class="k">return</span> <span class="n">train_set</span><span class="p">,</span> <span class="n">test_set</span>
@@ -553,16 +574,24 @@
 
 
 <span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
-    <span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
-    <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
-    <span class="kn">from</span> <span class="nn">PIL</span> <span class="kn">import</span> <span class="n">Image</span>
+    <span class="kn">import</span> <span class="nn">sys</span>
 
-    <span class="n">scenario</span> <span class="o">=</span> <span class="n">PermutedMNIST</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="n">train_transform</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">eval_transform</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
-    <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="p">(</span><span class="n">img</span><span class="p">,</span> <span class="n">label</span><span class="p">)</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">scenario</span><span class="o">.</span><span class="n">train_stream</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">dataset</span><span class="p">):</span>
-        <span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">img</span><span class="p">))</span>
-        <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
-        <span class="k">if</span> <span class="p">((</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span> <span class="o">%</span> <span class="mi">5</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
-            <span class="k">break</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Split MNIST&#39;</span><span class="p">)</span>
+    <span class="n">benchmark_instance</span> <span class="o">=</span> <span class="n">SplitMNIST</span><span class="p">(</span>
+        <span class="mi">5</span><span class="p">,</span> <span class="n">train_transform</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">eval_transform</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
+    <span class="n">check_vision_benchmark</span><span class="p">(</span><span class="n">benchmark_instance</span><span class="p">)</span>
+
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Permuted MNIST&#39;</span><span class="p">)</span>
+    <span class="n">benchmark_instance</span> <span class="o">=</span> <span class="n">PermutedMNIST</span><span class="p">(</span>
+        <span class="mi">5</span><span class="p">,</span> <span class="n">train_transform</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">eval_transform</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
+    <span class="n">check_vision_benchmark</span><span class="p">(</span><span class="n">benchmark_instance</span><span class="p">)</span>
+
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Rotated MNIST&#39;</span><span class="p">)</span>
+    <span class="n">benchmark_instance</span> <span class="o">=</span> <span class="n">RotatedMNIST</span><span class="p">(</span>
+        <span class="mi">5</span><span class="p">,</span> <span class="n">train_transform</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">eval_transform</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
+    <span class="n">check_vision_benchmark</span><span class="p">(</span><span class="n">benchmark_instance</span><span class="p">)</span>
+
+    <span class="n">sys</span><span class="o">.</span><span class="n">exit</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
 </pre></div>
 
            </div>

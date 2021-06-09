@@ -189,12 +189,17 @@
 <span class="c1"># E-mail: contact@continualai.org                                              #</span>
 <span class="c1"># Website: continualai.org                                                     #</span>
 <span class="c1">################################################################################</span>
+<span class="kn">from</span> <span class="nn">pathlib</span> <span class="kn">import</span> <span class="n">Path</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Union</span><span class="p">,</span> <span class="n">Optional</span><span class="p">,</span> <span class="n">Any</span>
 
+<span class="kn">from</span> <span class="nn">torchvision.transforms</span> <span class="kn">import</span> <span class="n">Compose</span><span class="p">,</span> <span class="n">ToTensor</span><span class="p">,</span> <span class="n">Resize</span>
+
+<span class="kn">from</span> <span class="nn">avalanche.benchmarks.classic.classic_benchmarks_utils</span> <span class="kn">import</span> \
+    <span class="n">check_vision_benchmark</span>
 <span class="kn">from</span> <span class="nn">avalanche.benchmarks.datasets</span> <span class="kn">import</span> <span class="n">CUB200</span>
 <span class="kn">from</span> <span class="nn">avalanche.benchmarks</span> <span class="kn">import</span> <span class="n">nc_benchmark</span>
 
 <span class="kn">from</span> <span class="nn">torchvision</span> <span class="kn">import</span> <span class="n">transforms</span>
-<span class="kn">from</span> <span class="nn">os.path</span> <span class="kn">import</span> <span class="n">expanduser</span>
 
 
 <span class="n">_default_train_transform</span> <span class="o">=</span> <span class="n">transforms</span><span class="o">.</span><span class="n">Compose</span><span class="p">([</span>
@@ -211,15 +216,17 @@
 <span class="p">])</span>
 
 
-<div class="viewcode-block" id="SplitCUB200"><a class="viewcode-back" href="../../../../../autoapi/avalanche/benchmarks/#avalanche.benchmarks.classic.ccub200.SplitCUB200">[docs]</a><span class="k">def</span> <span class="nf">SplitCUB200</span><span class="p">(</span><span class="n">root</span><span class="o">=</span><span class="n">expanduser</span><span class="p">(</span><span class="s2">&quot;~&quot;</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot;/.avalanche/data/CUB_200_2011/&quot;</span><span class="p">,</span>
-                <span class="n">n_experiences</span><span class="o">=</span><span class="mi">11</span><span class="p">,</span>
-                <span class="n">classes_first_batch</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span>
-                <span class="n">return_task_id</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
-                <span class="n">seed</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>
-                <span class="n">fixed_class_order</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
-                <span class="n">shuffle</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
-                <span class="n">train_transform</span><span class="o">=</span><span class="n">_default_train_transform</span><span class="p">,</span>
-                <span class="n">eval_transform</span><span class="o">=</span><span class="n">_default_eval_transform</span><span class="p">):</span>
+<div class="viewcode-block" id="SplitCUB200"><a class="viewcode-back" href="../../../../../autoapi/avalanche/benchmarks/#avalanche.benchmarks.classic.ccub200.SplitCUB200">[docs]</a><span class="k">def</span> <span class="nf">SplitCUB200</span><span class="p">(</span>
+        <span class="n">n_experiences</span><span class="o">=</span><span class="mi">11</span><span class="p">,</span>
+        <span class="o">*</span><span class="p">,</span>
+        <span class="n">classes_first_batch</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span>
+        <span class="n">return_task_id</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+        <span class="n">seed</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>
+        <span class="n">fixed_class_order</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+        <span class="n">shuffle</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+        <span class="n">train_transform</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Any</span><span class="p">]</span> <span class="o">=</span> <span class="n">_default_train_transform</span><span class="p">,</span>
+        <span class="n">eval_transform</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Any</span><span class="p">]</span> <span class="o">=</span> <span class="n">_default_eval_transform</span><span class="p">,</span>
+        <span class="n">dataset_root</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Path</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Creates a CL scenario using the Cub-200 dataset.</span>
 
@@ -246,7 +253,6 @@
 <span class="sd">    generators. It is recommended to check the tutorial of the &quot;benchmark&quot; API,</span>
 <span class="sd">    which contains usage examples ranging from &quot;basic&quot; to &quot;advanced&quot;.</span>
 
-<span class="sd">    :param root: Base path where Cub-200 data is stored.</span>
 <span class="sd">    :param n_experiences: The number of experiences in the current scenario.</span>
 <span class="sd">        Defaults to 11.</span>
 <span class="sd">    :param classes_first_batch: Number of classes in the first batch.</span>
@@ -273,11 +279,14 @@
 <span class="sd">        comprehensive list of possible transformations).</span>
 <span class="sd">        If no transformation is passed, the default test transformation</span>
 <span class="sd">        will be used.</span>
+<span class="sd">    :param dataset_root: The root path of the dataset.</span>
+<span class="sd">        Defaults to None, which means that the default location for</span>
+<span class="sd">        &#39;CUB_200_2011&#39; will be used.</span>
 
 <span class="sd">    :returns: A properly initialized :class:`NCScenario` instance.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
-    <span class="n">train_set</span><span class="p">,</span> <span class="n">test_set</span> <span class="o">=</span> <span class="n">_get_cub200_dataset</span><span class="p">(</span><span class="n">root</span><span class="p">)</span>
+    <span class="n">train_set</span><span class="p">,</span> <span class="n">test_set</span> <span class="o">=</span> <span class="n">_get_cub200_dataset</span><span class="p">(</span><span class="n">dataset_root</span><span class="p">)</span>
 
     <span class="k">if</span> <span class="n">classes_first_batch</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
         <span class="n">per_exp_classes</span> <span class="o">=</span> <span class="p">{</span><span class="mi">0</span><span class="p">:</span> <span class="n">classes_first_batch</span><span class="p">}</span>
@@ -323,12 +332,15 @@
 <span class="p">]</span>
 
 <span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
+    <span class="kn">import</span> <span class="nn">sys</span>
 
-    <span class="n">scenario</span> <span class="o">=</span> <span class="n">SplitCUB200</span><span class="p">()</span>
-    <span class="k">for</span> <span class="n">exp</span> <span class="ow">in</span> <span class="n">scenario</span><span class="o">.</span><span class="n">train_stream</span><span class="p">:</span>
-        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Experience: &quot;</span><span class="p">,</span> <span class="n">exp</span><span class="o">.</span><span class="n">current_experience</span><span class="p">)</span>
-        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;classes number: &quot;</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">exp</span><span class="o">.</span><span class="n">classes_in_this_experience</span><span class="p">))</span>
-        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;classes: &quot;</span><span class="p">,</span> <span class="n">exp</span><span class="o">.</span><span class="n">classes_in_this_experience</span><span class="p">)</span>
+    <span class="n">benchmark_instance</span> <span class="o">=</span> <span class="n">SplitCUB200</span><span class="p">(</span>
+        <span class="mi">5</span><span class="p">,</span>
+        <span class="n">train_transform</span><span class="o">=</span><span class="n">Compose</span><span class="p">([</span>
+            <span class="n">ToTensor</span><span class="p">(),</span> <span class="n">Resize</span><span class="p">((</span><span class="mi">128</span><span class="p">,</span> <span class="mi">128</span><span class="p">))</span>
+        <span class="p">]))</span>
+    <span class="n">check_vision_benchmark</span><span class="p">(</span><span class="n">benchmark_instance</span><span class="p">,</span> <span class="n">show_without_transforms</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+    <span class="n">sys</span><span class="o">.</span><span class="n">exit</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
 </pre></div>
 
            </div>

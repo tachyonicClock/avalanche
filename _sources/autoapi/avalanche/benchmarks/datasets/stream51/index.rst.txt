@@ -26,30 +26,23 @@ Classes
 
 
 
-.. py:class:: Stream51(root=get_default_dataset_location('stream51'), *, train=True, transform=None, target_transform=None, loader=default_loader, download=True)
+.. py:class:: Stream51(root: Union[str, Path] = None, *, train=True, transform=None, target_transform=None, loader=default_loader, download=True)
 
    Bases: :class:`avalanche.benchmarks.datasets.DownloadableDataset`
 
    Stream-51 Pytorch Dataset 
 
-   Creates an instance of a downloadable dataset.
+   Creates an instance of the Stream-51 dataset.
 
-   Consider looking at the class documentation for the precise details on
-   how to extend this class.
-
-   Beware that calling this constructor only fills the `root` field. The
-   download and metadata loading procedures are triggered only by
-   calling `_load_dataset`.
-
-   :param root: The root path where the dataset will be downloaded.
-       Consider passing a path obtained by calling
-       `get_default_dataset_location` with the name of the dataset.
+   :param root: The directory where the dataset can be found or downloaded.
+       Defaults to None, which means that the default location for
+       'stream51' will be used.
+   :param train: If True, the training set will be returned. If False,
+       the test set will be returned.
+   :param transform: The transformations to apply to the X values.
+   :param target_transform: The transformations to apply to the Y values.
+   :param loader: The image loader to use.
    :param download: If True, the dataset will be downloaded if needed.
-       If False and the dataset can't be loaded from the provided root
-       path, an error will be raised when calling the `_load_dataset`
-       method. Defaults to True.
-   :param verbose: If True, some info about the download process will be
-       printed. Defaults to False.
 
    .. method:: make_dataset(data_list, ordering='class_instance', seed=666)
       :staticmethod:

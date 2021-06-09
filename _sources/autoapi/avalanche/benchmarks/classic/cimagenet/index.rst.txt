@@ -16,7 +16,7 @@ Functions
    avalanche.benchmarks.classic.cimagenet.SplitImageNet
 
 
-.. function:: SplitImageNet(root, n_experiences=10, per_exp_classes=None, return_task_id=False, seed=0, fixed_class_order=None, train_transform=_default_train_transform, eval_transform=_default_eval_transform)
+.. function:: SplitImageNet(dataset_root: Union[str, Path], *, n_experiences=10, per_exp_classes=None, return_task_id=False, seed=0, fixed_class_order=None, shuffle: bool = True, train_transform: Optional[Any] = _default_train_transform, eval_transform: Optional[Any] = _default_eval_transform)
 
    Creates a CL scenario using the ImageNet dataset.
 
@@ -43,7 +43,7 @@ Functions
    generators. It is recommended to check the tutorial of the "benchmark" API,
    which contains usage examples ranging from "basic" to "advanced".
 
-   :param root: Base path where Imagenet data is stored.
+   :param dataset_root: Base path where Imagenet data is stored.
    :param n_experiences: The number of experiences in the current scenario.
    :param per_exp_classes: Is not None, a dictionary whose keys are
        (0-indexed) experience IDs and their values are the number of classes
@@ -64,6 +64,8 @@ Functions
        order. If None, value of ``seed`` will be used to define the class
        order. If non-None, ``seed`` parameter will be ignored.
        Defaults to None.
+   :param shuffle: If true, the class order in the incremental experiences is
+       randomly shuffled. Default to false.
    :param train_transform: The transformation to apply to the training data,
        e.g. a random crop, a normalization or a concatenation of different
        transformations (see torchvision.transform documentation for a

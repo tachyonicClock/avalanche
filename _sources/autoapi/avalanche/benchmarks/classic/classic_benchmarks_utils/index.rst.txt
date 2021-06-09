@@ -1,0 +1,21 @@
+:mod:`avalanche.benchmarks.classic.classic_benchmarks_utils`
+============================================================
+
+.. py:module:: avalanche.benchmarks.classic.classic_benchmarks_utils
+
+
+Module Contents
+---------------
+
+
+Functions
+~~~~~~~~~
+
+.. autoapisummary::
+
+   avalanche.benchmarks.classic.classic_benchmarks_utils.check_vision_benchmark
+
+
+.. function:: check_vision_benchmark(benchmark_instance, show_without_transforms=True)
+
+

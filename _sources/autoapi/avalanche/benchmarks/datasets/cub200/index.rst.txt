@@ -25,7 +25,7 @@ Classes
 
 
 
-.. py:class:: CUB200(root: Union[str, Path] = get_default_dataset_location('CUB_200_2011'), *, train=True, transform=None, target_transform=None, loader=default_loader, download=True)
+.. py:class:: CUB200(root: Union[str, Path] = None, *, train=True, transform=None, target_transform=None, loader=default_loader, download=True)
 
    Bases: :class:`avalanche.benchmarks.utils.PathsDataset`, :class:`avalanche.benchmarks.datasets.DownloadableDataset`
 
@@ -35,7 +35,8 @@ Classes
    design please use the 'benchmarks.generators'.
 
    :param root: root dir where the dataset can be found or downloaded.
-       Default to '~/.avalanche/data/CUB_200_2011'.
+       Defaults to None, which means that the default location for
+       'CUB_200_2011' will be used.
    :param train: train or test subset of the original dataset. Default
        to True.
    :param transform: eventual input data transformations to apply.

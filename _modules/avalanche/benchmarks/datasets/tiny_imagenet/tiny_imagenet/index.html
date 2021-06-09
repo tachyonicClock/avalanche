@@ -200,7 +200,7 @@
 <span class="kn">from</span> <span class="nn">torchvision.transforms</span> <span class="kn">import</span> <span class="n">ToTensor</span>
 
 <span class="kn">from</span> <span class="nn">avalanche.benchmarks.datasets</span> <span class="kn">import</span> <span class="n">SimpleDownloadableDataset</span><span class="p">,</span> \
-    <span class="n">get_default_dataset_location</span>
+    <span class="n">default_dataset_location</span>
 
 
 <div class="viewcode-block" id="TinyImagenet"><a class="viewcode-back" href="../../../../../../autoapi/avalanche/benchmarks/datasets/tiny_imagenet/tiny_imagenet/#avalanche.benchmarks.datasets.TinyImagenet">[docs]</a><span class="k">class</span> <span class="nc">TinyImagenet</span><span class="p">(</span><span class="n">SimpleDownloadableDataset</span><span class="p">):</span>
@@ -212,8 +212,7 @@
 
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span>
             <span class="bp">self</span><span class="p">,</span>
-            <span class="n">root</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Path</span><span class="p">]</span> <span class="o">=</span>
-            <span class="n">get_default_dataset_location</span><span class="p">(</span><span class="s1">&#39;tinyimagenet&#39;</span><span class="p">),</span>
+            <span class="n">root</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Path</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
             <span class="o">*</span><span class="p">,</span>
             <span class="n">train</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
             <span class="n">transform</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
@@ -223,7 +222,9 @@
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Creates an instance of the Tiny Imagenet dataset.</span>
 
-<span class="sd">        :param root: folder in which to download dataset.</span>
+<span class="sd">        :param root: folder in which to download dataset. Defaults to None,</span>
+<span class="sd">            which means that the default location for &#39;tinyimagenet&#39; will be</span>
+<span class="sd">            used.</span>
 <span class="sd">        :param train: True for training set, False for test set.</span>
 <span class="sd">        :param transform: Pytorch transformation function for x.</span>
 <span class="sd">        :param target_transform: Pytorch transformation function for y.</span>
@@ -231,6 +232,10 @@
 <span class="sd">        :param bool download: If True, the dataset will be  downloaded if</span>
 <span class="sd">            needed.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="k">if</span> <span class="n">root</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">root</span> <span class="o">=</span> <span class="n">default_dataset_location</span><span class="p">(</span><span class="s1">&#39;tinyimagenet&#39;</span><span class="p">)</span>
+
         <span class="bp">self</span><span class="o">.</span><span class="n">transform</span> <span class="o">=</span> <span class="n">transform</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">target_transform</span> <span class="o">=</span> <span class="n">target_transform</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">train</span> <span class="o">=</span> <span class="n">train</span>

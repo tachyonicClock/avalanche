@@ -561,7 +561,7 @@ Functions
        The adapter is used to adapt the values of the targets field only.
 
 
-.. py:class:: AvalancheTensorDataset(*dataset_tensors: Sequence, transform: Callable[[Any], Any] = None, target_transform: Callable[[int], int] = None, transform_groups: Dict[str, Tuple[XTransform, YTransform]] = None, initial_transform_group: str = 'train', task_labels: Union[int, Sequence[int]] = None, targets: Sequence[TTargetType] = None, dataset_type: AvalancheDatasetType = AvalancheDatasetType.UNDEFINED, collate_fn: Callable[[List], Any] = None, targets_adapter: Callable[[Any], TTargetType] = None)
+.. py:class:: AvalancheTensorDataset(*dataset_tensors: Sequence, transform: Callable[[Any], Any] = None, target_transform: Callable[[int], int] = None, transform_groups: Dict[str, Tuple[XTransform, YTransform]] = None, initial_transform_group: str = 'train', task_labels: Union[int, Sequence[int]] = None, targets: Union[Sequence[TTargetType], int] = None, dataset_type: AvalancheDatasetType = AvalancheDatasetType.UNDEFINED, collate_fn: Callable[[List], Any] = None, targets_adapter: Callable[[Any], TTargetType] = None)
 
    Bases: :class:`AvalancheDataset[T_co, TTargetType]`
 

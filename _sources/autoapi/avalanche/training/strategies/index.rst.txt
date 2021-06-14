@@ -36,6 +36,7 @@ Classes
 
    avalanche.training.strategies.BaseStrategy
    avalanche.training.strategies.JointTraining
+   avalanche.training.strategies.AR1
    avalanche.training.strategies.Cumulative
    avalanche.training.strategies.Naive
    avalanche.training.strategies.CWRStar
@@ -286,6 +287,11 @@ Classes
       :param kwargs: custom arguments.
 
 
+   .. method:: stop_training(self)
+
+      Signals to stop training at the next iteration. 
+
+
    .. method:: train_dataset_adaptation(self, **kwargs)
 
       Initialize `self.adapted_dataset`. 
@@ -484,6 +490,102 @@ Classes
    .. method:: train_dataset_adaptation(self, **kwargs)
 
       Concatenates all the datastream. 
+
+
+
+.. py:class:: AR1(criterion=None, lr: float = 0.001, momentum=0.9, l2=0.0005, train_epochs: int = 4, init_update_rate: float = 0.01, inc_update_rate=5e-05, max_r_max=1.25, max_d_max=0.5, inc_step=4.1e-05, rm_sz: int = 1500, freeze_below_layer: str = 'lat_features.19.bn.beta', latent_layer_num: int = 19, ewc_lambda: float = 0, train_mb_size: int = 128, eval_mb_size: int = 128, device=None, plugins: Optional[Sequence[StrategyPlugin]] = None, evaluator: EvaluationPlugin = default_logger, eval_every=-1)
+
+   Bases: :class:`avalanche.training.strategies.BaseStrategy`
+
+   The AR1 strategy with Latent Replay.
+
+   This implementations allows for the use of both Synaptic Intelligence and
+   Latent Replay to protect the lower level of the model from forgetting.
+
+   While the original papers show how to use those two techniques in a mutual
+   exclusive way, this implementation allows for the use of both of them
+   concurrently. This behaviour is controlled by passing proper constructor
+   arguments).
+
+   Creates an instance of the AR1 strategy.
+
+   :param criterion: The loss criterion to use. Defaults to None, in which
+       case the cross entropy loss is used.
+   :param lr: The learning rate (SGD optimizer).
+   :param momentum: The momentum (SGD optimizer).
+   :param l2: The L2 penalty used for weight decay.
+   :param train_epochs: The number of training epochs. Defaults to 4.
+   :param init_update_rate: The initial update rate of BatchReNorm layers.
+   :param inc_update_rate: The incremental update rate of BatchReNorm
+       layers.
+   :param max_r_max: The maximum r value of BatchReNorm layers.
+   :param max_d_max: The maximum d value of BatchReNorm layers.
+   :param inc_step: The incremental step of r and d values of BatchReNorm
+       layers.
+   :param rm_sz: The size of the replay buffer. The replay buffer is shared
+       across classes. Defaults to 1500.
+   :param freeze_below_layer: A string describing the name of the layer
+       to use while freezing the lower (nearest to the input) part of the
+       model. The given layer is not frozen (exclusive).
+   :param latent_layer_num: The number of the layer to use as the Latent
+       Replay Layer. Usually this is the same of `freeze_below_layer`.
+   :param ewc_lambda: The Synaptic Intelligence lambda term. Defaults to
+       0, which means that the Synaptic Intelligence regularization
+       will not be applied.
+   :param train_mb_size: The train minibatch size. Defaults to 128.
+   :param eval_mb_size: The eval minibatch size. Defaults to 128.
+   :param device: The device to use. Defaults to None (cpu).
+   :param plugins: (optional) list of StrategyPlugins.
+   :param evaluator: (optional) instance of EvaluationPlugin for logging
+       and metric computations.
+   :param eval_every: the frequency of the calls to `eval` inside the
+       training loop.
+           if -1: no evaluation during training.
+           if  0: calls `eval` after the final epoch of each training
+               experience.
+           if >0: calls `eval` every `eval_every` epochs and at the end
+               of all the epochs for a single experience.
+
+   .. method:: before_training_exp(self, **kwargs)
+
+      Called  after the dataset and data loader creation and
+      before the training loop.
+
+
+   .. method:: make_train_dataloader(self, num_workers=0, shuffle=True, **kwargs)
+
+      Called after the dataset instantiation. Initialize the data loader.
+
+      For AR1 a "custom" dataloader is used: instead of using
+      `self.train_mb_size` as the batch size, the data loader batch size will
+      be computed ad `self.train_mb_size - latent_mb_size`. `latent_mb_size`
+      is in turn computed as:
+
+      `
+      len(train_dataset) // ((len(train_dataset) + len(replay_buffer)
+      // self.train_mb_size)
+      `
+
+      so that the number of iterations required to run an epoch on the current
+      batch is equal to the number of iterations required to run an epoch
+      on the replay buffer.
+
+      :param num_workers: number of thread workers for the data loading.
+      :param shuffle: True if the data should be shuffled, False otherwise.
+
+
+   .. method:: training_epoch(self, **kwargs)
+
+      Training epoch.
+      :param kwargs:
+      :return:
+
+
+   .. method:: after_training_exp(self, **kwargs)
+
+
+   .. method:: filter_bn_and_brn(param_def: LayerAndParameter)
+      :staticmethod:
 
 
 

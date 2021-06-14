@@ -56,34 +56,15 @@ Classes
 
 .. py:class:: MTSimpleMLP(input_size=28 * 28, hidden_size=512)
 
-   Bases: :class:`torch.nn.Module`, :class:`avalanche.models.dynamic_modules.MultiTaskModule`
+   Bases: :class:`avalanche.models.dynamic_modules.MultiTaskModule`
 
-   Base class for all neural network modules.
+   Multi-task modules are `torch.nn.Modules`s for multi-task
+   scenarios. The `forward` method accepts task labels, one for
+   each sample in the mini-batch.
 
-   Your models should also subclass this class.
-
-   Modules can also contain other Modules, allowing to nest them in
-   a tree structure. You can assign the submodules as regular attributes::
-
-       import torch.nn as nn
-       import torch.nn.functional as F
-
-       class Model(nn.Module):
-           def __init__(self):
-               super(Model, self).__init__()
-               self.conv1 = nn.Conv2d(1, 20, 5)
-               self.conv2 = nn.Conv2d(20, 20, 5)
-
-           def forward(self, x):
-               x = F.relu(self.conv1(x))
-               return F.relu(self.conv2(x))
-
-   Submodules assigned in this way will be registered, and will have their
-   parameters converted too when you call :meth:`to`, etc.
-
-   :ivar training: Boolean represents whether this module is in training or
-                   evaluation mode.
-   :vartype training: bool
+   By default the `forward` method splits the mini-batch by task
+   and calls `forward_single_task`. Subclasses must implement
+   `forward_single_task` or override `forward.
 
    Multi-task MLP with multi-head classifier.
 

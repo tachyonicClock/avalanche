@@ -41,258 +41,1002 @@ Classes
 
 .. autoapisummary::
 
-   avalanche.training.InteractiveLogger
-   avalanche.training.EvaluationPlugin
+   avalanche.training.AR1
+   avalanche.training.Cumulative
+   avalanche.training.BaseStrategy
+   avalanche.training.JointTraining
+   avalanche.training.Naive
+   avalanche.training.CWRStar
+   avalanche.training.Replay
+   avalanche.training.GDumb
+   avalanche.training.LwF
+   avalanche.training.AGEM
+   avalanche.training.GEM
+   avalanche.training.EWC
+   avalanche.training.SynapticIntelligence
+   avalanche.training.CoPE
+   avalanche.training.StreamingLDA
+
 
+
+.. py:class:: AR1(criterion=None, lr: float = 0.001, momentum=0.9, l2=0.0005, train_epochs: int = 4, init_update_rate: float = 0.01, inc_update_rate=5e-05, max_r_max=1.25, max_d_max=0.5, inc_step=4.1e-05, rm_sz: int = 1500, freeze_below_layer: str = 'lat_features.19.bn.beta', latent_layer_num: int = 19, ewc_lambda: float = 0, train_mb_size: int = 128, eval_mb_size: int = 128, device=None, plugins: Optional[Sequence[StrategyPlugin]] = None, evaluator: EvaluationPlugin = default_logger, eval_every=-1)
 
+   Bases: :class:`avalanche.training.strategies.BaseStrategy`
+
+   The AR1 strategy with Latent Replay.
 
-Functions
-~~~~~~~~~
+   This implementations allows for the use of both Synaptic Intelligence and
+   Latent Replay to protect the lower level of the model from forgetting.
+
+   While the original papers show how to use those two techniques in a mutual
+   exclusive way, this implementation allows for the use of both of them
+   concurrently. This behaviour is controlled by passing proper constructor
+   arguments).
+
+   Creates an instance of the AR1 strategy.
+
+   :param criterion: The loss criterion to use. Defaults to None, in which
+       case the cross entropy loss is used.
+   :param lr: The learning rate (SGD optimizer).
+   :param momentum: The momentum (SGD optimizer).
+   :param l2: The L2 penalty used for weight decay.
+   :param train_epochs: The number of training epochs. Defaults to 4.
+   :param init_update_rate: The initial update rate of BatchReNorm layers.
+   :param inc_update_rate: The incremental update rate of BatchReNorm
+       layers.
+   :param max_r_max: The maximum r value of BatchReNorm layers.
+   :param max_d_max: The maximum d value of BatchReNorm layers.
+   :param inc_step: The incremental step of r and d values of BatchReNorm
+       layers.
+   :param rm_sz: The size of the replay buffer. The replay buffer is shared
+       across classes. Defaults to 1500.
+   :param freeze_below_layer: A string describing the name of the layer
+       to use while freezing the lower (nearest to the input) part of the
+       model. The given layer is not frozen (exclusive).
+   :param latent_layer_num: The number of the layer to use as the Latent
+       Replay Layer. Usually this is the same of `freeze_below_layer`.
+   :param ewc_lambda: The Synaptic Intelligence lambda term. Defaults to
+       0, which means that the Synaptic Intelligence regularization
+       will not be applied.
+   :param train_mb_size: The train minibatch size. Defaults to 128.
+   :param eval_mb_size: The eval minibatch size. Defaults to 128.
+   :param device: The device to use. Defaults to None (cpu).
+   :param plugins: (optional) list of StrategyPlugins.
+   :param evaluator: (optional) instance of EvaluationPlugin for logging
+       and metric computations.
+   :param eval_every: the frequency of the calls to `eval` inside the
+       training loop.
+           if -1: no evaluation during training.
+           if  0: calls `eval` after the final epoch of each training
+               experience.
+           if >0: calls `eval` every `eval_every` epochs and at the end
+               of all the epochs for a single experience.
+
+   .. method:: before_training_exp(self, **kwargs)
+
+      Called  after the dataset and data loader creation and
+      before the training loop.
+
+
+   .. method:: make_train_dataloader(self, num_workers=0, shuffle=True, **kwargs)
+
+      Called after the dataset instantiation. Initialize the data loader.
+
+      For AR1 a "custom" dataloader is used: instead of using
+      `self.train_mb_size` as the batch size, the data loader batch size will
+      be computed ad `self.train_mb_size - latent_mb_size`. `latent_mb_size`
+      is in turn computed as:
+
+      `
+      len(train_dataset) // ((len(train_dataset) + len(replay_buffer)
+      // self.train_mb_size)
+      `
+
+      so that the number of iterations required to run an epoch on the current
+      batch is equal to the number of iterations required to run an epoch
+      on the replay buffer.
+
+      :param num_workers: number of thread workers for the data loading.
+      :param shuffle: True if the data should be shuffled, False otherwise.
+
+
+   .. method:: training_epoch(self, **kwargs)
+
+      Training epoch.
+      :param kwargs:
+      :return:
+
+
+   .. method:: after_training_exp(self, **kwargs)
+
+
+   .. method:: filter_bn_and_brn(param_def: LayerAndParameter)
+      :staticmethod:
+
+
+
+.. py:class:: Cumulative(model: Module, optimizer: Optimizer, criterion, train_mb_size: int = 1, train_epochs: int = 1, eval_mb_size: int = None, device=None, plugins: Optional[List[StrategyPlugin]] = None, evaluator: EvaluationPlugin = default_logger, eval_every=-1)
+
+   Bases: :class:`avalanche.training.strategies.BaseStrategy`
+
+   Cumulative strategy. At each experience,
+       train model with data from all previous experiences and current
+       experience.
 
-.. autoapisummary::
+   :param model: The model.
+   :param optimizer: The optimizer to use.
+   :param criterion: The loss criterion to use.
+   :param train_mb_size: The train minibatch size. Defaults to 1.
+   :param train_epochs: The number of training epochs. Defaults to 1.
+   :param eval_mb_size: The eval minibatch size. Defaults to 1.
+   :param device: The device to use. Defaults to None (cpu).
+   :param plugins: Plugins to be added. Defaults to None.
+   :param evaluator: (optional) instance of EvaluationPlugin for logging
+       and metric computations.
+   :param eval_every: the frequency of the calls to `eval` inside the
+       training loop.
+           if -1: no evaluation during training.
+           if  0: calls `eval` after the final epoch of each training
+               experience.
+           if >0: calls `eval` every `eval_every` epochs and at the end
+               of all the epochs for a single experience.
 
-   avalanche.training.accuracy_metrics
-   avalanche.training.loss_metrics
+   .. method:: train_dataset_adaptation(self, **kwargs)
 
+      Concatenates all the previous experiences.
 
-.. function:: accuracy_metrics(*, minibatch=False, epoch=False, epoch_running=False, experience=False, stream=False) -> List[PluginMetric]
 
-   Helper method that can be used to obtain the desired set of
-   plugin metrics.
 
-   :param minibatch: If True, will return a metric able to log
-       the minibatch accuracy at training time.
-   :param epoch: If True, will return a metric able to log
-       the epoch accuracy at training time.
-   :param epoch_running: If True, will return a metric able to log
-       the running epoch accuracy at training time.
-   :param experience: If True, will return a metric able to log
-       the accuracy on each evaluation experience.
-   :param stream: If True, will return a metric able to log
-       the accuracy averaged over the entire evaluation stream of experiences.
+.. py:class:: BaseStrategy(model: Module, optimizer: Optimizer, criterion=CrossEntropyLoss(), train_mb_size: int = 1, train_epochs: int = 1, eval_mb_size: int = 1, device='cpu', plugins: Optional[Sequence['StrategyPlugin']] = None, evaluator=default_logger, eval_every=-1)
 
-   :return: A list of plugin metrics.
+   BaseStrategy is the super class of all task-based continual learning
+   strategies. It implements a basic training loop and callback system
+   that allows to execute code at each experience of the training loop.
+   Plugins can be used to implement callbacks to augment the training
+   loop with additional behavior (e.g. a memory buffer for replay).
 
+   **Scenarios**
+   This strategy supports several continual learning scenarios:
 
-.. function:: loss_metrics(*, minibatch=False, epoch=False, epoch_running=False, experience=False, stream=False) -> List[PluginMetric]
+   * class-incremental scenarios (no task labels)
+   * multi-task scenarios, where task labels are provided)
+   * multi-incremental scenarios, where the same task may be revisited
 
-   Helper method that can be used to obtain the desired set of
-   plugin metrics.
+   The exact scenario depends on the data stream and whether it provides
+   the task labels.
 
-   :param minibatch: If True, will return a metric able to log
-       the minibatch loss at training time.
-   :param epoch: If True, will return a metric able to log
-       the epoch loss at training time.
-   :param epoch_running: If True, will return a metric able to log
-       the running epoch loss at training time.
-   :param experience: If True, will return a metric able to log
-       the loss on each evaluation experience.
-   :param stream: If True, will return a metric able to log
-       the loss averaged over the entire evaluation stream of experiences.
+   **Training loop**
+   The training loop is organized as follows::
+       train
+           train_exp  # for each experience
+               adapt_train_dataset
+               train_dataset_adaptation
+               make_train_dataloader
+               train_epoch  # for each epoch
+                   # forward
+                   # backward
+                   # model update
 
-   :return: A list of plugin metrics.
+   **Evaluation loop**
+   The evaluation loop is organized as follows::
+       eval
+           eval_exp  # for each experience
+               adapt_eval_dataset
+               eval_dataset_adaptation
+               make_eval_dataloader
+               eval_epoch  # for each epoch
+                   # forward
+                   # backward
+                   # model update
 
+   :param model: PyTorch model.
+   :param optimizer: PyTorch optimizer.
+   :param criterion: loss function.
+   :param train_mb_size: mini-batch size for training.
+   :param train_epochs: number of training epochs.
+   :param eval_mb_size: mini-batch size for eval.
+   :param device: PyTorch device where the model will be allocated.
+   :param plugins: (optional) list of StrategyPlugins.
+   :param evaluator: (optional) instance of EvaluationPlugin for logging
+       and metric computations. None to remove logging.
+   :param eval_every: the frequency of the calls to `eval` inside the
+       training loop.
+           if -1: no evaluation during training.
+           if  0: calls `eval` after the final epoch of each training
+               experience.
+           if >0: calls `eval` every `eval_every` epochs and at the end
+               of all the epochs for a single experience.
 
-.. py:class:: InteractiveLogger
+   .. attribute:: model
+      :annotation: :Module
 
-   Bases: :class:`avalanche.logging.TextLogger`
+      PyTorch model. 
 
-   The `InteractiveLogger` class provides logging facilities
-   for the console standard output. The logger shows
-   a progress bar during training and evaluation flows and
-   interactively display metric results as soon as they
-   become available. The logger writes metric results after
-   each training epoch, evaluation experience and at the
-   end of the entire evaluation stream.
 
-   .. note::
-       To avoid an excessive amount of printed lines,
-       this logger will **not** print results after
-       each iteration. If the user is monitoring
-       metrics which emit results after each minibatch
-       (e.g., `MinibatchAccuracy`), only the last recorded
-       value of such metrics will be reported at the end
-       of the epoch.
+   .. attribute:: optimizer
+      
 
-   .. note::
-       Since this logger works on the standard output,
-       metrics producing images or more complex visualizations
-       will be converted to a textual format suitable for
-       console printing. You may want to add more loggers
-       to your `EvaluationPlugin` to better support
-       different formats.
+      PyTorch optimizer. 
 
-   Creates an instance of `TextLogger` class.
 
-   :param file: destination file to which print metrics
-       (default=sys.stdout).
+   .. attribute:: train_epochs
+      :annotation: :int
 
-   .. method:: before_training_epoch(self, strategy: BaseStrategy, metric_values: List['MetricValue'], **kwargs)
+      Number of training epochs. 
 
-      Called before `train_epoch` by the `BaseStrategy`. 
 
+   .. attribute:: train_mb_size
+      :annotation: :int
 
-   .. method:: after_training_epoch(self, strategy: BaseStrategy, metric_values: List['MetricValue'], **kwargs)
+      Training mini-batch size. 
 
-      Called after `train_epoch` by the `BaseStrategy`. 
 
+   .. attribute:: eval_mb_size
+      :annotation: :int
 
-   .. method:: before_eval_exp(self, strategy: BaseStrategy, metric_values: List['MetricValue'], **kwargs)
+      Eval mini-batch size. 
 
-      Called before `eval_exp` by the `BaseStrategy`. 
 
+   .. attribute:: device
+      
 
-   .. method:: after_eval_exp(self, strategy: BaseStrategy, metric_values: List['MetricValue'], **kwargs)
+      PyTorch device where the model will be allocated. 
 
-      Called after `eval_exp` by the `BaseStrategy`. 
 
+   .. attribute:: plugins
+      
 
-   .. method:: after_training_iteration(self, strategy: BaseStrategy, metric_values: List['MetricValue'], **kwargs)
+      List of `StrategyPlugin`s. 
 
-      Called after the end of a training iteration by the
-      `BaseStrategy`. 
 
+   .. attribute:: evaluator
+      
 
-   .. method:: after_eval_iteration(self, strategy: BaseStrategy, metric_values: List['MetricValue'], **kwargs)
+      EvaluationPlugin used for logging and metric computations. 
 
-      Called after the end of an iteration by the
-      `BaseStrategy`. 
 
+   .. attribute:: eval_every
+      
 
+      Frequency of the evaluation during training. 
 
-.. py:class:: EvaluationPlugin(*metrics: Union['PluginMetric', Sequence['PluginMetric']], loggers: Union['StrategyLogger', Sequence['StrategyLogger']] = None, collect_all=True)
 
-   Bases: :class:`avalanche.training.plugins.strategy_plugin.StrategyPlugin`
+   .. attribute:: training_exp_counter
+      :annotation: = 0
 
-   An evaluation plugin that obtains relevant data from the
-   training and eval loops of the strategy through callbacks.
-   The plugin keeps a dictionary with the last recorded value for each metric.
-   The dictionary will be returned by the `train` and `eval` methods of the
-   strategies.
-   It is also possible to keep a dictionary with all recorded metrics by
-   specifying `collect_all=True`. The dictionary can be retrieved via
-   the `get_all_metrics` method.
+      Counts the number of training steps. +1 at the end of each 
+      experience. 
 
-   This plugin also logs metrics using the provided loggers.
 
-   Creates an instance of the evaluation plugin.
+   .. attribute:: epoch
+      :annotation: :Optional[int]
 
-   :param metrics: The metrics to compute.
-   :param loggers: The loggers to be used to log the metric values.
-   :param collect_all: if True, collect in a separate dictionary all
-       metric curves values. This dictionary is accessible with
-       `get_all_metrics` method.
+      Epoch counter. 
 
-   .. method:: get_last_metrics(self)
 
-      Return a shallow copy of dictionary with metric names
-      as keys and last metrics value as values.
+   .. attribute:: experience
+      
 
-      :return: a dictionary with full metric
-          names as keys and last metric value as value.
+      Current experience. 
 
 
-   .. method:: get_all_metrics(self)
+   .. attribute:: adapted_dataset
+      
 
-      Return the dictionary of all collected metrics.
-      This method should be called only when `collect_all` is set to True.
+      Data used to train. It may be modified by plugins. Plugins can 
+      append data to it (e.g. for replay). 
+       
+      .. note:: 
+          This dataset may contain samples from different experiences. If you 
+          want the original data for the current experience  
+          use :attr:`.BaseStrategy.experience`.
 
-      :return: if `collect_all` is True, returns a dictionary
-          with full metric names as keys and a tuple of two lists
-          as value. The first list gathers x values (indices
-          representing time steps at which the corresponding
-          metric value has been emitted). The second list
-          gathers metric values. a dictionary. If `collect_all`
-          is False return an empty dictionary
 
+   .. attribute:: dataloader
+      
 
-   .. method:: reset_last_metrics(self)
+      Dataloader. 
 
-      Set the dictionary storing last value for each metric to be
-      empty dict.
 
+   .. attribute:: mb_it
+      
 
-   .. method:: before_training(self, strategy: BaseStrategy, **kwargs)
+      Iteration counter. Reset at the start of a new epoch. 
 
 
-   .. method:: before_training_exp(self, strategy: BaseStrategy, **kwargs)
+   .. attribute:: mbatch
+      
 
+      Current mini-batch. 
 
-   .. method:: before_train_dataset_adaptation(self, strategy: BaseStrategy, **kwargs)
 
+   .. attribute:: mb_output
+      
 
-   .. method:: after_train_dataset_adaptation(self, strategy: BaseStrategy, **kwargs)
+      Model's output computed on the current mini-batch. 
 
 
-   .. method:: before_training_epoch(self, strategy: BaseStrategy, **kwargs)
+   .. attribute:: loss
+      
 
+      Loss of the current mini-batch. 
 
-   .. method:: before_training_iteration(self, strategy: BaseStrategy, **kwargs)
 
+   .. attribute:: is_training
+      :annotation: :bool = False
 
-   .. method:: before_forward(self, strategy: BaseStrategy, **kwargs)
+      True if the strategy is in training mode. 
 
 
-   .. method:: after_forward(self, strategy: BaseStrategy, **kwargs)
+   .. method:: is_eval(self)
+      :property:
 
+      True if the strategy is in evaluation mode. 
 
-   .. method:: before_backward(self, strategy: BaseStrategy, **kwargs)
 
+   .. method:: mb_x(self)
+      :property:
 
-   .. method:: after_backward(self, strategy: BaseStrategy, **kwargs)
+      Current mini-batch input. 
 
 
-   .. method:: after_training_iteration(self, strategy: BaseStrategy, **kwargs)
+   .. method:: mb_y(self)
+      :property:
 
+      Current mini-batch target. 
 
-   .. method:: before_update(self, strategy: BaseStrategy, **kwargs)
 
+   .. method:: mb_task_id(self)
+      :property:
 
-   .. method:: after_update(self, strategy: BaseStrategy, **kwargs)
 
+   .. method:: criterion(self)
 
-   .. method:: after_training_epoch(self, strategy: BaseStrategy, **kwargs)
+      Loss function. 
 
 
-   .. method:: after_training_exp(self, strategy: BaseStrategy, **kwargs)
+   .. method:: train(self, experiences: Union[Experience, Sequence[Experience]], eval_streams: Optional[Sequence[Union[Experience, Sequence[Experience]]]] = None, **kwargs)
 
+      Training loop. if experiences is a single element trains on it.
+      If it is a sequence, trains the model on each experience in order.
+      This is different from joint training on the entire stream.
+      It returns a dictionary with last recorded value for each metric.
 
-   .. method:: after_training(self, strategy: BaseStrategy, **kwargs)
+      :param experiences: single Experience or sequence.
+      :param eval_streams: list of streams for evaluation.
+          If None: use training experiences for evaluation.
+          Use [] if you do not want to evaluate during training.
 
+      :return: dictionary containing last recorded value for
+          each metric name.
 
-   .. method:: before_eval(self, strategy: BaseStrategy, **kwargs)
 
+   .. method:: train_exp(self, experience: Experience, eval_streams, **kwargs)
 
-   .. method:: before_eval_dataset_adaptation(self, strategy: BaseStrategy, **kwargs)
+      Training loop over a single Experience object.
 
+      :param experience: CL experience information.
+      :param eval_streams: list of streams for evaluation.
+          If None: use training experiences for evaluation.
+          Use [] if you do not want to evaluate during training.
+      :param kwargs: custom arguments.
 
-   .. method:: after_eval_dataset_adaptation(self, strategy: BaseStrategy, **kwargs)
 
+   .. method:: stop_training(self)
 
-   .. method:: before_eval_exp(self, strategy: BaseStrategy, **kwargs)
+      Signals to stop training at the next iteration. 
 
 
-   .. method:: after_eval_exp(self, strategy: BaseStrategy, **kwargs)
+   .. method:: train_dataset_adaptation(self, **kwargs)
 
+      Initialize `self.adapted_dataset`. 
 
-   .. method:: after_eval(self, strategy: BaseStrategy, **kwargs)
 
+   .. method:: eval(self, exp_list: Union[Experience, Sequence[Experience]], **kwargs)
 
-   .. method:: before_eval_iteration(self, strategy: BaseStrategy, **kwargs)
+      Evaluate the current model on a series of experiences and
+      returns the last recorded value for each metric.
 
+      :param exp_list: CL experience information.
+      :param kwargs: custom arguments.
 
-   .. method:: before_eval_forward(self, strategy: BaseStrategy, **kwargs)
+      :return: dictionary containing last recorded value for
+          each metric name
 
 
-   .. method:: after_eval_forward(self, strategy: BaseStrategy, **kwargs)
+   .. method:: before_training_exp(self, **kwargs)
 
+      Called  after the dataset and data loader creation and
+      before the training loop.
 
-   .. method:: after_eval_iteration(self, strategy: BaseStrategy, **kwargs)
 
+   .. method:: make_train_dataloader(self, num_workers=0, shuffle=True, pin_memory=True, **kwargs)
 
+      Called after the dataset adaptation. Initializes the data loader.
+      :param num_workers: number of thread workers for the data loading.
+      :param shuffle: True if the data should be shuffled, False otherwise.
+      :param pin_memory: If True, the data loader will copy Tensors into CUDA
+          pinned memory before returning them. Defaults to True.
 
-.. data:: default_logger
-   
 
-   
+   .. method:: make_eval_dataloader(self, num_workers=0, pin_memory=True, **kwargs)
+
+      Initializes the eval data loader.
+      :param num_workers: How many subprocesses to use for data loading.
+          0 means that the data will be loaded in the main process.
+          (default: 0).
+      :param pin_memory: If True, the data loader will copy Tensors into CUDA
+          pinned memory before returning them. Defaults to True.
+      :param kwargs:
+      :return:
+
+
+   .. method:: after_train_dataset_adaptation(self, **kwargs)
+
+      Called after the dataset adaptation and before the
+      dataloader initialization. Allows to customize the dataset.
+      :param kwargs:
+      :return:
+
+
+   .. method:: before_training_epoch(self, **kwargs)
+
+      Called at the beginning of a new training epoch.
+      :param kwargs:
+      :return:
+
+
+   .. method:: training_epoch(self, **kwargs)
+
+      Training epoch.
+      :param kwargs:
+      :return:
+
+
+   .. method:: before_training(self, **kwargs)
+
+
+   .. method:: after_training(self, **kwargs)
+
+
+   .. method:: before_training_iteration(self, **kwargs)
+
+
+   .. method:: before_forward(self, **kwargs)
+
+
+   .. method:: after_forward(self, **kwargs)
+
+
+   .. method:: before_backward(self, **kwargs)
+
+
+   .. method:: after_backward(self, **kwargs)
+
+
+   .. method:: after_training_iteration(self, **kwargs)
+
+
+   .. method:: before_update(self, **kwargs)
+
+
+   .. method:: after_update(self, **kwargs)
+
+
+   .. method:: after_training_epoch(self, **kwargs)
+
+
+   .. method:: after_training_exp(self, **kwargs)
+
+
+   .. method:: before_eval(self, **kwargs)
+
+
+   .. method:: before_eval_exp(self, **kwargs)
+
+
+   .. method:: eval_dataset_adaptation(self, **kwargs)
+
+      Initialize `self.adapted_dataset`. 
+
+
+   .. method:: before_eval_dataset_adaptation(self, **kwargs)
+
+
+   .. method:: after_eval_dataset_adaptation(self, **kwargs)
+
+
+   .. method:: eval_epoch(self, **kwargs)
+
+
+   .. method:: after_eval_exp(self, **kwargs)
+
+
+   .. method:: after_eval(self, **kwargs)
+
+
+   .. method:: before_eval_iteration(self, **kwargs)
+
+
+   .. method:: before_eval_forward(self, **kwargs)
+
+
+   .. method:: after_eval_forward(self, **kwargs)
+
+
+   .. method:: after_eval_iteration(self, **kwargs)
+
+
+   .. method:: before_train_dataset_adaptation(self, **kwargs)
+
+
+   .. method:: model_adaptation(self)
+
+
+   .. method:: forward(self)
+
+
+   .. method:: make_optimizer(self)
+
+
+
+.. py:class:: JointTraining(model: Module, optimizer: Optimizer, criterion, train_mb_size: int = 1, train_epochs: int = 1, eval_mb_size: int = 1, device='cpu', plugins: Optional[Sequence['StrategyPlugin']] = None, evaluator=default_logger)
+
+   Bases: :class:`avalanche.training.strategies.BaseStrategy`
+
+   JointTraining performs joint training (also called offline training) on
+   the entire stream of data. This means that it is not a continual
+   learning strategy but it can be used as an "offline" upper bound for
+   them.
+
+   .. warnings also::
+       Currently :py:class:`JointTraining` adapts its own dataset.
+       Please check that the plugins you are using do not implement
+       :py:meth:`adapt_trainin_dataset`. Otherwise, they are incompatible
+       with :py:class:`JointTraining`.
+
+   :param model: PyTorch model.
+   :param optimizer: PyTorch optimizer.
+   :param criterion: loss function.
+   :param train_mb_size: mini-batch size for training.
+   :param train_epochs: number of training epochs.
+   :param eval_mb_size: mini-batch size for eval.
+   :param device: PyTorch device to run the model.
+   :param plugins: (optional) list of StrategyPlugins.
+   :param evaluator: (optional) instance of EvaluationPlugin for logging
+       and metric computations. None to remove logging.
+
+   .. method:: train(self, experiences: Union[Experience, Sequence[Experience]], eval_streams: Optional[Sequence[Union[Experience, Sequence[Experience]]]] = None, **kwargs)
+
+      Training loop. if experiences is a single element trains on it.
+      If it is a sequence, trains the model on each experience in order.
+      This is different from joint training on the entire stream.
+      It returns a dictionary with last recorded value for each metric.
+
+      :param experiences: single Experience or sequence.
+      :param eval_streams: list of streams for evaluation.
+          If None: use training experiences for evaluation.
+          Use [] if you do not want to evaluate during training.
+
+      :return: dictionary containing last recorded value for
+          each metric name.
+
+
+   .. method:: train_dataset_adaptation(self, **kwargs)
+
+      Concatenates all the datastream. 
+
+
+
+.. py:class:: Naive(model: Module, optimizer: Optimizer, criterion=CrossEntropyLoss(), train_mb_size: int = 1, train_epochs: int = 1, eval_mb_size: int = None, device=None, plugins: Optional[List[StrategyPlugin]] = None, evaluator: EvaluationPlugin = default_logger, eval_every=-1)
+
+   Bases: :class:`avalanche.training.strategies.base_strategy.BaseStrategy`
+
+   The simplest (and least effective) Continual Learning strategy. Naive just
+   incrementally fine tunes a single model without employing any method
+   to contrast the catastrophic forgetting of previous knowledge.
+   This strategy does not use task identities.
+
+   Naive is easy to set up and its results are commonly used to show the worst
+   performing baseline.
+
+   Creates an instance of the Naive strategy.
+
+   :param model: The model.
+   :param optimizer: The optimizer to use.
+   :param criterion: The loss criterion to use.
+   :param train_mb_size: The train minibatch size. Defaults to 1.
+   :param train_epochs: The number of training epochs. Defaults to 1.
+   :param eval_mb_size: The eval minibatch size. Defaults to 1.
+   :param device: The device to use. Defaults to None (cpu).
+   :param plugins: Plugins to be added. Defaults to None.
+   :param evaluator: (optional) instance of EvaluationPlugin for logging
+       and metric computations.
+   :param eval_every: the frequency of the calls to `eval` inside the
+       training loop.
+           if -1: no evaluation during training.
+           if  0: calls `eval` after the final epoch of each training
+               experience.
+           if >0: calls `eval` every `eval_every` epochs and at the end
+               of all the epochs for a single experience.
+
+
+.. py:class:: CWRStar(model: Module, optimizer: Optimizer, criterion, cwr_layer_name: str, train_mb_size: int = 1, train_epochs: int = 1, eval_mb_size: int = None, device=None, plugins: Optional[List[StrategyPlugin]] = None, evaluator: EvaluationPlugin = default_logger, eval_every=-1)
+
+   Bases: :class:`avalanche.training.strategies.base_strategy.BaseStrategy`
+
+   CWR* Strategy.
+   This strategy does not use task identities.
+
+   :param model: The model.
+   :param optimizer: The optimizer to use.
+   :param criterion: The loss criterion to use.
+   :param cwr_layer_name: name of the CWR layer. Defaults to None, which
+       means that the last fully connected layer will be used.
+   :param train_mb_size: The train minibatch size. Defaults to 1.
+   :param train_epochs: The number of training epochs. Defaults to 1.
+   :param eval_mb_size: The eval minibatch size. Defaults to 1.
+   :param device: The device to use. Defaults to None (cpu).
+   :param plugins: Plugins to be added. Defaults to None.
+   :param evaluator: (optional) instance of EvaluationPlugin for logging
+       and metric computations.
+   :param eval_every: the frequency of the calls to `eval` inside the
+       training loop.
+           if -1: no evaluation during training.
+           if  0: calls `eval` after the final epoch of each training
+               experience.
+           if >0: calls `eval` every `eval_every` epochs and at the end
+               of all the epochs for a single experience.
+
+
+.. py:class:: Replay(model: Module, optimizer: Optimizer, criterion, mem_size: int = 200, train_mb_size: int = 1, train_epochs: int = 1, eval_mb_size: int = None, device=None, plugins: Optional[List[StrategyPlugin]] = None, evaluator: EvaluationPlugin = default_logger, eval_every=-1)
+
+   Bases: :class:`avalanche.training.strategies.base_strategy.BaseStrategy`
+
+   Experience replay strategy. See ReplayPlugin for more details.
+   This strategy does not use task identities.
+
+   :param model: The model.
+   :param optimizer: The optimizer to use.
+   :param criterion: The loss criterion to use.
+   :param mem_size: replay buffer size.
+   :param train_mb_size: The train minibatch size. Defaults to 1.
+   :param train_epochs: The number of training epochs. Defaults to 1.
+   :param eval_mb_size: The eval minibatch size. Defaults to 1.
+   :param device: The device to use. Defaults to None (cpu).
+   :param plugins: Plugins to be added. Defaults to None.
+   :param evaluator: (optional) instance of EvaluationPlugin for logging
+       and metric computations.
+   :param eval_every: the frequency of the calls to `eval` inside the
+       training loop.
+           if -1: no evaluation during training.
+           if  0: calls `eval` after the final epoch of each training
+               experience.
+           if >0: calls `eval` every `eval_every` epochs and at the end
+               of all the epochs for a single experience.
+
+
+.. py:class:: GDumb(model: Module, optimizer: Optimizer, criterion, mem_size: int = 200, train_mb_size: int = 1, train_epochs: int = 1, eval_mb_size: int = None, device=None, plugins: Optional[List[StrategyPlugin]] = None, evaluator: EvaluationPlugin = default_logger, eval_every=-1)
+
+   Bases: :class:`avalanche.training.strategies.base_strategy.BaseStrategy`
+
+   GDumb strategy. See GDumbPlugin for more details.
+   This strategy does not use task identities.
+
+   :param model: The model.
+   :param optimizer: The optimizer to use.
+   :param criterion: The loss criterion to use.
+   :param mem_size: replay buffer size.
+   :param train_mb_size: The train minibatch size. Defaults to 1.
+   :param train_epochs: The number of training epochs. Defaults to 1.
+   :param eval_mb_size: The eval minibatch size. Defaults to 1.
+   :param device: The device to use. Defaults to None (cpu).
+   :param plugins: Plugins to be added. Defaults to None.
+   :param evaluator: (optional) instance of EvaluationPlugin for logging
+       and metric computations.
+   :param eval_every: the frequency of the calls to `eval` inside the
+       training loop.
+           if -1: no evaluation during training.
+           if  0: calls `eval` after the final epoch of each training
+               experience.
+           if >0: calls `eval` every `eval_every` epochs and at the end
+               of all the epochs for a single experience.
+
+
+.. py:class:: LwF(model: Module, optimizer: Optimizer, criterion, alpha: Union[float, Sequence[float]], temperature: float, train_mb_size: int = 1, train_epochs: int = 1, eval_mb_size: int = None, device=None, plugins: Optional[List[StrategyPlugin]] = None, evaluator: EvaluationPlugin = default_logger, eval_every=-1)
+
+   Bases: :class:`avalanche.training.strategies.base_strategy.BaseStrategy`
+
+   Learning without Forgetting strategy.
+       See LwF plugin for details.
+       This strategy does not use task identities.
+
+   :param model: The model.
+   :param optimizer: The optimizer to use.
+   :param criterion: The loss criterion to use.
+   :param alpha: distillation hyperparameter. It can be either a float
+           number or a list containing alpha for each experience.
+   :param temperature: softmax temperature for distillation
+   :param train_mb_size: The train minibatch size. Defaults to 1.
+   :param train_epochs: The number of training epochs. Defaults to 1.
+   :param eval_mb_size: The eval minibatch size. Defaults to 1.
+   :param device: The device to use. Defaults to None (cpu).
+   :param plugins: Plugins to be added. Defaults to None.
+   :param evaluator: (optional) instance of EvaluationPlugin for logging
+       and metric computations.
+   :param eval_every: the frequency of the calls to `eval` inside the
+       training loop.
+           if -1: no evaluation during training.
+           if  0: calls `eval` after the final epoch of each training
+               experience.
+           if >0: calls `eval` every `eval_every` epochs and at the end
+               of all the epochs for a single experience.
+
+
+.. py:class:: AGEM(model: Module, optimizer: Optimizer, criterion, patterns_per_exp: int, sample_size: int = 64, train_mb_size: int = 1, train_epochs: int = 1, eval_mb_size: int = None, device=None, plugins: Optional[List[StrategyPlugin]] = None, evaluator: EvaluationPlugin = default_logger, eval_every=-1)
+
+   Bases: :class:`avalanche.training.strategies.base_strategy.BaseStrategy`
+
+   Average Gradient Episodic Memory (A-GEM) strategy.
+       See AGEM plugin for details.
+       This strategy does not use task identities.
+
+   :param model: The model.
+   :param optimizer: The optimizer to use.
+   :param criterion: The loss criterion to use.
+   :param patterns_per_exp: number of patterns per experience in the memory
+   :param sample_size: number of patterns in memory sample when computing
+       reference gradient.
+   :param train_mb_size: The train minibatch size. Defaults to 1.
+   :param train_epochs: The number of training epochs. Defaults to 1.
+   :param eval_mb_size: The eval minibatch size. Defaults to 1.
+   :param device: The device to use. Defaults to None (cpu).
+   :param plugins: Plugins to be added. Defaults to None.
+   :param evaluator: (optional) instance of EvaluationPlugin for logging
+       and metric computations.
+   :param eval_every: the frequency of the calls to `eval` inside the
+       training loop.
+           if -1: no evaluation during training.
+           if  0: calls `eval` after the final epoch of each training
+               experience.
+           if >0: calls `eval` every `eval_every` epochs and at the end
+               of all the epochs for a single experience.
+
+
+.. py:class:: GEM(model: Module, optimizer: Optimizer, criterion, patterns_per_exp: int, memory_strength: float = 0.5, train_mb_size: int = 1, train_epochs: int = 1, eval_mb_size: int = None, device=None, plugins: Optional[List[StrategyPlugin]] = None, evaluator: EvaluationPlugin = default_logger, eval_every=-1)
+
+   Bases: :class:`avalanche.training.strategies.base_strategy.BaseStrategy`
+
+   Gradient Episodic Memory (GEM) strategy.
+       See GEM plugin for details.
+       This strategy does not use task identities.
+
+   :param model: The model.
+   :param optimizer: The optimizer to use.
+   :param criterion: The loss criterion to use.
+   :param patterns_per_exp: number of patterns per experience in the memory
+   :param memory_strength: offset to add to the projection direction
+       in order to favour backward transfer (gamma in original paper).
+   :param train_mb_size: The train minibatch size. Defaults to 1.
+   :param train_epochs: The number of training epochs. Defaults to 1.
+   :param eval_mb_size: The eval minibatch size. Defaults to 1.
+   :param device: The device to use. Defaults to None (cpu).
+   :param plugins: Plugins to be added. Defaults to None.
+   :param evaluator: (optional) instance of EvaluationPlugin for logging
+       and metric computations.
+   :param eval_every: the frequency of the calls to `eval` inside the
+       training loop.
+           if -1: no evaluation during training.
+           if  0: calls `eval` after the final epoch of each training
+               experience.
+           if >0: calls `eval` every `eval_every` epochs and at the end
+               of all the epochs for a single experience.
+
+
+.. py:class:: EWC(model: Module, optimizer: Optimizer, criterion, ewc_lambda: float, mode: str = 'separate', decay_factor: Optional[float] = None, keep_importance_data: bool = False, train_mb_size: int = 1, train_epochs: int = 1, eval_mb_size: int = None, device=None, plugins: Optional[List[StrategyPlugin]] = None, evaluator: EvaluationPlugin = default_logger, eval_every=-1)
+
+   Bases: :class:`avalanche.training.strategies.base_strategy.BaseStrategy`
+
+   Elastic Weight Consolidation (EWC) strategy.
+       See EWC plugin for details.
+       This strategy does not use task identities.
+
+   :param model: The model.
+   :param optimizer: The optimizer to use.
+   :param criterion: The loss criterion to use.
+   :param ewc_lambda: hyperparameter to weigh the penalty inside the total
+          loss. The larger the lambda, the larger the regularization.
+   :param mode: `separate` to keep a separate penalty for each previous
+          experience. `onlinesum` to keep a single penalty summed over all
+          previous tasks. `onlineweightedsum` to keep a single penalty
+          summed with a decay factor over all previous tasks.
+   :param decay_factor: used only if mode is `onlineweightedsum`.
+          It specify the decay term of the importance matrix.
+   :param keep_importance_data: if True, keep in memory both parameter
+           values and importances for all previous task, for all modes.
+           If False, keep only last parameter values and importances.
+           If mode is `separate`, the value of `keep_importance_data` is
+           set to be True.
+   :param train_mb_size: The train minibatch size. Defaults to 1.
+   :param train_epochs: The number of training epochs. Defaults to 1.
+   :param eval_mb_size: The eval minibatch size. Defaults to 1.
+   :param device: The device to use. Defaults to None (cpu).
+   :param plugins: Plugins to be added. Defaults to None.
+   :param evaluator: (optional) instance of EvaluationPlugin for logging
+       and metric computations.
+   :param eval_every: the frequency of the calls to `eval` inside the
+       training loop.
+           if -1: no evaluation during training.
+           if  0: calls `eval` after the final epoch of each training
+               experience.
+           if >0: calls `eval` every `eval_every` epochs and at the end
+               of all the epochs for a single experience.
+
+
+.. py:class:: SynapticIntelligence(model: Module, optimizer: Optimizer, criterion, si_lambda: float, train_mb_size: int = 1, train_epochs: int = 1, eval_mb_size: int = 1, device='cpu', plugins: Optional[Sequence['StrategyPlugin']] = None, evaluator=default_logger, eval_every=-1)
+
+   Bases: :class:`avalanche.training.strategies.base_strategy.BaseStrategy`
+
+   The Synaptic Intelligence strategy.
+
+   This is the Synaptic Intelligence PyTorch implementation of the
+   algorithm described in the paper
+   "Continuous Learning in Single-Incremental-Task Scenarios"
+   (https://arxiv.org/abs/1806.08568)
+
+   The original implementation has been proposed in the paper
+   "Continual Learning Through Synaptic Intelligence"
+   (https://arxiv.org/abs/1703.04200).
+
+   The Synaptic Intelligence regularization can also be used in a different
+   strategy by applying the :class:`SynapticIntelligencePlugin` plugin.
+
+   Creates an instance of the Synaptic Intelligence strategy.
+
+   :param model: PyTorch model.
+   :param optimizer: PyTorch optimizer.
+   :param criterion: loss function.
+   :param si_lambda: Synaptic Intelligence lambda term.
+   :param train_mb_size: mini-batch size for training.
+   :param train_epochs: number of training epochs.
+   :param eval_mb_size: mini-batch size for eval.
+   :param device: PyTorch device to run the model.
+   :param plugins: (optional) list of StrategyPlugins.
+   :param evaluator: (optional) instance of EvaluationPlugin for logging
+       and metric computations.
+   :param eval_every: the frequency of the calls to `eval` inside the
+       training loop.
+           if -1: no evaluation during training.
+           if  0: calls `eval` after the final epoch of each training
+               experience.
+           if >0: calls `eval` every `eval_every` epochs and at the end
+               of all the epochs for a single experience.
+
+
+.. py:class:: CoPE(model: Module, optimizer: Optimizer, criterion, mem_size: int = 200, n_classes: int = 10, p_size: int = 100, alpha: float = 0.99, T: float = 0.1, train_mb_size: int = 1, train_epochs: int = 1, eval_mb_size: int = None, device=None, plugins: Optional[List[StrategyPlugin]] = None, evaluator: EvaluationPlugin = default_logger, eval_every=-1)
+
+   Bases: :class:`avalanche.training.strategies.base_strategy.BaseStrategy`
+
+   Continual Prototype Evolution strategy.
+   See CoPEPlugin for more details.
+   This strategy does not use task identities during training.
+
+   :param model: The model.
+   :param optimizer: The optimizer to use.
+   :param criterion: Loss criterion to use. Standard overwritten by
+   PPPloss (see CoPEPlugin).
+   :param mem_size: replay buffer size.
+   :param n_classes: total number of classes that will be encountered. This
+   is used to output predictions for all classes, with zero probability
+   for unseen classes.
+   :param p_size: The prototype size, which equals the feature size of the
+   last layer.
+   :param alpha: The momentum for the exponentially moving average of the
+   prototypes.
+   :param T: The softmax temperature, used as a concentration parameter.
+   :param train_mb_size: The train minibatch size. Defaults to 1.
+   :param train_epochs: The number of training epochs. Defaults to 1.
+   :param eval_mb_size: The eval minibatch size. Defaults to 1.
+   :param device: The device to use. Defaults to None (cpu).
+   :param plugins: Plugins to be added. Defaults to None.
+   :param evaluator: (optional) instance of EvaluationPlugin for logging
+       and metric computations.
+   :param eval_every: the frequency of the calls to `eval` inside the
+       training loop.
+           if -1: no evaluation during training.
+           if  0: calls `eval` after the final epoch of each training
+               experience.
+           if >0: calls `eval` every `eval_every` epochs and at the end
+               of all the epochs for a single experience.
+
+
+.. py:class:: StreamingLDA(slda_model, criterion, input_size, num_classes, output_layer_name=None, shrinkage_param=0.0001, streaming_update_sigma=True, train_epochs: int = 1, train_mb_size: int = 1, eval_mb_size: int = 1, device='cpu', plugins: Optional[Sequence['StrategyPlugin']] = None, evaluator=default_logger, eval_every=-1)
+
+   Bases: :class:`avalanche.training.strategies.BaseStrategy`
+
+   Deep Streaming Linear Discriminant Analysis.
+   This strategy does not use backpropagation.
+   Minibatches are first passed to the pretrained feature extractor.
+   The result is processed one element at a time to fit the
+   LDA.
+   Original paper:
+   "Hayes et. al., Lifelong Machine Learning with Deep Streaming Linear
+   Discriminant Analysis, CVPR Workshop, 2020"
+   https://openaccess.thecvf.com/content_CVPRW_2020/papers/w15/Hayes_Lifelong_Machine_Learning_With_Deep_Streaming_Linear_Discriminant_Analysis_CVPRW_2020_paper.pdf
+
+   Init function for the SLDA model.
+   :param slda_model: a PyTorch model
+   :param criterion: loss function
+   :param output_layer_name: if not None, wrap model to retrieve
+       only the `output_layer_name` output. If None, the strategy
+       assumes that the model already produces a valid output.
+       You can use `FeatureExtractorBackbone` class to create your custom
+       SLDA-compatible model.
+   :param input_size: feature dimension
+   :param num_classes: number of total classes in stream
+   :param train_mb_size: batch size for feature extractor during
+       training. Fit will be called on a single pattern at a time.
+   :param eval_mb_size: batch size for inference
+   :param shrinkage_param: value of the shrinkage parameter
+   :param streaming_update_sigma: True if sigma is plastic else False
+   feature extraction in `self.feature_extraction_wrapper'
+   :param plugins: list of StrategyPlugins
+   :param evaluator: Evaluation Plugin instance
+   :param eval_every: run eval every `eval_every` epochs.
+       See `BaseStrategy` for details.
+
+   .. method:: forward(self, return_features=False)
+
+
+   .. method:: training_epoch(self, **kwargs)
+
+      Training epoch.
+      :param kwargs:
+      :return:
+
+
+   .. method:: make_optimizer(self)
+
+
+   .. method:: fit(self, x, y)
+
+      Fit the SLDA model to a new sample (x,y).
+      :param x: a torch tensor of the input data (must be a vector)
+      :param y: a torch tensor of the input label
+      :return: None
+
+
+   .. method:: predict(self, X)
+
+      Make predictions on test data X.
+      :param X: a torch tensor that contains N data samples (N x d)
+      :param return_probas: True if the user would like probabilities instead
+      of predictions returned
+      :return: the test predictions or probabilities
+
+
+   .. method:: fit_base(self, X, y)
+
+      Fit the SLDA model to the base data.
+      :param X: an Nxd torch tensor of base initialization data
+      :param y: an Nx1-dimensional torch tensor of the associated labels for X
+      :return: None
+
+
+   .. method:: save_model(self, save_path, save_name)
+
+      Save the model parameters to a torch file.
+      :param save_path: the path where the model will be saved
+      :param save_name: the name for the saved file
+      :return:
+
+
+   .. method:: load_model(self, save_path, save_name)
+
+      Load the model parameters into StreamingLDA object.
+      :param save_path: the path where the model is saved
+      :param save_name: the name of the saved file
+      :return:
+
+
 

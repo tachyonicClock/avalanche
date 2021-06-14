@@ -27,6 +27,7 @@ Submodules
    mlp_tiny_imagenet/index.rst
    mobilenetv1/index.rst
    ncm_classifier/index.rst
+   pnn/index.rst
    pytorchcv_wrapper/index.rst
    simple_cnn/index.rst
    simple_mlp/index.rst
@@ -189,34 +190,15 @@ Functions
 
 .. py:class:: MTSimpleMLP(input_size=28 * 28, hidden_size=512)
 
-   Bases: :class:`torch.nn.Module`, :class:`avalanche.models.dynamic_modules.MultiTaskModule`
+   Bases: :class:`avalanche.models.dynamic_modules.MultiTaskModule`
 
-   Base class for all neural network modules.
+   Multi-task modules are `torch.nn.Modules`s for multi-task
+   scenarios. The `forward` method accepts task labels, one for
+   each sample in the mini-batch.
 
-   Your models should also subclass this class.
-
-   Modules can also contain other Modules, allowing to nest them in
-   a tree structure. You can assign the submodules as regular attributes::
-
-       import torch.nn as nn
-       import torch.nn.functional as F
-
-       class Model(nn.Module):
-           def __init__(self):
-               super(Model, self).__init__()
-               self.conv1 = nn.Conv2d(1, 20, 5)
-               self.conv2 = nn.Conv2d(20, 20, 5)
-
-           def forward(self, x):
-               x = F.relu(self.conv1(x))
-               return F.relu(self.conv2(x))
-
-   Submodules assigned in this way will be registered, and will have their
-   parameters converted too when you call :meth:`to`, etc.
-
-   :ivar training: Boolean represents whether this module is in training or
-                   evaluation mode.
-   :vartype training: bool
+   By default the `forward` method splits the mini-batch by task
+   and calls `forward_single_task`. Subclasses must implement
+   `forward_single_task` or override `forward.
 
    Multi-task MLP with multi-head classifier.
 
@@ -308,33 +290,6 @@ Functions
 
    Bases: :class:`torch.nn.Module`
 
-   Base class for all neural network modules.
-
-   Your models should also subclass this class.
-
-   Modules can also contain other Modules, allowing to nest them in
-   a tree structure. You can assign the submodules as regular attributes::
-
-       import torch.nn as nn
-       import torch.nn.functional as F
-
-       class Model(nn.Module):
-           def __init__(self):
-               super(Model, self).__init__()
-               self.conv1 = nn.Conv2d(1, 20, 5)
-               self.conv2 = nn.Conv2d(20, 20, 5)
-
-           def forward(self, x):
-               x = F.relu(self.conv1(x))
-               return F.relu(self.conv2(x))
-
-   Submodules assigned in this way will be registered, and will have their
-   parameters converted too when you call :meth:`to`, etc.
-
-   :ivar training: Boolean represents whether this module is in training or
-                   evaluation mode.
-   :vartype training: bool
-
    Dynamic Modules are Avalanche modules that can be incrementally
    expanded to allow architectural modifications (multi-head
    classifiers, progressive networks, ...).
@@ -342,6 +297,8 @@ Functions
    Compared to pytoch Modules, they provide an additional method,
    `model_adaptation`, which adapts the model given data from the
    current experience.
+
+   Initializes internal Module state, shared by both nn.Module and ScriptModule.
 
    .. method:: adaptation(self, dataset: AvalancheDataset = None)
 
@@ -388,6 +345,8 @@ Functions
 
 .. py:class:: MultiTaskModule
 
+   Bases: :class:`torch.nn.Module`
+
    Multi-task modules are `torch.nn.Modules`s for multi-task
    scenarios. The `forward` method accepts task labels, one for
    each sample in the mini-batch.
@@ -395,6 +354,8 @@ Functions
    By default the `forward` method splits the mini-batch by task
    and calls `forward_single_task`. Subclasses must implement
    `forward_single_task` or override `forward.
+
+   Initializes internal Module state, shared by both nn.Module and ScriptModule.
 
    .. method:: forward(self, x: torch.Tensor, task_labels: torch.Tensor) -> torch.Tensor
 
@@ -406,6 +367,7 @@ Functions
 
 
    .. method:: forward_single_task(self, x: torch.Tensor, task_label: int) -> torch.Tensor
+      :abstractmethod:
 
       compute the output given the input `x` and task label.
 
@@ -419,32 +381,13 @@ Functions
 
    Bases: :class:`avalanche.models.dynamic_modules.DynamicModule`
 
-   Base class for all neural network modules.
+   Dynamic Modules are Avalanche modules that can be incrementally
+   expanded to allow architectural modifications (multi-head
+   classifiers, progressive networks, ...).
 
-   Your models should also subclass this class.
-
-   Modules can also contain other Modules, allowing to nest them in
-   a tree structure. You can assign the submodules as regular attributes::
-
-       import torch.nn as nn
-       import torch.nn.functional as F
-
-       class Model(nn.Module):
-           def __init__(self):
-               super(Model, self).__init__()
-               self.conv1 = nn.Conv2d(1, 20, 5)
-               self.conv2 = nn.Conv2d(20, 20, 5)
-
-           def forward(self, x):
-               x = F.relu(self.conv1(x))
-               return F.relu(self.conv2(x))
-
-   Submodules assigned in this way will be registered, and will have their
-   parameters converted too when you call :meth:`to`, etc.
-
-   :ivar training: Boolean represents whether this module is in training or
-                   evaluation mode.
-   :vartype training: bool
+   Compared to pytoch Modules, they provide an additional method,
+   `model_adaptation`, which adapts the model given data from the
+   current experience.
 
    Output layer that incrementally adds units whenever new classes are
    encountered.
@@ -478,32 +421,13 @@ Functions
 
    Bases: :class:`avalanche.models.dynamic_modules.MultiTaskModule`, :class:`avalanche.models.dynamic_modules.DynamicModule`
 
-   Base class for all neural network modules.
+   Multi-task modules are `torch.nn.Modules`s for multi-task
+   scenarios. The `forward` method accepts task labels, one for
+   each sample in the mini-batch.
 
-   Your models should also subclass this class.
-
-   Modules can also contain other Modules, allowing to nest them in
-   a tree structure. You can assign the submodules as regular attributes::
-
-       import torch.nn as nn
-       import torch.nn.functional as F
-
-       class Model(nn.Module):
-           def __init__(self):
-               super(Model, self).__init__()
-               self.conv1 = nn.Conv2d(1, 20, 5)
-               self.conv2 = nn.Conv2d(20, 20, 5)
-
-           def forward(self, x):
-               x = F.relu(self.conv1(x))
-               return F.relu(self.conv2(x))
-
-   Submodules assigned in this way will be registered, and will have their
-   parameters converted too when you call :meth:`to`, etc.
-
-   :ivar training: Boolean represents whether this module is in training or
-                   evaluation mode.
-   :vartype training: bool
+   By default the `forward` method splits the mini-batch by task
+   and calls `forward_single_task`. Subclasses must implement
+   `forward_single_task` or override `forward.
 
    Multi-head classifier with separate heads for each task.
 

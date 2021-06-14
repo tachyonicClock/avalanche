@@ -190,7 +190,8 @@
 <span class="kn">from</span> <span class="nn">math</span> <span class="kn">import</span> <span class="n">ceil</span>
 
 <span class="kn">from</span> <span class="nn">avalanche.models</span> <span class="kn">import</span> <span class="n">TrainEvalModel</span><span class="p">,</span> <span class="n">NCMClassifier</span>
-<span class="kn">from</span> <span class="nn">avalanche.training</span> <span class="kn">import</span> <span class="n">EvaluationPlugin</span><span class="p">,</span> <span class="n">default_logger</span>
+<span class="kn">from</span> <span class="nn">avalanche.training.plugins</span> <span class="kn">import</span> <span class="n">EvaluationPlugin</span>
+<span class="kn">from</span> <span class="nn">avalanche.training.plugins.evaluation</span> <span class="kn">import</span> <span class="n">default_logger</span>
 <span class="kn">from</span> <span class="nn">avalanche.training.losses</span> <span class="kn">import</span> <span class="n">ICaRLLossPlugin</span>
 <span class="kn">from</span> <span class="nn">avalanche.training.plugins.strategy_plugin</span> <span class="kn">import</span> <span class="n">StrategyPlugin</span>
 <span class="kn">from</span> <span class="nn">torch.nn</span> <span class="kn">import</span> <span class="n">Module</span>

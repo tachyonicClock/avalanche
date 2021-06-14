@@ -189,7 +189,6 @@
 <span class="kn">from</span> <span class="nn">torch.optim</span> <span class="kn">import</span> <span class="n">SGD</span>
 <span class="kn">from</span> <span class="nn">torch.utils.data</span> <span class="kn">import</span> <span class="n">DataLoader</span>
 
-<span class="kn">from</span> <span class="nn">avalanche.training</span> <span class="kn">import</span> <span class="n">default_logger</span>
 <span class="kn">from</span> <span class="nn">avalanche.models</span> <span class="kn">import</span> <span class="n">MobilenetV1</span>
 <span class="kn">from</span> <span class="nn">avalanche.models.batch_renorm</span> <span class="kn">import</span> <span class="n">BatchRenorm2D</span>
 <span class="kn">from</span> <span class="nn">avalanche.training.plugins</span> <span class="kn">import</span> <span class="n">StrategyPlugin</span><span class="p">,</span> <span class="n">EvaluationPlugin</span><span class="p">,</span> \
@@ -197,9 +196,10 @@
 <span class="kn">from</span> <span class="nn">avalanche.training.strategies</span> <span class="kn">import</span> <span class="n">BaseStrategy</span>
 <span class="kn">from</span> <span class="nn">avalanche.training.utils</span> <span class="kn">import</span> <span class="n">replace_bn_with_brn</span><span class="p">,</span> <span class="n">get_last_fc_layer</span><span class="p">,</span> \
     <span class="n">freeze_up_to</span><span class="p">,</span> <span class="n">change_brn_pars</span><span class="p">,</span> <span class="n">examples_per_class</span><span class="p">,</span> <span class="n">LayerAndParameter</span>
+<span class="kn">from</span> <span class="nn">avalanche.training.plugins.evaluation</span> <span class="kn">import</span> <span class="n">default_logger</span>
 
 
-<div class="viewcode-block" id="AR1"><a class="viewcode-back" href="../../../../../autoapi/avalanche/training/strategies/ar1/#avalanche.training.strategies.ar1.AR1">[docs]</a><span class="k">class</span> <span class="nc">AR1</span><span class="p">(</span><span class="n">BaseStrategy</span><span class="p">):</span>
+<div class="viewcode-block" id="AR1"><a class="viewcode-back" href="../../../../../autoapi/avalanche/training/strategies/#avalanche.training.AR1">[docs]</a><span class="k">class</span> <span class="nc">AR1</span><span class="p">(</span><span class="n">BaseStrategy</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    The AR1 strategy with Latent Replay.</span>
 
@@ -314,7 +314,7 @@
             <span class="n">eval_mb_size</span><span class="o">=</span><span class="n">eval_mb_size</span><span class="p">,</span> <span class="n">device</span><span class="o">=</span><span class="n">device</span><span class="p">,</span> <span class="n">plugins</span><span class="o">=</span><span class="n">plugins</span><span class="p">,</span>
             <span class="n">evaluator</span><span class="o">=</span><span class="n">evaluator</span><span class="p">,</span> <span class="n">eval_every</span><span class="o">=</span><span class="n">eval_every</span><span class="p">)</span>
 
-<div class="viewcode-block" id="AR1.before_training_exp"><a class="viewcode-back" href="../../../../../autoapi/avalanche/training/strategies/ar1/#avalanche.training.strategies.ar1.AR1.before_training_exp">[docs]</a>    <span class="k">def</span> <span class="nf">before_training_exp</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+<div class="viewcode-block" id="AR1.before_training_exp"><a class="viewcode-back" href="../../../../../autoapi/avalanche/training/strategies/#avalanche.training.AR1.before_training_exp">[docs]</a>    <span class="k">def</span> <span class="nf">before_training_exp</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">eval</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">end_features</span><span class="o">.</span><span class="n">train</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">output</span><span class="o">.</span><span class="n">train</span><span class="p">()</span>
@@ -355,7 +355,7 @@
                 <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">cur_j</span><span class="p">[</span><span class="bp">cls</span><span class="p">]</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">]</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">cwr_plugin</span><span class="o">.</span><span class="n">reset_weights</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">cwr_plugin</span><span class="o">.</span><span class="n">cur_class</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="AR1.make_train_dataloader"><a class="viewcode-back" href="../../../../../autoapi/avalanche/training/strategies/ar1/#avalanche.training.strategies.ar1.AR1.make_train_dataloader">[docs]</a>    <span class="k">def</span> <span class="nf">make_train_dataloader</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">num_workers</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">shuffle</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+<div class="viewcode-block" id="AR1.make_train_dataloader"><a class="viewcode-back" href="../../../../../autoapi/avalanche/training/strategies/#avalanche.training.AR1.make_train_dataloader">[docs]</a>    <span class="k">def</span> <span class="nf">make_train_dataloader</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">num_workers</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">shuffle</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Called after the dataset instantiation. Initialize the data loader.</span>
 
@@ -392,7 +392,7 @@
             <span class="bp">self</span><span class="o">.</span><span class="n">adapted_dataset</span><span class="p">,</span> <span class="n">num_workers</span><span class="o">=</span><span class="n">num_workers</span><span class="p">,</span>
             <span class="n">batch_size</span><span class="o">=</span><span class="n">current_batch_mb_size</span><span class="p">,</span> <span class="n">shuffle</span><span class="o">=</span><span class="n">shuffle</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="AR1.training_epoch"><a class="viewcode-back" href="../../../../../autoapi/avalanche/training/strategies/ar1/#avalanche.training.strategies.ar1.AR1.training_epoch">[docs]</a>    <span class="k">def</span> <span class="nf">training_epoch</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+<div class="viewcode-block" id="AR1.training_epoch"><a class="viewcode-back" href="../../../../../autoapi/avalanche/training/strategies/#avalanche.training.AR1.training_epoch">[docs]</a>    <span class="k">def</span> <span class="nf">training_epoch</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
         <span class="k">for</span> <span class="bp">self</span><span class="o">.</span><span class="n">mb_it</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">mbatch</span> <span class="ow">in</span> \
                 <span class="nb">enumerate</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">dataloader</span><span class="p">):</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">before_training_iteration</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
@@ -441,7 +441,7 @@
 
             <span class="bp">self</span><span class="o">.</span><span class="n">after_training_iteration</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="AR1.after_training_exp"><a class="viewcode-back" href="../../../../../autoapi/avalanche/training/strategies/ar1/#avalanche.training.strategies.ar1.AR1.after_training_exp">[docs]</a>    <span class="k">def</span> <span class="nf">after_training_exp</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+<div class="viewcode-block" id="AR1.after_training_exp"><a class="viewcode-back" href="../../../../../autoapi/avalanche/training/strategies/#avalanche.training.AR1.after_training_exp">[docs]</a>    <span class="k">def</span> <span class="nf">after_training_exp</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
         <span class="n">h</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">rm_sz</span> <span class="o">//</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">training_exp_counter</span> <span class="o">+</span> <span class="mi">1</span><span class="p">),</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">cur_acts</span><span class="o">.</span><span class="n">size</span><span class="p">(</span><span class="mi">0</span><span class="p">))</span>
 
@@ -467,7 +467,7 @@
         <span class="c1"># Runs S.I. and CWR* plugin callbacks</span>
         <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">after_training_exp</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="AR1.filter_bn_and_brn"><a class="viewcode-back" href="../../../../../autoapi/avalanche/training/strategies/ar1/#avalanche.training.strategies.ar1.AR1.filter_bn_and_brn">[docs]</a>    <span class="nd">@staticmethod</span>
+<div class="viewcode-block" id="AR1.filter_bn_and_brn"><a class="viewcode-back" href="../../../../../autoapi/avalanche/training/strategies/#avalanche.training.AR1.filter_bn_and_brn">[docs]</a>    <span class="nd">@staticmethod</span>
     <span class="k">def</span> <span class="nf">filter_bn_and_brn</span><span class="p">(</span><span class="n">param_def</span><span class="p">:</span> <span class="n">LayerAndParameter</span><span class="p">):</span>
         <span class="k">return</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">param_def</span><span class="o">.</span><span class="n">layer</span><span class="p">,</span> <span class="p">(</span><span class="n">_NormBase</span><span class="p">,</span> <span class="n">BatchRenorm2D</span><span class="p">))</span></div></div>
 </pre></div>

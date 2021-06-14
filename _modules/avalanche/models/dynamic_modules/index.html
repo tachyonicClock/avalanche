@@ -194,25 +194,23 @@
 <span class="sd">    to allow architectural modifications (multi-head classifiers, progressive</span>
 <span class="sd">    networks, ...).</span>
 <span class="sd">&quot;&quot;&quot;</span>
-<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Dict</span>
-
 <span class="kn">import</span> <span class="nn">torch</span>
+<span class="kn">from</span> <span class="nn">torch.nn</span> <span class="kn">import</span> <span class="n">Module</span>
+
 <span class="kn">from</span> <span class="nn">avalanche.benchmarks.utils</span> <span class="kn">import</span> <span class="n">AvalancheDataset</span>
 <span class="kn">from</span> <span class="nn">avalanche.benchmarks.utils.dataset_utils</span> <span class="kn">import</span> <span class="n">ConstantSequence</span>
 
 
-<div class="viewcode-block" id="DynamicModule"><a class="viewcode-back" href="../../../../autoapi/avalanche/models/#avalanche.models.dynamic_modules.DynamicModule">[docs]</a><span class="k">class</span> <span class="nc">DynamicModule</span><span class="p">(</span><span class="n">torch</span><span class="o">.</span><span class="n">nn</span><span class="o">.</span><span class="n">Module</span><span class="p">):</span>
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">            Dynamic Modules are Avalanche modules that can be incrementally</span>
-<span class="sd">            expanded to allow architectural modifications (multi-head</span>
-<span class="sd">            classifiers, progressive networks, ...).</span>
+<div class="viewcode-block" id="DynamicModule"><a class="viewcode-back" href="../../../../autoapi/avalanche/models/#avalanche.models.dynamic_modules.DynamicModule">[docs]</a><span class="k">class</span> <span class="nc">DynamicModule</span><span class="p">(</span><span class="n">Module</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Dynamic Modules are Avalanche modules that can be incrementally</span>
+<span class="sd">        expanded to allow architectural modifications (multi-head</span>
+<span class="sd">        classifiers, progressive networks, ...).</span>
 
-<span class="sd">            Compared to pytoch Modules, they provide an additional method,</span>
-<span class="sd">            `model_adaptation`, which adapts the model given data from the</span>
-<span class="sd">            current experience.</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
+<span class="sd">        Compared to pytoch Modules, they provide an additional method,</span>
+<span class="sd">        `model_adaptation`, which adapts the model given data from the</span>
+<span class="sd">        current experience.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
 
 <div class="viewcode-block" id="DynamicModule.adaptation"><a class="viewcode-back" href="../../../../autoapi/avalanche/models/#avalanche.models.dynamic_modules.DynamicModule.adaptation">[docs]</a>    <span class="k">def</span> <span class="nf">adaptation</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dataset</span><span class="p">:</span> <span class="n">AvalancheDataset</span> <span class="o">=</span> <span class="kc">None</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot; Adapt the module (freeze units, add units...) using the current</span>
@@ -260,18 +258,16 @@
         <span class="k">pass</span></div></div>
 
 
-<div class="viewcode-block" id="MultiTaskModule"><a class="viewcode-back" href="../../../../autoapi/avalanche/models/#avalanche.models.dynamic_modules.MultiTaskModule">[docs]</a><span class="k">class</span> <span class="nc">MultiTaskModule</span><span class="p">:</span>
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">            Multi-task modules are `torch.nn.Modules`s for multi-task</span>
-<span class="sd">            scenarios. The `forward` method accepts task labels, one for</span>
-<span class="sd">            each sample in the mini-batch.</span>
+<div class="viewcode-block" id="MultiTaskModule"><a class="viewcode-back" href="../../../../autoapi/avalanche/models/#avalanche.models.dynamic_modules.MultiTaskModule">[docs]</a><span class="k">class</span> <span class="nc">MultiTaskModule</span><span class="p">(</span><span class="n">Module</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Multi-task modules are `torch.nn.Modules`s for multi-task</span>
+<span class="sd">        scenarios. The `forward` method accepts task labels, one for</span>
+<span class="sd">        each sample in the mini-batch.</span>
 
-<span class="sd">            By default the `forward` method splits the mini-batch by task</span>
-<span class="sd">            and calls `forward_single_task`. Subclasses must implement</span>
-<span class="sd">            `forward_single_task` or override `forward.</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
+<span class="sd">        By default the `forward` method splits the mini-batch by task</span>
+<span class="sd">        and calls `forward_single_task`. Subclasses must implement</span>
+<span class="sd">        `forward_single_task` or override `forward.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
 
 <div class="viewcode-block" id="MultiTaskModule.forward"><a class="viewcode-back" href="../../../../autoapi/avalanche/models/#avalanche.models.dynamic_modules.MultiTaskModule.forward">[docs]</a>    <span class="k">def</span> <span class="nf">forward</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">:</span> <span class="n">torch</span><span class="o">.</span><span class="n">Tensor</span><span class="p">,</span> <span class="n">task_labels</span><span class="p">:</span> <span class="n">torch</span><span class="o">.</span><span class="n">Tensor</span><span class="p">)</span>\
             <span class="o">-&gt;</span> <span class="n">torch</span><span class="o">.</span><span class="n">Tensor</span><span class="p">:</span>
@@ -281,7 +277,12 @@
 <span class="sd">        :param task_labels: task labels for each sample.</span>
 <span class="sd">        :return:</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">unique_tasks</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">unique</span><span class="p">(</span><span class="n">task_labels</span><span class="p">)</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">task_labels</span><span class="p">,</span> <span class="nb">int</span><span class="p">):</span>
+            <span class="c1"># fast path. mini-batch is single task.</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">forward_single_task</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">task_labels</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">unique_tasks</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">unique</span><span class="p">(</span><span class="n">task_labels</span><span class="p">)</span>
+
         <span class="n">out</span> <span class="o">=</span> <span class="kc">None</span>
         <span class="k">for</span> <span class="n">task</span> <span class="ow">in</span> <span class="n">unique_tasks</span><span class="p">:</span>
             <span class="n">task_mask</span> <span class="o">=</span> <span class="n">task_labels</span> <span class="o">==</span> <span class="n">task</span>
@@ -302,7 +303,7 @@
 <span class="sd">        :param task_label: a single task label.</span>
 <span class="sd">        :return:</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">assert</span> <span class="ne">NotImplementedError</span><span class="p">()</span></div></div>
+        <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">()</span></div></div>
 
 
 <div class="viewcode-block" id="IncrementalClassifier"><a class="viewcode-back" href="../../../../autoapi/avalanche/models/#avalanche.models.dynamic_modules.IncrementalClassifier">[docs]</a><span class="k">class</span> <span class="nc">IncrementalClassifier</span><span class="p">(</span><span class="n">DynamicModule</span><span class="p">):</span>

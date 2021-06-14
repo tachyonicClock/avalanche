@@ -196,16 +196,16 @@ networks, …).</p>
 </colgroup>
 <tbody>
 <tr class="row-odd"><td><p><a class="reference internal" href="#avalanche.models.dynamic_modules.DynamicModule" title="avalanche.models.dynamic_modules.DynamicModule"><code class="xref py py-obj docutils literal notranslate"><span class="pre">DynamicModule</span></code></a></p></td>
-<td><p>Base class for all neural network modules.</p></td>
+<td><p>Dynamic Modules are Avalanche modules that can be incrementally</p></td>
 </tr>
 <tr class="row-even"><td><p><a class="reference internal" href="#avalanche.models.dynamic_modules.MultiTaskModule" title="avalanche.models.dynamic_modules.MultiTaskModule"><code class="xref py py-obj docutils literal notranslate"><span class="pre">MultiTaskModule</span></code></a></p></td>
 <td><p>Multi-task modules are <a href="#id1"><span class="problematic" id="id2">`</span></a>torch.nn.Modules`s for multi-task</p></td>
 </tr>
 <tr class="row-odd"><td><p><a class="reference internal" href="#avalanche.models.dynamic_modules.IncrementalClassifier" title="avalanche.models.dynamic_modules.IncrementalClassifier"><code class="xref py py-obj docutils literal notranslate"><span class="pre">IncrementalClassifier</span></code></a></p></td>
-<td><p>Base class for all neural network modules.</p></td>
+<td><p>Dynamic Modules are Avalanche modules that can be incrementally</p></td>
 </tr>
 <tr class="row-even"><td><p><a class="reference internal" href="#avalanche.models.dynamic_modules.MultiHeadClassifier" title="avalanche.models.dynamic_modules.MultiHeadClassifier"><code class="xref py py-obj docutils literal notranslate"><span class="pre">MultiHeadClassifier</span></code></a></p></td>
-<td><p>Base class for all neural network modules.</p></td>
+<td><p>Multi-task modules are <a href="#id3"><span class="problematic" id="id4">`</span></a>torch.nn.Modules`s for multi-task</p></td>
 </tr>
 <tr class="row-odd"><td><p><a class="reference internal" href="#avalanche.models.dynamic_modules.TrainEvalModel" title="avalanche.models.dynamic_modules.TrainEvalModel"><code class="xref py py-obj docutils literal notranslate"><span class="pre">TrainEvalModel</span></code></a></p></td>
 <td><p>TrainEvalModel.</p></td>
@@ -216,38 +216,13 @@ networks, …).</p>
 <dt class="sig sig-object py" id="avalanche.models.dynamic_modules.DynamicModule">
 <em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">avalanche.models.dynamic_modules.</span></span><span class="sig-name descname"><span class="pre">DynamicModule</span></span><a class="reference internal" href="../../../../_modules/avalanche/models/dynamic_modules/#DynamicModule"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.models.dynamic_modules.DynamicModule" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">torch.nn.Module</span></code></p>
-<p>Base class for all neural network modules.</p>
-<p>Your models should also subclass this class.</p>
-<p>Modules can also contain other Modules, allowing to nest them in
-a tree structure. You can assign the submodules as regular attributes:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">torch.nn</span> <span class="k">as</span> <span class="nn">nn</span>
-<span class="kn">import</span> <span class="nn">torch.nn.functional</span> <span class="k">as</span> <span class="nn">F</span>
-
-<span class="k">class</span> <span class="nc">Model</span><span class="p">(</span><span class="n">nn</span><span class="o">.</span><span class="n">Module</span><span class="p">):</span>
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="nb">super</span><span class="p">(</span><span class="n">Model</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">conv1</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">Conv2d</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">20</span><span class="p">,</span> <span class="mi">5</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">conv2</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">Conv2d</span><span class="p">(</span><span class="mi">20</span><span class="p">,</span> <span class="mi">20</span><span class="p">,</span> <span class="mi">5</span><span class="p">)</span>
-
-    <span class="k">def</span> <span class="nf">forward</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">):</span>
-        <span class="n">x</span> <span class="o">=</span> <span class="n">F</span><span class="o">.</span><span class="n">relu</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">conv1</span><span class="p">(</span><span class="n">x</span><span class="p">))</span>
-        <span class="k">return</span> <span class="n">F</span><span class="o">.</span><span class="n">relu</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">conv2</span><span class="p">(</span><span class="n">x</span><span class="p">))</span>
-</pre></div>
-</div>
-<p>Submodules assigned in this way will be registered, and will have their
-parameters converted too when you call <code class="xref py py-meth docutils literal notranslate"><span class="pre">to()</span></code>, etc.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Variables</dt>
-<dd class="field-odd"><p><strong>training</strong> (<em>bool</em>) – Boolean represents whether this module is in training or
-evaluation mode.</p>
-</dd>
-</dl>
 <p>Dynamic Modules are Avalanche modules that can be incrementally
 expanded to allow architectural modifications (multi-head
 classifiers, progressive networks, …).</p>
 <p>Compared to pytoch Modules, they provide an additional method,
 <cite>model_adaptation</cite>, which adapts the model given data from the
 current experience.</p>
+<p>Initializes internal Module state, shared by both nn.Module and ScriptModule.</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="avalanche.models.dynamic_modules.DynamicModule.adaptation">
 <span class="sig-name descname"><span class="pre">adaptation</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dataset</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">AvalancheDataset</span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/avalanche/models/dynamic_modules/#DynamicModule.adaptation"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.models.dynamic_modules.DynamicModule.adaptation" title="Permalink to this definition">¶</a></dt>
@@ -302,12 +277,14 @@ use this data to <strong>train</strong> the module’s parameters.</p>
 <dl class="py class">
 <dt class="sig sig-object py" id="avalanche.models.dynamic_modules.MultiTaskModule">
 <em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">avalanche.models.dynamic_modules.</span></span><span class="sig-name descname"><span class="pre">MultiTaskModule</span></span><a class="reference internal" href="../../../../_modules/avalanche/models/dynamic_modules/#MultiTaskModule"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.models.dynamic_modules.MultiTaskModule" title="Permalink to this definition">¶</a></dt>
-<dd><p>Multi-task modules are <cite>torch.nn.Modules`s for multi-task
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">torch.nn.Module</span></code></p>
+<p>Multi-task modules are <cite>torch.nn.Modules`s for multi-task
 scenarios. The `forward</cite> method accepts task labels, one for
 each sample in the mini-batch.</p>
 <p>By default the <cite>forward</cite> method splits the mini-batch by task
 and calls <cite>forward_single_task</cite>. Subclasses must implement
-<cite>forward_single_task</cite> or override <a href="#id3"><span class="problematic" id="id4">`</span></a>forward.</p>
+<cite>forward_single_task</cite> or override <a href="#id5"><span class="problematic" id="id6">`</span></a>forward.</p>
+<p>Initializes internal Module state, shared by both nn.Module and ScriptModule.</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="avalanche.models.dynamic_modules.MultiTaskModule.forward">
 <span class="sig-name descname"><span class="pre">forward</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">x</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">torch.Tensor</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">task_labels</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">torch.Tensor</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">torch.Tensor</span><a class="reference internal" href="../../../../_modules/avalanche/models/dynamic_modules/#MultiTaskModule.forward"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.models.dynamic_modules.MultiTaskModule.forward" title="Permalink to this definition">¶</a></dt>
@@ -327,7 +304,7 @@ and calls <cite>forward_single_task</cite>. Subclasses must implement
 
 <dl class="py method">
 <dt class="sig sig-object py" id="avalanche.models.dynamic_modules.MultiTaskModule.forward_single_task">
-<span class="sig-name descname"><span class="pre">forward_single_task</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">x</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">torch.Tensor</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">task_label</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">torch.Tensor</span><a class="reference internal" href="../../../../_modules/avalanche/models/dynamic_modules/#MultiTaskModule.forward_single_task"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.models.dynamic_modules.MultiTaskModule.forward_single_task" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">abstract</span> </em><span class="sig-name descname"><span class="pre">forward_single_task</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">x</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">torch.Tensor</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">task_label</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">torch.Tensor</span><a class="reference internal" href="../../../../_modules/avalanche/models/dynamic_modules/#MultiTaskModule.forward_single_task"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.models.dynamic_modules.MultiTaskModule.forward_single_task" title="Permalink to this definition">¶</a></dt>
 <dd><p>compute the output given the input <cite>x</cite> and task label.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -348,32 +325,12 @@ and calls <cite>forward_single_task</cite>. Subclasses must implement
 <dt class="sig sig-object py" id="avalanche.models.dynamic_modules.IncrementalClassifier">
 <em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">avalanche.models.dynamic_modules.</span></span><span class="sig-name descname"><span class="pre">IncrementalClassifier</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">in_features</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">initial_out_features</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">2</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/avalanche/models/dynamic_modules/#IncrementalClassifier"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.models.dynamic_modules.IncrementalClassifier" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="#avalanche.models.dynamic_modules.DynamicModule" title="avalanche.models.dynamic_modules.DynamicModule"><code class="xref py py-class docutils literal notranslate"><span class="pre">avalanche.models.dynamic_modules.DynamicModule</span></code></a></p>
-<p>Base class for all neural network modules.</p>
-<p>Your models should also subclass this class.</p>
-<p>Modules can also contain other Modules, allowing to nest them in
-a tree structure. You can assign the submodules as regular attributes:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">torch.nn</span> <span class="k">as</span> <span class="nn">nn</span>
-<span class="kn">import</span> <span class="nn">torch.nn.functional</span> <span class="k">as</span> <span class="nn">F</span>
-
-<span class="k">class</span> <span class="nc">Model</span><span class="p">(</span><span class="n">nn</span><span class="o">.</span><span class="n">Module</span><span class="p">):</span>
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="nb">super</span><span class="p">(</span><span class="n">Model</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">conv1</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">Conv2d</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">20</span><span class="p">,</span> <span class="mi">5</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">conv2</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">Conv2d</span><span class="p">(</span><span class="mi">20</span><span class="p">,</span> <span class="mi">20</span><span class="p">,</span> <span class="mi">5</span><span class="p">)</span>
-
-    <span class="k">def</span> <span class="nf">forward</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">):</span>
-        <span class="n">x</span> <span class="o">=</span> <span class="n">F</span><span class="o">.</span><span class="n">relu</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">conv1</span><span class="p">(</span><span class="n">x</span><span class="p">))</span>
-        <span class="k">return</span> <span class="n">F</span><span class="o">.</span><span class="n">relu</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">conv2</span><span class="p">(</span><span class="n">x</span><span class="p">))</span>
-</pre></div>
-</div>
-<p>Submodules assigned in this way will be registered, and will have their
-parameters converted too when you call <code class="xref py py-meth docutils literal notranslate"><span class="pre">to()</span></code>, etc.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Variables</dt>
-<dd class="field-odd"><p><strong>training</strong> (<em>bool</em>) – Boolean represents whether this module is in training or
-evaluation mode.</p>
-</dd>
-</dl>
+<p>Dynamic Modules are Avalanche modules that can be incrementally
+expanded to allow architectural modifications (multi-head
+classifiers, progressive networks, …).</p>
+<p>Compared to pytoch Modules, they provide an additional method,
+<cite>model_adaptation</cite>, which adapts the model given data from the
+current experience.</p>
 <p>Output layer that incrementally adds units whenever new classes are
 encountered.</p>
 <p>Typically used in class-incremental scenarios where the number of
@@ -422,32 +379,12 @@ the task label.</p>
 <dt class="sig sig-object py" id="avalanche.models.dynamic_modules.MultiHeadClassifier">
 <em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">avalanche.models.dynamic_modules.</span></span><span class="sig-name descname"><span class="pre">MultiHeadClassifier</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">in_features</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">initial_out_features</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">2</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/avalanche/models/dynamic_modules/#MultiHeadClassifier"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.models.dynamic_modules.MultiHeadClassifier" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="#avalanche.models.dynamic_modules.MultiTaskModule" title="avalanche.models.dynamic_modules.MultiTaskModule"><code class="xref py py-class docutils literal notranslate"><span class="pre">avalanche.models.dynamic_modules.MultiTaskModule</span></code></a>, <a class="reference internal" href="#avalanche.models.dynamic_modules.DynamicModule" title="avalanche.models.dynamic_modules.DynamicModule"><code class="xref py py-class docutils literal notranslate"><span class="pre">avalanche.models.dynamic_modules.DynamicModule</span></code></a></p>
-<p>Base class for all neural network modules.</p>
-<p>Your models should also subclass this class.</p>
-<p>Modules can also contain other Modules, allowing to nest them in
-a tree structure. You can assign the submodules as regular attributes:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">torch.nn</span> <span class="k">as</span> <span class="nn">nn</span>
-<span class="kn">import</span> <span class="nn">torch.nn.functional</span> <span class="k">as</span> <span class="nn">F</span>
-
-<span class="k">class</span> <span class="nc">Model</span><span class="p">(</span><span class="n">nn</span><span class="o">.</span><span class="n">Module</span><span class="p">):</span>
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="nb">super</span><span class="p">(</span><span class="n">Model</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">conv1</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">Conv2d</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">20</span><span class="p">,</span> <span class="mi">5</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">conv2</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">Conv2d</span><span class="p">(</span><span class="mi">20</span><span class="p">,</span> <span class="mi">20</span><span class="p">,</span> <span class="mi">5</span><span class="p">)</span>
-
-    <span class="k">def</span> <span class="nf">forward</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">):</span>
-        <span class="n">x</span> <span class="o">=</span> <span class="n">F</span><span class="o">.</span><span class="n">relu</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">conv1</span><span class="p">(</span><span class="n">x</span><span class="p">))</span>
-        <span class="k">return</span> <span class="n">F</span><span class="o">.</span><span class="n">relu</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">conv2</span><span class="p">(</span><span class="n">x</span><span class="p">))</span>
-</pre></div>
-</div>
-<p>Submodules assigned in this way will be registered, and will have their
-parameters converted too when you call <code class="xref py py-meth docutils literal notranslate"><span class="pre">to()</span></code>, etc.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Variables</dt>
-<dd class="field-odd"><p><strong>training</strong> (<em>bool</em>) – Boolean represents whether this module is in training or
-evaluation mode.</p>
-</dd>
-</dl>
+<p>Multi-task modules are <cite>torch.nn.Modules`s for multi-task
+scenarios. The `forward</cite> method accepts task labels, one for
+each sample in the mini-batch.</p>
+<p>By default the <cite>forward</cite> method splits the mini-batch by task
+and calls <cite>forward_single_task</cite>. Subclasses must implement
+<cite>forward_single_task</cite> or override <a href="#id7"><span class="problematic" id="id8">`</span></a>forward.</p>
 <p>Multi-head classifier with separate heads for each task.</p>
 <p>Typically used in task-incremental scenarios where task labels are
 available and provided to the model.</p>

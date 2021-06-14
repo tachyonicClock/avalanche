@@ -251,6 +251,11 @@ Classes
       :param kwargs: custom arguments.
 
 
+   .. method:: stop_training(self)
+
+      Signals to stop training at the next iteration. 
+
+
    .. method:: train_dataset_adaptation(self, **kwargs)
 
       Initialize `self.adapted_dataset`. 

@@ -344,6 +344,12 @@ Classes
       Called before `eval_exp` by the `BaseStrategy`. 
 
 
+   .. method:: after_eval_iteration(self, strategy: BaseStrategy)
+
+      Called after the end of an iteration by the
+      `BaseStrategy`. 
+
+
    .. method:: after_eval_exp(self, strategy: BaseStrategy)
 
       Called after `eval_exp` by the `BaseStrategy`. 
@@ -357,12 +363,6 @@ Classes
    .. method:: before_eval_iteration(self, strategy: BaseStrategy)
 
       Called before the start of a training iteration by the
-      `BaseStrategy`. 
-
-
-   .. method:: after_eval_iteration(self, strategy: BaseStrategy)
-
-      Called after the end of an iteration by the
       `BaseStrategy`. 
 
 

@@ -195,19 +195,28 @@
 <tr class="row-odd"><td><p><a class="reference internal" href="#avalanche.evaluation.metric_utils.default_cm_image_creator" title="avalanche.evaluation.metric_utils.default_cm_image_creator"><code class="xref py py-obj docutils literal notranslate"><span class="pre">default_cm_image_creator</span></code></a>(confusion_matrix_tensor: Tensor, display_labels: Sequence = None, include_values=False, xticks_rotation=0, yticks_rotation=0, values_format=None, cmap='viridis', image_title='')</p></td>
 <td><p>The default Confusion Matrix image creator.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#avalanche.evaluation.metric_utils.get_task_label" title="avalanche.evaluation.metric_utils.get_task_label"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_task_label</span></code></a>(strategy: BaseStrategy) → int</p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#avalanche.evaluation.metric_utils.repartition_pie_chart_image_creator" title="avalanche.evaluation.metric_utils.repartition_pie_chart_image_creator"><code class="xref py py-obj docutils literal notranslate"><span class="pre">repartition_pie_chart_image_creator</span></code></a>(label2counts: Dict[int, List[int]], counters: List[int], colors: Union[ndarray, Iterable, int, float] = SEABORN_COLORS, fmt: str = '%1.1f%%')</p></td>
+<td><p>Create a pie chart representing the labels repartition.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#avalanche.evaluation.metric_utils.repartition_bar_chart_image_creator" title="avalanche.evaluation.metric_utils.repartition_bar_chart_image_creator"><code class="xref py py-obj docutils literal notranslate"><span class="pre">repartition_bar_chart_image_creator</span></code></a>(label2counts: Dict[int, List[int]], counters: List[int], colors: Union[ndarray, Iterable, int, float] = SEABORN_COLORS)</p></td>
+<td><p>Create a bar chart representing the labels repartition.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#avalanche.evaluation.metric_utils.default_history_repartition_image_creator" title="avalanche.evaluation.metric_utils.default_history_repartition_image_creator"><code class="xref py py-obj docutils literal notranslate"><span class="pre">default_history_repartition_image_creator</span></code></a>(label2counts: Dict[int, List[int]], counters: List[int], colors: Union[ndarray, Iterable, int, float] = SEABORN_COLORS)</p></td>
+<td><p>Create a stack plot representing the labels repartition with their history.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#avalanche.evaluation.metric_utils.get_task_label" title="avalanche.evaluation.metric_utils.get_task_label"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_task_label</span></code></a>(strategy: BaseStrategy) → int</p></td>
 <td><p>Returns the current task label.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#avalanche.evaluation.metric_utils.stream_type" title="avalanche.evaluation.metric_utils.stream_type"><code class="xref py py-obj docutils literal notranslate"><span class="pre">stream_type</span></code></a>(experience: Experience) → str</p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#avalanche.evaluation.metric_utils.stream_type" title="avalanche.evaluation.metric_utils.stream_type"><code class="xref py py-obj docutils literal notranslate"><span class="pre">stream_type</span></code></a>(experience: Experience) → str</p></td>
 <td><p>Returns the stream name from which the experience belongs to.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#avalanche.evaluation.metric_utils.phase_and_task" title="avalanche.evaluation.metric_utils.phase_and_task"><code class="xref py py-obj docutils literal notranslate"><span class="pre">phase_and_task</span></code></a>(strategy: BaseStrategy) → Tuple[str, int]</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#avalanche.evaluation.metric_utils.phase_and_task" title="avalanche.evaluation.metric_utils.phase_and_task"><code class="xref py py-obj docutils literal notranslate"><span class="pre">phase_and_task</span></code></a>(strategy: BaseStrategy) → Tuple[str, int]</p></td>
 <td><p>Returns the current phase name and the associated task label.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#avalanche.evaluation.metric_utils.bytes2human" title="avalanche.evaluation.metric_utils.bytes2human"><code class="xref py py-obj docutils literal notranslate"><span class="pre">bytes2human</span></code></a>(n)</p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#avalanche.evaluation.metric_utils.bytes2human" title="avalanche.evaluation.metric_utils.bytes2human"><code class="xref py py-obj docutils literal notranslate"><span class="pre">bytes2human</span></code></a>(n)</p></td>
 <td><p></p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#avalanche.evaluation.metric_utils.get_metric_name" title="avalanche.evaluation.metric_utils.get_metric_name"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_metric_name</span></code></a>(metric: PluginMetric, strategy: BaseStrategy, add_experience=False, add_task=True)</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#avalanche.evaluation.metric_utils.get_metric_name" title="avalanche.evaluation.metric_utils.get_metric_name"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_metric_name</span></code></a>(metric: PluginMetric, strategy: BaseStrategy, add_experience=False, add_task=True)</p></td>
 <td><p>Return the complete metric name used to report its current value.</p></td>
 </tr>
 </tbody>
@@ -228,7 +237,7 @@ utility.</p></li>
 will be used if it is defined, otherwise the values will be inferred by
 the matrix tensor.</p></li>
 <li><p><strong>include_values</strong> – Includes values in confusion matrix. Defaults to
-<cite>True</cite>.</p></li>
+<cite>False</cite>.</p></li>
 <li><p><strong>xticks_rotation</strong> – Rotation of xtick labels. Valid values are
 float point value. Defaults to 0.</p></li>
 <li><p><strong>yticks_rotation</strong> – Rotation of ytick labels. Valid values are
@@ -243,6 +252,57 @@ Defaults to ‘viridis’.</p></li>
 </dd>
 <dt class="field-even">Returns</dt>
 <dd class="field-even"><p>The Confusion Matrix as a PIL Image.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="avalanche.evaluation.metric_utils.repartition_pie_chart_image_creator">
+<span class="sig-prename descclassname"><span class="pre">avalanche.evaluation.metric_utils.</span></span><span class="sig-name descname"><span class="pre">repartition_pie_chart_image_creator</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">label2counts</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">,</span> </span><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">counters</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">colors</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">ndarray</span><span class="p"><span class="pre">,</span> </span><span class="pre">Iterable</span><span class="p"><span class="pre">,</span> </span><span class="pre">int</span><span class="p"><span class="pre">,</span> </span><span class="pre">float</span><span class="p"><span class="pre">]</span></span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">SEABORN_COLORS</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fmt</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">'%1.1f%%'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/avalanche/evaluation/metric_utils/#repartition_pie_chart_image_creator"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.evaluation.metric_utils.repartition_pie_chart_image_creator" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create a pie chart representing the labels repartition.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>label2counts</strong> – A dict holding the counts for each label, of the form
+{label: [count_at_step_0, count_at_step_1, …]}. Only the last count of
+each label is used here.</p></li>
+<li><p><strong>counters</strong> – (unused) The steps the counts were taken at.</p></li>
+<li><p><strong>colors</strong> – The colors to use in the chart.</p></li>
+<li><p><strong>fmt</strong> – Formatting used to display the text values in the chart.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="avalanche.evaluation.metric_utils.repartition_bar_chart_image_creator">
+<span class="sig-prename descclassname"><span class="pre">avalanche.evaluation.metric_utils.</span></span><span class="sig-name descname"><span class="pre">repartition_bar_chart_image_creator</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">label2counts</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">,</span> </span><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">counters</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">colors</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">ndarray</span><span class="p"><span class="pre">,</span> </span><span class="pre">Iterable</span><span class="p"><span class="pre">,</span> </span><span class="pre">int</span><span class="p"><span class="pre">,</span> </span><span class="pre">float</span><span class="p"><span class="pre">]</span></span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">SEABORN_COLORS</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/avalanche/evaluation/metric_utils/#repartition_bar_chart_image_creator"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.evaluation.metric_utils.repartition_bar_chart_image_creator" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create a bar chart representing the labels repartition.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>label2counts</strong> – A dict holding the counts for each label, of the form
+{label: [count_at_step_0, count_at_step_1, …]}. Only the last count of
+each label is used here.</p></li>
+<li><p><strong>counters</strong> – (unused) The steps the counts were taken at.</p></li>
+<li><p><strong>colors</strong> – The colors to use in the chart.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="avalanche.evaluation.metric_utils.default_history_repartition_image_creator">
+<span class="sig-prename descclassname"><span class="pre">avalanche.evaluation.metric_utils.</span></span><span class="sig-name descname"><span class="pre">default_history_repartition_image_creator</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">label2counts</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">,</span> </span><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">counters</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">colors</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">ndarray</span><span class="p"><span class="pre">,</span> </span><span class="pre">Iterable</span><span class="p"><span class="pre">,</span> </span><span class="pre">int</span><span class="p"><span class="pre">,</span> </span><span class="pre">float</span><span class="p"><span class="pre">]</span></span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">SEABORN_COLORS</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/avalanche/evaluation/metric_utils/#default_history_repartition_image_creator"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.evaluation.metric_utils.default_history_repartition_image_creator" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create a stack plot representing the labels repartition with their history.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>label2counts</strong> – A dict holding the counts for each label, of the form
+{label: [count_at_step_0, count_at_step_1, …]}.</p></li>
+<li><p><strong>counters</strong> – The steps the counts were taken at.</p></li>
+<li><p><strong>colors</strong> – The colors to use in the chart.</p></li>
+</ul>
 </dd>
 </dl>
 </dd></dl>

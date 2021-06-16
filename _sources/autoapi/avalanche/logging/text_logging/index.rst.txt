@@ -16,6 +16,11 @@ Classes
 
 
 
+.. data:: UNSUPPORTED_TYPES
+   :annotation: :Tuple[Type]
+
+   
+
 .. py:class:: TextLogger(file=sys.stdout)
 
    Bases: :class:`avalanche.logging.StrategyLogger`

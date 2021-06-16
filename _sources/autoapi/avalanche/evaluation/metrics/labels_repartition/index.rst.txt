@@ -1,0 +1,6 @@
+:mod:`avalanche.evaluation.metrics.labels_repartition`
+======================================================
+
+.. py:module:: avalanche.evaluation.metrics.labels_repartition
+
+

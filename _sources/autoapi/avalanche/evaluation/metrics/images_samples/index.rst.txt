@@ -1,0 +1,6 @@
+:mod:`avalanche.evaluation.metrics.images_samples`
+==================================================
+
+.. py:module:: avalanche.evaluation.metrics.images_samples
+
+

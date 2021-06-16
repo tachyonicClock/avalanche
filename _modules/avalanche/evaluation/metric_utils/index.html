@@ -190,10 +190,12 @@
 <span class="c1"># Website: www.continualai.org                                                 #</span>
 <span class="c1">################################################################################</span>
 
-<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Sequence</span><span class="p">,</span> <span class="n">TYPE_CHECKING</span><span class="p">,</span> <span class="n">Tuple</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Dict</span><span class="p">,</span> <span class="n">Union</span><span class="p">,</span> <span class="n">Iterable</span><span class="p">,</span> <span class="n">Sequence</span><span class="p">,</span> <span class="n">Tuple</span><span class="p">,</span> <span class="n">TYPE_CHECKING</span><span class="p">,</span> <span class="n">List</span>
 
 <span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">from</span> <span class="nn">matplotlib.axes</span> <span class="kn">import</span> <span class="n">Axes</span>
+<span class="kn">from</span> <span class="nn">numpy</span> <span class="kn">import</span> <span class="n">ndarray</span><span class="p">,</span> <span class="n">arange</span>
 <span class="kn">from</span> <span class="nn">torch</span> <span class="kn">import</span> <span class="n">Tensor</span>
 
 <span class="k">if</span> <span class="n">TYPE_CHECKING</span><span class="p">:</span>
@@ -226,7 +228,7 @@
 <span class="sd">        will be used if it is defined, otherwise the values will be inferred by</span>
 <span class="sd">        the matrix tensor.</span>
 <span class="sd">    :param include_values: Includes values in confusion matrix. Defaults to</span>
-<span class="sd">        `True`.</span>
+<span class="sd">        `False`.</span>
 <span class="sd">    :param xticks_rotation: Rotation of xtick labels. Valid values are</span>
 <span class="sd">        float point value. Defaults to 0.</span>
 <span class="sd">    :param yticks_rotation: Rotation of ytick labels. Valid values are</span>
@@ -294,7 +296,113 @@
     <span class="k">return</span> <span class="n">fig</span></div>
 
 
-<div class="viewcode-block" id="get_task_label"><a class="viewcode-back" href="../../../../autoapi/avalanche/evaluation/metric_utils/#avalanche.evaluation.metric_utils.get_task_label">[docs]</a><span class="k">def</span> <span class="nf">get_task_label</span><span class="p">(</span><span class="n">strategy</span><span class="p">:</span> <span class="s1">&#39;BaseStrategy&#39;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+<span class="n">SEABORN_COLORS</span> <span class="o">=</span> <span class="p">(</span>
+    <span class="p">(</span><span class="mf">0.2980392156862745</span><span class="p">,</span> <span class="mf">0.4470588235294118</span><span class="p">,</span> <span class="mf">0.6901960784313725</span><span class="p">),</span>
+    <span class="p">(</span><span class="mf">0.8666666666666667</span><span class="p">,</span> <span class="mf">0.5176470588235295</span><span class="p">,</span> <span class="mf">0.3215686274509804</span><span class="p">),</span>
+    <span class="p">(</span><span class="mf">0.3333333333333333</span><span class="p">,</span> <span class="mf">0.6588235294117647</span><span class="p">,</span> <span class="mf">0.40784313725490196</span><span class="p">),</span>
+    <span class="p">(</span><span class="mf">0.7686274509803922</span><span class="p">,</span> <span class="mf">0.3058823529411765</span><span class="p">,</span> <span class="mf">0.3215686274509804</span><span class="p">),</span>
+    <span class="p">(</span><span class="mf">0.5058823529411764</span><span class="p">,</span> <span class="mf">0.4470588235294118</span><span class="p">,</span> <span class="mf">0.7019607843137254</span><span class="p">),</span>
+    <span class="p">(</span><span class="mf">0.5764705882352941</span><span class="p">,</span> <span class="mf">0.47058823529411764</span><span class="p">,</span> <span class="mf">0.3764705882352941</span><span class="p">),</span>
+    <span class="p">(</span><span class="mf">0.8549019607843137</span><span class="p">,</span> <span class="mf">0.5450980392156862</span><span class="p">,</span> <span class="mf">0.7647058823529411</span><span class="p">),</span>
+    <span class="p">(</span><span class="mf">0.5490196078431373</span><span class="p">,</span> <span class="mf">0.5490196078431373</span><span class="p">,</span> <span class="mf">0.5490196078431373</span><span class="p">),</span>
+    <span class="p">(</span><span class="mf">0.8</span><span class="p">,</span> <span class="mf">0.7254901960784313</span><span class="p">,</span> <span class="mf">0.4549019607843137</span><span class="p">),</span>
+    <span class="p">(</span><span class="mf">0.39215686274509803</span><span class="p">,</span> <span class="mf">0.7098039215686275</span><span class="p">,</span> <span class="mf">0.803921568627451</span><span class="p">),</span>
+<span class="p">)</span>
+
+
+<div class="viewcode-block" id="repartition_pie_chart_image_creator"><a class="viewcode-back" href="../../../../autoapi/avalanche/evaluation/metric_utils/#avalanche.evaluation.metric_utils.repartition_pie_chart_image_creator">[docs]</a><span class="k">def</span> <span class="nf">repartition_pie_chart_image_creator</span><span class="p">(</span>
+    <span class="n">label2counts</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="n">List</span><span class="p">[</span><span class="nb">int</span><span class="p">]],</span>
+    <span class="n">counters</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">int</span><span class="p">],</span>
+    <span class="n">colors</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">Iterable</span><span class="p">,</span> <span class="nb">int</span><span class="p">,</span> <span class="nb">float</span><span class="p">]</span> <span class="o">=</span> <span class="n">SEABORN_COLORS</span><span class="p">,</span>
+    <span class="n">fmt</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;</span><span class="si">%1.1f%%</span><span class="s2">&quot;</span><span class="p">,</span>
+<span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Create a pie chart representing the labels repartition.</span>
+
+<span class="sd">    :param label2counts: A dict holding the counts for each label, of the form</span>
+<span class="sd">        {label: [count_at_step_0, count_at_step_1, ...]}. Only the last count of</span>
+<span class="sd">        each label is used here.</span>
+<span class="sd">    :param counters: (unused) The steps the counts were taken at.</span>
+<span class="sd">    :param colors: The colors to use in the chart.</span>
+<span class="sd">    :param fmt: Formatting used to display the text values in the chart.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">()</span>
+    <span class="n">ax</span><span class="p">:</span> <span class="n">Axes</span>
+
+    <span class="n">labels</span><span class="p">,</span> <span class="n">counts</span> <span class="o">=</span> <span class="nb">zip</span><span class="p">(</span><span class="o">*</span><span class="p">((</span><span class="n">label</span><span class="p">,</span> <span class="n">c</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span> <span class="k">for</span> <span class="n">label</span><span class="p">,</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">label2counts</span><span class="o">.</span><span class="n">items</span><span class="p">()))</span>
+
+    <span class="n">ax</span><span class="o">.</span><span class="n">pie</span><span class="p">(</span><span class="n">counts</span><span class="p">,</span> <span class="n">labels</span><span class="o">=</span><span class="n">labels</span><span class="p">,</span> <span class="n">autopct</span><span class="o">=</span><span class="n">fmt</span><span class="p">,</span> <span class="n">colors</span><span class="o">=</span><span class="n">colors</span><span class="p">)</span>
+
+    <span class="n">fig</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
+    <span class="k">return</span> <span class="n">fig</span></div>
+
+
+<div class="viewcode-block" id="repartition_bar_chart_image_creator"><a class="viewcode-back" href="../../../../autoapi/avalanche/evaluation/metric_utils/#avalanche.evaluation.metric_utils.repartition_bar_chart_image_creator">[docs]</a><span class="k">def</span> <span class="nf">repartition_bar_chart_image_creator</span><span class="p">(</span>
+    <span class="n">label2counts</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="n">List</span><span class="p">[</span><span class="nb">int</span><span class="p">]],</span>
+    <span class="n">counters</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">int</span><span class="p">],</span>
+    <span class="n">colors</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">Iterable</span><span class="p">,</span> <span class="nb">int</span><span class="p">,</span> <span class="nb">float</span><span class="p">]</span> <span class="o">=</span> <span class="n">SEABORN_COLORS</span><span class="p">,</span>
+<span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Create a bar chart representing the labels repartition.</span>
+
+<span class="sd">    :param label2counts: A dict holding the counts for each label, of the form</span>
+<span class="sd">        {label: [count_at_step_0, count_at_step_1, ...]}. Only the last count of</span>
+<span class="sd">        each label is used here.</span>
+<span class="sd">    :param counters: (unused) The steps the counts were taken at.</span>
+<span class="sd">    :param colors: The colors to use in the chart.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">()</span>
+    <span class="n">ax</span><span class="p">:</span> <span class="n">Axes</span>
+
+    <span class="n">y</span> <span class="o">=</span> <span class="o">-</span><span class="n">arange</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">label2counts</span><span class="p">))</span>
+    <span class="n">labels</span><span class="p">,</span> <span class="n">counts</span> <span class="o">=</span> <span class="nb">zip</span><span class="p">(</span><span class="o">*</span><span class="p">((</span><span class="n">label</span><span class="p">,</span> <span class="n">c</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span> <span class="k">for</span> <span class="n">label</span><span class="p">,</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">label2counts</span><span class="o">.</span><span class="n">items</span><span class="p">()))</span>
+    <span class="n">total</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">(</span><span class="n">counts</span><span class="p">)</span>
+
+    <span class="n">ax</span><span class="o">.</span><span class="n">barh</span><span class="p">(</span><span class="n">y</span><span class="p">,</span> <span class="n">width</span><span class="o">=</span><span class="n">counts</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="n">colors</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">set_yticks</span><span class="p">(</span><span class="n">y</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">set_yticklabels</span><span class="p">(</span><span class="n">labels</span><span class="p">)</span>
+
+    <span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s2">&quot;Number of exemplars&quot;</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s2">&quot;Class&quot;</span><span class="p">)</span>
+
+    <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">count</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">counts</span><span class="p">):</span>
+        <span class="n">ax</span><span class="o">.</span><span class="n">text</span><span class="p">(</span><span class="n">count</span> <span class="o">/</span> <span class="mi">2</span><span class="p">,</span> <span class="o">-</span><span class="n">i</span><span class="p">,</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">count</span><span class="o">/</span><span class="n">total</span><span class="si">:</span><span class="s2">.1%</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">va</span><span class="o">=</span><span class="s2">&quot;center&quot;</span><span class="p">,</span> <span class="n">ha</span><span class="o">=</span><span class="s2">&quot;center&quot;</span><span class="p">)</span>
+
+    <span class="n">fig</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
+    <span class="k">return</span> <span class="n">fig</span></div>
+
+
+<div class="viewcode-block" id="default_history_repartition_image_creator"><a class="viewcode-back" href="../../../../autoapi/avalanche/evaluation/metric_utils/#avalanche.evaluation.metric_utils.default_history_repartition_image_creator">[docs]</a><span class="k">def</span> <span class="nf">default_history_repartition_image_creator</span><span class="p">(</span>
+    <span class="n">label2counts</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="n">List</span><span class="p">[</span><span class="nb">int</span><span class="p">]],</span>
+    <span class="n">counters</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">int</span><span class="p">],</span>
+    <span class="n">colors</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">Iterable</span><span class="p">,</span> <span class="nb">int</span><span class="p">,</span> <span class="nb">float</span><span class="p">]</span> <span class="o">=</span> <span class="n">SEABORN_COLORS</span><span class="p">,</span>
+<span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Create a stack plot representing the labels repartition with their history.</span>
+
+<span class="sd">    :param label2counts: A dict holding the counts for each label, of the form</span>
+<span class="sd">        {label: [count_at_step_0, count_at_step_1, ...]}.</span>
+<span class="sd">    :param counters: The steps the counts were taken at.</span>
+<span class="sd">    :param colors: The colors to use in the chart.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">()</span>
+    <span class="n">ax</span><span class="p">:</span> <span class="n">Axes</span>
+
+    <span class="n">ax</span><span class="o">.</span><span class="n">stackplot</span><span class="p">(</span>
+        <span class="n">counters</span><span class="p">,</span>
+        <span class="n">label2counts</span><span class="o">.</span><span class="n">values</span><span class="p">(),</span>
+        <span class="n">labels</span><span class="o">=</span><span class="n">label2counts</span><span class="o">.</span><span class="n">keys</span><span class="p">(),</span>
+        <span class="n">colors</span><span class="o">=</span><span class="n">colors</span><span class="p">,</span>
+    <span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">loc</span><span class="o">=</span><span class="s1">&#39;upper left&#39;</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s2">&quot;Number of examples&quot;</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s2">&quot;step&quot;</span><span class="p">)</span>
+
+    <span class="n">fig</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
+    <span class="k">return</span> <span class="n">fig</span></div>
+
+
+<div class="viewcode-block" id="get_task_label"><a class="viewcode-back" href="../../../../autoapi/avalanche/evaluation/metric_utils/#avalanche.evaluation.metric_utils.get_task_label">[docs]</a><span class="k">def</span> <span class="nf">get_task_label</span><span class="p">(</span><span class="n">strategy</span><span class="p">:</span> <span class="s2">&quot;BaseStrategy&quot;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Returns the current task label.</span>
 
@@ -381,10 +489,9 @@
 
     <span class="n">phase_name</span><span class="p">,</span> <span class="n">task_label</span> <span class="o">=</span> <span class="n">phase_and_task</span><span class="p">(</span><span class="n">strategy</span><span class="p">)</span>
     <span class="n">stream</span> <span class="o">=</span> <span class="n">stream_type</span><span class="p">(</span><span class="n">strategy</span><span class="o">.</span><span class="n">experience</span><span class="p">)</span>
-    <span class="n">base_name</span> <span class="o">=</span> <span class="s1">&#39;</span><span class="si">{}</span><span class="s1">/</span><span class="si">{}</span><span class="s1">_phase/</span><span class="si">{}</span><span class="s1">_stream&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">metric</span><span class="p">),</span>
-                                               <span class="n">phase_name</span><span class="p">,</span> <span class="n">stream</span><span class="p">)</span>
-    <span class="n">task_name</span> <span class="o">=</span> <span class="s1">&#39;/Task</span><span class="si">{:03}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">task_label</span><span class="p">)</span>
-    <span class="n">exp_name</span> <span class="o">=</span> <span class="s1">&#39;/Exp</span><span class="si">{:03}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">strategy</span><span class="o">.</span><span class="n">experience</span><span class="o">.</span><span class="n">current_experience</span><span class="p">)</span>
+    <span class="n">base_name</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">metric</span><span class="si">}</span><span class="s2">/</span><span class="si">{</span><span class="n">phase_name</span><span class="si">}</span><span class="s2">_phase/</span><span class="si">{</span><span class="n">stream</span><span class="si">}</span><span class="s2">_stream&quot;</span>
+    <span class="n">task_name</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;/Task</span><span class="si">{</span><span class="n">task_label</span><span class="si">:</span><span class="s2">03</span><span class="si">}</span><span class="s2">&quot;</span>
+    <span class="n">exp_name</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;/Exp</span><span class="si">{</span><span class="n">strategy</span><span class="o">.</span><span class="n">experience</span><span class="o">.</span><span class="n">current_experience</span><span class="si">:</span><span class="s2">03</span><span class="si">}</span><span class="s2">&quot;</span>
 
     <span class="k">if</span> <span class="n">add_experience</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">add_task</span><span class="p">:</span>
         <span class="k">return</span> <span class="n">base_name</span> <span class="o">+</span> <span class="n">exp_name</span>
@@ -397,12 +504,15 @@
 
 
 <span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span>
-    <span class="s1">&#39;default_cm_image_creator&#39;</span><span class="p">,</span>
-    <span class="s1">&#39;get_task_label&#39;</span><span class="p">,</span>
-    <span class="s1">&#39;phase_and_task&#39;</span><span class="p">,</span>
-    <span class="s1">&#39;get_metric_name&#39;</span><span class="p">,</span>
-    <span class="s1">&#39;stream_type&#39;</span><span class="p">,</span>
-    <span class="s1">&#39;bytes2human&#39;</span>
+    <span class="s2">&quot;default_cm_image_creator&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;get_task_label&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;phase_and_task&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;get_metric_name&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;stream_type&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;bytes2human&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;default_history_repartition_image_creator&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;repartition_pie_chart_image_creator&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;repartition_bar_chart_image_creator&quot;</span><span class="p">,</span>
 <span class="p">]</span>
 </pre></div>
 

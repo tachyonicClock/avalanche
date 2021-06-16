@@ -12,17 +12,29 @@ Classes
 
 .. autoapisummary::
 
+   avalanche.evaluation.metric_results.TensorImage
    avalanche.evaluation.metric_results.AlternativeValues
    avalanche.evaluation.metric_results.MetricValue
 
 
 
-.. data:: MetricType
-   
-
-   
-
 .. data:: MetricResult
+   
+
+   
+
+.. py:class:: TensorImage
+
+   .. attribute:: image
+      :annotation: :Tensor
+
+      
+
+   .. method:: __array__(self)
+
+
+
+.. data:: MetricType
    
 
    

@@ -190,7 +190,8 @@
 
 <span class="k">if</span> <span class="n">TYPE_CHECKING</span><span class="p">:</span>
     <span class="kn">from</span> <span class="nn">avalanche.evaluation</span> <span class="kn">import</span> <span class="n">PluginMetric</span>
-    <span class="kn">from</span> <span class="nn">avalanche.training</span> <span class="kn">import</span> <span class="n">BaseStrategy</span>
+    <span class="kn">from</span> <span class="nn">avalanche.logging</span> <span class="kn">import</span> <span class="n">StrategyLogger</span>
+    <span class="kn">from</span> <span class="nn">avalanche.training.strategies</span> <span class="kn">import</span> <span class="n">BaseStrategy</span>
 
 
 <div class="viewcode-block" id="EvaluationPlugin"><a class="viewcode-back" href="../../../../../autoapi/avalanche/training/plugins/#avalanche.training.plugins.evaluation.EvaluationPlugin">[docs]</a><span class="k">class</span> <span class="nc">EvaluationPlugin</span><span class="p">(</span><span class="n">StrategyPlugin</span><span class="p">):</span>

@@ -14,6 +14,9 @@ Functions
 .. autoapisummary::
 
    avalanche.evaluation.metric_utils.default_cm_image_creator
+   avalanche.evaluation.metric_utils.repartition_pie_chart_image_creator
+   avalanche.evaluation.metric_utils.repartition_bar_chart_image_creator
+   avalanche.evaluation.metric_utils.default_history_repartition_image_creator
    avalanche.evaluation.metric_utils.get_task_label
    avalanche.evaluation.metric_utils.stream_type
    avalanche.evaluation.metric_utils.phase_and_task
@@ -34,7 +37,7 @@ Functions
        will be used if it is defined, otherwise the values will be inferred by
        the matrix tensor.
    :param include_values: Includes values in confusion matrix. Defaults to
-       `True`.
+       `False`.
    :param xticks_rotation: Rotation of xtick labels. Valid values are
        float point value. Defaults to 0.
    :param yticks_rotation: Rotation of ytick labels. Valid values are
@@ -46,6 +49,39 @@ Functions
        Defaults to 'viridis'.
    :param image_title: The title of the image. Defaults to an empty string.
    :return: The Confusion Matrix as a PIL Image.
+
+
+.. function:: repartition_pie_chart_image_creator(label2counts: Dict[int, List[int]], counters: List[int], colors: Union[ndarray, Iterable, int, float] = SEABORN_COLORS, fmt: str = '%1.1f%%')
+
+   Create a pie chart representing the labels repartition.
+
+   :param label2counts: A dict holding the counts for each label, of the form
+       {label: [count_at_step_0, count_at_step_1, ...]}. Only the last count of
+       each label is used here.
+   :param counters: (unused) The steps the counts were taken at.
+   :param colors: The colors to use in the chart.
+   :param fmt: Formatting used to display the text values in the chart.
+
+
+.. function:: repartition_bar_chart_image_creator(label2counts: Dict[int, List[int]], counters: List[int], colors: Union[ndarray, Iterable, int, float] = SEABORN_COLORS)
+
+   Create a bar chart representing the labels repartition.
+
+   :param label2counts: A dict holding the counts for each label, of the form
+       {label: [count_at_step_0, count_at_step_1, ...]}. Only the last count of
+       each label is used here.
+   :param counters: (unused) The steps the counts were taken at.
+   :param colors: The colors to use in the chart.
+
+
+.. function:: default_history_repartition_image_creator(label2counts: Dict[int, List[int]], counters: List[int], colors: Union[ndarray, Iterable, int, float] = SEABORN_COLORS)
+
+   Create a stack plot representing the labels repartition with their history.
+
+   :param label2counts: A dict holding the counts for each label, of the form
+       {label: [count_at_step_0, count_at_step_1, ...]}.
+   :param counters: The steps the counts were taken at.
+   :param colors: The colors to use in the chart.
 
 
 .. function:: get_task_label(strategy: BaseStrategy) -> int

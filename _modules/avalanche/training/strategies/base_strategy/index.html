@@ -450,11 +450,12 @@
 
         <span class="bp">self</span><span class="o">.</span><span class="n">epoch</span> <span class="o">=</span> <span class="mi">0</span>
         <span class="k">for</span> <span class="bp">self</span><span class="o">.</span><span class="n">epoch</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">train_epochs</span><span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">before_training_epoch</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+
             <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_stop_training</span><span class="p">:</span>  <span class="c1"># Early stopping</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">_stop_training</span> <span class="o">=</span> <span class="kc">False</span>
                 <span class="k">break</span>
 
-            <span class="bp">self</span><span class="o">.</span><span class="n">before_training_epoch</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">training_epoch</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">after_training_epoch</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_periodic_eval</span><span class="p">(</span><span class="n">eval_streams</span><span class="p">,</span> <span class="n">do_final</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>

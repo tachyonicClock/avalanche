@@ -13,6 +13,7 @@ Submodules
    agem/index.rst
    cope/index.rst
    cwr_star/index.rst
+   early_stopping/index.rst
    evaluation/index.rst
    ewc/index.rst
    gdumb/index.rst

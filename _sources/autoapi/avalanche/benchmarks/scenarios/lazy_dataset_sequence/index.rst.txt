@@ -1,0 +1,108 @@
+:mod:`avalanche.benchmarks.scenarios.lazy_dataset_sequence`
+===========================================================
+
+.. py:module:: avalanche.benchmarks.scenarios.lazy_dataset_sequence
+
+
+Module Contents
+---------------
+
+Classes
+~~~~~~~
+
+.. autoapisummary::
+
+   avalanche.benchmarks.scenarios.lazy_dataset_sequence.LazyDatasetSequence
+
+
+
+.. py:class:: LazyDatasetSequence(experience_generator: Iterable[AvalancheDataset], stream_length: int)
+
+   Bases: :class:`Sequence[AvalancheDataset]`
+
+   A lazily initialized sequence of datasets.
+
+   This class provides a way to lazily generate and store the datasets
+   linked to each experience. This class uses a generator to get the sequence
+   of datasets but it can also be used with a more classic statically
+   initialized Sequence (like a list).
+
+   This class will also keep track of the targets and task labels field of the
+   generated datasets.
+
+   Initialize self.  See help(type(self)) for accurate signature.
+
+   .. attribute:: targets_field_sequence
+      :annotation: :Dict[int, Optional[Sequence]]
+
+      A dictionary mapping each experience to its `targets` field.
+
+      This dictionary contains the targets field of datasets generated up to
+      now, including the ones of dropped experiences.
+
+
+   .. attribute:: task_labels_field_sequence
+      :annotation: :Dict[int, Optional[Sequence[int]]]
+
+      A dictionary mapping each experience to its `targets_task_labels` field.
+
+      This dictionary contains the task labels of datasets generated up to
+      now, including the ones of dropped experiences.
+
+
+   .. method:: __len__(self) -> int
+
+      Gets the length of the stream (number of experiences).
+
+      :return: The length of the stream.
+
+
+   .. method:: __getitem__(self, exp_idx: int) -> AvalancheDataset
+
+      Gets the dataset associated to an experience.
+
+      :param exp_idx: The ID of the experience.
+      :return: The dataset associated to the experience.
+
+
+   .. method:: get_experience_if_loaded(self, exp_idx: int) -> Optional[AvalancheDataset]
+
+      Gets the dataset associated to an experience.
+
+      Differently from `__getitem__`, this will return None if the experience
+      has not been (lazily) loaded yet.
+
+      :param exp_idx: The ID of the experience.
+      :return: The dataset associated to the experience or None if the
+          experience has not been loaded yet or if it has been dropped.
+
+
+   .. method:: drop_previous_experiences(self, to_exp: int) -> None
+
+      Drop the reference to experiences up to a certain experience ID
+      (inclusive).
+
+      This means that experiences with ID [0, from_exp] will be released.
+      Beware that the associated object will be valid until all the references
+      to it are dropped.
+
+      :param to_exp: The ID of the last exp to drop (inclusive). If None,
+          the whole stream will be loaded. Can be a negative number, in
+          which case this method doesn't have any effect. Can be greater
+          or equal to the stream length, in which case all currently loaded
+          experiences will be dropped.
+      :return: None
+
+
+   .. method:: load_all_experiences(self, to_exp: int = None) -> None
+
+      Load all experiences up to a certain experience ID (inclusive).
+
+      Beware that this won't re-load any already dropped experience.
+
+      :param to_exp: The ID of the last exp to load (inclusive). If None,
+          the whole stream will be loaded.
+      :return: None
+
+
+

@@ -1,0 +1,445 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>avalanche.benchmarks.scenarios.lazy_dataset_sequence &mdash; Avalanche 0.1 documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="../../../../../_static/css/mystyle.css" type="text/css" />
+  <link rel="stylesheet" href="../../../../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../../../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../../../../_static/css/mystyle.css" type="text/css" />
+  <link rel="stylesheet" href="../../../../../_static/graphviz.css" type="text/css" />
+
+  
+  
+
+  
+  
+
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../../../../" src="../../../../../_static/documentation_options.js"></script>
+        <script data-url_root="../../../../../" id="documentation_options" src="../../../../../_static/documentation_options.js"></script>
+        <script src="../../../../../_static/jquery.js"></script>
+        <script src="../../../../../_static/underscore.js"></script>
+        <script src="../../../../../_static/doctools.js"></script>
+    
+    <script type="text/javascript" src="../../../../../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="../../../../../genindex/" />
+    <link rel="search" title="Search" href="../../../../../search/" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../../../../">
+          
+
+          
+            
+            <img src="../../../../../_static/avalanche_logo.png" class="logo" alt="Logo"/>
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../../../search/" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Avalanche API:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../autoapi/">API Reference</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../autoapi/avalanche/"><code class="xref py py-mod docutils literal notranslate"><span class="pre">avalanche</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../../../autoapi/avalanche/#subpackages">Subpackages</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../../../autoapi/avalanche/benchmarks/"><code class="xref py py-mod docutils literal notranslate"><span class="pre">avalanche.benchmarks</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../../autoapi/avalanche/evaluation/"><code class="xref py py-mod docutils literal notranslate"><span class="pre">avalanche.evaluation</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../../autoapi/avalanche/logging/"><code class="xref py py-mod docutils literal notranslate"><span class="pre">avalanche.logging</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../../autoapi/avalanche/models/"><code class="xref py py-mod docutils literal notranslate"><span class="pre">avalanche.models</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../../autoapi/avalanche/training/"><code class="xref py py-mod docutils literal notranslate"><span class="pre">avalanche.training</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../../autoapi/avalanche/#submodules">Submodules</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../../../autoapi/avalanche/core/"><code class="xref py py-mod docutils literal notranslate"><span class="pre">avalanche.core</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../../autoapi/avalanche/#package-contents">Package Contents</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../../../autoapi/avalanche/#avalanche.__version__">__version__</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../../../">Avalanche</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../../../../" class="icon icon-home"></a> &raquo;</li>
+        
+          <li><a href="../../../../">Module code</a> &raquo;</li>
+        
+      <li>avalanche.benchmarks.scenarios.lazy_dataset_sequence</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for avalanche.benchmarks.scenarios.lazy_dataset_sequence</h1><div class="highlight"><pre>
+<span></span><span class="c1">################################################################################</span>
+<span class="c1"># Copyright (c) 2021 ContinualAI.                                              #</span>
+<span class="c1"># Copyrights licensed under the MIT License.                                   #</span>
+<span class="c1"># See the accompanying LICENSE file for terms.                                 #</span>
+<span class="c1">#                                                                              #</span>
+<span class="c1"># Date: 15-06-2021                                                             #</span>
+<span class="c1"># Author(s): Lorenzo Pellegrini                                                #</span>
+<span class="c1"># E-mail: contact@continualai.org                                              #</span>
+<span class="c1"># Website: avalanche.continualai.org                                           #</span>
+<span class="c1">################################################################################</span>
+
+<span class="kn">from</span> <span class="nn">collections</span> <span class="kn">import</span> <span class="n">defaultdict</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Sequence</span><span class="p">,</span> <span class="n">Iterable</span><span class="p">,</span> <span class="n">Dict</span><span class="p">,</span> <span class="n">Optional</span><span class="p">,</span> <span class="n">Iterator</span>
+
+<span class="kn">from</span> <span class="nn">avalanche.benchmarks.utils</span> <span class="kn">import</span> <span class="n">AvalancheDataset</span>
+
+
+<div class="viewcode-block" id="LazyDatasetSequence"><a class="viewcode-back" href="../../../../../autoapi/avalanche/benchmarks/scenarios/lazy_dataset_sequence/#avalanche.benchmarks.scenarios.lazy_dataset_sequence.LazyDatasetSequence">[docs]</a><span class="k">class</span> <span class="nc">LazyDatasetSequence</span><span class="p">(</span><span class="n">Sequence</span><span class="p">[</span><span class="n">AvalancheDataset</span><span class="p">]):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    A lazily initialized sequence of datasets.</span>
+
+<span class="sd">    This class provides a way to lazily generate and store the datasets</span>
+<span class="sd">    linked to each experience. This class uses a generator to get the sequence</span>
+<span class="sd">    of datasets but it can also be used with a more classic statically</span>
+<span class="sd">    initialized Sequence (like a list).</span>
+
+<span class="sd">    This class will also keep track of the targets and task labels field of the</span>
+<span class="sd">    generated datasets.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span>
+            <span class="bp">self</span><span class="p">,</span>
+            <span class="n">experience_generator</span><span class="p">:</span> <span class="n">Iterable</span><span class="p">[</span><span class="n">AvalancheDataset</span><span class="p">],</span>
+            <span class="n">stream_length</span><span class="p">:</span> <span class="nb">int</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_exp_source</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Iterable</span><span class="p">[</span><span class="n">AvalancheDataset</span><span class="p">]]</span> <span class="o">=</span> \
+            <span class="n">experience_generator</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        The source of the experiences stream, as an Iterable.</span>
+<span class="sd">        </span>
+<span class="sd">        Can be a simple Sequence or a Generator.</span>
+<span class="sd">        </span>
+<span class="sd">        This field is kept for reference and debugging. The actual generator</span>
+<span class="sd">        is kept in the `_exp_generator` field, which stores the iterator.</span>
+<span class="sd">        </span>
+<span class="sd">        This field is None when if all the experiences have been loaded.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">_next_exp_id</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        The ID of the next experience that will be generated.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">_loaded_experiences</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="n">AvalancheDataset</span><span class="p">]</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">()</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        The sequence of experiences obtained from the generator.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">_stream_length</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="n">stream_length</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        The length of the stream.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_exp_generator</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Iterator</span><span class="p">[</span><span class="n">AvalancheDataset</span><span class="p">]]</span> <span class="o">=</span> <span class="nb">iter</span><span class="p">(</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_exp_source</span>
+            <span class="p">)</span>
+        <span class="k">except</span> <span class="ne">TypeError</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">callable</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_exp_source</span><span class="p">):</span>
+                <span class="c1"># https://stackoverflow.com/a/17092033</span>
+                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+                    <span class="s1">&#39;The provided generator is not iterable. When using a &#39;</span>
+                    <span class="s1">&#39;generator function based on &quot;yield&quot;, remember to pass the&#39;</span>
+                    <span class="s1">&#39; result of that function, not the &#39;</span>
+                    <span class="s1">&#39;function itself!&#39;</span><span class="p">)</span> <span class="kn">from</span> <span class="bp">None</span>
+            <span class="k">raise</span> <span class="n">e</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        The experience generator, as an Iterator.</span>
+<span class="sd">        </span>
+<span class="sd">        This field is None when if all the experiences have been loaded.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">targets_field_sequence</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Sequence</span><span class="p">]]</span> <span class="o">=</span> \
+            <span class="n">defaultdict</span><span class="p">(</span><span class="k">lambda</span><span class="p">:</span> <span class="kc">None</span><span class="p">)</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        A dictionary mapping each experience to its `targets` field.</span>
+<span class="sd">        </span>
+<span class="sd">        This dictionary contains the targets field of datasets generated up to</span>
+<span class="sd">        now, including the ones of dropped experiences.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">task_labels_field_sequence</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Sequence</span><span class="p">[</span><span class="nb">int</span><span class="p">]]]</span> <span class="o">=</span> \
+            <span class="n">defaultdict</span><span class="p">(</span><span class="k">lambda</span><span class="p">:</span> <span class="kc">None</span><span class="p">)</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        A dictionary mapping each experience to its `targets_task_labels` field.</span>
+
+<span class="sd">        This dictionary contains the task labels of datasets generated up to</span>
+<span class="sd">        now, including the ones of dropped experiences.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+<div class="viewcode-block" id="LazyDatasetSequence.__len__"><a class="viewcode-back" href="../../../../../autoapi/avalanche/benchmarks/scenarios/lazy_dataset_sequence/#avalanche.benchmarks.scenarios.lazy_dataset_sequence.LazyDatasetSequence.__len__">[docs]</a>    <span class="k">def</span> <span class="fm">__len__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Gets the length of the stream (number of experiences).</span>
+
+<span class="sd">        :return: The length of the stream.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_stream_length</span></div>
+
+<div class="viewcode-block" id="LazyDatasetSequence.__getitem__"><a class="viewcode-back" href="../../../../../autoapi/avalanche/benchmarks/scenarios/lazy_dataset_sequence/#avalanche.benchmarks.scenarios.lazy_dataset_sequence.LazyDatasetSequence.__getitem__">[docs]</a>    <span class="k">def</span> <span class="fm">__getitem__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">exp_idx</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">AvalancheDataset</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Gets the dataset associated to an experience.</span>
+
+<span class="sd">        :param exp_idx: The ID of the experience.</span>
+<span class="sd">        :return: The dataset associated to the experience.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">exp_idx</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">exp_idx</span><span class="p">)</span>  <span class="c1"># Handle single element tensors</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">load_all_experiences</span><span class="p">(</span><span class="n">exp_idx</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">exp_idx</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_loaded_experiences</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Experience </span><span class="si">{</span><span class="n">exp_idx</span><span class="si">}</span><span class="s1"> has been dropped&#39;</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_loaded_experiences</span><span class="p">[</span><span class="n">exp_idx</span><span class="p">]</span></div>
+
+<div class="viewcode-block" id="LazyDatasetSequence.get_experience_if_loaded"><a class="viewcode-back" href="../../../../../autoapi/avalanche/benchmarks/scenarios/lazy_dataset_sequence/#avalanche.benchmarks.scenarios.lazy_dataset_sequence.LazyDatasetSequence.get_experience_if_loaded">[docs]</a>    <span class="k">def</span> <span class="nf">get_experience_if_loaded</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">exp_idx</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> \
+            <span class="n">Optional</span><span class="p">[</span><span class="n">AvalancheDataset</span><span class="p">]:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Gets the dataset associated to an experience.</span>
+
+<span class="sd">        Differently from `__getitem__`, this will return None if the experience</span>
+<span class="sd">        has not been (lazily) loaded yet.</span>
+
+<span class="sd">        :param exp_idx: The ID of the experience.</span>
+<span class="sd">        :return: The dataset associated to the experience or None if the</span>
+<span class="sd">            experience has not been loaded yet or if it has been dropped.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">exp_idx</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">exp_idx</span><span class="p">)</span>  <span class="c1"># Handle single element tensors</span>
+        <span class="k">if</span> <span class="n">exp_idx</span> <span class="o">&gt;=</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="ne">IndexError</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;The stream doesn</span><span class="se">\&#39;</span><span class="s1">t contain </span><span class="si">{</span><span class="n">exp_idx</span><span class="o">+</span><span class="mi">1</span><span class="si">}</span><span class="s1">&#39;</span>
+                             <span class="sa">f</span><span class="s1">&#39;experiences&#39;</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_loaded_experiences</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">exp_idx</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="LazyDatasetSequence.drop_previous_experiences"><a class="viewcode-back" href="../../../../../autoapi/avalanche/benchmarks/scenarios/lazy_dataset_sequence/#avalanche.benchmarks.scenarios.lazy_dataset_sequence.LazyDatasetSequence.drop_previous_experiences">[docs]</a>    <span class="k">def</span> <span class="nf">drop_previous_experiences</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">to_exp</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Drop the reference to experiences up to a certain experience ID</span>
+<span class="sd">        (inclusive).</span>
+
+<span class="sd">        This means that experiences with ID [0, from_exp] will be released.</span>
+<span class="sd">        Beware that the associated object will be valid until all the references</span>
+<span class="sd">        to it are dropped.</span>
+
+<span class="sd">        :param to_exp: The ID of the last exp to drop (inclusive). If None,</span>
+<span class="sd">            the whole stream will be loaded. Can be a negative number, in</span>
+<span class="sd">            which case this method doesn&#39;t have any effect. Can be greater</span>
+<span class="sd">            or equal to the stream length, in which case all currently loaded</span>
+<span class="sd">            experiences will be dropped.</span>
+<span class="sd">        :return: None</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="n">to_exp</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">to_exp</span><span class="p">)</span>  <span class="c1"># Handle single element tensors</span>
+        <span class="k">if</span> <span class="n">to_exp</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="k">return</span>
+
+        <span class="n">to_exp</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="n">to_exp</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+
+        <span class="k">for</span> <span class="n">exp_id</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">to_exp</span><span class="o">+</span><span class="mi">1</span><span class="p">):</span>
+            <span class="k">if</span> <span class="n">exp_id</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_loaded_experiences</span><span class="p">:</span>
+                <span class="k">del</span> <span class="bp">self</span><span class="o">.</span><span class="n">_loaded_experiences</span><span class="p">[</span><span class="n">exp_id</span><span class="p">]</span></div>
+
+<div class="viewcode-block" id="LazyDatasetSequence.load_all_experiences"><a class="viewcode-back" href="../../../../../autoapi/avalanche/benchmarks/scenarios/lazy_dataset_sequence/#avalanche.benchmarks.scenarios.lazy_dataset_sequence.LazyDatasetSequence.load_all_experiences">[docs]</a>    <span class="k">def</span> <span class="nf">load_all_experiences</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">to_exp</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Load all experiences up to a certain experience ID (inclusive).</span>
+
+<span class="sd">        Beware that this won&#39;t re-load any already dropped experience.</span>
+
+<span class="sd">        :param to_exp: The ID of the last exp to load (inclusive). If None,</span>
+<span class="sd">            the whole stream will be loaded.</span>
+<span class="sd">        :return: None</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">to_exp</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">to_exp</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">to_exp</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">to_exp</span><span class="p">)</span>  <span class="c1"># Handle single element tensors</span>
+
+        <span class="k">if</span> <span class="n">to_exp</span> <span class="o">&gt;=</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="ne">IndexError</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;The stream doesn</span><span class="se">\&#39;</span><span class="s1">t contain </span><span class="si">{</span><span class="n">to_exp</span><span class="o">+</span><span class="mi">1</span><span class="si">}</span><span class="s1">&#39;</span>
+                             <span class="sa">f</span><span class="s1">&#39;experiences&#39;</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_next_exp_id</span> <span class="o">&gt;</span> <span class="n">to_exp</span><span class="p">:</span>
+            <span class="c1"># Nothing to do</span>
+            <span class="k">return</span>
+
+        <span class="k">for</span> <span class="n">exp_id</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_next_exp_id</span><span class="p">,</span> <span class="n">to_exp</span><span class="o">+</span><span class="mi">1</span><span class="p">):</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="n">generated_exp</span><span class="p">:</span> <span class="n">AvalancheDataset</span> <span class="o">=</span> <span class="nb">next</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_exp_generator</span><span class="p">)</span>
+            <span class="k">except</span> <span class="ne">StopIteration</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span>
+                    <span class="sa">f</span><span class="s1">&#39;Unexpected end of stream. The generator was supposed to &#39;</span>
+                    <span class="sa">f</span><span class="s1">&#39;generate </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span><span class="si">}</span><span class="s1"> experiences, but an error occurred &#39;</span>
+                    <span class="sa">f</span><span class="s1">&#39;while generating experience </span><span class="si">{</span><span class="n">exp_id</span><span class="si">}</span><span class="s1">.&#39;</span><span class="p">)</span>
+
+            <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">generated_exp</span><span class="p">,</span> <span class="n">AvalancheDataset</span><span class="p">):</span>
+                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+                    <span class="s1">&#39;All experience datasets must be subclasses of&#39;</span>
+                    <span class="s1">&#39; AvalancheDataset&#39;</span><span class="p">)</span>
+
+            <span class="bp">self</span><span class="o">.</span><span class="n">_loaded_experiences</span><span class="p">[</span><span class="n">exp_id</span><span class="p">]</span> <span class="o">=</span> <span class="n">generated_exp</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">targets_field_sequence</span><span class="p">[</span><span class="n">exp_id</span><span class="p">]</span> <span class="o">=</span> <span class="n">generated_exp</span><span class="o">.</span><span class="n">targets</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">task_labels_field_sequence</span><span class="p">[</span><span class="n">exp_id</span><span class="p">]</span> <span class="o">=</span> \
+                <span class="n">generated_exp</span><span class="o">.</span><span class="n">targets_task_labels</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_next_exp_id</span> <span class="o">+=</span> <span class="mi">1</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_next_exp_id</span> <span class="o">==</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+            <span class="c1"># Release all references to the generator</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_exp_generator</span> <span class="o">=</span> <span class="kc">None</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_exp_source</span> <span class="o">=</span> <span class="kc">None</span></div></div>
+
+
+<span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="s1">&#39;LazyDatasetSequence&#39;</span>
+<span class="p">]</span>
+</pre></div>
+
+           </div>
+           
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &#169; Copyright 2021, ContinualAI.
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

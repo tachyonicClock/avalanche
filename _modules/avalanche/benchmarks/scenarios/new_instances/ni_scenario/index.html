@@ -584,19 +584,6 @@
             <span class="n">complete_test_set_only</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
             <span class="n">experience_factory</span><span class="o">=</span><span class="n">NIExperience</span><span class="p">)</span>
 
-    <span class="c1"># TODO: remove</span>
-    <span class="c1"># @property</span>
-    <span class="c1"># def classes_in_experience(self) -&gt; Sequence[Set[int]]:</span>
-    <span class="c1">#     if self._classes_in_exp is None:</span>
-    <span class="c1">#         self._classes_in_exp = []</span>
-    <span class="c1">#         for exp_id in range(self.n_experiences):</span>
-    <span class="c1">#             self._classes_in_exp.append(set())</span>
-    <span class="c1">#             exp_s = self.exp_structure[exp_id]</span>
-    <span class="c1">#             for class_id, n_patterns_of_class in enumerate(exp_s):</span>
-    <span class="c1">#                 if n_patterns_of_class &gt; 0:</span>
-    <span class="c1">#                     self._classes_in_exp[exp_id].add(class_id)</span>
-    <span class="c1">#     return self._classes_in_exp</span>
-
 <div class="viewcode-block" id="NIScenario.get_reproducibility_data"><a class="viewcode-back" href="../../../../../../autoapi/avalanche/benchmarks/scenarios/new_instances/ni_scenario/#avalanche.benchmarks.NIScenario.get_reproducibility_data">[docs]</a>    <span class="k">def</span> <span class="nf">get_reproducibility_data</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]:</span>
         <span class="n">reproducibility_data</span> <span class="o">=</span> <span class="p">{</span>
             <span class="s1">&#39;exps_patterns_assignment&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">train_exps_patterns_assignment</span><span class="p">,</span>

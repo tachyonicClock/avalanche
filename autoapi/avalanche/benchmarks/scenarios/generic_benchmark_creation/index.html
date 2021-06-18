@@ -187,6 +187,20 @@ Consider using the higher-level ones found in benchmark_generators. If none of
 them fit your needs, then the helper functions here listed may help.</p>
 <div class="section" id="module-contents">
 <h2>Module Contents<a class="headerlink" href="#module-contents" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="classes">
+<h3>Classes<a class="headerlink" href="#classes" title="Permalink to this headline">¶</a></h3>
+<table class="longtable docutils align-default">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 90%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="#avalanche.benchmarks.scenarios.generic_benchmark_creation.LazyStreamDefinition" title="avalanche.benchmarks.scenarios.generic_benchmark_creation.LazyStreamDefinition"><code class="xref py py-obj docutils literal notranslate"><span class="pre">LazyStreamDefinition</span></code></a></p></td>
+<td><p>A simple class that can be used when preparing the parameters for the</p></td>
+</tr>
+</tbody>
+</table>
+</div>
 <div class="section" id="functions">
 <h3>Functions<a class="headerlink" href="#functions" title="Permalink to this headline">¶</a></h3>
 <table class="longtable docutils align-default">
@@ -198,13 +212,16 @@ them fit your needs, then the helper functions here listed may help.</p>
 <tr class="row-odd"><td><p><a class="reference internal" href="#avalanche.benchmarks.scenarios.generic_benchmark_creation.create_multi_dataset_generic_benchmark" title="avalanche.benchmarks.scenarios.generic_benchmark_creation.create_multi_dataset_generic_benchmark"><code class="xref py py-obj docutils literal notranslate"><span class="pre">create_multi_dataset_generic_benchmark</span></code></a>(train_datasets: Sequence[SupportedDataset], test_datasets: Sequence[SupportedDataset], *, other_streams_datasets: Dict[str, Sequence[SupportedDataset]] = None, complete_test_set_only: bool = False, train_transform=None, train_target_transform=None, eval_transform=None, eval_target_transform=None, other_streams_transforms: Dict[str, Tuple[Any, Any]] = None, dataset_type: AvalancheDatasetType = None) → GenericCLScenario</p></td>
 <td><p>Creates a benchmark instance given a list of datasets. Each dataset will be</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#avalanche.benchmarks.scenarios.generic_benchmark_creation.create_generic_benchmark_from_filelists" title="avalanche.benchmarks.scenarios.generic_benchmark_creation.create_generic_benchmark_from_filelists"><code class="xref py py-obj docutils literal notranslate"><span class="pre">create_generic_benchmark_from_filelists</span></code></a>(root: Optional[Union[str, Path]], train_file_lists: Sequence[Union[str, Path]], test_file_lists: Sequence[Union[str, Path]], *, other_streams_file_lists: Dict[str, Sequence[Union[str, Path]]] = None, task_labels: Sequence[int], complete_test_set_only: bool = False, train_transform=None, train_target_transform=None, eval_transform=None, eval_target_transform=None, other_streams_transforms: Dict[str, Tuple[Any, Any]] = None) → GenericCLScenario</p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#avalanche.benchmarks.scenarios.generic_benchmark_creation.create_lazy_generic_benchmark" title="avalanche.benchmarks.scenarios.generic_benchmark_creation.create_lazy_generic_benchmark"><code class="xref py py-obj docutils literal notranslate"><span class="pre">create_lazy_generic_benchmark</span></code></a>(train_generator: LazyStreamDefinition, test_generator: LazyStreamDefinition, *, other_streams_generators: Dict[str, LazyStreamDefinition] = None, complete_test_set_only: bool = False, train_transform=None, train_target_transform=None, eval_transform=None, eval_target_transform=None, other_streams_transforms: Dict[str, Tuple[Any, Any]] = None, dataset_type: AvalancheDatasetType = None) → GenericCLScenario</p></td>
+<td><p>Creates a lazily-defined benchmark instance given a dataset generator for</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#avalanche.benchmarks.scenarios.generic_benchmark_creation.create_generic_benchmark_from_filelists" title="avalanche.benchmarks.scenarios.generic_benchmark_creation.create_generic_benchmark_from_filelists"><code class="xref py py-obj docutils literal notranslate"><span class="pre">create_generic_benchmark_from_filelists</span></code></a>(root: Optional[Union[str, Path]], train_file_lists: Sequence[Union[str, Path]], test_file_lists: Sequence[Union[str, Path]], *, other_streams_file_lists: Dict[str, Sequence[Union[str, Path]]] = None, task_labels: Sequence[int], complete_test_set_only: bool = False, train_transform=None, train_target_transform=None, eval_transform=None, eval_target_transform=None, other_streams_transforms: Dict[str, Tuple[Any, Any]] = None) → GenericCLScenario</p></td>
 <td><p>Creates a benchmark instance given a list of filelists and the respective</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#avalanche.benchmarks.scenarios.generic_benchmark_creation.create_generic_benchmark_from_paths" title="avalanche.benchmarks.scenarios.generic_benchmark_creation.create_generic_benchmark_from_paths"><code class="xref py py-obj docutils literal notranslate"><span class="pre">create_generic_benchmark_from_paths</span></code></a>(train_lists_of_files: Sequence[Sequence[FileAndLabel]], test_lists_of_files: Union[Sequence[FileAndLabel], Sequence[Sequence[FileAndLabel]]], *, other_streams_lists_of_files: Dict[str, Sequence[Sequence[FileAndLabel]]] = None, task_labels: Sequence[int], complete_test_set_only: bool = False, train_transform=None, train_target_transform=None, eval_transform=None, eval_target_transform=None, other_streams_transforms: Dict[str, Tuple[Any, Any]] = None, dataset_type: AvalancheDatasetType = AvalancheDatasetType.UNDEFINED) → GenericCLScenario</p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#avalanche.benchmarks.scenarios.generic_benchmark_creation.create_generic_benchmark_from_paths" title="avalanche.benchmarks.scenarios.generic_benchmark_creation.create_generic_benchmark_from_paths"><code class="xref py py-obj docutils literal notranslate"><span class="pre">create_generic_benchmark_from_paths</span></code></a>(train_lists_of_files: Sequence[Sequence[FileAndLabel]], test_lists_of_files: Union[Sequence[FileAndLabel], Sequence[Sequence[FileAndLabel]]], *, other_streams_lists_of_files: Dict[str, Sequence[Sequence[FileAndLabel]]] = None, task_labels: Sequence[int], complete_test_set_only: bool = False, train_transform=None, train_target_transform=None, eval_transform=None, eval_target_transform=None, other_streams_transforms: Dict[str, Tuple[Any, Any]] = None, dataset_type: AvalancheDatasetType = AvalancheDatasetType.UNDEFINED) → GenericCLScenario</p></td>
 <td><p>Creates a benchmark instance given a sequence of lists of files. A separate</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#avalanche.benchmarks.scenarios.generic_benchmark_creation.create_generic_benchmark_from_tensor_lists" title="avalanche.benchmarks.scenarios.generic_benchmark_creation.create_generic_benchmark_from_tensor_lists"><code class="xref py py-obj docutils literal notranslate"><span class="pre">create_generic_benchmark_from_tensor_lists</span></code></a>(train_tensors: Sequence[Sequence[Any]], test_tensors: Sequence[Sequence[Any]], *, other_streams_tensors: Dict[str, Sequence[Sequence[Any]]] = None, task_labels: Sequence[int], complete_test_set_only: bool = False, train_transform=None, train_target_transform=None, eval_transform=None, eval_target_transform=None, other_streams_transforms: Dict[str, Tuple[Any, Any]] = None, dataset_type: AvalancheDatasetType = None) → GenericCLScenario</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#avalanche.benchmarks.scenarios.generic_benchmark_creation.create_generic_benchmark_from_tensor_lists" title="avalanche.benchmarks.scenarios.generic_benchmark_creation.create_generic_benchmark_from_tensor_lists"><code class="xref py py-obj docutils literal notranslate"><span class="pre">create_generic_benchmark_from_tensor_lists</span></code></a>(train_tensors: Sequence[Sequence[Any]], test_tensors: Sequence[Sequence[Any]], *, other_streams_tensors: Dict[str, Sequence[Sequence[Any]]] = None, task_labels: Sequence[int], complete_test_set_only: bool = False, train_transform=None, train_target_transform=None, eval_transform=None, eval_target_transform=None, other_streams_transforms: Dict[str, Tuple[Any, Any]] = None, dataset_type: AvalancheDatasetType = None) → GenericCLScenario</p></td>
 <td><p>Creates a benchmark instance given lists of Tensors. A separate dataset will</p></td>
 </tr>
 </tbody>
@@ -236,8 +253,7 @@ streams then those definition will override the <cite>train_datasets</cite> and
 <li><p><strong>complete_test_set_only</strong> – If True, only the complete test set will
 be returned by the scenario. This means that the <code class="docutils literal notranslate"><span class="pre">test_dataset_list</span></code>
 parameter must be list with a single element (the complete test set).
-Defaults to False, which means that <code class="docutils literal notranslate"><span class="pre">train_dataset_list</span></code> and
-<code class="docutils literal notranslate"><span class="pre">test_dataset_list</span></code> must contain the same amount of datasets.</p></li>
+Defaults to False.</p></li>
 <li><p><strong>train_transform</strong> – The transformation to apply to the training data,
 e.g. a random crop, a normalization or a concatenation of different
 transformations (see torchvision.transform documentation for a
@@ -268,6 +284,122 @@ UNDEFINED will be used.</p></li>
 </dd>
 <dt class="field-even">Returns</dt>
 <dd class="field-even"><p>A <code class="xref py py-class docutils literal notranslate"><span class="pre">GenericCLScenario</span></code> instance.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="avalanche.benchmarks.scenarios.generic_benchmark_creation.LazyStreamDefinition">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">avalanche.benchmarks.scenarios.generic_benchmark_creation.</span></span><span class="sig-name descname"><span class="pre">LazyStreamDefinition</span></span><a class="reference internal" href="../../../../../_modules/avalanche/benchmarks/scenarios/generic_benchmark_creation/#LazyStreamDefinition"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.benchmarks.scenarios.generic_benchmark_creation.LazyStreamDefinition" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">typing.NamedTuple</span></code></p>
+<p>A simple class that can be used when preparing the parameters for the
+<a class="reference internal" href="#avalanche.benchmarks.scenarios.generic_benchmark_creation.create_lazy_generic_benchmark" title="avalanche.benchmarks.scenarios.generic_benchmark_creation.create_lazy_generic_benchmark"><code class="xref py py-func docutils literal notranslate"><span class="pre">create_lazy_generic_benchmark()</span></code></a> helper.</p>
+<p>This class is a named tuple containing the fields required for defining
+a lazily-created benchmark.</p>
+<ul class="simple">
+<li><p>exps_generator: The experiences generator. Can be a “yield”-based
+generator, a custom sequence, a standard list or any kind of
+iterable returning <code class="xref py py-class docutils literal notranslate"><span class="pre">AvalancheDataset</span></code>.</p></li>
+<li><p>stream_length: The number of experiences in the stream. Must match the
+number of experiences returned by the generator.</p></li>
+<li><p>exps_task_labels: A list containing the list of task labels of each
+experience. If an experience contains a single task label, a single int
+can be used.</p></li>
+</ul>
+<p>Create and return a new object.  See help(type) for accurate signature.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="avalanche.benchmarks.scenarios.generic_benchmark_creation.LazyStreamDefinition.exps_generator">
+<span class="sig-name descname"><span class="pre">exps_generator</span></span><em class="property"> <span class="pre">:Iterable[AvalancheDataset]</span></em><a class="headerlink" href="#avalanche.benchmarks.scenarios.generic_benchmark_creation.LazyStreamDefinition.exps_generator" title="Permalink to this definition">¶</a></dt>
+<dd><p>The experiences generator. Can be a “yield”-based generator, a custom
+sequence, a standard list or any kind of iterable returning
+<code class="xref py py-class docutils literal notranslate"><span class="pre">AvalancheDataset</span></code>.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="avalanche.benchmarks.scenarios.generic_benchmark_creation.LazyStreamDefinition.stream_length">
+<span class="sig-name descname"><span class="pre">stream_length</span></span><em class="property"> <span class="pre">:int</span></em><a class="headerlink" href="#avalanche.benchmarks.scenarios.generic_benchmark_creation.LazyStreamDefinition.stream_length" title="Permalink to this definition">¶</a></dt>
+<dd><p>The number of experiences in the stream. Must match the number of
+experiences returned by the generator</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="avalanche.benchmarks.scenarios.generic_benchmark_creation.LazyStreamDefinition.exps_task_labels">
+<span class="sig-name descname"><span class="pre">exps_task_labels</span></span><em class="property"> <span class="pre">:Sequence[Union[int,</span> <span class="pre">Iterable[int]]]</span></em><a class="headerlink" href="#avalanche.benchmarks.scenarios.generic_benchmark_creation.LazyStreamDefinition.exps_task_labels" title="Permalink to this definition">¶</a></dt>
+<dd><p>A list containing the list of task labels of each experience.
+If an experience contains a single task label, a single int can be used.</p>
+<p>This field is temporary required for internal purposes to support lazy
+streams. This field may become optional in the future.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="avalanche.benchmarks.scenarios.generic_benchmark_creation.create_lazy_generic_benchmark">
+<span class="sig-prename descclassname"><span class="pre">avalanche.benchmarks.scenarios.generic_benchmark_creation.</span></span><span class="sig-name descname"><span class="pre">create_lazy_generic_benchmark</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">train_generator</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><a class="reference internal" href="#avalanche.benchmarks.scenarios.generic_benchmark_creation.LazyStreamDefinition" title="avalanche.benchmarks.scenarios.generic_benchmark_creation.LazyStreamDefinition"><span class="pre">LazyStreamDefinition</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">test_generator</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><a class="reference internal" href="#avalanche.benchmarks.scenarios.generic_benchmark_creation.LazyStreamDefinition" title="avalanche.benchmarks.scenarios.generic_benchmark_creation.LazyStreamDefinition"><span class="pre">LazyStreamDefinition</span></a></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">other_streams_generators</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span> </span><a class="reference internal" href="#avalanche.benchmarks.scenarios.generic_benchmark_creation.LazyStreamDefinition" title="avalanche.benchmarks.scenarios.generic_benchmark_creation.LazyStreamDefinition"><span class="pre">LazyStreamDefinition</span></a><span class="p"><span class="pre">]</span></span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">complete_test_set_only</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">bool</span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">train_transform</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">train_target_transform</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">eval_transform</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">eval_target_transform</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">other_streams_transforms</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span> </span><span class="pre">Tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">Any</span><span class="p"><span class="pre">,</span> </span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dataset_type</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">AvalancheDatasetType</span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">GenericCLScenario</span><a class="reference internal" href="../../../../../_modules/avalanche/benchmarks/scenarios/generic_benchmark_creation/#create_lazy_generic_benchmark"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.benchmarks.scenarios.generic_benchmark_creation.create_lazy_generic_benchmark" title="Permalink to this definition">¶</a></dt>
+<dd><p>Creates a lazily-defined benchmark instance given a dataset generator for
+each stream.</p>
+<p>Generators must return properly initialized instances of
+<code class="xref py py-class docutils literal notranslate"><span class="pre">AvalancheDataset</span></code> which will be used to create experiences.</p>
+<p>The created datasets can have transformations already set.
+However, if transformations are shared across all datasets of the same
+stream, it is recommended to use the <cite>train_transform</cite>, <cite>eval_transform</cite>
+and <cite>other_streams_transforms</cite> parameters, so that transformations groups
+can be correctly applied (transformations are lazily added atop the datasets
+returned by the generators). The same reasoning applies to the
+<cite>dataset_type</cite> parameter.</p>
+<p>This function allows for the creation of custom streams as well.
+While “train” and “test” streams must be always set, the generators
+for other streams can be defined by using the <cite>other_streams_generators</cite>
+parameter.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>train_generator</strong> – A proper lazy-generation definition for the training
+stream. It is recommended to pass an instance
+of <a class="reference internal" href="#avalanche.benchmarks.scenarios.generic_benchmark_creation.LazyStreamDefinition" title="avalanche.benchmarks.scenarios.generic_benchmark_creation.LazyStreamDefinition"><code class="xref py py-class docutils literal notranslate"><span class="pre">LazyStreamDefinition</span></code></a>. See its description for more details.</p></li>
+<li><p><strong>test_generator</strong> – A proper lazy-generation definition for the test
+stream. It is recommended to pass an instance
+of <a class="reference internal" href="#avalanche.benchmarks.scenarios.generic_benchmark_creation.LazyStreamDefinition" title="avalanche.benchmarks.scenarios.generic_benchmark_creation.LazyStreamDefinition"><code class="xref py py-class docutils literal notranslate"><span class="pre">LazyStreamDefinition</span></code></a>. See its description for more details.</p></li>
+<li><p><strong>other_streams_generators</strong> – A dictionary describing the content of
+custom streams. Keys must be valid stream names (letters and numbers,
+not starting with a number) while the value must be a
+lazy-generation definition (like the ones of the training and
+test streams). If this dictionary contains the definition for
+“train” or “test” streams then those definition will override the
+<cite>train_generator</cite> and <cite>test_generator</cite> parameters.</p></li>
+<li><p><strong>complete_test_set_only</strong> – If True, only the complete test set will
+be returned by the scenario. This means that the <code class="docutils literal notranslate"><span class="pre">test_generator</span></code>
+parameter must define a stream with a single experience (the complete
+test set). Defaults to False.</p></li>
+<li><p><strong>train_transform</strong> – The transformation to apply to the training data,
+e.g. a random crop, a normalization or a concatenation of different
+transformations (see torchvision.transform documentation for a
+comprehensive list of possible transformations). Defaults to None.</p></li>
+<li><p><strong>train_target_transform</strong> – The transformation to apply to training
+patterns targets. Defaults to None.</p></li>
+<li><p><strong>eval_transform</strong> – The transformation to apply to the test data,
+e.g. a random crop, a normalization or a concatenation of different
+transformations (see torchvision.transform documentation for a
+comprehensive list of possible transformations). Defaults to None.</p></li>
+<li><p><strong>eval_target_transform</strong> – The transformation to apply to test
+patterns targets. Defaults to None.</p></li>
+<li><p><strong>other_streams_transforms</strong> – Transformations to apply to custom
+streams. If no transformations are defined for a custom stream,
+then “train” transformations will be used. This parameter must be a
+dictionary mapping stream names to transformations. The transformations
+must be a two elements tuple where the first element defines the
+X transformation while the second element is the Y transformation.
+Those elements can be None. If this dictionary contains the
+transformations for “train” or “test” streams then those transformations
+will override the <cite>train_transform</cite>, <cite>train_target_transform</cite>,
+<cite>eval_transform</cite> and <cite>eval_target_transform</cite> parameters.</p></li>
+<li><p><strong>dataset_type</strong> – The type of the datasets. Defaults to None, which
+means that the type will be obtained from the input datasets. This
+type will be applied to all the datasets returned by the generators.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>A lazily-initialized <code class="xref py py-class docutils literal notranslate"><span class="pre">GenericCLScenario</span></code> instance.</p>
 </dd>
 </dl>
 </dd></dl>
@@ -321,8 +453,7 @@ see the function description.</p></li>
 be returned by the scenario. This means that the <code class="docutils literal notranslate"><span class="pre">test_file_lists</span></code>
 parameter must be list with a single element (the complete test set).
 Alternatively, can be a plain string or <code class="xref py py-class docutils literal notranslate"><span class="pre">Path</span></code> object.
-Defaults to False, which means that <code class="docutils literal notranslate"><span class="pre">train_file_lists</span></code> and
-<code class="docutils literal notranslate"><span class="pre">test_file_lists</span></code> must contain the same amount of filelists paths.</p></li>
+Defaults to False.</p></li>
 <li><p><strong>train_transform</strong> – The transformation to apply to the training data,
 e.g. a random crop, a normalization or a concatenation of different
 transformations (see torchvision.transform documentation for a
@@ -401,8 +532,7 @@ see the function description.</p></li>
 <li><p><strong>complete_test_set_only</strong> – If True, only the complete test set will
 be returned by the scenario. This means that the <code class="docutils literal notranslate"><span class="pre">test_list_of_files</span></code>
 parameter must define a single experience (the complete test set).
-Defaults to False, which means that <code class="docutils literal notranslate"><span class="pre">train_list_of_files</span></code> and
-<code class="docutils literal notranslate"><span class="pre">test_list_of_files</span></code> must contain the same amount of paths.</p></li>
+Defaults to False.</p></li>
 <li><p><strong>train_transform</strong> – The transformation to apply to the training data,
 e.g. a random crop, a normalization or a concatenation of different
 transformations (see torchvision.transform documentation for a
@@ -482,9 +612,7 @@ applied to all patterns of a certain experience. For more info on that,
 see the function description.</p></li>
 <li><p><strong>complete_test_set_only</strong> – If True, only the complete test set will
 be returned by the scenario. This means that <code class="docutils literal notranslate"><span class="pre">test_tensors</span></code> must
-define a single experience. Defaults to False, which means that
-<code class="docutils literal notranslate"><span class="pre">train_tensors</span></code> and <code class="docutils literal notranslate"><span class="pre">test_tensors</span></code> must define the same
-amount of experiences.</p></li>
+define a single experience. Defaults to False.</p></li>
 <li><p><strong>train_transform</strong> – The transformation to apply to the training data,
 e.g. a random crop, a normalization or a concatenation of different
 transformations (see torchvision.transform documentation for a

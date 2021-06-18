@@ -245,13 +245,11 @@
 <span class="sd">    original stream and may be unrelated to the order in which the strategy will</span>
 <span class="sd">    encounter experiences.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="nd">@property</span>
-    <span class="nd">@abstractmethod</span>
-    <span class="k">def</span> <span class="nf">dataset</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">AvalancheDataset</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        The dataset containing the patterns available in this experience.</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="o">...</span>
+
+    <span class="n">dataset</span><span class="p">:</span> <span class="n">AvalancheDataset</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    The dataset containing the patterns available in this experience.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="nd">@property</span>
     <span class="nd">@abstractmethod</span>

@@ -295,6 +295,8 @@
 </li>
         <li><a href="../autoapi/avalanche/benchmarks/scenarios/#avalanche.benchmarks.scenarios.GenericScenarioStream.__getitem__">(avalanche.benchmarks.scenarios.GenericScenarioStream method)</a>
 </li>
+        <li><a href="../autoapi/avalanche/benchmarks/scenarios/lazy_dataset_sequence/#avalanche.benchmarks.scenarios.lazy_dataset_sequence.LazyDatasetSequence.__getitem__">(avalanche.benchmarks.scenarios.lazy_dataset_sequence.LazyDatasetSequence method)</a>
+</li>
         <li><a href="../autoapi/avalanche/benchmarks/scenarios/#avalanche.benchmarks.scenarios.ScenarioStream.__getitem__">(avalanche.benchmarks.scenarios.ScenarioStream method)</a>
 </li>
         <li><a href="../autoapi/avalanche/benchmarks/#avalanche.benchmarks.ScenarioStream.__getitem__">(avalanche.benchmarks.ScenarioStream method)</a>
@@ -384,6 +386,8 @@
         <li><a href="../autoapi/avalanche/benchmarks/scenarios/generic_definitions/#avalanche.benchmarks.scenarios.generic_definitions.ScenarioStream.__len__">(avalanche.benchmarks.scenarios.generic_definitions.ScenarioStream method)</a>
 </li>
         <li><a href="../autoapi/avalanche/benchmarks/scenarios/#avalanche.benchmarks.scenarios.GenericScenarioStream.__len__">(avalanche.benchmarks.scenarios.GenericScenarioStream method)</a>
+</li>
+        <li><a href="../autoapi/avalanche/benchmarks/scenarios/lazy_dataset_sequence/#avalanche.benchmarks.scenarios.lazy_dataset_sequence.LazyDatasetSequence.__len__">(avalanche.benchmarks.scenarios.lazy_dataset_sequence.LazyDatasetSequence method)</a>
 </li>
         <li><a href="../autoapi/avalanche/benchmarks/scenarios/#avalanche.benchmarks.scenarios.ScenarioStream.__len__">(avalanche.benchmarks.scenarios.ScenarioStream method)</a>
 </li>
@@ -1667,6 +1671,13 @@
 
       <ul>
         <li><a href="../autoapi/avalanche/benchmarks/scenarios/generic_scenario_creation/#module-avalanche.benchmarks.scenarios.generic_scenario_creation">module</a>
+</li>
+      </ul></li>
+      <li>
+    avalanche.benchmarks.scenarios.lazy_dataset_sequence
+
+      <ul>
+        <li><a href="../autoapi/avalanche/benchmarks/scenarios/lazy_dataset_sequence/#module-avalanche.benchmarks.scenarios.lazy_dataset_sequence">module</a>
 </li>
       </ul></li>
       <li>
@@ -3178,6 +3189,8 @@
         <li><a href="../autoapi/avalanche/benchmarks/scenarios/generic_scenario_creation/#avalanche.benchmarks.scenarios.generic_scenario_creation.create_generic_scenario_from_tensors">(in module avalanche.benchmarks.scenarios.generic_scenario_creation)</a>
 </li>
       </ul></li>
+      <li><a href="../autoapi/avalanche/benchmarks/scenarios/generic_benchmark_creation/#avalanche.benchmarks.scenarios.generic_benchmark_creation.create_lazy_generic_benchmark">create_lazy_generic_benchmark() (in module avalanche.benchmarks.scenarios.generic_benchmark_creation)</a>
+</li>
       <li><a href="../autoapi/avalanche/benchmarks/scenarios/generic_benchmark_creation/#avalanche.benchmarks.scenarios.generic_benchmark_creation.create_multi_dataset_generic_benchmark">create_multi_dataset_generic_benchmark() (in module avalanche.benchmarks.scenarios.generic_benchmark_creation)</a>
 </li>
       <li><a href="../autoapi/avalanche/benchmarks/#avalanche.benchmarks.create_multi_dataset_generic_scenario">create_multi_dataset_generic_scenario() (in module avalanche.benchmarks)</a>
@@ -3288,18 +3301,12 @@
         <li><a href="../autoapi/avalanche/training/strategies/#avalanche.training.strategies.BaseStrategy.dataloader">(avalanche.training.strategies.BaseStrategy attribute)</a>
 </li>
       </ul></li>
-      <li><a href="../autoapi/avalanche/benchmarks/#avalanche.benchmarks.Experience.dataset">dataset() (avalanche.benchmarks.Experience property)</a>
+      <li><a href="../autoapi/avalanche/benchmarks/#avalanche.benchmarks.Experience.dataset">dataset (avalanche.benchmarks.Experience attribute)</a>
 
       <ul>
-        <li><a href="../autoapi/avalanche/benchmarks/#avalanche.benchmarks.GenericExperience.dataset">(avalanche.benchmarks.GenericExperience property)</a>
+        <li><a href="../autoapi/avalanche/benchmarks/scenarios/#avalanche.benchmarks.scenarios.Experience.dataset">(avalanche.benchmarks.scenarios.Experience attribute)</a>
 </li>
-        <li><a href="../autoapi/avalanche/benchmarks/scenarios/#avalanche.benchmarks.scenarios.Experience.dataset">(avalanche.benchmarks.scenarios.Experience property)</a>
-</li>
-        <li><a href="../autoapi/avalanche/benchmarks/scenarios/generic_cl_scenario/#avalanche.benchmarks.scenarios.generic_cl_scenario.GenericExperience.dataset">(avalanche.benchmarks.scenarios.generic_cl_scenario.GenericExperience property)</a>
-</li>
-        <li><a href="../autoapi/avalanche/benchmarks/scenarios/generic_definitions/#avalanche.benchmarks.scenarios.generic_definitions.Experience.dataset">(avalanche.benchmarks.scenarios.generic_definitions.Experience property)</a>
-</li>
-        <li><a href="../autoapi/avalanche/benchmarks/scenarios/#avalanche.benchmarks.scenarios.GenericExperience.dataset">(avalanche.benchmarks.scenarios.GenericExperience property)</a>
+        <li><a href="../autoapi/avalanche/benchmarks/scenarios/generic_definitions/#avalanche.benchmarks.scenarios.generic_definitions.Experience.dataset">(avalanche.benchmarks.scenarios.generic_definitions.Experience attribute)</a>
 </li>
       </ul></li>
       <li><a href="../autoapi/avalanche/benchmarks/#avalanche.benchmarks.dataset_benchmark">dataset_benchmark (in module avalanche.benchmarks)</a>
@@ -3346,8 +3353,6 @@
         <li><a href="../autoapi/avalanche/benchmarks/utils/datasets_from_filelists/#avalanche.benchmarks.utils.datasets_from_filelists.datasets_from_paths">(in module avalanche.benchmarks.utils.datasets_from_filelists)</a>
 </li>
       </ul></li>
-  </ul></td>
-  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="../autoapi/avalanche/benchmarks/datasets/inaturalist/inaturalist/#avalanche.benchmarks.datasets.inaturalist.inaturalist.INATURALIST2018.def_supcats">def_supcats (avalanche.benchmarks.datasets.inaturalist.inaturalist.INATURALIST2018 attribute)</a>
 
       <ul>
@@ -3356,6 +3361,8 @@
         <li><a href="../autoapi/avalanche/benchmarks/datasets/#avalanche.benchmarks.datasets.INATURALIST2018.def_supcats">(avalanche.benchmarks.datasets.INATURALIST2018 attribute)</a>
 </li>
       </ul></li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="../autoapi/avalanche/evaluation/metric_utils/#avalanche.evaluation.metric_utils.default_cm_image_creator">default_cm_image_creator() (in module avalanche.evaluation.metric_utils)</a>
 </li>
       <li><a href="../autoapi/avalanche/benchmarks/datasets/#avalanche.benchmarks.datasets.default_dataset_location">default_dataset_location() (in module avalanche.benchmarks.datasets)</a>
@@ -3426,6 +3433,16 @@
 
       <ul>
         <li><a href="../autoapi/avalanche/benchmarks/datasets/downloadable_dataset/#avalanche.benchmarks.datasets.downloadable_dataset.DownloadableDataset">(class in avalanche.benchmarks.datasets.downloadable_dataset)</a>
+</li>
+      </ul></li>
+      <li><a href="../autoapi/avalanche/benchmarks/#avalanche.benchmarks.GenericScenarioStream.drop_previous_experiences">drop_previous_experiences() (avalanche.benchmarks.GenericScenarioStream method)</a>
+
+      <ul>
+        <li><a href="../autoapi/avalanche/benchmarks/scenarios/generic_cl_scenario/#avalanche.benchmarks.scenarios.generic_cl_scenario.GenericScenarioStream.drop_previous_experiences">(avalanche.benchmarks.scenarios.generic_cl_scenario.GenericScenarioStream method)</a>
+</li>
+        <li><a href="../autoapi/avalanche/benchmarks/scenarios/#avalanche.benchmarks.scenarios.GenericScenarioStream.drop_previous_experiences">(avalanche.benchmarks.scenarios.GenericScenarioStream method)</a>
+</li>
+        <li><a href="../autoapi/avalanche/benchmarks/scenarios/lazy_dataset_sequence/#avalanche.benchmarks.scenarios.lazy_dataset_sequence.LazyDatasetSequence.drop_previous_experiences">(avalanche.benchmarks.scenarios.lazy_dataset_sequence.LazyDatasetSequence method)</a>
 </li>
       </ul></li>
       <li><a href="../autoapi/avalanche/models/#avalanche.models.DynamicModule">DynamicModule (class in avalanche.models)</a>
@@ -3594,14 +3611,14 @@
         <li><a href="../autoapi/avalanche/training/strategies/strategy_wrappers/#avalanche.training.strategies.strategy_wrappers.EWC">(class in avalanche.training.strategies.strategy_wrappers)</a>
 </li>
       </ul></li>
-  </ul></td>
-  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="../autoapi/avalanche/training/plugins/synaptic_intelligence/#avalanche.training.plugins.synaptic_intelligence.SynapticIntelligencePlugin.ewc_data">ewc_data (avalanche.training.plugins.synaptic_intelligence.SynapticIntelligencePlugin attribute)</a>
 
       <ul>
         <li><a href="../autoapi/avalanche/training/plugins/#avalanche.training.plugins.SynapticIntelligencePlugin.ewc_data">(avalanche.training.plugins.SynapticIntelligencePlugin attribute)</a>
 </li>
       </ul></li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="../autoapi/avalanche/training/plugins/ewc/#avalanche.training.plugins.ewc.EwcDataType">EwcDataType (in module avalanche.training.plugins.ewc)</a>
 </li>
       <li><a href="../autoapi/avalanche/training/plugins/#avalanche.training.plugins.EWCPlugin">EWCPlugin (class in avalanche.training.plugins)</a>
@@ -3734,9 +3751,13 @@
         <li><a href="../autoapi/avalanche/benchmarks/#avalanche.benchmarks.StreamDef.exps_data">(avalanche.benchmarks.StreamDef attribute)</a>
 </li>
       </ul></li>
-      <li><a href="../autoapi/avalanche/benchmarks/scenarios/generic_cl_scenario/#avalanche.benchmarks.scenarios.generic_cl_scenario.StreamDef.exps_task_labels">exps_task_labels (avalanche.benchmarks.scenarios.generic_cl_scenario.StreamDef attribute)</a>
+      <li><a href="../autoapi/avalanche/benchmarks/scenarios/generic_benchmark_creation/#avalanche.benchmarks.scenarios.generic_benchmark_creation.LazyStreamDefinition.exps_generator">exps_generator (avalanche.benchmarks.scenarios.generic_benchmark_creation.LazyStreamDefinition attribute)</a>
+</li>
+      <li><a href="../autoapi/avalanche/benchmarks/scenarios/generic_benchmark_creation/#avalanche.benchmarks.scenarios.generic_benchmark_creation.LazyStreamDefinition.exps_task_labels">exps_task_labels (avalanche.benchmarks.scenarios.generic_benchmark_creation.LazyStreamDefinition attribute)</a>
 
       <ul>
+        <li><a href="../autoapi/avalanche/benchmarks/scenarios/generic_cl_scenario/#avalanche.benchmarks.scenarios.generic_cl_scenario.StreamDef.exps_task_labels">(avalanche.benchmarks.scenarios.generic_cl_scenario.StreamDef attribute)</a>
+</li>
         <li><a href="../autoapi/avalanche/benchmarks/scenarios/#avalanche.benchmarks.scenarios.StreamDef.exps_task_labels">(avalanche.benchmarks.scenarios.StreamDef attribute)</a>
 </li>
         <li><a href="../autoapi/avalanche/benchmarks/#avalanche.benchmarks.StreamDef.exps_task_labels">(avalanche.benchmarks.StreamDef attribute)</a>
@@ -4108,6 +4129,8 @@
         <li><a href="../autoapi/avalanche/evaluation/metrics/#avalanche.evaluation.metrics.DiskUsage.get_dir_size">(avalanche.evaluation.metrics.DiskUsage static method)</a>
 </li>
       </ul></li>
+      <li><a href="../autoapi/avalanche/benchmarks/scenarios/lazy_dataset_sequence/#avalanche.benchmarks.scenarios.lazy_dataset_sequence.LazyDatasetSequence.get_experience_if_loaded">get_experience_if_loaded() (avalanche.benchmarks.scenarios.lazy_dataset_sequence.LazyDatasetSequence method)</a>
+</li>
       <li><a href="../autoapi/avalanche/evaluation/metric_definitions/#avalanche.evaluation.metric_definitions.PluginMetric.get_global_counter">get_global_counter() (avalanche.evaluation.metric_definitions.PluginMetric method)</a>
 
       <ul>
@@ -4444,9 +4467,15 @@
 </li>
       <li><a href="../autoapi/avalanche/benchmarks/utils/dataset_utils/#avalanche.benchmarks.utils.dataset_utils.LazyConcatTargets">LazyConcatTargets (class in avalanche.benchmarks.utils.dataset_utils)</a>
 </li>
+      <li><a href="../autoapi/avalanche/benchmarks/scenarios/lazy_dataset_sequence/#avalanche.benchmarks.scenarios.lazy_dataset_sequence.LazyDatasetSequence">LazyDatasetSequence (class in avalanche.benchmarks.scenarios.lazy_dataset_sequence)</a>
+</li>
+      <li><a href="../autoapi/avalanche/benchmarks/scenarios/generic_benchmark_creation/#avalanche.benchmarks.scenarios.generic_benchmark_creation.LazyStreamDefinition">LazyStreamDefinition (class in avalanche.benchmarks.scenarios.generic_benchmark_creation)</a>
+</li>
       <li><a href="../autoapi/avalanche/models/pnn/#avalanche.models.pnn.LinearAdapter">LinearAdapter (class in avalanche.models.pnn)</a>
 </li>
       <li><a href="../autoapi/avalanche/training/utils/#avalanche.training.utils.load_all_dataset">load_all_dataset() (in module avalanche.training.utils)</a>
+</li>
+      <li><a href="../autoapi/avalanche/benchmarks/scenarios/lazy_dataset_sequence/#avalanche.benchmarks.scenarios.lazy_dataset_sequence.LazyDatasetSequence.load_all_experiences">load_all_experiences() (avalanche.benchmarks.scenarios.lazy_dataset_sequence.LazyDatasetSequence method)</a>
 </li>
       <li><a href="../autoapi/avalanche/benchmarks/datasets/tiny_imagenet/tiny_imagenet/#avalanche.benchmarks.datasets.tiny_imagenet.tiny_imagenet.TinyImagenet.load_data">load_data() (avalanche.benchmarks.datasets.tiny_imagenet.tiny_imagenet.TinyImagenet method)</a>
 
@@ -4918,6 +4947,8 @@
 </li>
         <li><a href="../autoapi/avalanche/benchmarks/scenarios/generic_scenario_creation/#module-avalanche.benchmarks.scenarios.generic_scenario_creation">avalanche.benchmarks.scenarios.generic_scenario_creation</a>
 </li>
+        <li><a href="../autoapi/avalanche/benchmarks/scenarios/lazy_dataset_sequence/#module-avalanche.benchmarks.scenarios.lazy_dataset_sequence">avalanche.benchmarks.scenarios.lazy_dataset_sequence</a>
+</li>
         <li><a href="../autoapi/avalanche/benchmarks/scenarios/new_classes/#module-avalanche.benchmarks.scenarios.new_classes">avalanche.benchmarks.scenarios.new_classes</a>
 </li>
         <li><a href="../autoapi/avalanche/benchmarks/scenarios/new_classes/nc_scenario/#module-avalanche.benchmarks.scenarios.new_classes.nc_scenario">avalanche.benchmarks.scenarios.new_classes.nc_scenario</a>
@@ -5173,9 +5204,15 @@
         <li><a href="../autoapi/avalanche/training/strategies/strategy_wrappers/#avalanche.training.strategies.strategy_wrappers.Naive">(class in avalanche.training.strategies.strategy_wrappers)</a>
 </li>
       </ul></li>
-      <li><a href="../autoapi/avalanche/benchmarks/scenarios/generic_definitions/#avalanche.benchmarks.scenarios.generic_definitions.ScenarioStream.name">name (avalanche.benchmarks.scenarios.generic_definitions.ScenarioStream attribute)</a>
+      <li><a href="../autoapi/avalanche/benchmarks/#avalanche.benchmarks.GenericScenarioStream.name">name (avalanche.benchmarks.GenericScenarioStream attribute)</a>
 
       <ul>
+        <li><a href="../autoapi/avalanche/benchmarks/scenarios/generic_cl_scenario/#avalanche.benchmarks.scenarios.generic_cl_scenario.GenericScenarioStream.name">(avalanche.benchmarks.scenarios.generic_cl_scenario.GenericScenarioStream attribute)</a>
+</li>
+        <li><a href="../autoapi/avalanche/benchmarks/scenarios/generic_definitions/#avalanche.benchmarks.scenarios.generic_definitions.ScenarioStream.name">(avalanche.benchmarks.scenarios.generic_definitions.ScenarioStream attribute)</a>
+</li>
+        <li><a href="../autoapi/avalanche/benchmarks/scenarios/#avalanche.benchmarks.scenarios.GenericScenarioStream.name">(avalanche.benchmarks.scenarios.GenericScenarioStream attribute)</a>
+</li>
         <li><a href="../autoapi/avalanche/benchmarks/scenarios/#avalanche.benchmarks.scenarios.ScenarioStream.name">(avalanche.benchmarks.scenarios.ScenarioStream attribute)</a>
 </li>
         <li><a href="../autoapi/avalanche/benchmarks/#avalanche.benchmarks.ScenarioStream.name">(avalanche.benchmarks.ScenarioStream attribute)</a>
@@ -5185,14 +5222,14 @@
       </ul></li>
       <li><a href="../autoapi/avalanche/benchmarks/datasets/core50/core50_data/#avalanche.benchmarks.datasets.core50.core50_data.name2cat">name2cat (in module avalanche.benchmarks.datasets.core50.core50_data)</a>
 </li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="../autoapi/avalanche/evaluation/metrics/confusion_matrix/#avalanche.evaluation.metrics.confusion_matrix.ConfusionMatrix.nan_to_num">nan_to_num() (avalanche.evaluation.metrics.confusion_matrix.ConfusionMatrix static method)</a>
 
       <ul>
         <li><a href="../autoapi/avalanche/evaluation/metrics/#avalanche.evaluation.metrics.ConfusionMatrix.nan_to_num">(avalanche.evaluation.metrics.ConfusionMatrix static method)</a>
 </li>
       </ul></li>
-  </ul></td>
-  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="../autoapi/avalanche/benchmarks/#avalanche.benchmarks.nc_benchmark">nc_benchmark() (in module avalanche.benchmarks)</a>
 
       <ul>
@@ -5890,11 +5927,17 @@
       <li><a href="../autoapi/avalanche/benchmarks/#avalanche.benchmarks.Experience.scenario">scenario (avalanche.benchmarks.Experience attribute)</a>
 
       <ul>
+        <li><a href="../autoapi/avalanche/benchmarks/#avalanche.benchmarks.GenericScenarioStream.scenario">(avalanche.benchmarks.GenericScenarioStream attribute)</a>
+</li>
         <li><a href="../autoapi/avalanche/benchmarks/scenarios/#avalanche.benchmarks.scenarios.Experience.scenario">(avalanche.benchmarks.scenarios.Experience attribute)</a>
+</li>
+        <li><a href="../autoapi/avalanche/benchmarks/scenarios/generic_cl_scenario/#avalanche.benchmarks.scenarios.generic_cl_scenario.GenericScenarioStream.scenario">(avalanche.benchmarks.scenarios.generic_cl_scenario.GenericScenarioStream attribute)</a>
 </li>
         <li><a href="../autoapi/avalanche/benchmarks/scenarios/generic_definitions/#avalanche.benchmarks.scenarios.generic_definitions.Experience.scenario">(avalanche.benchmarks.scenarios.generic_definitions.Experience attribute)</a>
 </li>
         <li><a href="../autoapi/avalanche/benchmarks/scenarios/generic_definitions/#avalanche.benchmarks.scenarios.generic_definitions.ScenarioStream.scenario">(avalanche.benchmarks.scenarios.generic_definitions.ScenarioStream attribute)</a>
+</li>
+        <li><a href="../autoapi/avalanche/benchmarks/scenarios/#avalanche.benchmarks.scenarios.GenericScenarioStream.scenario">(avalanche.benchmarks.scenarios.GenericScenarioStream attribute)</a>
 </li>
         <li><a href="../autoapi/avalanche/benchmarks/scenarios/#avalanche.benchmarks.scenarios.ScenarioStream.scenario">(avalanche.benchmarks.scenarios.ScenarioStream attribute)</a>
 </li>
@@ -6137,12 +6180,22 @@
         <li><a href="../autoapi/avalanche/benchmarks/datasets/stream51/stream51/#avalanche.benchmarks.datasets.stream51.stream51.Stream51">(class in avalanche.benchmarks.datasets.stream51.stream51)</a>
 </li>
       </ul></li>
+      <li><a href="../autoapi/avalanche/benchmarks/#avalanche.benchmarks.GenericCLScenario.stream_definitions">stream_definitions (avalanche.benchmarks.GenericCLScenario attribute)</a>
+
+      <ul>
+        <li><a href="../autoapi/avalanche/benchmarks/scenarios/generic_cl_scenario/#avalanche.benchmarks.scenarios.generic_cl_scenario.GenericCLScenario.stream_definitions">(avalanche.benchmarks.scenarios.generic_cl_scenario.GenericCLScenario attribute)</a>
+</li>
+        <li><a href="../autoapi/avalanche/benchmarks/scenarios/#avalanche.benchmarks.scenarios.GenericCLScenario.stream_definitions">(avalanche.benchmarks.scenarios.GenericCLScenario attribute)</a>
+</li>
+      </ul></li>
       <li><a href="../autoapi/avalanche/evaluation/metrics/forgetting_bwt/#avalanche.evaluation.metrics.forgetting_bwt.StreamForgetting.stream_forgetting">stream_forgetting (avalanche.evaluation.metrics.forgetting_bwt.StreamForgetting attribute)</a>
 
       <ul>
         <li><a href="../autoapi/avalanche/evaluation/metrics/#avalanche.evaluation.metrics.StreamForgetting.stream_forgetting">(avalanche.evaluation.metrics.StreamForgetting attribute)</a>
 </li>
       </ul></li>
+      <li><a href="../autoapi/avalanche/benchmarks/scenarios/generic_benchmark_creation/#avalanche.benchmarks.scenarios.generic_benchmark_creation.LazyStreamDefinition.stream_length">stream_length (avalanche.benchmarks.scenarios.generic_benchmark_creation.LazyStreamDefinition attribute)</a>
+</li>
       <li><a href="../autoapi/avalanche/evaluation/metric_utils/#avalanche.evaluation.metric_utils.stream_type">stream_type() (in module avalanche.evaluation.metric_utils)</a>
 </li>
       <li><a href="../autoapi/avalanche/evaluation/metrics/#avalanche.evaluation.metrics.StreamAccuracy">StreamAccuracy (class in avalanche.evaluation.metrics)</a>
@@ -6313,6 +6366,8 @@
         <li><a href="../autoapi/avalanche/benchmarks/utils/dataset_definitions/#avalanche.benchmarks.utils.dataset_definitions.ISupportedClassificationDataset.targets">(avalanche.benchmarks.utils.dataset_definitions.ISupportedClassificationDataset attribute)</a>
 </li>
       </ul></li>
+      <li><a href="../autoapi/avalanche/benchmarks/scenarios/lazy_dataset_sequence/#avalanche.benchmarks.scenarios.lazy_dataset_sequence.LazyDatasetSequence.targets_field_sequence">targets_field_sequence (avalanche.benchmarks.scenarios.lazy_dataset_sequence.LazyDatasetSequence attribute)</a>
+</li>
       <li><a href="../autoapi/avalanche/benchmarks/utils/avalanche_dataset/#avalanche.benchmarks.utils.avalanche_dataset.AvalancheDataset.targets_task_labels">targets_task_labels (avalanche.benchmarks.utils.avalanche_dataset.AvalancheDataset attribute)</a>
 
       <ul>
@@ -6353,6 +6408,8 @@
         <li><a href="../autoapi/avalanche/benchmarks/scenarios/#avalanche.benchmarks.scenarios.GenericExperience.task_labels">(avalanche.benchmarks.scenarios.GenericExperience property)</a>
 </li>
       </ul></li>
+      <li><a href="../autoapi/avalanche/benchmarks/scenarios/lazy_dataset_sequence/#avalanche.benchmarks.scenarios.lazy_dataset_sequence.LazyDatasetSequence.task_labels_field_sequence">task_labels_field_sequence (avalanche.benchmarks.scenarios.lazy_dataset_sequence.LazyDatasetSequence attribute)</a>
+</li>
       <li><a href="../autoapi/avalanche/benchmarks/utils/avalanche_dataset/#avalanche.benchmarks.utils.avalanche_dataset.AvalancheDataset.task_set">task_set (avalanche.benchmarks.utils.avalanche_dataset.AvalancheDataset attribute)</a>
 
       <ul>
@@ -6479,6 +6536,8 @@
         <li><a href="../autoapi/avalanche/benchmarks/datasets/tiny_imagenet/tiny_imagenet/#avalanche.benchmarks.datasets.tiny_imagenet.tiny_imagenet.TinyImagenet">(class in avalanche.benchmarks.datasets.tiny_imagenet.tiny_imagenet)</a>
 </li>
       </ul></li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="../autoapi/avalanche/benchmarks/utils/avalanche_dataset/#avalanche.benchmarks.utils.avalanche_dataset.AvalancheDataset.train">train() (avalanche.benchmarks.utils.avalanche_dataset.AvalancheDataset method)</a>
 
       <ul>
@@ -6497,8 +6556,6 @@
         <li><a href="../autoapi/avalanche/training/strategies/#avalanche.training.strategies.JointTraining.train">(avalanche.training.strategies.JointTraining method)</a>
 </li>
       </ul></li>
-  </ul></td>
-  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="../autoapi/avalanche/models/dynamic_modules/#avalanche.models.dynamic_modules.DynamicModule.train_adaptation">train_adaptation() (avalanche.models.dynamic_modules.DynamicModule method)</a>
 
       <ul>

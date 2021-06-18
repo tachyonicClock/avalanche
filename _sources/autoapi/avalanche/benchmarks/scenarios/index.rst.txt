@@ -24,6 +24,7 @@ Submodules
    generic_cl_scenario/index.rst
    generic_definitions/index.rst
    generic_scenario_creation/index.rst
+   lazy_dataset_sequence/index.rst
    scenario_utils/index.rst
 
 
@@ -103,8 +104,8 @@ Functions
       encounter experiences.
 
 
-   .. method:: dataset(self) -> AvalancheDataset
-      :property:
+   .. attribute:: dataset
+      :annotation: :AvalancheDataset
 
       The dataset containing the patterns available in this experience.
 
@@ -219,7 +220,7 @@ Functions
    Create and return a new object.  See help(type) for accurate signature.
 
    .. attribute:: exps_data
-      :annotation: :Sequence[AvalancheDataset]
+      :annotation: :LazyDatasetSequence
 
       
 
@@ -280,7 +281,8 @@ Functions
        is the definition of that stream. "train" and "test" streams are
        mandatory. This class supports custom streams as well. The name of
        custom streams can only contain letters, numbers and the "_"
-       character and must not start with a number. The definition of each
+       character and must not start with a number. Streams can be defined
+       is two ways: static and lazy. In the static case, the
        stream must be a tuple containing 1, 2 or 3 elements:
        - The first element must be a list containing the datasets
        describing each experience. Datasets must be instances of
@@ -295,6 +297,13 @@ Functions
        this may be a reference to the whole MNIST dataset. If the stream
        definition tuple contains less than 3 elements, then the reference
        to the original dataset will be set to None.
+       In the lazy case, the stream must be defined as a tuple with 2
+       elements:
+       - The first element must be a tuple containing the dataset generator
+       (one for each experience) and the number of experiences in that
+       stream.
+       - The second element must be a list containing the task labels of
+       each experience (as an int or a set of ints).
    :param complete_test_set_only: If True, the test stream will contain
        a single experience containing the complete test set. This also
        means that the definition for the test stream must contain the
@@ -305,6 +314,12 @@ Functions
        invoking the super constructor) to specialize the experience class.
        Defaults to None, which means that the :class:`GenericExperience`
        constructor will be used.
+
+   .. attribute:: stream_definitions
+      
+
+      A structure containing the definition of the streams.
+
 
    .. attribute:: original_train_dataset
       :annotation: :Optional[Dataset]
@@ -383,7 +398,7 @@ Functions
           experiment.
 
 
-   .. method:: classes_in_experience(self) -> Mapping[str, Sequence[Set[int]]]
+   .. method:: classes_in_experience(self) -> Mapping[str, Sequence[Optional[Set[int]]]]
       :property:
 
       A dictionary mapping each stream (by name) to a list.
@@ -417,7 +432,8 @@ Functions
           classes seen in previous experiences, the third returns a cumulative
           list of classes (that is, the union of the first two list) while the
           last one returns a list of classes that will be encountered in next
-          experiences.
+          experiences. Beware that each of these elements can be None when
+          the benchmark is initialized by using a lazy generator.
 
 
 
@@ -442,6 +458,18 @@ Functions
       Can be None, which means that this object is the original stream. 
 
 
+   .. attribute:: name
+      :annotation: :str
+
+      The name of the stream (for instance: "train", "test", "valid", ...).
+
+
+   .. attribute:: scenario
+      
+
+      A reference to the scenario.
+
+
    .. method:: __len__(self) -> int
 
       Gets the number of experiences this stream it's made of.
@@ -459,6 +487,36 @@ Functions
 
       :return: The experience instance associated to the given experience
           index or a sliced stream instance.
+
+
+   .. method:: drop_previous_experiences(self, to_exp: int) -> None
+
+      Drop the reference to experiences up to a certain experience ID
+      (inclusive).
+
+      This means that any reference to experiences with ID [0, from_exp] will
+      be released. By dropping the reference to previous experiences, the
+      memory associated with them can be freed, especially the one occupied by
+      the dataset. However, if external references to the experience or the
+      dataset still exist, dropping previous experiences at the stream level
+      will have little to no impact on the memory usage.
+
+      To make sure that the underlying dataset can be freed, make sure that:
+      - No reference to previous datasets or experiences are kept in you code;
+      - The replay implementation doesn't keep a reference to previous
+          datasets (in which case, is better to store a copy of the raw
+          tensors instead);
+      - The benchmark is being generated using a lazy initializer.
+
+      By dropping previous experiences, those experiences will no longer be
+      available in the stream. Trying to access them will result in an
+      exception.
+
+      :param to_exp: The ID of the last exp to drop (inclusive). Can be a
+          negative number, in which case this method doesn't have any effect.
+          Can be greater or equal to the stream length, in which case all
+          currently loaded experiences will be dropped.
+      :return: None
 
 
 
@@ -541,10 +599,6 @@ Functions
    :param origin_stream: The stream from which this experience was
        obtained.
    :param current_experience: The current experience ID, as an integer.
-
-   .. method:: dataset(self) -> AvalancheDataset
-      :property:
-
 
    .. method:: task_labels(self) -> List[int]
       :property:

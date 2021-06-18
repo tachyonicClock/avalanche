@@ -207,6 +207,7 @@
 <li class="toctree-l1"><a class="reference internal" href="generic_cl_scenario/"><code class="xref py py-mod docutils literal notranslate"><span class="pre">avalanche.benchmarks.scenarios.generic_cl_scenario</span></code></a></li>
 <li class="toctree-l1"><a class="reference internal" href="generic_definitions/"><code class="xref py py-mod docutils literal notranslate"><span class="pre">avalanche.benchmarks.scenarios.generic_definitions</span></code></a></li>
 <li class="toctree-l1"><a class="reference internal" href="generic_scenario_creation/"><code class="xref py py-mod docutils literal notranslate"><span class="pre">avalanche.benchmarks.scenarios.generic_scenario_creation</span></code></a></li>
+<li class="toctree-l1"><a class="reference internal" href="lazy_dataset_sequence/"><code class="xref py py-mod docutils literal notranslate"><span class="pre">avalanche.benchmarks.scenarios.lazy_dataset_sequence</span></code></a></li>
 <li class="toctree-l1"><a class="reference internal" href="scenario_utils/"><code class="xref py py-mod docutils literal notranslate"><span class="pre">avalanche.benchmarks.scenarios.scenario_utils</span></code></a></li>
 </ul>
 </div>
@@ -320,9 +321,9 @@ original stream and may be unrelated to the order in which the strategy will
 encounter experiences.</p>
 </dd></dl>
 
-<dl class="py method">
+<dl class="py attribute">
 <dt class="sig sig-object py" id="avalanche.benchmarks.scenarios.Experience.dataset">
-<em class="property"><span class="pre">property</span> </em><span class="sig-name descname"><span class="pre">dataset</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">AvalancheDataset</span><a class="headerlink" href="#avalanche.benchmarks.scenarios.Experience.dataset" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">dataset</span></span><em class="property"> <span class="pre">:AvalancheDataset</span></em><a class="headerlink" href="#avalanche.benchmarks.scenarios.Experience.dataset" title="Permalink to this definition">¶</a></dt>
 <dd><p>The dataset containing the patterns available in this experience.</p>
 </dd></dl>
 
@@ -445,7 +446,7 @@ Alternative equivalent keyword syntax is also accepted:</p>
 <p>Create and return a new object.  See help(type) for accurate signature.</p>
 <dl class="py attribute">
 <dt class="sig sig-object py" id="avalanche.benchmarks.scenarios.StreamDef.exps_data">
-<span class="sig-name descname"><span class="pre">exps_data</span></span><em class="property"> <span class="pre">:Sequence[AvalancheDataset]</span></em><a class="headerlink" href="#avalanche.benchmarks.scenarios.StreamDef.exps_data" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">exps_data</span></span><em class="property"> <span class="pre">:LazyDatasetSequence</span></em><a class="headerlink" href="#avalanche.benchmarks.scenarios.StreamDef.exps_data" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
@@ -502,7 +503,8 @@ be a dictionary where the key is the stream name and the value
 is the definition of that stream. “train” and “test” streams are
 mandatory. This class supports custom streams as well. The name of
 custom streams can only contain letters, numbers and the “_”
-character and must not start with a number. The definition of each
+character and must not start with a number. Streams can be defined
+is two ways: static and lazy. In the static case, the
 stream must be a tuple containing 1, 2 or 3 elements:
 - The first element must be a list containing the datasets
 describing each experience. Datasets must be instances of
@@ -516,7 +518,14 @@ obtained by inspecting the content of the datasets.
 originating dataset (if applicable). For instance, for SplitMNIST
 this may be a reference to the whole MNIST dataset. If the stream
 definition tuple contains less than 3 elements, then the reference
-to the original dataset will be set to None.</p></li>
+to the original dataset will be set to None.
+In the lazy case, the stream must be defined as a tuple with 2
+elements:
+- The first element must be a tuple containing the dataset generator
+(one for each experience) and the number of experiences in that
+stream.
+- The second element must be a list containing the task labels of
+each experience (as an int or a set of ints).</p></li>
 <li><p><strong>complete_test_set_only</strong> – If True, the test stream will contain
 a single experience containing the complete test set. This also
 means that the definition for the test stream must contain the
@@ -530,6 +539,12 @@ constructor will be used.</p></li>
 </ul>
 </dd>
 </dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="avalanche.benchmarks.scenarios.GenericCLScenario.stream_definitions">
+<span class="sig-name descname"><span class="pre">stream_definitions</span></span><a class="headerlink" href="#avalanche.benchmarks.scenarios.GenericCLScenario.stream_definitions" title="Permalink to this definition">¶</a></dt>
+<dd><p>A structure containing the definition of the streams.</p>
+</dd></dl>
+
 <dl class="py attribute">
 <dt class="sig sig-object py" id="avalanche.benchmarks.scenarios.GenericCLScenario.original_train_dataset">
 <span class="sig-name descname"><span class="pre">original_train_dataset</span></span><em class="property"> <span class="pre">:Optional[Dataset]</span></em><a class="headerlink" href="#avalanche.benchmarks.scenarios.GenericCLScenario.original_train_dataset" title="Permalink to this definition">¶</a></dt>
@@ -609,7 +624,7 @@ experiment.</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="avalanche.benchmarks.scenarios.GenericCLScenario.classes_in_experience">
-<em class="property"><span class="pre">property</span> </em><span class="sig-name descname"><span class="pre">classes_in_experience</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">Mapping</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span> </span><span class="pre">Sequence</span><span class="p"><span class="pre">[</span></span><span class="pre">Set</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span><a class="headerlink" href="#avalanche.benchmarks.scenarios.GenericCLScenario.classes_in_experience" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">property</span> </em><span class="sig-name descname"><span class="pre">classes_in_experience</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">Mapping</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span> </span><span class="pre">Sequence</span><span class="p"><span class="pre">[</span></span><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">Set</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span><a class="headerlink" href="#avalanche.benchmarks.scenarios.GenericCLScenario.classes_in_experience" title="Permalink to this definition">¶</a></dt>
 <dd><p>A dictionary mapping each stream (by name) to a list.</p>
 <p>Each element of the list is a set describing the classes included in
 that experience (identified by its index).</p>
@@ -643,7 +658,8 @@ IDs of classes in this experience, the second contains IDs of
 classes seen in previous experiences, the third returns a cumulative
 list of classes (that is, the union of the first two list) while the
 last one returns a list of classes that will be encountered in next
-experiences.</p>
+experiences. Beware that each of these elements can be None when
+the benchmark is initialized by using a lazy generator.</p>
 </dd>
 </dl>
 </dd></dl>
@@ -666,6 +682,18 @@ stream.</p>
 <span class="sig-name descname"><span class="pre">slice_ids</span></span><em class="property"> <span class="pre">:Optional[List[int]]</span></em><a class="headerlink" href="#avalanche.benchmarks.scenarios.GenericScenarioStream.slice_ids" title="Permalink to this definition">¶</a></dt>
 <dd><p>Describes which experiences are contained in the current stream slice.
 Can be None, which means that this object is the original stream.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="avalanche.benchmarks.scenarios.GenericScenarioStream.name">
+<span class="sig-name descname"><span class="pre">name</span></span><em class="property"> <span class="pre">:str</span></em><a class="headerlink" href="#avalanche.benchmarks.scenarios.GenericScenarioStream.name" title="Permalink to this definition">¶</a></dt>
+<dd><p>The name of the stream (for instance: “train”, “test”, “valid”, …).</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="avalanche.benchmarks.scenarios.GenericScenarioStream.scenario">
+<span class="sig-name descname"><span class="pre">scenario</span></span><a class="headerlink" href="#avalanche.benchmarks.scenarios.GenericScenarioStream.scenario" title="Permalink to this definition">¶</a></dt>
+<dd><p>A reference to the scenario.</p>
 </dd></dl>
 
 <dl class="py method">
@@ -692,6 +720,43 @@ iterable/slice object describing a slice of this stream.</p>
 <dt class="field-even">Returns</dt>
 <dd class="field-even"><p>The experience instance associated to the given experience
 index or a sliced stream instance.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="avalanche.benchmarks.scenarios.GenericScenarioStream.drop_previous_experiences">
+<span class="sig-name descname"><span class="pre">drop_previous_experiences</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">to_exp</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">None</span><a class="reference internal" href="../../../../_modules/avalanche/benchmarks/scenarios/generic_cl_scenario/#GenericScenarioStream.drop_previous_experiences"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.benchmarks.scenarios.GenericScenarioStream.drop_previous_experiences" title="Permalink to this definition">¶</a></dt>
+<dd><p>Drop the reference to experiences up to a certain experience ID
+(inclusive).</p>
+<p>This means that any reference to experiences with ID [0, from_exp] will
+be released. By dropping the reference to previous experiences, the
+memory associated with them can be freed, especially the one occupied by
+the dataset. However, if external references to the experience or the
+dataset still exist, dropping previous experiences at the stream level
+will have little to no impact on the memory usage.</p>
+<p>To make sure that the underlying dataset can be freed, make sure that:
+- No reference to previous datasets or experiences are kept in you code;
+- The replay implementation doesn’t keep a reference to previous</p>
+<blockquote>
+<div><p>datasets (in which case, is better to store a copy of the raw
+tensors instead);</p>
+</div></blockquote>
+<ul class="simple">
+<li><p>The benchmark is being generated using a lazy initializer.</p></li>
+</ul>
+<p>By dropping previous experiences, those experiences will no longer be
+available in the stream. Trying to access them will result in an
+exception.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>to_exp</strong> – The ID of the last exp to drop (inclusive). Can be a
+negative number, in which case this method doesn’t have any effect.
+Can be greater or equal to the stream length, in which case all
+currently loaded experiences will be dropped.</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>None</p>
 </dd>
 </dl>
 </dd></dl>
@@ -783,11 +848,6 @@ obtained.</p></li>
 </ul>
 </dd>
 </dl>
-<dl class="py method">
-<dt class="sig sig-object py" id="avalanche.benchmarks.scenarios.GenericExperience.dataset">
-<em class="property"><span class="pre">property</span> </em><span class="sig-name descname"><span class="pre">dataset</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">AvalancheDataset</span><a class="headerlink" href="#avalanche.benchmarks.scenarios.GenericExperience.dataset" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
 <dl class="py method">
 <dt class="sig sig-object py" id="avalanche.benchmarks.scenarios.GenericExperience.task_labels">
 <em class="property"><span class="pre">property</span> </em><span class="sig-name descname"><span class="pre">task_labels</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">]</span></span><a class="headerlink" href="#avalanche.benchmarks.scenarios.GenericExperience.task_labels" title="Permalink to this definition">¶</a></dt>

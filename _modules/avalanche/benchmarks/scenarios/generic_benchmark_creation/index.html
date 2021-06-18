@@ -196,7 +196,8 @@
 <span class="sd">&quot;&quot;&quot;</span>
 
 <span class="kn">from</span> <span class="nn">pathlib</span> <span class="kn">import</span> <span class="n">Path</span>
-<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Sequence</span><span class="p">,</span> <span class="n">Union</span><span class="p">,</span> <span class="n">Any</span><span class="p">,</span> <span class="n">Tuple</span><span class="p">,</span> <span class="n">Dict</span><span class="p">,</span> <span class="n">Optional</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Sequence</span><span class="p">,</span> <span class="n">Union</span><span class="p">,</span> <span class="n">Any</span><span class="p">,</span> <span class="n">Tuple</span><span class="p">,</span> <span class="n">Dict</span><span class="p">,</span> <span class="n">Optional</span><span class="p">,</span> <span class="n">Iterable</span><span class="p">,</span> \
+    <span class="n">NamedTuple</span>
 
 <span class="kn">from</span> <span class="nn">avalanche.benchmarks.utils</span> <span class="kn">import</span> <span class="n">AvalancheTensorDataset</span><span class="p">,</span> \
     <span class="n">SupportedDataset</span><span class="p">,</span> <span class="n">AvalancheDataset</span><span class="p">,</span> <span class="n">FilelistDataset</span><span class="p">,</span> \
@@ -241,8 +242,7 @@
 <span class="sd">    :param complete_test_set_only: If True, only the complete test set will</span>
 <span class="sd">        be returned by the scenario. This means that the ``test_dataset_list``</span>
 <span class="sd">        parameter must be list with a single element (the complete test set).</span>
-<span class="sd">        Defaults to False, which means that ``train_dataset_list`` and</span>
-<span class="sd">        ``test_dataset_list`` must contain the same amount of datasets.</span>
+<span class="sd">        Defaults to False.</span>
 <span class="sd">    :param train_transform: The transformation to apply to the training data,</span>
 <span class="sd">        e.g. a random crop, a normalization or a concatenation of different</span>
 <span class="sd">        transformations (see torchvision.transform documentation for a</span>
@@ -323,6 +323,193 @@
         <span class="n">complete_test_set_only</span><span class="o">=</span><span class="n">complete_test_set_only</span><span class="p">)</span></div>
 
 
+<span class="k">def</span> <span class="nf">_adapt_lazy_stream</span><span class="p">(</span>
+        <span class="n">generator</span><span class="p">,</span> <span class="n">transform_groups</span><span class="p">,</span> <span class="n">initial_transform_group</span><span class="p">,</span> <span class="n">dataset_type</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    A simple internal utility to apply transforms and dataset type to all lazily</span>
+<span class="sd">    generated datasets. Used in the :func:`create_lazy_generic_benchmark`</span>
+<span class="sd">    benchmark creation helper.</span>
+
+<span class="sd">    :return: A datasets in which the proper transformation groups and dataset</span>
+<span class="sd">        type are applied.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">for</span> <span class="n">dataset</span> <span class="ow">in</span> <span class="n">generator</span><span class="p">:</span>
+        <span class="n">dataset</span> <span class="o">=</span> <span class="n">AvalancheDataset</span><span class="p">(</span>
+            <span class="n">dataset</span><span class="p">,</span> <span class="n">transform_groups</span><span class="o">=</span><span class="n">transform_groups</span><span class="p">,</span>
+            <span class="n">initial_transform_group</span><span class="o">=</span><span class="n">initial_transform_group</span><span class="p">,</span>
+            <span class="n">dataset_type</span><span class="o">=</span><span class="n">dataset_type</span><span class="p">)</span>
+        <span class="k">yield</span> <span class="n">dataset</span>
+
+
+<div class="viewcode-block" id="LazyStreamDefinition"><a class="viewcode-back" href="../../../../../autoapi/avalanche/benchmarks/scenarios/generic_benchmark_creation/#avalanche.benchmarks.scenarios.generic_benchmark_creation.LazyStreamDefinition">[docs]</a><span class="k">class</span> <span class="nc">LazyStreamDefinition</span><span class="p">(</span><span class="n">NamedTuple</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    A simple class that can be used when preparing the parameters for the</span>
+<span class="sd">    :func:`create_lazy_generic_benchmark` helper.</span>
+
+<span class="sd">    This class is a named tuple containing the fields required for defining</span>
+<span class="sd">    a lazily-created benchmark.</span>
+
+<span class="sd">    - exps_generator: The experiences generator. Can be a &quot;yield&quot;-based</span>
+<span class="sd">      generator, a custom sequence, a standard list or any kind of</span>
+<span class="sd">      iterable returning :class:`AvalancheDataset`.</span>
+<span class="sd">    - stream_length: The number of experiences in the stream. Must match the</span>
+<span class="sd">      number of experiences returned by the generator.</span>
+<span class="sd">    - exps_task_labels: A list containing the list of task labels of each</span>
+<span class="sd">      experience. If an experience contains a single task label, a single int</span>
+<span class="sd">      can be used.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">exps_generator</span><span class="p">:</span> <span class="n">Iterable</span><span class="p">[</span><span class="n">AvalancheDataset</span><span class="p">]</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    The experiences generator. Can be a &quot;yield&quot;-based generator, a custom</span>
+<span class="sd">    sequence, a standard list or any kind of iterable returning</span>
+<span class="sd">    :class:`AvalancheDataset`.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">stream_length</span><span class="p">:</span> <span class="nb">int</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    The number of experiences in the stream. Must match the number of</span>
+<span class="sd">    experiences returned by the generator</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">exps_task_labels</span><span class="p">:</span> <span class="n">Sequence</span><span class="p">[</span><span class="n">Union</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="n">Iterable</span><span class="p">[</span><span class="nb">int</span><span class="p">]]]</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    A list containing the list of task labels of each experience.</span>
+<span class="sd">    If an experience contains a single task label, a single int can be used.</span>
+<span class="sd">    </span>
+<span class="sd">    This field is temporary required for internal purposes to support lazy</span>
+<span class="sd">    streams. This field may become optional in the future.</span>
+<span class="sd">    &quot;&quot;&quot;</span></div>
+
+
+<div class="viewcode-block" id="create_lazy_generic_benchmark"><a class="viewcode-back" href="../../../../../autoapi/avalanche/benchmarks/scenarios/generic_benchmark_creation/#avalanche.benchmarks.scenarios.generic_benchmark_creation.create_lazy_generic_benchmark">[docs]</a><span class="k">def</span> <span class="nf">create_lazy_generic_benchmark</span><span class="p">(</span>
+        <span class="n">train_generator</span><span class="p">:</span> <span class="n">LazyStreamDefinition</span><span class="p">,</span>
+        <span class="n">test_generator</span><span class="p">:</span> <span class="n">LazyStreamDefinition</span><span class="p">,</span>
+        <span class="o">*</span><span class="p">,</span>
+        <span class="n">other_streams_generators</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">LazyStreamDefinition</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">complete_test_set_only</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
+        <span class="n">train_transform</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">train_target_transform</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+        <span class="n">eval_transform</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">eval_target_transform</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+        <span class="n">other_streams_transforms</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Tuple</span><span class="p">[</span><span class="n">Any</span><span class="p">,</span> <span class="n">Any</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">dataset_type</span><span class="p">:</span> <span class="n">AvalancheDatasetType</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> \
+        <span class="o">-&gt;</span> <span class="n">GenericCLScenario</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Creates a lazily-defined benchmark instance given a dataset generator for</span>
+<span class="sd">    each stream.</span>
+
+<span class="sd">    Generators must return properly initialized instances of</span>
+<span class="sd">    :class:`AvalancheDataset` which will be used to create experiences.</span>
+
+<span class="sd">    The created datasets can have transformations already set.</span>
+<span class="sd">    However, if transformations are shared across all datasets of the same</span>
+<span class="sd">    stream, it is recommended to use the `train_transform`, `eval_transform`</span>
+<span class="sd">    and `other_streams_transforms` parameters, so that transformations groups</span>
+<span class="sd">    can be correctly applied (transformations are lazily added atop the datasets</span>
+<span class="sd">    returned by the generators). The same reasoning applies to the</span>
+<span class="sd">    `dataset_type` parameter.</span>
+
+<span class="sd">    This function allows for the creation of custom streams as well.</span>
+<span class="sd">    While &quot;train&quot; and &quot;test&quot; streams must be always set, the generators</span>
+<span class="sd">    for other streams can be defined by using the `other_streams_generators`</span>
+<span class="sd">    parameter.</span>
+
+<span class="sd">    :param train_generator: A proper lazy-generation definition for the training</span>
+<span class="sd">        stream. It is recommended to pass an instance</span>
+<span class="sd">        of :class:`LazyStreamDefinition`. See its description for more details.</span>
+<span class="sd">    :param test_generator: A proper lazy-generation definition for the test</span>
+<span class="sd">        stream. It is recommended to pass an instance</span>
+<span class="sd">        of :class:`LazyStreamDefinition`. See its description for more details.</span>
+<span class="sd">    :param other_streams_generators: A dictionary describing the content of</span>
+<span class="sd">        custom streams. Keys must be valid stream names (letters and numbers,</span>
+<span class="sd">        not starting with a number) while the value must be a</span>
+<span class="sd">        lazy-generation definition (like the ones of the training and</span>
+<span class="sd">        test streams). If this dictionary contains the definition for</span>
+<span class="sd">        &quot;train&quot; or &quot;test&quot; streams then those definition will override the</span>
+<span class="sd">        `train_generator` and `test_generator` parameters.</span>
+<span class="sd">    :param complete_test_set_only: If True, only the complete test set will</span>
+<span class="sd">        be returned by the scenario. This means that the ``test_generator``</span>
+<span class="sd">        parameter must define a stream with a single experience (the complete</span>
+<span class="sd">        test set). Defaults to False.</span>
+<span class="sd">    :param train_transform: The transformation to apply to the training data,</span>
+<span class="sd">        e.g. a random crop, a normalization or a concatenation of different</span>
+<span class="sd">        transformations (see torchvision.transform documentation for a</span>
+<span class="sd">        comprehensive list of possible transformations). Defaults to None.</span>
+<span class="sd">    :param train_target_transform: The transformation to apply to training</span>
+<span class="sd">        patterns targets. Defaults to None.</span>
+<span class="sd">    :param eval_transform: The transformation to apply to the test data,</span>
+<span class="sd">        e.g. a random crop, a normalization or a concatenation of different</span>
+<span class="sd">        transformations (see torchvision.transform documentation for a</span>
+<span class="sd">        comprehensive list of possible transformations). Defaults to None.</span>
+<span class="sd">    :param eval_target_transform: The transformation to apply to test</span>
+<span class="sd">        patterns targets. Defaults to None.</span>
+<span class="sd">    :param other_streams_transforms: Transformations to apply to custom</span>
+<span class="sd">        streams. If no transformations are defined for a custom stream,</span>
+<span class="sd">        then &quot;train&quot; transformations will be used. This parameter must be a</span>
+<span class="sd">        dictionary mapping stream names to transformations. The transformations</span>
+<span class="sd">        must be a two elements tuple where the first element defines the</span>
+<span class="sd">        X transformation while the second element is the Y transformation.</span>
+<span class="sd">        Those elements can be None. If this dictionary contains the</span>
+<span class="sd">        transformations for &quot;train&quot; or &quot;test&quot; streams then those transformations</span>
+<span class="sd">        will override the `train_transform`, `train_target_transform`,</span>
+<span class="sd">        `eval_transform` and `eval_target_transform` parameters.</span>
+<span class="sd">    :param dataset_type: The type of the datasets. Defaults to None, which</span>
+<span class="sd">        means that the type will be obtained from the input datasets. This</span>
+<span class="sd">        type will be applied to all the datasets returned by the generators.</span>
+
+<span class="sd">    :returns: A lazily-initialized :class:`GenericCLScenario` instance.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">transform_groups</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span>
+        <span class="n">train</span><span class="o">=</span><span class="p">(</span><span class="n">train_transform</span><span class="p">,</span> <span class="n">train_target_transform</span><span class="p">),</span>
+        <span class="nb">eval</span><span class="o">=</span><span class="p">(</span><span class="n">eval_transform</span><span class="p">,</span> <span class="n">eval_target_transform</span><span class="p">))</span>
+
+    <span class="k">if</span> <span class="n">other_streams_transforms</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="k">for</span> <span class="n">stream_name</span><span class="p">,</span> <span class="n">stream_transforms</span> <span class="ow">in</span> <span class="n">other_streams_transforms</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+            <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">stream_transforms</span><span class="p">,</span> <span class="n">Sequence</span><span class="p">):</span>
+                <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">stream_transforms</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+                    <span class="c1"># Suppose we got only the transformation for X values</span>
+                    <span class="n">stream_transforms</span> <span class="o">=</span> <span class="p">(</span><span class="n">stream_transforms</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="kc">None</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="c1"># Suppose it&#39;s the transformation for X values</span>
+                <span class="n">stream_transforms</span> <span class="o">=</span> <span class="p">(</span><span class="n">stream_transforms</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+
+            <span class="n">transform_groups</span><span class="p">[</span><span class="n">stream_name</span><span class="p">]</span> <span class="o">=</span> <span class="n">stream_transforms</span>
+
+    <span class="n">input_streams</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span>
+        <span class="n">train</span><span class="o">=</span><span class="n">train_generator</span><span class="p">,</span>
+        <span class="n">test</span><span class="o">=</span><span class="n">test_generator</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">other_streams_generators</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">input_streams</span> <span class="o">=</span> <span class="p">{</span><span class="o">**</span><span class="n">input_streams</span><span class="p">,</span> <span class="o">**</span><span class="n">other_streams_generators</span><span class="p">}</span>
+
+    <span class="k">if</span> <span class="n">complete_test_set_only</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">input_streams</span><span class="p">[</span><span class="s1">&#39;test&#39;</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span> <span class="o">!=</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;Test stream must contain one experience when&#39;</span>
+                             <span class="s1">&#39;complete_test_set_only is True&#39;</span><span class="p">)</span>
+
+    <span class="n">stream_definitions</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">()</span>
+
+    <span class="k">for</span> <span class="n">stream_name</span><span class="p">,</span> <span class="p">(</span><span class="n">generator</span><span class="p">,</span> <span class="n">stream_length</span><span class="p">,</span> <span class="n">task_labels</span><span class="p">)</span> <span class="ow">in</span> \
+            <span class="n">input_streams</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+        <span class="n">initial_transform_group</span> <span class="o">=</span> <span class="s1">&#39;train&#39;</span>
+        <span class="k">if</span> <span class="n">stream_name</span> <span class="ow">in</span> <span class="n">transform_groups</span><span class="p">:</span>
+            <span class="n">initial_transform_group</span> <span class="o">=</span> <span class="n">stream_name</span>
+
+        <span class="n">adapted_stream_generator</span> <span class="o">=</span> <span class="n">_adapt_lazy_stream</span><span class="p">(</span>
+            <span class="n">generator</span><span class="p">,</span> <span class="n">transform_groups</span><span class="p">,</span>
+            <span class="n">initial_transform_group</span><span class="o">=</span><span class="n">initial_transform_group</span><span class="p">,</span>
+            <span class="n">dataset_type</span><span class="o">=</span><span class="n">dataset_type</span><span class="p">)</span>
+
+        <span class="n">stream_definitions</span><span class="p">[</span><span class="n">stream_name</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span>
+            <span class="p">(</span><span class="n">adapted_stream_generator</span><span class="p">,</span> <span class="n">stream_length</span><span class="p">),</span> <span class="n">task_labels</span>
+        <span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">GenericCLScenario</span><span class="p">(</span>
+        <span class="n">stream_definitions</span><span class="o">=</span><span class="n">stream_definitions</span><span class="p">,</span>
+        <span class="n">complete_test_set_only</span><span class="o">=</span><span class="n">complete_test_set_only</span><span class="p">)</span></div>
+
+
 <div class="viewcode-block" id="create_generic_benchmark_from_filelists"><a class="viewcode-back" href="../../../../../autoapi/avalanche/benchmarks/scenarios/generic_benchmark_creation/#avalanche.benchmarks.scenarios.generic_benchmark_creation.create_generic_benchmark_from_filelists">[docs]</a><span class="k">def</span> <span class="nf">create_generic_benchmark_from_filelists</span><span class="p">(</span>
         <span class="n">root</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Path</span><span class="p">]],</span>
         <span class="n">train_file_lists</span><span class="p">:</span> <span class="n">Sequence</span><span class="p">[</span><span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Path</span><span class="p">]],</span>
@@ -384,8 +571,7 @@
 <span class="sd">        be returned by the scenario. This means that the ``test_file_lists``</span>
 <span class="sd">        parameter must be list with a single element (the complete test set).</span>
 <span class="sd">        Alternatively, can be a plain string or :class:`Path` object.</span>
-<span class="sd">        Defaults to False, which means that ``train_file_lists`` and</span>
-<span class="sd">        ``test_file_lists`` must contain the same amount of filelists paths.</span>
+<span class="sd">        Defaults to False.</span>
 <span class="sd">    :param train_transform: The transformation to apply to the training data,</span>
 <span class="sd">        e.g. a random crop, a normalization or a concatenation of different</span>
 <span class="sd">        transformations (see torchvision.transform documentation for a</span>
@@ -509,8 +695,7 @@
 <span class="sd">    :param complete_test_set_only: If True, only the complete test set will</span>
 <span class="sd">        be returned by the scenario. This means that the ``test_list_of_files``</span>
 <span class="sd">        parameter must define a single experience (the complete test set).</span>
-<span class="sd">        Defaults to False, which means that ``train_list_of_files`` and</span>
-<span class="sd">        ``test_list_of_files`` must contain the same amount of paths.</span>
+<span class="sd">        Defaults to False.</span>
 <span class="sd">    :param train_transform: The transformation to apply to the training data,</span>
 <span class="sd">        e.g. a random crop, a normalization or a concatenation of different</span>
 <span class="sd">        transformations (see torchvision.transform documentation for a</span>
@@ -629,9 +814,7 @@
 <span class="sd">        see the function description.</span>
 <span class="sd">    :param complete_test_set_only: If True, only the complete test set will</span>
 <span class="sd">        be returned by the scenario. This means that ``test_tensors`` must</span>
-<span class="sd">        define a single experience. Defaults to False, which means that</span>
-<span class="sd">        ``train_tensors`` and ``test_tensors`` must define the same</span>
-<span class="sd">        amount of experiences.</span>
+<span class="sd">        define a single experience. Defaults to False.</span>
 <span class="sd">    :param train_transform: The transformation to apply to the training data,</span>
 <span class="sd">        e.g. a random crop, a normalization or a concatenation of different</span>
 <span class="sd">        transformations (see torchvision.transform documentation for a</span>
@@ -691,6 +874,8 @@
 
 <span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span>
     <span class="s1">&#39;create_multi_dataset_generic_benchmark&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;LazyStreamDefinition&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;create_lazy_generic_benchmark&#39;</span><span class="p">,</span>
     <span class="s1">&#39;create_generic_benchmark_from_filelists&#39;</span><span class="p">,</span>
     <span class="s1">&#39;create_generic_benchmark_from_paths&#39;</span><span class="p">,</span>
     <span class="s1">&#39;create_generic_benchmark_from_tensor_lists&#39;</span><span class="p">,</span>

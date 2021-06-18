@@ -74,8 +74,8 @@ Classes
       encounter experiences.
 
 
-   .. method:: dataset(self) -> AvalancheDataset
-      :property:
+   .. attribute:: dataset
+      :annotation: :AvalancheDataset
 
       The dataset containing the patterns available in this experience.
 

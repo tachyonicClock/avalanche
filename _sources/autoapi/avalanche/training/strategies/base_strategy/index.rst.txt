@@ -76,6 +76,11 @@ Classes
            if >0: calls `eval` every `eval_every` epochs and at the end
                of all the epochs for a single experience.
 
+   .. attribute:: DISABLED_CALLBACKS
+      :annotation: :Sequence[str] = []
+
+      
+
    .. attribute:: model
       :annotation: :Module
 

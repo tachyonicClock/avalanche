@@ -193,6 +193,8 @@
 
 
 <div class="viewcode-block" id="StreamingLDA"><a class="viewcode-back" href="../../../../../autoapi/avalanche/training/strategies/#avalanche.training.StreamingLDA">[docs]</a><span class="k">class</span> <span class="nc">StreamingLDA</span><span class="p">(</span><span class="n">BaseStrategy</span><span class="p">):</span>
+    <span class="n">DISABLED_CALLBACKS</span> <span class="o">=</span> <span class="p">(</span><span class="s2">&quot;before_backward&quot;</span><span class="p">,</span> <span class="s2">&quot;after_backward&quot;</span><span class="p">)</span>
+
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Deep Streaming Linear Discriminant Analysis.</span>
 <span class="sd">    This strategy does not use backpropagation.</span>

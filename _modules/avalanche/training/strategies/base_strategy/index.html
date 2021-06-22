@@ -189,10 +189,11 @@
 <span class="c1"># E-mail: contact@continualai.org                                              #</span>
 <span class="c1"># Website: avalanche.continualai.org                                           #</span>
 <span class="c1">################################################################################</span>
+<span class="kn">import</span> <span class="nn">logging</span>
 
 <span class="kn">import</span> <span class="nn">torch</span>
 <span class="kn">from</span> <span class="nn">torch.utils.data</span> <span class="kn">import</span> <span class="n">DataLoader</span>
-<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Optional</span><span class="p">,</span> <span class="n">Sequence</span><span class="p">,</span> <span class="n">Union</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Optional</span><span class="p">,</span> <span class="n">Sequence</span><span class="p">,</span> <span class="n">Union</span><span class="p">,</span> <span class="n">List</span>
 
 <span class="kn">from</span> <span class="nn">torch.nn</span> <span class="kn">import</span> <span class="n">Module</span><span class="p">,</span> <span class="n">CrossEntropyLoss</span>
 <span class="kn">from</span> <span class="nn">torch.optim</span> <span class="kn">import</span> <span class="n">Optimizer</span>
@@ -208,10 +209,16 @@
 <span class="kn">from</span> <span class="nn">avalanche.training.plugins</span> <span class="kn">import</span> <span class="n">EvaluationPlugin</span>
 
 <span class="k">if</span> <span class="n">TYPE_CHECKING</span><span class="p">:</span>
+    <span class="kn">from</span> <span class="nn">avalanche.core</span> <span class="kn">import</span> <span class="n">StrategyCallbacks</span>
     <span class="kn">from</span> <span class="nn">avalanche.training.plugins</span> <span class="kn">import</span> <span class="n">StrategyPlugin</span>
 
 
+<span class="n">logger</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="vm">__name__</span><span class="p">)</span>
+
+
 <div class="viewcode-block" id="BaseStrategy"><a class="viewcode-back" href="../../../../../autoapi/avalanche/training/strategies/#avalanche.training.BaseStrategy">[docs]</a><span class="k">class</span> <span class="nc">BaseStrategy</span><span class="p">:</span>
+    <span class="n">DISABLED_CALLBACKS</span><span class="p">:</span> <span class="n">Sequence</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="p">()</span>
+
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">model</span><span class="p">:</span> <span class="n">Module</span><span class="p">,</span> <span class="n">optimizer</span><span class="p">:</span> <span class="n">Optimizer</span><span class="p">,</span>
                  <span class="n">criterion</span><span class="o">=</span><span class="n">CrossEntropyLoss</span><span class="p">(),</span>
                  <span class="n">train_mb_size</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span> <span class="n">train_epochs</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span>
@@ -352,6 +359,9 @@
         <span class="sd">&quot;&quot;&quot; True if the strategy is in training mode. &quot;&quot;&quot;</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">_stop_training</span> <span class="o">=</span> <span class="kc">False</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">_warn_for_disabled_plugins_callbacks</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_warn_for_disabled_metrics_callbacks</span><span class="p">()</span>
 
     <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">is_eval</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
@@ -770,7 +780,37 @@
         <span class="c1"># we reset the optimizer&#39;s state after each experience.</span>
         <span class="c1"># This allows to add new parameters (new heads) and</span>
         <span class="c1"># freezing old units during the model&#39;s adaptation phase.</span>
-        <span class="n">reset_optimizer</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">optimizer</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="p">)</span></div></div>
+        <span class="n">reset_optimizer</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">optimizer</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="p">)</span></div>
+
+    <span class="k">def</span> <span class="nf">_warn_for_disabled_plugins_callbacks</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_warn_for_disabled_callbacks</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">plugins</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">_warn_for_disabled_metrics_callbacks</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_warn_for_disabled_callbacks</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">evaluator</span><span class="o">.</span><span class="n">metrics</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">_warn_for_disabled_callbacks</span><span class="p">(</span>
+            <span class="bp">self</span><span class="p">,</span>
+            <span class="n">plugins</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="s2">&quot;StrategyCallbacks&quot;</span><span class="p">]</span>
+    <span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Will log some warnings in case some plugins appear to be using callbacks</span>
+<span class="sd">        that have been de-activated by the strategy class.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">for</span> <span class="n">disabled_callback_name</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">DISABLED_CALLBACKS</span><span class="p">:</span>
+            <span class="k">for</span> <span class="n">plugin</span> <span class="ow">in</span> <span class="n">plugins</span><span class="p">:</span>
+                <span class="n">callback</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">plugin</span><span class="p">,</span> <span class="n">disabled_callback_name</span><span class="p">)</span>
+                <span class="n">callback_class</span> <span class="o">=</span> <span class="n">callback</span><span class="o">.</span><span class="vm">__qualname__</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;.&#39;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+                <span class="k">if</span> <span class="n">callback_class</span> <span class="ow">not</span> <span class="ow">in</span> <span class="p">(</span>
+                    <span class="s2">&quot;StrategyPlugin&quot;</span><span class="p">,</span>
+                    <span class="s2">&quot;PluginMetric&quot;</span><span class="p">,</span>
+                    <span class="s2">&quot;EvaluationPlugin&quot;</span><span class="p">,</span>
+                    <span class="s2">&quot;GenericPluginMetric&quot;</span><span class="p">,</span>
+                <span class="p">):</span>
+                    <span class="n">logger</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span>
+                        <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">plugin</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__name__</span><span class="si">}</span><span class="s2"> seems to use &quot;</span>
+                        <span class="sa">f</span><span class="s2">&quot;the callback </span><span class="si">{</span><span class="n">disabled_callback_name</span><span class="si">}</span><span class="s2"> &quot;</span>
+                        <span class="sa">f</span><span class="s2">&quot;which is disabled by </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__name__</span><span class="si">}</span><span class="s2">&quot;</span>
+                    <span class="p">)</span></div>
 
 
 <span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;BaseStrategy&#39;</span><span class="p">]</span>

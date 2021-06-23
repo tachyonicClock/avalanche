@@ -197,16 +197,17 @@
 <span class="sd">and paths_benchmark.</span>
 <span class="sd">&quot;&quot;&quot;</span>
 <span class="kn">from</span> <span class="nn">functools</span> <span class="kn">import</span> <span class="n">partial</span>
+<span class="kn">from</span> <span class="nn">itertools</span> <span class="kn">import</span> <span class="n">tee</span>
 <span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Sequence</span><span class="p">,</span> <span class="n">Optional</span><span class="p">,</span> <span class="n">Dict</span><span class="p">,</span> <span class="n">Union</span><span class="p">,</span> <span class="n">Any</span><span class="p">,</span> <span class="n">List</span><span class="p">,</span> <span class="n">Callable</span><span class="p">,</span> <span class="n">Set</span><span class="p">,</span> \
-    <span class="n">Tuple</span>
+    <span class="n">Tuple</span><span class="p">,</span> <span class="n">Iterable</span><span class="p">,</span> <span class="n">Generator</span>
 
 <span class="kn">import</span> <span class="nn">torch</span>
 
 <span class="kn">from</span> <span class="nn">avalanche.benchmarks</span> <span class="kn">import</span> <span class="n">GenericCLScenario</span><span class="p">,</span> <span class="n">Experience</span><span class="p">,</span> \
-    <span class="n">GenericExperience</span><span class="p">,</span> <span class="n">GenericScenarioStream</span>
+    <span class="n">GenericScenarioStream</span>
 <span class="kn">from</span> <span class="nn">avalanche.benchmarks.scenarios.generic_benchmark_creation</span> <span class="kn">import</span> <span class="o">*</span>
-<span class="kn">from</span> <span class="nn">avalanche.benchmarks.scenarios.generic_cl_scenario</span> <span class="kn">import</span> <span class="n">StreamDef</span><span class="p">,</span> \
-    <span class="n">TStreamsDict</span>
+<span class="kn">from</span> <span class="nn">avalanche.benchmarks.scenarios.generic_cl_scenario</span> <span class="kn">import</span> \
+    <span class="n">TStreamsUserDict</span><span class="p">,</span> <span class="n">StreamUserDef</span>
 <span class="kn">from</span> <span class="nn">avalanche.benchmarks.scenarios.new_classes.nc_scenario</span> <span class="kn">import</span> \
     <span class="n">NCScenario</span>
 <span class="kn">from</span> <span class="nn">avalanche.benchmarks.scenarios.new_instances.ni_scenario</span> <span class="kn">import</span> <span class="n">NIScenario</span>
@@ -675,7 +676,7 @@
             <span class="n">fixed_size_experience_split_strategy</span><span class="p">,</span> <span class="n">experience_size</span><span class="p">,</span> <span class="n">shuffle</span><span class="p">,</span>
             <span class="n">drop_last</span><span class="p">)</span>
 
-    <span class="n">stream_definitions</span><span class="p">:</span> <span class="n">TStreamsDict</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span>
+    <span class="n">stream_definitions</span><span class="p">:</span> <span class="n">TStreamsUserDict</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span>
         <span class="n">benchmark_instance</span><span class="o">.</span><span class="n">stream_definitions</span><span class="p">)</span>
 
     <span class="k">for</span> <span class="n">stream_name</span> <span class="ow">in</span> <span class="n">split_streams</span><span class="p">:</span>
@@ -695,8 +696,10 @@
             <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">experiences</span><span class="p">)):</span>
                 <span class="n">split_task_labels</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="nb">set</span><span class="p">(</span><span class="n">exp</span><span class="o">.</span><span class="n">task_labels</span><span class="p">))</span>
 
-        <span class="n">stream_def</span> <span class="o">=</span> <span class="n">StreamDef</span><span class="p">(</span><span class="n">split_datasets</span><span class="p">,</span> <span class="n">split_task_labels</span><span class="p">,</span>
-                               <span class="n">stream_definitions</span><span class="p">[</span><span class="n">stream_name</span><span class="p">]</span><span class="o">.</span><span class="n">origin_dataset</span><span class="p">)</span>
+        <span class="n">stream_def</span> <span class="o">=</span> <span class="n">StreamUserDef</span><span class="p">(</span>
+            <span class="n">split_datasets</span><span class="p">,</span> <span class="n">split_task_labels</span><span class="p">,</span>
+            <span class="n">stream_definitions</span><span class="p">[</span><span class="n">stream_name</span><span class="p">]</span><span class="o">.</span><span class="n">origin_dataset</span><span class="p">,</span>
+            <span class="kc">False</span><span class="p">)</span>
 
         <span class="n">stream_definitions</span><span class="p">[</span><span class="n">stream_name</span><span class="p">]</span> <span class="o">=</span> <span class="n">stream_def</span>
 
@@ -709,7 +712,8 @@
 
 
 <span class="k">def</span> <span class="nf">random_validation_split_strategy</span><span class="p">(</span>
-        <span class="n">validation_size</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">float</span><span class="p">],</span> <span class="n">shuffle</span><span class="p">:</span> <span class="nb">bool</span><span class="p">,</span>
+        <span class="n">validation_size</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">float</span><span class="p">],</span>
+        <span class="n">shuffle</span><span class="p">:</span> <span class="nb">bool</span><span class="p">,</span>
         <span class="n">experience</span><span class="p">:</span> <span class="n">Experience</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    The default splitting strategy used by</span>
@@ -767,6 +771,44 @@
     <span class="k">return</span> <span class="n">result_train_dataset</span><span class="p">,</span> <span class="n">result_valid_dataset</span>
 
 
+<span class="k">def</span> <span class="nf">_gen_split</span><span class="p">(</span><span class="n">split_generator</span><span class="p">:</span> <span class="n">Iterable</span><span class="p">[</span><span class="n">Tuple</span><span class="p">[</span><span class="n">AvalancheDataset</span><span class="p">,</span>
+                                               <span class="n">AvalancheDataset</span><span class="p">]])</span> <span class="o">-&gt;</span> \
+    <span class="n">Tuple</span><span class="p">[</span><span class="n">Generator</span><span class="p">[</span><span class="n">AvalancheDataset</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="kc">None</span><span class="p">],</span>
+          <span class="n">Generator</span><span class="p">[</span><span class="n">AvalancheDataset</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="kc">None</span><span class="p">]]:</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Internal utility function to split the train-validation generator</span>
+<span class="sd">    into two distinct generators (one for the train stream and another one</span>
+<span class="sd">    for the valid stream).</span>
+
+<span class="sd">    :param split_generator: The lazy stream generator returning tuples of train</span>
+<span class="sd">        and valid datasets.</span>
+<span class="sd">    :return: Two generators (one for the train, one for the valuid).</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="c1"># For more info: https://stackoverflow.com/a/28030261</span>
+    <span class="n">gen_a</span><span class="p">,</span> <span class="n">gen_b</span> <span class="o">=</span> <span class="n">tee</span><span class="p">(</span><span class="n">split_generator</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+    <span class="k">return</span> <span class="p">(</span><span class="n">a</span> <span class="k">for</span> <span class="n">a</span><span class="p">,</span> <span class="n">b</span> <span class="ow">in</span> <span class="n">gen_a</span><span class="p">),</span> <span class="p">(</span><span class="n">b</span> <span class="k">for</span> <span class="n">a</span><span class="p">,</span> <span class="n">b</span> <span class="ow">in</span> <span class="n">gen_b</span><span class="p">)</span>
+
+
+<span class="k">def</span> <span class="nf">_lazy_train_val_split</span><span class="p">(</span>
+        <span class="n">split_strategy</span><span class="p">:</span> <span class="n">Callable</span><span class="p">[[</span><span class="n">Experience</span><span class="p">],</span>
+                                 <span class="n">Tuple</span><span class="p">[</span><span class="n">AvalancheDataset</span><span class="p">,</span> <span class="n">AvalancheDataset</span><span class="p">]],</span>
+        <span class="n">experiences</span><span class="p">:</span> <span class="n">Iterable</span><span class="p">[</span><span class="n">Experience</span><span class="p">])</span> <span class="o">-&gt;</span> \
+        <span class="n">Generator</span><span class="p">[</span><span class="n">Tuple</span><span class="p">[</span><span class="n">AvalancheDataset</span><span class="p">,</span> <span class="n">AvalancheDataset</span><span class="p">],</span> <span class="kc">None</span><span class="p">,</span> <span class="kc">None</span><span class="p">]:</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Creates a generator operating around the split strategy and the</span>
+<span class="sd">    experiences stream.</span>
+
+<span class="sd">    :param split_strategy: The strategy used to split each experience in train</span>
+<span class="sd">        and validation datasets.</span>
+<span class="sd">    :return: A generator returning a 2 elements tuple (the train and validation</span>
+<span class="sd">        datasets).</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">for</span> <span class="n">new_experience</span> <span class="ow">in</span> <span class="n">experiences</span><span class="p">:</span>
+        <span class="k">yield</span> <span class="n">split_strategy</span><span class="p">(</span><span class="n">new_experience</span><span class="p">)</span>
+
+
 <div class="viewcode-block" id="benchmark_with_validation_stream"><a class="viewcode-back" href="../../../../../autoapi/avalanche/benchmarks/#avalanche.benchmarks.generators.benchmark_generators.benchmark_with_validation_stream">[docs]</a><span class="k">def</span> <span class="nf">benchmark_with_validation_stream</span><span class="p">(</span>
         <span class="n">benchmark_instance</span><span class="p">:</span> <span class="n">GenericCLScenario</span><span class="p">,</span>
         <span class="n">validation_size</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">float</span><span class="p">],</span>
@@ -776,8 +818,10 @@
         <span class="n">custom_split_strategy</span><span class="p">:</span> <span class="n">Callable</span><span class="p">[[</span><span class="n">Experience</span><span class="p">],</span>
                                         <span class="n">Tuple</span><span class="p">[</span><span class="n">AvalancheDataset</span><span class="p">,</span>
                                               <span class="n">AvalancheDataset</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="o">*</span><span class="p">,</span>
         <span class="n">experience_factory</span><span class="p">:</span> <span class="n">Callable</span><span class="p">[[</span><span class="n">GenericScenarioStream</span><span class="p">,</span> <span class="nb">int</span><span class="p">],</span>
-                                     <span class="n">Experience</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">):</span>
+                                     <span class="n">Experience</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">lazy_splitting</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">None</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Helper that can be used to obtain a benchmark with a validation stream.</span>
 
@@ -800,12 +844,12 @@
 <span class="sd">    The `custom_split_strategy` parameter can be used if a more specific</span>
 <span class="sd">    splitting is required.</span>
 
-<span class="sd">    Beware that experience splitting is NOT executed in a lazy way. This</span>
-<span class="sd">    means that the splitting process takes place immediately. This is usually</span>
-<span class="sd">    fast even for streams with many experiences.</span>
-
-<span class="sd">    Please note that the resulting experiences will have a task  labels field</span>
+<span class="sd">    Please note that the resulting experiences will have a task labels field</span>
 <span class="sd">    equal to the one of the originating experience.</span>
+
+<span class="sd">    Experience splitting can be executed in a lazy way. This behavior can be</span>
+<span class="sd">    controlled using the `lazy_splitting` parameter. By default, experiences</span>
+<span class="sd">    are split in a lazy way only when the input stream is lazily generated.</span>
 
 <span class="sd">    :param benchmark_instance: The benchmark to split.</span>
 <span class="sd">    :param validation_size: The size of the validation experience, as an int</span>
@@ -828,6 +872,10 @@
 <span class="sd">        :func:`random_validation_split_strategy`.</span>
 <span class="sd">    :param experience_factory: The experience factory. Defaults to</span>
 <span class="sd">        :class:`GenericExperience`.</span>
+<span class="sd">    :param lazy_splitting: If True, the stream will be split in a lazy way.</span>
+<span class="sd">        If False, the stream will be split immediately. Defaults to None, which</span>
+<span class="sd">        means that the stream will be split in a lazy or non-lazy way depending</span>
+<span class="sd">        on the laziness of the `input_stream`.</span>
 <span class="sd">    :return: A benchmark instance in which the validation stream has been added.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
@@ -837,7 +885,7 @@
             <span class="n">random_validation_split_strategy</span><span class="p">,</span> <span class="n">validation_size</span><span class="p">,</span>
             <span class="n">shuffle</span><span class="p">)</span>
 
-    <span class="n">stream_definitions</span><span class="p">:</span> <span class="n">TStreamsDict</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span>
+    <span class="n">stream_definitions</span><span class="p">:</span> <span class="n">TStreamsUserDict</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span>
         <span class="n">benchmark_instance</span><span class="o">.</span><span class="n">stream_definitions</span><span class="p">)</span>
     <span class="n">streams</span> <span class="o">=</span> <span class="n">benchmark_instance</span><span class="o">.</span><span class="n">streams</span>
 
@@ -851,24 +899,44 @@
 
     <span class="n">stream</span> <span class="o">=</span> <span class="n">streams</span><span class="p">[</span><span class="n">input_stream</span><span class="p">]</span>
 
-    <span class="n">split_train_datasets</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">AvalancheDataset</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>
-    <span class="n">split_valid_datasets</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">AvalancheDataset</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>
-    <span class="n">split_task_labels</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">Set</span><span class="p">[</span><span class="nb">int</span><span class="p">]]</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="n">split_lazily</span> <span class="o">=</span> <span class="n">lazy_splitting</span>
+    <span class="k">if</span> <span class="n">split_lazily</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">split_lazily</span> <span class="o">=</span> <span class="n">stream_definitions</span><span class="p">[</span><span class="n">input_stream</span><span class="p">]</span><span class="o">.</span><span class="n">is_lazy</span>
 
-    <span class="n">exp</span><span class="p">:</span> <span class="n">Experience</span>
-    <span class="k">for</span> <span class="n">exp</span> <span class="ow">in</span> <span class="n">stream</span><span class="p">:</span>
-        <span class="n">train_exp</span><span class="p">,</span> <span class="n">valid_exp</span> <span class="o">=</span> <span class="n">split_strategy</span><span class="p">(</span><span class="n">exp</span><span class="p">)</span>
-        <span class="n">split_train_datasets</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">train_exp</span><span class="p">)</span>
-        <span class="n">split_valid_datasets</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">valid_exp</span><span class="p">)</span>
-        <span class="n">split_task_labels</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="nb">set</span><span class="p">(</span><span class="n">exp</span><span class="o">.</span><span class="n">task_labels</span><span class="p">))</span>
+    <span class="n">exps_tasks_labels</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span>
+        <span class="n">stream_definitions</span><span class="p">[</span><span class="n">input_stream</span><span class="p">]</span><span class="o">.</span><span class="n">exps_task_labels</span>
+    <span class="p">)</span>
+
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">split_lazily</span><span class="p">:</span>
+        <span class="c1"># Classic static splitting</span>
+        <span class="n">train_exps_source</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="n">valid_exps_source</span> <span class="o">=</span> <span class="p">[]</span>
+
+        <span class="n">exp</span><span class="p">:</span> <span class="n">Experience</span>
+        <span class="k">for</span> <span class="n">exp</span> <span class="ow">in</span> <span class="n">stream</span><span class="p">:</span>
+            <span class="n">train_exp</span><span class="p">,</span> <span class="n">valid_exp</span> <span class="o">=</span> <span class="n">split_strategy</span><span class="p">(</span><span class="n">exp</span><span class="p">)</span>
+            <span class="n">train_exps_source</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">train_exp</span><span class="p">)</span>
+            <span class="n">valid_exps_source</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">valid_exp</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="c1"># Lazy splitting (based on a generator)</span>
+        <span class="n">split_generator</span> <span class="o">=</span> <span class="n">_lazy_train_val_split</span><span class="p">(</span><span class="n">split_strategy</span><span class="p">,</span> <span class="n">stream</span><span class="p">)</span>
+        <span class="n">train_exps_gen</span><span class="p">,</span> <span class="n">valid_exps_gen</span> <span class="o">=</span> <span class="n">_gen_split</span><span class="p">(</span><span class="n">split_generator</span><span class="p">)</span>
+        <span class="n">train_exps_source</span> <span class="o">=</span> <span class="p">(</span><span class="n">train_exps_gen</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">stream</span><span class="p">))</span>
+        <span class="n">valid_exps_source</span> <span class="o">=</span> <span class="p">(</span><span class="n">valid_exps_gen</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">stream</span><span class="p">))</span>
 
     <span class="n">train_stream_def</span> <span class="o">=</span> \
-        <span class="n">StreamDef</span><span class="p">(</span><span class="n">split_train_datasets</span><span class="p">,</span> <span class="n">split_task_labels</span><span class="p">,</span>
-                  <span class="n">stream_definitions</span><span class="p">[</span><span class="n">input_stream</span><span class="p">]</span><span class="o">.</span><span class="n">origin_dataset</span><span class="p">)</span>
+        <span class="n">StreamUserDef</span><span class="p">(</span>
+            <span class="n">train_exps_source</span><span class="p">,</span>
+            <span class="n">exps_tasks_labels</span><span class="p">,</span>
+            <span class="n">stream_definitions</span><span class="p">[</span><span class="n">input_stream</span><span class="p">]</span><span class="o">.</span><span class="n">origin_dataset</span><span class="p">,</span>
+            <span class="n">split_lazily</span><span class="p">)</span>
 
     <span class="n">valid_stream_def</span> <span class="o">=</span> \
-        <span class="n">StreamDef</span><span class="p">(</span><span class="n">split_valid_datasets</span><span class="p">,</span> <span class="n">split_task_labels</span><span class="p">,</span>
-                  <span class="n">stream_definitions</span><span class="p">[</span><span class="n">input_stream</span><span class="p">]</span><span class="o">.</span><span class="n">origin_dataset</span><span class="p">)</span>
+        <span class="n">StreamUserDef</span><span class="p">(</span>
+            <span class="n">valid_exps_source</span><span class="p">,</span>
+            <span class="n">exps_tasks_labels</span><span class="p">,</span>
+            <span class="n">stream_definitions</span><span class="p">[</span><span class="n">input_stream</span><span class="p">]</span><span class="o">.</span><span class="n">origin_dataset</span><span class="p">,</span>
+            <span class="n">split_lazily</span><span class="p">)</span>
 
     <span class="n">stream_definitions</span><span class="p">[</span><span class="n">input_stream</span><span class="p">]</span> <span class="o">=</span> <span class="n">train_stream_def</span>
     <span class="n">stream_definitions</span><span class="p">[</span><span class="n">output_stream</span><span class="p">]</span> <span class="o">=</span> <span class="n">valid_stream_def</span>

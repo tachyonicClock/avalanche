@@ -209,30 +209,31 @@
 <span class="c1"># The definitions used to accept user stream definition</span>
 <span class="c1"># Those definitions allow for a more simpler usage as they don&#39;t</span>
 <span class="c1"># mandate setting task labels and the origin dataset</span>
-<span class="k">class</span> <span class="nc">StreamUserDef</span><span class="p">(</span><span class="n">NamedTuple</span><span class="p">):</span>
+<div class="viewcode-block" id="StreamUserDef"><a class="viewcode-back" href="../../../../../autoapi/avalanche/benchmarks/scenarios/#avalanche.benchmarks.StreamUserDef">[docs]</a><span class="k">class</span> <span class="nc">StreamUserDef</span><span class="p">(</span><span class="n">NamedTuple</span><span class="p">):</span>
     <span class="n">exps_data</span><span class="p">:</span> <span class="n">TStreamDataOrigin</span>
     <span class="n">exps_task_labels</span><span class="p">:</span> <span class="n">TStreamTaskLabels</span> <span class="o">=</span> <span class="kc">None</span>
     <span class="n">origin_dataset</span><span class="p">:</span> <span class="n">TOriginDataset</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="n">is_lazy</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">bool</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span></div>
 
 
 <span class="n">TStreamUserDef</span> <span class="o">=</span> \
-    <span class="n">Union</span><span class="p">[</span><span class="n">Tuple</span><span class="p">[</span><span class="n">TStreamDataOrigin</span><span class="p">,</span> <span class="n">TStreamTaskLabels</span><span class="p">,</span> <span class="n">TOriginDataset</span><span class="p">],</span>
+    <span class="n">Union</span><span class="p">[</span><span class="n">Tuple</span><span class="p">[</span><span class="n">TStreamDataOrigin</span><span class="p">,</span> <span class="n">TStreamTaskLabels</span><span class="p">,</span> <span class="n">TOriginDataset</span><span class="p">,</span> <span class="nb">bool</span><span class="p">],</span>
+          <span class="n">Tuple</span><span class="p">[</span><span class="n">TStreamDataOrigin</span><span class="p">,</span> <span class="n">TStreamTaskLabels</span><span class="p">,</span> <span class="n">TOriginDataset</span><span class="p">],</span>
           <span class="n">Tuple</span><span class="p">[</span><span class="n">TStreamDataOrigin</span><span class="p">,</span> <span class="n">TStreamTaskLabels</span><span class="p">],</span>
           <span class="n">Tuple</span><span class="p">[</span><span class="n">TStreamDataOrigin</span><span class="p">]]</span>
 
-
-<span class="n">TStreamsUserDict</span> <span class="o">=</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">TStreamUserDef</span><span class="p">]</span>
+<span class="n">TStreamsUserDict</span> <span class="o">=</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">StreamUserDef</span><span class="p">]</span>
 
 
 <span class="c1"># The definitions used to store stream definitions</span>
 <div class="viewcode-block" id="StreamDef"><a class="viewcode-back" href="../../../../../autoapi/avalanche/benchmarks/scenarios/#avalanche.benchmarks.StreamDef">[docs]</a><span class="k">class</span> <span class="nc">StreamDef</span><span class="p">(</span><span class="n">NamedTuple</span><span class="p">):</span>
     <span class="n">exps_data</span><span class="p">:</span> <span class="n">LazyDatasetSequence</span>
     <span class="n">exps_task_labels</span><span class="p">:</span> <span class="n">Sequence</span><span class="p">[</span><span class="n">Set</span><span class="p">[</span><span class="nb">int</span><span class="p">]]</span>
-    <span class="n">origin_dataset</span><span class="p">:</span> <span class="n">TOriginDataset</span></div>
+    <span class="n">origin_dataset</span><span class="p">:</span> <span class="n">TOriginDataset</span>
+    <span class="n">is_lazy</span><span class="p">:</span> <span class="nb">bool</span></div>
 
 
 <span class="n">TStreamsDict</span> <span class="o">=</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">StreamDef</span><span class="p">]</span>
-
 
 <span class="n">STREAM_NAME_REGEX</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="s1">&#39;^[A-Za-z][A-Za-z_</span><span class="se">\\</span><span class="s1">d]*$&#39;</span><span class="p">)</span>
 
@@ -257,6 +258,7 @@
 <span class="sd">    The name of custom streams can only contain letters, numbers or the &quot;_&quot;</span>
 <span class="sd">    character and must not start with a number.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
+
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">:</span> <span class="n">TGenericCLScenario</span><span class="p">,</span>
                  <span class="o">*</span><span class="p">,</span>
                  <span class="n">stream_definitions</span><span class="p">:</span> <span class="n">TStreamsUserDict</span><span class="p">,</span>
@@ -314,7 +316,7 @@
 <span class="sd">        &quot;&quot;&quot;</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">stream_definitions</span> <span class="o">=</span> \
-            <span class="bp">self</span><span class="o">.</span><span class="n">_check_stream_definitions</span><span class="p">(</span><span class="n">stream_definitions</span><span class="p">)</span>
+            <span class="n">GenericCLScenario</span><span class="o">.</span><span class="n">_check_stream_definitions</span><span class="p">(</span><span class="n">stream_definitions</span><span class="p">)</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        A structure containing the definition of the streams.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
@@ -350,7 +352,7 @@
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        If True, only the complete test set will be returned from experience</span>
 <span class="sd">        instances.</span>
-<span class="sd">        </span>
+
 <span class="sd">        This flag is usually set to True in scenarios where having one separate</span>
 <span class="sd">        test set aligned to each training experience is impossible or doesn&#39;t</span>
 <span class="sd">        make sense from a semantic point of view.</span>
@@ -495,7 +497,7 @@
 
         <span class="n">class_set_future_exps</span> <span class="o">=</span> <span class="nb">set</span><span class="p">()</span>
         <span class="n">stream_n_exps</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">classes_in_experience</span><span class="p">[</span><span class="n">stream</span><span class="p">])</span>
-        <span class="k">for</span> <span class="n">exp_id</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">current_experience</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span> <span class="n">stream_n_exps</span><span class="p">):</span>
+        <span class="k">for</span> <span class="n">exp_id</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">current_experience</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="n">stream_n_exps</span><span class="p">):</span>
             <span class="n">future_exp_classes</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">classes_in_experience</span><span class="p">[</span><span class="n">stream</span><span class="p">][</span><span class="n">exp_id</span><span class="p">]</span>
             <span class="k">if</span> <span class="n">future_exp_classes</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
                 <span class="n">class_set_future_exps</span> <span class="o">=</span> <span class="kc">None</span>
@@ -526,8 +528,9 @@
             <span class="n">stream_obj</span> <span class="o">=</span> <span class="n">GenericScenarioStream</span><span class="p">(</span><span class="n">stream_name</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span>
             <span class="nb">setattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">stream_name</span><span class="si">}</span><span class="s1">_stream&#39;</span><span class="p">,</span> <span class="n">stream_obj</span><span class="p">)</span>
 
+    <span class="nd">@staticmethod</span>
     <span class="k">def</span> <span class="nf">_check_stream_definitions</span><span class="p">(</span>
-            <span class="bp">self</span><span class="p">,</span> <span class="n">stream_definitions</span><span class="p">:</span> <span class="n">TStreamsUserDict</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">TStreamsDict</span><span class="p">:</span>
+            <span class="n">stream_definitions</span><span class="p">:</span> <span class="n">TStreamsUserDict</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">TStreamsDict</span><span class="p">:</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        A function used to check the input stream definitions.</span>
 
@@ -547,23 +550,28 @@
             <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;No test stream found!&#39;</span><span class="p">)</span>
 
         <span class="k">for</span> <span class="n">stream_name</span><span class="p">,</span> <span class="n">stream_def</span> <span class="ow">in</span> <span class="n">stream_definitions</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">_check_stream_name</span><span class="p">(</span><span class="n">stream_name</span><span class="p">)</span>
-            <span class="n">stream_def</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_check_single_stream_def</span><span class="p">(</span><span class="n">stream_def</span><span class="p">)</span>
+            <span class="n">GenericCLScenario</span><span class="o">.</span><span class="n">_check_stream_name</span><span class="p">(</span><span class="n">stream_name</span><span class="p">)</span>
+            <span class="n">stream_def</span> <span class="o">=</span> <span class="n">GenericCLScenario</span><span class="o">.</span><span class="n">_check_and_adapt_user_stream_def</span><span class="p">(</span>
+                <span class="n">stream_def</span><span class="p">,</span> <span class="n">stream_name</span><span class="p">)</span>
             <span class="n">streams_defs</span><span class="p">[</span><span class="n">stream_name</span><span class="p">]</span> <span class="o">=</span> <span class="n">stream_def</span>
 
         <span class="k">return</span> <span class="n">streams_defs</span>
 
-    <span class="k">def</span> <span class="nf">_check_stream_name</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">stream_name</span><span class="p">:</span> <span class="n">Any</span><span class="p">):</span>
+    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">_check_stream_name</span><span class="p">(</span><span class="n">stream_name</span><span class="p">:</span> <span class="n">Any</span><span class="p">):</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">stream_name</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
             <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;Invalid type for stream name. Must be a &quot;str&quot;&#39;</span><span class="p">)</span>
 
         <span class="k">if</span> <span class="n">STREAM_NAME_REGEX</span><span class="o">.</span><span class="n">fullmatch</span><span class="p">(</span><span class="n">stream_name</span><span class="p">)</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
             <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Invalid name for stream </span><span class="si">{</span><span class="n">stream_name</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
 
-    <span class="k">def</span> <span class="nf">_check_single_stream_def</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">stream_def</span><span class="p">:</span> <span class="n">TStreamUserDef</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">StreamDef</span><span class="p">:</span>
+    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">_check_and_adapt_user_stream_def</span><span class="p">(</span>
+            <span class="n">stream_def</span><span class="p">:</span> <span class="n">TStreamUserDef</span><span class="p">,</span> <span class="n">stream_name</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">StreamDef</span><span class="p">:</span>
         <span class="n">exp_data</span> <span class="o">=</span> <span class="n">stream_def</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
         <span class="n">task_labels</span> <span class="o">=</span> <span class="kc">None</span>
         <span class="n">origin_dataset</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="n">is_lazy</span> <span class="o">=</span> <span class="kc">None</span>
 
         <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">stream_def</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">:</span>
             <span class="n">task_labels</span> <span class="o">=</span> <span class="n">stream_def</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
@@ -571,16 +579,44 @@
         <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">stream_def</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">2</span><span class="p">:</span>
             <span class="n">origin_dataset</span> <span class="o">=</span> <span class="n">stream_def</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span>
 
-        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">exp_data</span><span class="p">,</span> <span class="n">AvalancheDataset</span><span class="p">):</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">stream_def</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">3</span><span class="p">:</span>
+            <span class="n">is_lazy</span> <span class="o">=</span> <span class="n">stream_def</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span>
+
+        <span class="k">if</span> <span class="n">is_lazy</span> <span class="ow">or</span> <span class="p">(</span><span class="nb">isinstance</span><span class="p">(</span><span class="n">exp_data</span><span class="p">,</span> <span class="nb">tuple</span><span class="p">)</span> <span class="ow">and</span> <span class="p">(</span><span class="n">is_lazy</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">)):</span>
+            <span class="c1"># Creation based on a generator</span>
+            <span class="k">if</span> <span class="n">is_lazy</span><span class="p">:</span>
+                <span class="c1"># We also check for LazyDatasetSequence, which is sufficient</span>
+                <span class="c1"># per se (only if is_lazy==True, otherwise is treated as a</span>
+                <span class="c1"># standard Sequence)</span>
+                <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">exp_data</span><span class="p">,</span> <span class="n">LazyDatasetSequence</span><span class="p">):</span>
+                    <span class="k">if</span> <span class="p">(</span><span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">exp_data</span><span class="p">,</span> <span class="nb">tuple</span><span class="p">))</span> <span class="ow">or</span> \
+                            <span class="p">(</span><span class="ow">not</span> <span class="nb">len</span><span class="p">(</span><span class="n">exp_data</span><span class="p">)</span> <span class="o">==</span> <span class="mi">2</span><span class="p">):</span>
+                        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+                            <span class="sa">f</span><span class="s1">&#39;The stream </span><span class="si">{</span><span class="n">stream_name</span><span class="si">}</span><span class="s1"> was flagged as &#39;</span>
+                            <span class="sa">f</span><span class="s1">&#39;lazy-generated but its definition is not a &#39;</span>
+                            <span class="sa">f</span><span class="s1">&#39;2-elements tuple (generator and stream length).&#39;</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">if</span> <span class="p">(</span><span class="ow">not</span> <span class="nb">len</span><span class="p">(</span><span class="n">exp_data</span><span class="p">)</span> <span class="o">==</span> <span class="mi">2</span><span class="p">)</span> <span class="ow">or</span> \
+                        <span class="p">(</span><span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">exp_data</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="nb">int</span><span class="p">)):</span>
+                    <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+                        <span class="sa">f</span><span class="s1">&#39;The stream </span><span class="si">{</span><span class="n">stream_name</span><span class="si">}</span><span class="s1"> was detected &#39;</span>
+                        <span class="sa">f</span><span class="s1">&#39;as lazy-generated but its definition is not a &#39;</span>
+                        <span class="sa">f</span><span class="s1">&#39;2-elements tuple. If you</span><span class="se">\&#39;</span><span class="s1">re trying to define a &#39;</span>
+                        <span class="sa">f</span><span class="s1">&#39;non-lazily generated stream, don</span><span class="se">\&#39;</span><span class="s1">t use a tuple &#39;</span>
+                        <span class="sa">f</span><span class="s1">&#39;when passing the list of datasets, use a list &#39;</span>
+                        <span class="sa">f</span><span class="s1">&#39;instead.&#39;</span><span class="p">)</span>
+
+            <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">exp_data</span><span class="p">,</span> <span class="n">LazyDatasetSequence</span><span class="p">):</span>
+                <span class="n">stream_length</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">exp_data</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="c1"># exp_data[0] must contain the generator</span>
+                <span class="n">stream_length</span> <span class="o">=</span> <span class="n">exp_data</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+            <span class="n">is_lazy</span> <span class="o">=</span> <span class="kc">True</span>
+        <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">exp_data</span><span class="p">,</span> <span class="n">AvalancheDataset</span><span class="p">):</span>
             <span class="c1"># Single element</span>
             <span class="n">exp_data</span> <span class="o">=</span> <span class="p">[</span><span class="n">exp_data</span><span class="p">]</span>
             <span class="n">is_lazy</span> <span class="o">=</span> <span class="kc">False</span>
             <span class="n">stream_length</span> <span class="o">=</span> <span class="mi">1</span>
-        <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">exp_data</span><span class="p">,</span> <span class="nb">tuple</span><span class="p">):</span>
-            <span class="c1"># Creation based on a generator</span>
-            <span class="c1"># exp_data[0] must contain the generator</span>
-            <span class="n">stream_length</span> <span class="o">=</span> <span class="n">exp_data</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
-            <span class="n">is_lazy</span> <span class="o">=</span> <span class="kc">True</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="c1"># Standard def</span>
             <span class="n">stream_length</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">exp_data</span><span class="p">)</span>
@@ -619,7 +655,10 @@
                 <span class="sa">f</span><span class="s1">&#39;labels for </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">task_labels</span><span class="p">)</span><span class="si">}</span><span class="s1"> experiences are given.&#39;</span><span class="p">)</span>
 
         <span class="k">if</span> <span class="n">is_lazy</span><span class="p">:</span>
-            <span class="n">lazy_sequence</span> <span class="o">=</span> <span class="n">LazyDatasetSequence</span><span class="p">(</span><span class="n">exp_data</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">stream_length</span><span class="p">)</span>
+            <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">exp_data</span><span class="p">,</span> <span class="n">LazyDatasetSequence</span><span class="p">):</span>
+                <span class="n">lazy_sequence</span> <span class="o">=</span> <span class="n">exp_data</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">lazy_sequence</span> <span class="o">=</span> <span class="n">LazyDatasetSequence</span><span class="p">(</span><span class="n">exp_data</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">stream_length</span><span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="n">lazy_sequence</span> <span class="o">=</span> <span class="n">LazyDatasetSequence</span><span class="p">(</span><span class="n">exp_data</span><span class="p">,</span> <span class="n">stream_length</span><span class="p">)</span>
             <span class="n">lazy_sequence</span><span class="o">.</span><span class="n">load_all_experiences</span><span class="p">()</span>
@@ -627,7 +666,8 @@
         <span class="k">return</span> <span class="n">StreamDef</span><span class="p">(</span>
             <span class="n">lazy_sequence</span><span class="p">,</span>
             <span class="n">task_labels</span><span class="p">,</span>
-            <span class="n">origin_dataset</span><span class="p">)</span></div>
+            <span class="n">origin_dataset</span><span class="p">,</span>
+            <span class="n">is_lazy</span><span class="p">)</span></div>
 
 
 <div class="viewcode-block" id="GenericScenarioStream"><a class="viewcode-back" href="../../../../../autoapi/avalanche/benchmarks/scenarios/#avalanche.benchmarks.GenericScenarioStream">[docs]</a><span class="k">class</span> <span class="nc">GenericScenarioStream</span><span class="p">(</span><span class="n">Generic</span><span class="p">[</span><span class="n">TExperience</span><span class="p">,</span> <span class="n">TGenericCLScenario</span><span class="p">],</span>
@@ -948,6 +988,9 @@
 
 
 <span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="s1">&#39;StreamUserDef&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;TStreamUserDef&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;TStreamsUserDict&#39;</span><span class="p">,</span>
     <span class="s1">&#39;StreamDef&#39;</span><span class="p">,</span>
     <span class="s1">&#39;TStreamsDict&#39;</span><span class="p">,</span>
     <span class="s1">&#39;TGenericCLScenario&#39;</span><span class="p">,</span>

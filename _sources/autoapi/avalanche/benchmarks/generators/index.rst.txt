@@ -694,7 +694,7 @@ Functions
    :return: The Data Incremental benchmark instance.
 
 
-.. function:: benchmark_with_validation_stream(benchmark_instance: GenericCLScenario, validation_size: Union[int, float], shuffle: bool = False, input_stream: str = 'train', output_stream: str = 'valid', custom_split_strategy: Callable[[Experience], Tuple[AvalancheDataset, AvalancheDataset]] = None, experience_factory: Callable[[GenericScenarioStream, int], Experience] = None)
+.. function:: benchmark_with_validation_stream(benchmark_instance: GenericCLScenario, validation_size: Union[int, float], shuffle: bool = False, input_stream: str = 'train', output_stream: str = 'valid', custom_split_strategy: Callable[[Experience], Tuple[AvalancheDataset, AvalancheDataset]] = None, *, experience_factory: Callable[[GenericScenarioStream, int], Experience] = None, lazy_splitting: bool = None)
 
    Helper that can be used to obtain a benchmark with a validation stream.
 
@@ -717,12 +717,12 @@ Functions
    The `custom_split_strategy` parameter can be used if a more specific
    splitting is required.
 
-   Beware that experience splitting is NOT executed in a lazy way. This
-   means that the splitting process takes place immediately. This is usually
-   fast even for streams with many experiences.
-
-   Please note that the resulting experiences will have a task  labels field
+   Please note that the resulting experiences will have a task labels field
    equal to the one of the originating experience.
+
+   Experience splitting can be executed in a lazy way. This behavior can be
+   controlled using the `lazy_splitting` parameter. By default, experiences
+   are split in a lazy way only when the input stream is lazily generated.
 
    :param benchmark_instance: The benchmark to split.
    :param validation_size: The size of the validation experience, as an int
@@ -745,6 +745,10 @@ Functions
        :func:`random_validation_split_strategy`.
    :param experience_factory: The experience factory. Defaults to
        :class:`GenericExperience`.
+   :param lazy_splitting: If True, the stream will be split in a lazy way.
+       If False, the stream will be split immediately. Defaults to None, which
+       means that the stream will be split in a lazy or non-lazy way depending
+       on the laziness of the `input_stream`.
    :return: A benchmark instance in which the validation stream has been added.
 
 

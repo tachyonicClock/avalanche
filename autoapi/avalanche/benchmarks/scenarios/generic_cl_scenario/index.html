@@ -192,19 +192,22 @@
 <col style="width: 90%" />
 </colgroup>
 <tbody>
-<tr class="row-odd"><td><p><a class="reference internal" href="#avalanche.benchmarks.scenarios.generic_cl_scenario.StreamDef" title="avalanche.benchmarks.scenarios.generic_cl_scenario.StreamDef"><code class="xref py py-obj docutils literal notranslate"><span class="pre">StreamDef</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#avalanche.benchmarks.scenarios.generic_cl_scenario.StreamUserDef" title="avalanche.benchmarks.scenarios.generic_cl_scenario.StreamUserDef"><code class="xref py py-obj docutils literal notranslate"><span class="pre">StreamUserDef</span></code></a></p></td>
 <td><p>Typed version of namedtuple.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#avalanche.benchmarks.scenarios.generic_cl_scenario.GenericCLScenario" title="avalanche.benchmarks.scenarios.generic_cl_scenario.GenericCLScenario"><code class="xref py py-obj docutils literal notranslate"><span class="pre">GenericCLScenario</span></code></a></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#avalanche.benchmarks.scenarios.generic_cl_scenario.StreamDef" title="avalanche.benchmarks.scenarios.generic_cl_scenario.StreamDef"><code class="xref py py-obj docutils literal notranslate"><span class="pre">StreamDef</span></code></a></p></td>
+<td><p>Typed version of namedtuple.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#avalanche.benchmarks.scenarios.generic_cl_scenario.GenericCLScenario" title="avalanche.benchmarks.scenarios.generic_cl_scenario.GenericCLScenario"><code class="xref py py-obj docutils literal notranslate"><span class="pre">GenericCLScenario</span></code></a></p></td>
 <td><p>Base implementation of a Continual Learning benchmark instance.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#avalanche.benchmarks.scenarios.generic_cl_scenario.GenericScenarioStream" title="avalanche.benchmarks.scenarios.generic_cl_scenario.GenericScenarioStream"><code class="xref py py-obj docutils literal notranslate"><span class="pre">GenericScenarioStream</span></code></a></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#avalanche.benchmarks.scenarios.generic_cl_scenario.GenericScenarioStream" title="avalanche.benchmarks.scenarios.generic_cl_scenario.GenericScenarioStream"><code class="xref py py-obj docutils literal notranslate"><span class="pre">GenericScenarioStream</span></code></a></p></td>
 <td><p>A scenario stream describes a sequence of incremental experiences.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#avalanche.benchmarks.scenarios.generic_cl_scenario.AbstractExperience" title="avalanche.benchmarks.scenarios.generic_cl_scenario.AbstractExperience"><code class="xref py py-obj docutils literal notranslate"><span class="pre">AbstractExperience</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#avalanche.benchmarks.scenarios.generic_cl_scenario.AbstractExperience" title="avalanche.benchmarks.scenarios.generic_cl_scenario.AbstractExperience"><code class="xref py py-obj docutils literal notranslate"><span class="pre">AbstractExperience</span></code></a></p></td>
 <td><p>Definition of a learning experience. A learning experience contains a set of</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#avalanche.benchmarks.scenarios.generic_cl_scenario.GenericExperience" title="avalanche.benchmarks.scenarios.generic_cl_scenario.GenericExperience"><code class="xref py py-obj docutils literal notranslate"><span class="pre">GenericExperience</span></code></a></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#avalanche.benchmarks.scenarios.generic_cl_scenario.GenericExperience" title="avalanche.benchmarks.scenarios.generic_cl_scenario.GenericExperience"><code class="xref py py-obj docutils literal notranslate"><span class="pre">GenericExperience</span></code></a></p></td>
 <td><p>Definition of a learning experience based on a <a class="reference internal" href="#avalanche.benchmarks.scenarios.generic_cl_scenario.GenericCLScenario" title="avalanche.benchmarks.scenarios.generic_cl_scenario.GenericCLScenario"><code class="xref py py-class docutils literal notranslate"><span class="pre">GenericCLScenario</span></code></a></p></td>
 </tr>
 </tbody>
@@ -212,6 +215,65 @@
 <dl class="py data">
 <dt class="sig sig-object py" id="avalanche.benchmarks.scenarios.generic_cl_scenario.TGenericCLScenario">
 <span class="sig-prename descclassname"><span class="pre">avalanche.benchmarks.scenarios.generic_cl_scenario.</span></span><span class="sig-name descname"><span class="pre">TGenericCLScenario</span></span><a class="headerlink" href="#avalanche.benchmarks.scenarios.generic_cl_scenario.TGenericCLScenario" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="avalanche.benchmarks.scenarios.generic_cl_scenario.StreamUserDef">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">avalanche.benchmarks.scenarios.generic_cl_scenario.</span></span><span class="sig-name descname"><span class="pre">StreamUserDef</span></span><a class="reference internal" href="../../../../../_modules/avalanche/benchmarks/scenarios/generic_cl_scenario/#StreamUserDef"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.benchmarks.scenarios.generic_cl_scenario.StreamUserDef" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">typing.NamedTuple</span></code></p>
+<p>Typed version of namedtuple.</p>
+<p>Usage in Python versions &gt;= 3.6:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Employee</span><span class="p">(</span><span class="n">NamedTuple</span><span class="p">):</span>
+    <span class="n">name</span><span class="p">:</span> <span class="nb">str</span>
+    <span class="nb">id</span><span class="p">:</span> <span class="nb">int</span>
+</pre></div>
+</div>
+<p>This is equivalent to:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">Employee</span> <span class="o">=</span> <span class="n">collections</span><span class="o">.</span><span class="n">namedtuple</span><span class="p">(</span><span class="s1">&#39;Employee&#39;</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;name&#39;</span><span class="p">,</span> <span class="s1">&#39;id&#39;</span><span class="p">])</span>
+</pre></div>
+</div>
+<p>The resulting class has an extra __annotations__ attribute, giving a
+dict that maps field names to types.  (The field names are also in
+the _fields attribute, which is part of the namedtuple API.)
+Alternative equivalent keyword syntax is also accepted:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">Employee</span> <span class="o">=</span> <span class="n">NamedTuple</span><span class="p">(</span><span class="s1">&#39;Employee&#39;</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="nb">str</span><span class="p">,</span> <span class="nb">id</span><span class="o">=</span><span class="nb">int</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>In Python versions &lt;= 3.5 use:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">Employee</span> <span class="o">=</span> <span class="n">NamedTuple</span><span class="p">(</span><span class="s1">&#39;Employee&#39;</span><span class="p">,</span> <span class="p">[(</span><span class="s1">&#39;name&#39;</span><span class="p">,</span> <span class="nb">str</span><span class="p">),</span> <span class="p">(</span><span class="s1">&#39;id&#39;</span><span class="p">,</span> <span class="nb">int</span><span class="p">)])</span>
+</pre></div>
+</div>
+<p>Create and return a new object.  See help(type) for accurate signature.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="avalanche.benchmarks.scenarios.generic_cl_scenario.StreamUserDef.exps_data">
+<span class="sig-name descname"><span class="pre">exps_data</span></span><em class="property"> <span class="pre">:TStreamDataOrigin</span></em><a class="headerlink" href="#avalanche.benchmarks.scenarios.generic_cl_scenario.StreamUserDef.exps_data" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="avalanche.benchmarks.scenarios.generic_cl_scenario.StreamUserDef.exps_task_labels">
+<span class="sig-name descname"><span class="pre">exps_task_labels</span></span><em class="property"> <span class="pre">:TStreamTaskLabels</span></em><a class="headerlink" href="#avalanche.benchmarks.scenarios.generic_cl_scenario.StreamUserDef.exps_task_labels" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="avalanche.benchmarks.scenarios.generic_cl_scenario.StreamUserDef.origin_dataset">
+<span class="sig-name descname"><span class="pre">origin_dataset</span></span><em class="property"> <span class="pre">:TOriginDataset</span></em><a class="headerlink" href="#avalanche.benchmarks.scenarios.generic_cl_scenario.StreamUserDef.origin_dataset" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="avalanche.benchmarks.scenarios.generic_cl_scenario.StreamUserDef.is_lazy">
+<span class="sig-name descname"><span class="pre">is_lazy</span></span><em class="property"> <span class="pre">:Optional[bool]</span></em><a class="headerlink" href="#avalanche.benchmarks.scenarios.generic_cl_scenario.StreamUserDef.is_lazy" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py data">
+<dt class="sig sig-object py" id="avalanche.benchmarks.scenarios.generic_cl_scenario.TStreamUserDef">
+<span class="sig-prename descclassname"><span class="pre">avalanche.benchmarks.scenarios.generic_cl_scenario.</span></span><span class="sig-name descname"><span class="pre">TStreamUserDef</span></span><a class="headerlink" href="#avalanche.benchmarks.scenarios.generic_cl_scenario.TStreamUserDef" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py data">
+<dt class="sig sig-object py" id="avalanche.benchmarks.scenarios.generic_cl_scenario.TStreamsUserDict">
+<span class="sig-prename descclassname"><span class="pre">avalanche.benchmarks.scenarios.generic_cl_scenario.</span></span><span class="sig-name descname"><span class="pre">TStreamsUserDict</span></span><a class="headerlink" href="#avalanche.benchmarks.scenarios.generic_cl_scenario.TStreamsUserDict" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py class">
@@ -254,6 +316,11 @@ Alternative equivalent keyword syntax is also accepted:</p>
 <dl class="py attribute">
 <dt class="sig sig-object py" id="avalanche.benchmarks.scenarios.generic_cl_scenario.StreamDef.origin_dataset">
 <span class="sig-name descname"><span class="pre">origin_dataset</span></span><em class="property"> <span class="pre">:TOriginDataset</span></em><a class="headerlink" href="#avalanche.benchmarks.scenarios.generic_cl_scenario.StreamDef.origin_dataset" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="avalanche.benchmarks.scenarios.generic_cl_scenario.StreamDef.is_lazy">
+<span class="sig-name descname"><span class="pre">is_lazy</span></span><em class="property"> <span class="pre">:bool</span></em><a class="headerlink" href="#avalanche.benchmarks.scenarios.generic_cl_scenario.StreamDef.is_lazy" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 </dd></dl>

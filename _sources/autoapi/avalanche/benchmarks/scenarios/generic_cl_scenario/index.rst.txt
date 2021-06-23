@@ -12,6 +12,7 @@ Classes
 
 .. autoapisummary::
 
+   avalanche.benchmarks.scenarios.generic_cl_scenario.StreamUserDef
    avalanche.benchmarks.scenarios.generic_cl_scenario.StreamDef
    avalanche.benchmarks.scenarios.generic_cl_scenario.GenericCLScenario
    avalanche.benchmarks.scenarios.generic_cl_scenario.GenericScenarioStream
@@ -21,6 +22,66 @@ Classes
 
 
 .. data:: TGenericCLScenario
+   
+
+   
+
+.. py:class:: StreamUserDef
+
+   Bases: :class:`typing.NamedTuple`
+
+   Typed version of namedtuple.
+
+   Usage in Python versions >= 3.6::
+
+       class Employee(NamedTuple):
+           name: str
+           id: int
+
+   This is equivalent to::
+
+       Employee = collections.namedtuple('Employee', ['name', 'id'])
+
+   The resulting class has an extra __annotations__ attribute, giving a
+   dict that maps field names to types.  (The field names are also in
+   the _fields attribute, which is part of the namedtuple API.)
+   Alternative equivalent keyword syntax is also accepted::
+
+       Employee = NamedTuple('Employee', name=str, id=int)
+
+   In Python versions <= 3.5 use::
+
+       Employee = NamedTuple('Employee', [('name', str), ('id', int)])
+
+   Create and return a new object.  See help(type) for accurate signature.
+
+   .. attribute:: exps_data
+      :annotation: :TStreamDataOrigin
+
+      
+
+   .. attribute:: exps_task_labels
+      :annotation: :TStreamTaskLabels
+
+      
+
+   .. attribute:: origin_dataset
+      :annotation: :TOriginDataset
+
+      
+
+   .. attribute:: is_lazy
+      :annotation: :Optional[bool]
+
+      
+
+
+.. data:: TStreamUserDef
+   
+
+   
+
+.. data:: TStreamsUserDict
    
 
    
@@ -66,6 +127,11 @@ Classes
 
    .. attribute:: origin_dataset
       :annotation: :TOriginDataset
+
+      
+
+   .. attribute:: is_lazy
+      :annotation: :bool
 
       
 

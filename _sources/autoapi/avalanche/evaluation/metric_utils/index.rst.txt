@@ -17,7 +17,6 @@ Functions
    avalanche.evaluation.metric_utils.repartition_pie_chart_image_creator
    avalanche.evaluation.metric_utils.repartition_bar_chart_image_creator
    avalanche.evaluation.metric_utils.default_history_repartition_image_creator
-   avalanche.evaluation.metric_utils.get_task_label
    avalanche.evaluation.metric_utils.stream_type
    avalanche.evaluation.metric_utils.phase_and_task
    avalanche.evaluation.metric_utils.bytes2human
@@ -84,19 +83,6 @@ Functions
    :param colors: The colors to use in the chart.
 
 
-.. function:: get_task_label(strategy: BaseStrategy) -> int
-
-   Returns the current task label.
-
-   The current task label depends on the phase. During the training
-   phase, the task label is the one defined in the "train_task_label"
-   field. On the contrary, during the eval phase the task label is the one
-   defined in the "eval_task_label" field.
-
-   :param strategy: The strategy instance to get the task label from.
-   :return: The current train or eval task label.
-
-
 .. function:: stream_type(experience: Experience) -> str
 
    Returns the stream name from which the experience belongs to.
@@ -138,6 +124,7 @@ Functions
    :param add_experience: if True, add eval_exp_id to the main metric name.
            Default to False.
    :param add_task: if True the main metric name will include the task
-       information. Otherwise, it will not.
+       information. If False, no task label will be displayed.
+       If an int, that value will be used as task label for the metric name.
 
 

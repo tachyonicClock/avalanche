@@ -194,7 +194,7 @@
 <span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">TypeVar</span><span class="p">,</span> <span class="n">Optional</span><span class="p">,</span> <span class="n">TYPE_CHECKING</span>
 <span class="kn">from</span> <span class="nn">typing_extensions</span> <span class="kn">import</span> <span class="n">Protocol</span>
 <span class="kn">from</span> <span class="nn">.metric_results</span> <span class="kn">import</span> <span class="n">MetricValue</span>
-<span class="kn">from</span> <span class="nn">.metric_utils</span> <span class="kn">import</span> <span class="n">get_metric_name</span>
+<span class="kn">from</span> <span class="nn">.metric_utils</span> <span class="kn">import</span> <span class="n">get_metric_name</span><span class="p">,</span> <span class="n">phase_and_task</span>
 <span class="kn">from</span> <span class="nn">..core</span> <span class="kn">import</span> <span class="n">StrategyCallbacks</span>
 
 <span class="k">if</span> <span class="n">TYPE_CHECKING</span><span class="p">:</span>
@@ -227,7 +227,7 @@
 <span class="sd">    update and results. See :class:`PluginMetric` for more details.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
-<div class="viewcode-block" id="Metric.result"><a class="viewcode-back" href="../../../../autoapi/avalanche/evaluation/metric_definitions/#avalanche.evaluation.Metric.result">[docs]</a>    <span class="k">def</span> <span class="nf">result</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Optional</span><span class="p">[</span><span class="n">TResult</span><span class="p">]:</span>
+<div class="viewcode-block" id="Metric.result"><a class="viewcode-back" href="../../../../autoapi/avalanche/evaluation/metric_definitions/#avalanche.evaluation.Metric.result">[docs]</a>    <span class="k">def</span> <span class="nf">result</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Optional</span><span class="p">[</span><span class="n">TResult</span><span class="p">]:</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Obtains the value of the metric.</span>
 
@@ -235,7 +235,7 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">pass</span></div>
 
-<div class="viewcode-block" id="Metric.reset"><a class="viewcode-back" href="../../../../autoapi/avalanche/evaluation/metric_definitions/#avalanche.evaluation.Metric.reset">[docs]</a>    <span class="k">def</span> <span class="nf">reset</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<div class="viewcode-block" id="Metric.reset"><a class="viewcode-back" href="../../../../autoapi/avalanche/evaluation/metric_definitions/#avalanche.evaluation.Metric.reset">[docs]</a>    <span class="k">def</span> <span class="nf">reset</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Resets the metric internal state.</span>
 
@@ -276,11 +276,11 @@
 <span class="sd">        &quot;&quot;&quot;</span>
 
 <div class="viewcode-block" id="PluginMetric.result"><a class="viewcode-back" href="../../../../autoapi/avalanche/evaluation/metric_definitions/#avalanche.evaluation.PluginMetric.result">[docs]</a>    <span class="nd">@abstractmethod</span>
-    <span class="k">def</span> <span class="nf">result</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Optional</span><span class="p">[</span><span class="n">TResult</span><span class="p">]:</span>
+    <span class="k">def</span> <span class="nf">result</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Optional</span><span class="p">[</span><span class="n">TResult</span><span class="p">]:</span>
         <span class="k">pass</span></div>
 
 <div class="viewcode-block" id="PluginMetric.reset"><a class="viewcode-back" href="../../../../autoapi/avalanche/evaluation/metric_definitions/#avalanche.evaluation.PluginMetric.reset">[docs]</a>    <span class="nd">@abstractmethod</span>
-    <span class="k">def</span> <span class="nf">reset</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">reset</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
         <span class="k">pass</span></div>
 
 <div class="viewcode-block" id="PluginMetric.get_global_counter"><a class="viewcode-back" href="../../../../autoapi/avalanche/evaluation/metric_definitions/#avalanche.evaluation.PluginMetric.get_global_counter">[docs]</a>    <span class="k">def</span> <span class="nf">get_global_counter</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
@@ -403,25 +403,34 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">_emit_at</span> <span class="o">=</span> <span class="n">emit_at</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_mode</span> <span class="o">=</span> <span class="n">mode</span>
 
-<div class="viewcode-block" id="GenericPluginMetric.reset"><a class="viewcode-back" href="../../../../autoapi/avalanche/evaluation/metric_definitions/#avalanche.evaluation.GenericPluginMetric.reset">[docs]</a>    <span class="k">def</span> <span class="nf">reset</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<div class="viewcode-block" id="GenericPluginMetric.reset"><a class="viewcode-back" href="../../../../autoapi/avalanche/evaluation/metric_definitions/#avalanche.evaluation.GenericPluginMetric.reset">[docs]</a>    <span class="k">def</span> <span class="nf">reset</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">strategy</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_metric</span><span class="o">.</span><span class="n">reset</span><span class="p">()</span></div>
 
-<div class="viewcode-block" id="GenericPluginMetric.result"><a class="viewcode-back" href="../../../../autoapi/avalanche/evaluation/metric_definitions/#avalanche.evaluation.GenericPluginMetric.result">[docs]</a>    <span class="k">def</span> <span class="nf">result</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
+<div class="viewcode-block" id="GenericPluginMetric.result"><a class="viewcode-back" href="../../../../autoapi/avalanche/evaluation/metric_definitions/#avalanche.evaluation.GenericPluginMetric.result">[docs]</a>    <span class="k">def</span> <span class="nf">result</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">strategy</span><span class="p">):</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_metric</span><span class="o">.</span><span class="n">result</span><span class="p">()</span></div>
 
 <div class="viewcode-block" id="GenericPluginMetric.update"><a class="viewcode-back" href="../../../../autoapi/avalanche/evaluation/metric_definitions/#avalanche.evaluation.GenericPluginMetric.update">[docs]</a>    <span class="k">def</span> <span class="nf">update</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">strategy</span><span class="p">):</span>
-        <span class="k">assert</span> <span class="ne">NotImplementedError</span><span class="p">()</span></div>
+        <span class="k">pass</span></div>
 
     <span class="k">def</span> <span class="nf">_package_result</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">strategy</span><span class="p">:</span> <span class="s1">&#39;BaseStrategy&#39;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="s1">&#39;MetricResult&#39;</span><span class="p">:</span>
-        <span class="n">metric_value</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">result</span><span class="p">()</span>
-
+        <span class="n">metric_value</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">result</span><span class="p">(</span><span class="n">strategy</span><span class="p">)</span>
         <span class="n">add_exp</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_emit_at</span> <span class="o">==</span> <span class="s1">&#39;experience&#39;</span>
-        <span class="n">add_task</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_emit_at</span> <span class="o">!=</span> <span class="s1">&#39;stream&#39;</span>
-        <span class="n">metric_name</span> <span class="o">=</span> <span class="n">get_metric_name</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">strategy</span><span class="p">,</span> <span class="n">add_experience</span><span class="o">=</span><span class="n">add_exp</span><span class="p">,</span>
-                                      <span class="n">add_task</span><span class="o">=</span><span class="n">add_task</span><span class="p">)</span>
         <span class="n">plot_x_position</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_global_counter</span><span class="p">()</span>
 
-        <span class="k">return</span> <span class="p">[</span><span class="n">MetricValue</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">metric_name</span><span class="p">,</span> <span class="n">metric_value</span><span class="p">,</span> <span class="n">plot_x_position</span><span class="p">)]</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">metric_value</span><span class="p">,</span> <span class="nb">dict</span><span class="p">):</span>
+            <span class="n">metrics</span> <span class="o">=</span> <span class="p">[]</span>
+            <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">metric_value</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+                <span class="n">metric_name</span> <span class="o">=</span> <span class="n">get_metric_name</span><span class="p">(</span>
+                    <span class="bp">self</span><span class="p">,</span> <span class="n">strategy</span><span class="p">,</span> <span class="n">add_experience</span><span class="o">=</span><span class="n">add_exp</span><span class="p">,</span> <span class="n">add_task</span><span class="o">=</span><span class="n">k</span><span class="p">)</span>
+                <span class="n">metrics</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">MetricValue</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">metric_name</span><span class="p">,</span> <span class="n">v</span><span class="p">,</span>
+                                           <span class="n">plot_x_position</span><span class="p">))</span>
+            <span class="k">return</span> <span class="n">metrics</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">metric_name</span> <span class="o">=</span> <span class="n">get_metric_name</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">strategy</span><span class="p">,</span>
+                                          <span class="n">add_experience</span><span class="o">=</span><span class="n">add_exp</span><span class="p">,</span>
+                                          <span class="n">add_task</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+            <span class="k">return</span> <span class="p">[</span><span class="n">MetricValue</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">metric_name</span><span class="p">,</span> <span class="n">metric_value</span><span class="p">,</span>
+                                <span class="n">plot_x_position</span><span class="p">)]</span>
 
 <div class="viewcode-block" id="GenericPluginMetric.before_training"><a class="viewcode-back" href="../../../../autoapi/avalanche/evaluation/metric_definitions/#avalanche.evaluation.GenericPluginMetric.before_training">[docs]</a>    <span class="k">def</span> <span class="nf">before_training</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">strategy</span><span class="p">:</span> <span class="s1">&#39;BaseStrategy&#39;</span><span class="p">):</span>
         <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">before_training</span><span class="p">(</span><span class="n">strategy</span><span class="p">)</span>
@@ -431,17 +440,17 @@
 <div class="viewcode-block" id="GenericPluginMetric.before_training_exp"><a class="viewcode-back" href="../../../../autoapi/avalanche/evaluation/metric_definitions/#avalanche.evaluation.GenericPluginMetric.before_training_exp">[docs]</a>    <span class="k">def</span> <span class="nf">before_training_exp</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">strategy</span><span class="p">:</span> <span class="s1">&#39;BaseStrategy&#39;</span><span class="p">):</span>
         <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">before_training_exp</span><span class="p">(</span><span class="n">strategy</span><span class="p">)</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_reset_at</span> <span class="o">==</span> <span class="s1">&#39;experience&#39;</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">_mode</span> <span class="o">==</span> <span class="s1">&#39;train&#39;</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">reset</span><span class="p">()</span></div>
+            <span class="bp">self</span><span class="o">.</span><span class="n">reset</span><span class="p">(</span><span class="n">strategy</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="GenericPluginMetric.before_training_epoch"><a class="viewcode-back" href="../../../../autoapi/avalanche/evaluation/metric_definitions/#avalanche.evaluation.GenericPluginMetric.before_training_epoch">[docs]</a>    <span class="k">def</span> <span class="nf">before_training_epoch</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">strategy</span><span class="p">:</span> <span class="s1">&#39;BaseStrategy&#39;</span><span class="p">):</span>
         <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">before_training_epoch</span><span class="p">(</span><span class="n">strategy</span><span class="p">)</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_reset_at</span> <span class="o">==</span> <span class="s1">&#39;epoch&#39;</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">_mode</span> <span class="o">==</span> <span class="s1">&#39;train&#39;</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">reset</span><span class="p">()</span></div>
+            <span class="bp">self</span><span class="o">.</span><span class="n">reset</span><span class="p">(</span><span class="n">strategy</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="GenericPluginMetric.before_training_iteration"><a class="viewcode-back" href="../../../../autoapi/avalanche/evaluation/metric_definitions/#avalanche.evaluation.GenericPluginMetric.before_training_iteration">[docs]</a>    <span class="k">def</span> <span class="nf">before_training_iteration</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">strategy</span><span class="p">:</span> <span class="s1">&#39;BaseStrategy&#39;</span><span class="p">):</span>
         <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">before_training_iteration</span><span class="p">(</span><span class="n">strategy</span><span class="p">)</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_reset_at</span> <span class="o">==</span> <span class="s1">&#39;iteration&#39;</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">_mode</span> <span class="o">==</span> <span class="s1">&#39;train&#39;</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">reset</span><span class="p">()</span></div>
+            <span class="bp">self</span><span class="o">.</span><span class="n">reset</span><span class="p">(</span><span class="n">strategy</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="GenericPluginMetric.after_training_iteration"><a class="viewcode-back" href="../../../../autoapi/avalanche/evaluation/metric_definitions/#avalanche.evaluation.GenericPluginMetric.after_training_iteration">[docs]</a>    <span class="k">def</span> <span class="nf">after_training_iteration</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">strategy</span><span class="p">:</span> <span class="s1">&#39;BaseStrategy&#39;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
         <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">after_training_iteration</span><span class="p">(</span><span class="n">strategy</span><span class="p">)</span>
@@ -468,19 +477,12 @@
 <div class="viewcode-block" id="GenericPluginMetric.before_eval"><a class="viewcode-back" href="../../../../autoapi/avalanche/evaluation/metric_definitions/#avalanche.evaluation.GenericPluginMetric.before_eval">[docs]</a>    <span class="k">def</span> <span class="nf">before_eval</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">strategy</span><span class="p">:</span> <span class="s1">&#39;BaseStrategy&#39;</span><span class="p">):</span>
         <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">before_eval</span><span class="p">(</span><span class="n">strategy</span><span class="p">)</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_reset_at</span> <span class="o">==</span> <span class="s1">&#39;stream&#39;</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">_mode</span> <span class="o">==</span> <span class="s1">&#39;eval&#39;</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">reset</span><span class="p">()</span></div>
+            <span class="bp">self</span><span class="o">.</span><span class="n">reset</span><span class="p">(</span><span class="n">strategy</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="GenericPluginMetric.before_eval_exp"><a class="viewcode-back" href="../../../../autoapi/avalanche/evaluation/metric_definitions/#avalanche.evaluation.GenericPluginMetric.before_eval_exp">[docs]</a>    <span class="k">def</span> <span class="nf">before_eval_exp</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">strategy</span><span class="p">:</span> <span class="s1">&#39;BaseStrategy&#39;</span><span class="p">):</span>
         <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">before_eval_exp</span><span class="p">(</span><span class="n">strategy</span><span class="p">)</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_reset_at</span> <span class="o">==</span> <span class="s1">&#39;experience&#39;</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">_mode</span> <span class="o">==</span> <span class="s1">&#39;eval&#39;</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">reset</span><span class="p">()</span></div>
-
-<div class="viewcode-block" id="GenericPluginMetric.after_eval_iteration"><a class="viewcode-back" href="../../../../autoapi/avalanche/evaluation/metric_definitions/#avalanche.evaluation.GenericPluginMetric.after_eval_iteration">[docs]</a>    <span class="k">def</span> <span class="nf">after_eval_iteration</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">strategy</span><span class="p">:</span> <span class="s1">&#39;BaseStrategy&#39;</span><span class="p">):</span>
-        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">after_eval_iteration</span><span class="p">(</span><span class="n">strategy</span><span class="p">)</span>
-        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_mode</span> <span class="o">==</span> <span class="s1">&#39;eval&#39;</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">strategy</span><span class="p">)</span>
-        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_reset_at</span> <span class="o">==</span> <span class="s1">&#39;iteration&#39;</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">_mode</span> <span class="o">==</span> <span class="s1">&#39;eval&#39;</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">reset</span><span class="p">()</span></div>
+            <span class="bp">self</span><span class="o">.</span><span class="n">reset</span><span class="p">(</span><span class="n">strategy</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="GenericPluginMetric.after_eval_exp"><a class="viewcode-back" href="../../../../autoapi/avalanche/evaluation/metric_definitions/#avalanche.evaluation.GenericPluginMetric.after_eval_exp">[docs]</a>    <span class="k">def</span> <span class="nf">after_eval_exp</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">strategy</span><span class="p">:</span> <span class="s1">&#39;BaseStrategy&#39;</span><span class="p">):</span>
         <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">after_eval_exp</span><span class="p">(</span><span class="n">strategy</span><span class="p">)</span>
@@ -495,7 +497,14 @@
 <div class="viewcode-block" id="GenericPluginMetric.before_eval_iteration"><a class="viewcode-back" href="../../../../autoapi/avalanche/evaluation/metric_definitions/#avalanche.evaluation.GenericPluginMetric.before_eval_iteration">[docs]</a>    <span class="k">def</span> <span class="nf">before_eval_iteration</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">strategy</span><span class="p">:</span> <span class="s1">&#39;BaseStrategy&#39;</span><span class="p">):</span>
         <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">before_eval_iteration</span><span class="p">(</span><span class="n">strategy</span><span class="p">)</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_emit_at</span> <span class="o">==</span> <span class="s1">&#39;iteration&#39;</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">_mode</span> <span class="o">==</span> <span class="s1">&#39;eval&#39;</span><span class="p">:</span>
-            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_package_result</span><span class="p">(</span><span class="n">strategy</span><span class="p">)</span></div></div>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_package_result</span><span class="p">(</span><span class="n">strategy</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="GenericPluginMetric.after_eval_iteration"><a class="viewcode-back" href="../../../../autoapi/avalanche/evaluation/metric_definitions/#avalanche.evaluation.GenericPluginMetric.after_eval_iteration">[docs]</a>    <span class="k">def</span> <span class="nf">after_eval_iteration</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">strategy</span><span class="p">:</span> <span class="s1">&#39;BaseStrategy&#39;</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">after_eval_iteration</span><span class="p">(</span><span class="n">strategy</span><span class="p">)</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_mode</span> <span class="o">==</span> <span class="s1">&#39;eval&#39;</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">strategy</span><span class="p">)</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_reset_at</span> <span class="o">==</span> <span class="s1">&#39;iteration&#39;</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">_mode</span> <span class="o">==</span> <span class="s1">&#39;eval&#39;</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">reset</span><span class="p">(</span><span class="n">strategy</span><span class="p">)</span></div></div>
 
 
 <span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;Metric&#39;</span><span class="p">,</span> <span class="s1">&#39;PluginMetric&#39;</span><span class="p">,</span> <span class="s1">&#39;GenericPluginMetric&#39;</span><span class="p">]</span>

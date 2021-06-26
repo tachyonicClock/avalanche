@@ -284,7 +284,152 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">last</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">float</span><span class="p">]</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">()</span></div></div>
 
 
-<div class="viewcode-block" id="ExperienceForgetting"><a class="viewcode-back" href="../../../../../autoapi/avalanche/evaluation/metrics/#avalanche.evaluation.metrics.forgetting_bwt.ExperienceForgetting">[docs]</a><span class="k">class</span> <span class="nc">ExperienceForgetting</span><span class="p">(</span><span class="n">PluginMetric</span><span class="p">[</span><span class="n">Dict</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">float</span><span class="p">]]):</span>
+<div class="viewcode-block" id="GenericExperienceForgetting"><a class="viewcode-back" href="../../../../../autoapi/avalanche/evaluation/metrics/#avalanche.evaluation.metrics.forgetting_bwt.GenericExperienceForgetting">[docs]</a><span class="k">class</span> <span class="nc">GenericExperienceForgetting</span><span class="p">(</span><span class="n">PluginMetric</span><span class="p">[</span><span class="n">Dict</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">float</span><span class="p">]]):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    The GenericExperienceForgetting metric, describing the change in</span>
+<span class="sd">    a metric detected for a certain experience. The user should</span>
+<span class="sd">    subclass this and provide the desired metric.</span>
+
+<span class="sd">    In particular, the user should override:</span>
+<span class="sd">    * __init__ by calling `super` and instantiating the `self.current_metric`</span>
+<span class="sd">    property as a valid avalanche metric</span>
+<span class="sd">    * `metric_update`, to update `current_metric`</span>
+<span class="sd">    * `metric_result` to get the result from `current_metric`.</span>
+<span class="sd">    * `__str__` to define the experience forgetting  name.</span>
+
+<span class="sd">    This plugin metric, computed separately for each experience,</span>
+<span class="sd">    is the difference between the metric result obtained after</span>
+<span class="sd">    first training on a experience and the metric result obtained</span>
+<span class="sd">    on the same experience at the end of successive experiences.</span>
+
+<span class="sd">    This metric is computed during the eval phase only.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Creates an instance of the GenericExperienceForgetting metric.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">forgetting</span> <span class="o">=</span> <span class="n">Forgetting</span><span class="p">()</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        The general metric to compute forgetting</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">_current_metric</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        The metric the user should override</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">eval_exp_id</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        The current evaluation experience id</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">train_exp_id</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        The last encountered training experience id</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+<div class="viewcode-block" id="GenericExperienceForgetting.reset"><a class="viewcode-back" href="../../../../../autoapi/avalanche/evaluation/metrics/#avalanche.evaluation.metrics.forgetting_bwt.GenericExperienceForgetting.reset">[docs]</a>    <span class="k">def</span> <span class="nf">reset</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Resets the metric.</span>
+
+<span class="sd">        Beware that this will also reset the initial metric of each</span>
+<span class="sd">        experience!</span>
+
+<span class="sd">        :return: None.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">forgetting</span><span class="o">.</span><span class="n">reset</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="GenericExperienceForgetting.reset_last"><a class="viewcode-back" href="../../../../../autoapi/avalanche/evaluation/metrics/#avalanche.evaluation.metrics.forgetting_bwt.GenericExperienceForgetting.reset_last">[docs]</a>    <span class="k">def</span> <span class="nf">reset_last</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Resets the last metric value.</span>
+
+<span class="sd">        This will preserve the initial metric value of each experience.</span>
+<span class="sd">        To be used at the beginning of each eval experience.</span>
+
+<span class="sd">        :return: None.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">forgetting</span><span class="o">.</span><span class="n">reset_last</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="GenericExperienceForgetting.update"><a class="viewcode-back" href="../../../../../autoapi/avalanche/evaluation/metrics/#avalanche.evaluation.metrics.forgetting_bwt.GenericExperienceForgetting.update">[docs]</a>    <span class="k">def</span> <span class="nf">update</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span><span class="p">,</span> <span class="n">initial</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Update forgetting metric.</span>
+<span class="sd">        See `Forgetting` for more detailed information.</span>
+
+<span class="sd">        :param k: key to update</span>
+<span class="sd">        :param v: value associated to k</span>
+<span class="sd">        :param initial: update initial value. If False, update</span>
+<span class="sd">            last value.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">forgetting</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">k</span><span class="p">,</span> <span class="n">v</span><span class="p">,</span> <span class="n">initial</span><span class="o">=</span><span class="n">initial</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="GenericExperienceForgetting.result"><a class="viewcode-back" href="../../../../../autoapi/avalanche/evaluation/metrics/#avalanche.evaluation.metrics.forgetting_bwt.GenericExperienceForgetting.result">[docs]</a>    <span class="k">def</span> <span class="nf">result</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">k</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Union</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">float</span><span class="p">]]:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        See `Forgetting` documentation for more detailed information.</span>
+
+<span class="sd">        k: optional key from which compute forgetting.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">forgetting</span><span class="o">.</span><span class="n">result</span><span class="p">(</span><span class="n">k</span><span class="o">=</span><span class="n">k</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="GenericExperienceForgetting.before_training_exp"><a class="viewcode-back" href="../../../../../autoapi/avalanche/evaluation/metrics/#avalanche.evaluation.metrics.forgetting_bwt.GenericExperienceForgetting.before_training_exp">[docs]</a>    <span class="k">def</span> <span class="nf">before_training_exp</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">strategy</span><span class="p">:</span> <span class="s1">&#39;BaseStrategy&#39;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">train_exp_id</span> <span class="o">=</span> <span class="n">strategy</span><span class="o">.</span><span class="n">experience</span><span class="o">.</span><span class="n">current_experience</span></div>
+
+<div class="viewcode-block" id="GenericExperienceForgetting.before_eval"><a class="viewcode-back" href="../../../../../autoapi/avalanche/evaluation/metrics/#avalanche.evaluation.metrics.forgetting_bwt.GenericExperienceForgetting.before_eval">[docs]</a>    <span class="k">def</span> <span class="nf">before_eval</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">strategy</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">reset_last</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="GenericExperienceForgetting.before_eval_exp"><a class="viewcode-back" href="../../../../../autoapi/avalanche/evaluation/metrics/#avalanche.evaluation.metrics.forgetting_bwt.GenericExperienceForgetting.before_eval_exp">[docs]</a>    <span class="k">def</span> <span class="nf">before_eval_exp</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">strategy</span><span class="p">:</span> <span class="s1">&#39;BaseStrategy&#39;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_current_metric</span><span class="o">.</span><span class="n">reset</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="GenericExperienceForgetting.after_eval_iteration"><a class="viewcode-back" href="../../../../../autoapi/avalanche/evaluation/metrics/#avalanche.evaluation.metrics.forgetting_bwt.GenericExperienceForgetting.after_eval_iteration">[docs]</a>    <span class="k">def</span> <span class="nf">after_eval_iteration</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">strategy</span><span class="p">:</span> <span class="s1">&#39;BaseStrategy&#39;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">after_eval_iteration</span><span class="p">(</span><span class="n">strategy</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">eval_exp_id</span> <span class="o">=</span> <span class="n">strategy</span><span class="o">.</span><span class="n">experience</span><span class="o">.</span><span class="n">current_experience</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">metric_update</span><span class="p">(</span><span class="n">strategy</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="GenericExperienceForgetting.after_eval_exp"><a class="viewcode-back" href="../../../../../autoapi/avalanche/evaluation/metrics/#avalanche.evaluation.metrics.forgetting_bwt.GenericExperienceForgetting.after_eval_exp">[docs]</a>    <span class="k">def</span> <span class="nf">after_eval_exp</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">strategy</span><span class="p">:</span> <span class="s1">&#39;BaseStrategy&#39;</span><span class="p">)</span> \
+            <span class="o">-&gt;</span> <span class="n">MetricResult</span><span class="p">:</span>
+        <span class="c1"># update experience on which training just ended</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">train_exp_id</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">eval_exp_id</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">eval_exp_id</span><span class="p">,</span>
+                        <span class="bp">self</span><span class="o">.</span><span class="n">metric_result</span><span class="p">(</span><span class="n">strategy</span><span class="p">),</span>
+                        <span class="n">initial</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="c1"># update other experiences</span>
+            <span class="c1"># if experience has not been encountered in training</span>
+            <span class="c1"># its value will not be considered in forgetting</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">eval_exp_id</span><span class="p">,</span>
+                        <span class="bp">self</span><span class="o">.</span><span class="n">metric_result</span><span class="p">(</span><span class="n">strategy</span><span class="p">))</span>
+
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_package_result</span><span class="p">(</span><span class="n">strategy</span><span class="p">)</span></div>
+
+    <span class="k">def</span> <span class="nf">_package_result</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">strategy</span><span class="p">:</span> <span class="s1">&#39;BaseStrategy&#39;</span><span class="p">)</span> \
+            <span class="o">-&gt;</span> <span class="n">MetricResult</span><span class="p">:</span>
+        <span class="c1"># this checks if the evaluation experience has been</span>
+        <span class="c1"># already encountered at training time</span>
+        <span class="c1"># before the last training.</span>
+        <span class="c1"># If not, forgetting should not be returned.</span>
+        <span class="n">forgetting</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">result</span><span class="p">(</span><span class="n">k</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">eval_exp_id</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">forgetting</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">metric_name</span> <span class="o">=</span> <span class="n">get_metric_name</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">strategy</span><span class="p">,</span> <span class="n">add_experience</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+            <span class="n">plot_x_position</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_global_counter</span><span class="p">()</span>
+
+            <span class="n">metric_values</span> <span class="o">=</span> <span class="p">[</span><span class="n">MetricValue</span><span class="p">(</span>
+                <span class="bp">self</span><span class="p">,</span> <span class="n">metric_name</span><span class="p">,</span> <span class="n">forgetting</span><span class="p">,</span> <span class="n">plot_x_position</span><span class="p">)]</span>
+            <span class="k">return</span> <span class="n">metric_values</span>
+
+<div class="viewcode-block" id="GenericExperienceForgetting.metric_update"><a class="viewcode-back" href="../../../../../autoapi/avalanche/evaluation/metrics/#avalanche.evaluation.metrics.forgetting_bwt.GenericExperienceForgetting.metric_update">[docs]</a>    <span class="k">def</span> <span class="nf">metric_update</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">strategy</span><span class="p">):</span>
+        <span class="k">raise</span> <span class="ne">NotImplementedError</span></div>
+
+<div class="viewcode-block" id="GenericExperienceForgetting.metric_result"><a class="viewcode-back" href="../../../../../autoapi/avalanche/evaluation/metrics/#avalanche.evaluation.metrics.forgetting_bwt.GenericExperienceForgetting.metric_result">[docs]</a>    <span class="k">def</span> <span class="nf">metric_result</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">strategy</span><span class="p">):</span>
+        <span class="k">raise</span> <span class="ne">NotImplementedError</span></div>
+
+<div class="viewcode-block" id="GenericExperienceForgetting.__str__"><a class="viewcode-back" href="../../../../../autoapi/avalanche/evaluation/metrics/#avalanche.evaluation.metrics.forgetting_bwt.GenericExperienceForgetting.__str__">[docs]</a>    <span class="k">def</span> <span class="fm">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">raise</span> <span class="ne">NotImplementedError</span></div></div>
+
+
+<div class="viewcode-block" id="ExperienceForgetting"><a class="viewcode-back" href="../../../../../autoapi/avalanche/evaluation/metrics/#avalanche.evaluation.metrics.forgetting_bwt.ExperienceForgetting">[docs]</a><span class="k">class</span> <span class="nc">ExperienceForgetting</span><span class="p">(</span><span class="n">GenericExperienceForgetting</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    The ExperienceForgetting metric, describing the accuracy loss</span>
 <span class="sd">    detected for a certain experience.</span>
@@ -304,49 +449,68 @@
 
         <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
 
-        <span class="bp">self</span><span class="o">.</span><span class="n">forgetting</span> <span class="o">=</span> <span class="n">Forgetting</span><span class="p">()</span>
-        <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        The general metric to compute forgetting</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-
-        <span class="bp">self</span><span class="o">.</span><span class="n">_current_accuracy</span> <span class="o">=</span> <span class="n">Accuracy</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_current_metric</span> <span class="o">=</span> <span class="n">Accuracy</span><span class="p">()</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        The average accuracy over the current evaluation experience</span>
 <span class="sd">        &quot;&quot;&quot;</span>
 
-        <span class="bp">self</span><span class="o">.</span><span class="n">eval_exp_id</span> <span class="o">=</span> <span class="kc">None</span>
+<div class="viewcode-block" id="ExperienceForgetting.metric_update"><a class="viewcode-back" href="../../../../../autoapi/avalanche/evaluation/metrics/#avalanche.evaluation.metrics.forgetting_bwt.ExperienceForgetting.metric_update">[docs]</a>    <span class="k">def</span> <span class="nf">metric_update</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">strategy</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_current_metric</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">strategy</span><span class="o">.</span><span class="n">mb_y</span><span class="p">,</span>
+                                    <span class="n">strategy</span><span class="o">.</span><span class="n">mb_output</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="ExperienceForgetting.metric_result"><a class="viewcode-back" href="../../../../../autoapi/avalanche/evaluation/metrics/#avalanche.evaluation.metrics.forgetting_bwt.ExperienceForgetting.metric_result">[docs]</a>    <span class="k">def</span> <span class="nf">metric_result</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">strategy</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_current_metric</span><span class="o">.</span><span class="n">result</span><span class="p">(</span><span class="mi">0</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span></div>
+
+<div class="viewcode-block" id="ExperienceForgetting.__str__"><a class="viewcode-back" href="../../../../../autoapi/avalanche/evaluation/metrics/#avalanche.evaluation.metrics.forgetting_bwt.ExperienceForgetting.__str__">[docs]</a>    <span class="k">def</span> <span class="fm">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="s2">&quot;ExperienceForgetting&quot;</span></div></div>
+
+
+<div class="viewcode-block" id="GenericStreamForgetting"><a class="viewcode-back" href="../../../../../autoapi/avalanche/evaluation/metrics/#avalanche.evaluation.metrics.forgetting_bwt.GenericStreamForgetting">[docs]</a><span class="k">class</span> <span class="nc">GenericStreamForgetting</span><span class="p">(</span><span class="n">GenericExperienceForgetting</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    The GenericStreamForgetting metric, describing the average evaluation</span>
+<span class="sd">    change in the desired metric detected over all experiences observed</span>
+<span class="sd">    during training.</span>
+
+<span class="sd">    In particular, the user should override:</span>
+<span class="sd">    * __init__ by calling `super` and instantiating the `self.current_metric`</span>
+<span class="sd">    property as a valid avalanche metric</span>
+<span class="sd">    * `metric_update`, to update `current_metric`</span>
+<span class="sd">    * `metric_result` to get the result from `current_metric`.</span>
+<span class="sd">    * `__str__` to define the experience forgetting  name.</span>
+
+<span class="sd">    This plugin metric, computed over all observed experiences during training,</span>
+<span class="sd">    is the average over the difference between the metric result obtained</span>
+<span class="sd">    after first training on a experience and the metric result obtained</span>
+<span class="sd">    on the same experience at the end of successive experiences.</span>
+
+<span class="sd">    This metric is computed during the eval phase only.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        The current evaluation experience id</span>
+<span class="sd">        Creates an instance of the GenericStreamForgetting metric.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
 
-        <span class="bp">self</span><span class="o">.</span><span class="n">train_exp_id</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">stream_forgetting</span> <span class="o">=</span> <span class="n">Mean</span><span class="p">()</span>
         <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        The last encountered training experience id</span>
+<span class="sd">        The average forgetting over all experiences</span>
 <span class="sd">        &quot;&quot;&quot;</span>
 
-<div class="viewcode-block" id="ExperienceForgetting.reset"><a class="viewcode-back" href="../../../../../autoapi/avalanche/evaluation/metrics/#avalanche.evaluation.metrics.forgetting_bwt.ExperienceForgetting.reset">[docs]</a>    <span class="k">def</span> <span class="nf">reset</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<div class="viewcode-block" id="GenericStreamForgetting.reset"><a class="viewcode-back" href="../../../../../autoapi/avalanche/evaluation/metrics/#avalanche.evaluation.metrics.forgetting_bwt.GenericStreamForgetting.reset">[docs]</a>    <span class="k">def</span> <span class="nf">reset</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
         <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Resets the metric.</span>
+<span class="sd">        Resets the forgetting metrics.</span>
 
-<span class="sd">        Beware that this will also reset the initial accuracy of each</span>
+<span class="sd">        Beware that this will also reset the initial metric value of each</span>
 <span class="sd">        experience!</span>
 
 <span class="sd">        :return: None.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">forgetting</span><span class="o">.</span><span class="n">reset</span><span class="p">()</span></div>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">reset</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">stream_forgetting</span><span class="o">.</span><span class="n">reset</span><span class="p">()</span></div>
 
-<div class="viewcode-block" id="ExperienceForgetting.reset_last_accuracy"><a class="viewcode-back" href="../../../../../autoapi/avalanche/evaluation/metrics/#avalanche.evaluation.metrics.forgetting_bwt.ExperienceForgetting.reset_last_accuracy">[docs]</a>    <span class="k">def</span> <span class="nf">reset_last_accuracy</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Resets the last accuracy.</span>
-
-<span class="sd">        This will preserve the initial accuracy value of each experience.</span>
-<span class="sd">        To be used at the beginning of each eval experience.</span>
-
-<span class="sd">        :return: None.</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">forgetting</span><span class="o">.</span><span class="n">reset_last</span><span class="p">()</span></div>
-
-<div class="viewcode-block" id="ExperienceForgetting.update"><a class="viewcode-back" href="../../../../../autoapi/avalanche/evaluation/metrics/#avalanche.evaluation.metrics.forgetting_bwt.ExperienceForgetting.update">[docs]</a>    <span class="k">def</span> <span class="nf">update</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span><span class="p">,</span> <span class="n">initial</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+<div class="viewcode-block" id="GenericStreamForgetting.exp_update"><a class="viewcode-back" href="../../../../../autoapi/avalanche/evaluation/metrics/#avalanche.evaluation.metrics.forgetting_bwt.GenericStreamForgetting.exp_update">[docs]</a>    <span class="k">def</span> <span class="nf">exp_update</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span><span class="p">,</span> <span class="n">initial</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Update forgetting metric.</span>
 <span class="sd">        See `Forgetting` for more detailed information.</span>
@@ -356,67 +520,79 @@
 <span class="sd">        :param initial: update initial value. If False, update</span>
 <span class="sd">            last value.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">forgetting</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">k</span><span class="p">,</span> <span class="n">v</span><span class="p">,</span> <span class="n">initial</span><span class="o">=</span><span class="n">initial</span><span class="p">)</span></div>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">k</span><span class="p">,</span> <span class="n">v</span><span class="p">,</span> <span class="n">initial</span><span class="o">=</span><span class="n">initial</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="ExperienceForgetting.result"><a class="viewcode-back" href="../../../../../autoapi/avalanche/evaluation/metrics/#avalanche.evaluation.metrics.forgetting_bwt.ExperienceForgetting.result">[docs]</a>    <span class="k">def</span> <span class="nf">result</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">k</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Union</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">float</span><span class="p">]]:</span>
+<div class="viewcode-block" id="GenericStreamForgetting.exp_result"><a class="viewcode-back" href="../../../../../autoapi/avalanche/evaluation/metrics/#avalanche.evaluation.metrics.forgetting_bwt.GenericStreamForgetting.exp_result">[docs]</a>    <span class="k">def</span> <span class="nf">exp_result</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">k</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Union</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">float</span><span class="p">]]:</span>
         <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Result for experience defined by a key.</span>
 <span class="sd">        See `Forgetting` documentation for more detailed information.</span>
 
 <span class="sd">        k: optional key from which compute forgetting.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">forgetting</span><span class="o">.</span><span class="n">result</span><span class="p">(</span><span class="n">k</span><span class="o">=</span><span class="n">k</span><span class="p">)</span></div>
+        <span class="k">return</span> <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">result</span><span class="p">(</span><span class="n">k</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="ExperienceForgetting.before_training_exp"><a class="viewcode-back" href="../../../../../autoapi/avalanche/evaluation/metrics/#avalanche.evaluation.metrics.forgetting_bwt.ExperienceForgetting.before_training_exp">[docs]</a>    <span class="k">def</span> <span class="nf">before_training_exp</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">strategy</span><span class="p">:</span> <span class="s1">&#39;BaseStrategy&#39;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">train_exp_id</span> <span class="o">=</span> <span class="n">strategy</span><span class="o">.</span><span class="n">experience</span><span class="o">.</span><span class="n">current_experience</span></div>
+<div class="viewcode-block" id="GenericStreamForgetting.result"><a class="viewcode-back" href="../../../../../autoapi/avalanche/evaluation/metrics/#avalanche.evaluation.metrics.forgetting_bwt.GenericStreamForgetting.result">[docs]</a>    <span class="k">def</span> <span class="nf">result</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">k</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Union</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">float</span><span class="p">]]:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        The average forgetting over all experience.</span>
 
-<div class="viewcode-block" id="ExperienceForgetting.before_eval"><a class="viewcode-back" href="../../../../../autoapi/avalanche/evaluation/metrics/#avalanche.evaluation.metrics.forgetting_bwt.ExperienceForgetting.before_eval">[docs]</a>    <span class="k">def</span> <span class="nf">before_eval</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">strategy</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">reset_last_accuracy</span><span class="p">()</span></div>
+<span class="sd">        k: optional key from which compute forgetting.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">stream_forgetting</span><span class="o">.</span><span class="n">result</span><span class="p">()</span></div>
 
-<div class="viewcode-block" id="ExperienceForgetting.before_eval_exp"><a class="viewcode-back" href="../../../../../autoapi/avalanche/evaluation/metrics/#avalanche.evaluation.metrics.forgetting_bwt.ExperienceForgetting.before_eval_exp">[docs]</a>    <span class="k">def</span> <span class="nf">before_eval_exp</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">strategy</span><span class="p">:</span> <span class="s1">&#39;BaseStrategy&#39;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_current_accuracy</span><span class="o">.</span><span class="n">reset</span><span class="p">()</span></div>
+<div class="viewcode-block" id="GenericStreamForgetting.before_eval"><a class="viewcode-back" href="../../../../../autoapi/avalanche/evaluation/metrics/#avalanche.evaluation.metrics.forgetting_bwt.GenericStreamForgetting.before_eval">[docs]</a>    <span class="k">def</span> <span class="nf">before_eval</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">strategy</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">before_eval</span><span class="p">(</span><span class="n">strategy</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">stream_forgetting</span><span class="o">.</span><span class="n">reset</span><span class="p">()</span></div>
 
-<div class="viewcode-block" id="ExperienceForgetting.after_eval_iteration"><a class="viewcode-back" href="../../../../../autoapi/avalanche/evaluation/metrics/#avalanche.evaluation.metrics.forgetting_bwt.ExperienceForgetting.after_eval_iteration">[docs]</a>    <span class="k">def</span> <span class="nf">after_eval_iteration</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">strategy</span><span class="p">:</span> <span class="s1">&#39;BaseStrategy&#39;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">after_eval_iteration</span><span class="p">(</span><span class="n">strategy</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">eval_exp_id</span> <span class="o">=</span> <span class="n">strategy</span><span class="o">.</span><span class="n">experience</span><span class="o">.</span><span class="n">current_experience</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_current_accuracy</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">strategy</span><span class="o">.</span><span class="n">mb_y</span><span class="p">,</span>
-                                      <span class="n">strategy</span><span class="o">.</span><span class="n">mb_output</span><span class="p">)</span></div>
-
-<div class="viewcode-block" id="ExperienceForgetting.after_eval_exp"><a class="viewcode-back" href="../../../../../autoapi/avalanche/evaluation/metrics/#avalanche.evaluation.metrics.forgetting_bwt.ExperienceForgetting.after_eval_exp">[docs]</a>    <span class="k">def</span> <span class="nf">after_eval_exp</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">strategy</span><span class="p">:</span> <span class="s1">&#39;BaseStrategy&#39;</span><span class="p">)</span> \
-            <span class="o">-&gt;</span> <span class="n">MetricResult</span><span class="p">:</span>
+<div class="viewcode-block" id="GenericStreamForgetting.after_eval_exp"><a class="viewcode-back" href="../../../../../autoapi/avalanche/evaluation/metrics/#avalanche.evaluation.metrics.forgetting_bwt.GenericStreamForgetting.after_eval_exp">[docs]</a>    <span class="k">def</span> <span class="nf">after_eval_exp</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">strategy</span><span class="p">:</span> <span class="s1">&#39;BaseStrategy&#39;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
         <span class="c1"># update experience on which training just ended</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">train_exp_id</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">eval_exp_id</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">eval_exp_id</span><span class="p">,</span>
-                        <span class="bp">self</span><span class="o">.</span><span class="n">_current_accuracy</span><span class="o">.</span><span class="n">result</span><span class="p">(),</span>
-                        <span class="n">initial</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">exp_update</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">eval_exp_id</span><span class="p">,</span>
+                            <span class="bp">self</span><span class="o">.</span><span class="n">metric_result</span><span class="p">(</span><span class="n">strategy</span><span class="p">),</span>
+                            <span class="n">initial</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="c1"># update other experiences</span>
             <span class="c1"># if experience has not been encountered in training</span>
             <span class="c1"># its value will not be considered in forgetting</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">eval_exp_id</span><span class="p">,</span>
-                        <span class="bp">self</span><span class="o">.</span><span class="n">_current_accuracy</span><span class="o">.</span><span class="n">result</span><span class="p">())</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">exp_update</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">eval_exp_id</span><span class="p">,</span>
+                            <span class="bp">self</span><span class="o">.</span><span class="n">metric_result</span><span class="p">(</span><span class="n">strategy</span><span class="p">))</span>
 
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_package_result</span><span class="p">(</span><span class="n">strategy</span><span class="p">)</span></div>
-
-    <span class="k">def</span> <span class="nf">_package_result</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">strategy</span><span class="p">:</span> <span class="s1">&#39;BaseStrategy&#39;</span><span class="p">)</span> \
-            <span class="o">-&gt;</span> <span class="n">MetricResult</span><span class="p">:</span>
         <span class="c1"># this checks if the evaluation experience has been</span>
         <span class="c1"># already encountered at training time</span>
         <span class="c1"># before the last training.</span>
         <span class="c1"># If not, forgetting should not be returned.</span>
-        <span class="n">forgetting</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">result</span><span class="p">(</span><span class="n">k</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">eval_exp_id</span><span class="p">)</span>
-        <span class="k">if</span> <span class="n">forgetting</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="n">metric_name</span> <span class="o">=</span> <span class="n">get_metric_name</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">strategy</span><span class="p">,</span> <span class="n">add_experience</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-            <span class="n">plot_x_position</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_global_counter</span><span class="p">()</span>
+        <span class="n">exp_forgetting</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">exp_result</span><span class="p">(</span><span class="n">k</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">eval_exp_id</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">exp_forgetting</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">stream_forgetting</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">exp_forgetting</span><span class="p">,</span> <span class="n">weight</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span></div>
 
-            <span class="n">metric_values</span> <span class="o">=</span> <span class="p">[</span><span class="n">MetricValue</span><span class="p">(</span>
-                <span class="bp">self</span><span class="p">,</span> <span class="n">metric_name</span><span class="p">,</span> <span class="n">forgetting</span><span class="p">,</span> <span class="n">plot_x_position</span><span class="p">)]</span>
-            <span class="k">return</span> <span class="n">metric_values</span>
+<div class="viewcode-block" id="GenericStreamForgetting.after_eval"><a class="viewcode-back" href="../../../../../autoapi/avalanche/evaluation/metrics/#avalanche.evaluation.metrics.forgetting_bwt.GenericStreamForgetting.after_eval">[docs]</a>    <span class="k">def</span> <span class="nf">after_eval</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">strategy</span><span class="p">:</span> <span class="s1">&#39;BaseStrategy&#39;</span><span class="p">)</span> <span class="o">-&gt;</span> \
+            <span class="s1">&#39;MetricResult&#39;</span><span class="p">:</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_package_result</span><span class="p">(</span><span class="n">strategy</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="ExperienceForgetting.__str__"><a class="viewcode-back" href="../../../../../autoapi/avalanche/evaluation/metrics/#avalanche.evaluation.metrics.forgetting_bwt.ExperienceForgetting.__str__">[docs]</a>    <span class="k">def</span> <span class="fm">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="k">return</span> <span class="s2">&quot;ExperienceForgetting&quot;</span></div></div>
+    <span class="k">def</span> <span class="nf">_package_result</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">strategy</span><span class="p">:</span> <span class="s1">&#39;BaseStrategy&#39;</span><span class="p">)</span> <span class="o">-&gt;</span> \
+            <span class="n">MetricResult</span><span class="p">:</span>
+        <span class="n">metric_value</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">result</span><span class="p">()</span>
+
+        <span class="n">phase_name</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">phase_and_task</span><span class="p">(</span><span class="n">strategy</span><span class="p">)</span>
+        <span class="n">stream</span> <span class="o">=</span> <span class="n">stream_type</span><span class="p">(</span><span class="n">strategy</span><span class="o">.</span><span class="n">experience</span><span class="p">)</span>
+        <span class="n">metric_name</span> <span class="o">=</span> <span class="s1">&#39;</span><span class="si">{}</span><span class="s1">/</span><span class="si">{}</span><span class="s1">_phase/</span><span class="si">{}</span><span class="s1">_stream&#39;</span> \
+            <span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="p">),</span>
+                    <span class="n">phase_name</span><span class="p">,</span>
+                    <span class="n">stream</span><span class="p">)</span>
+        <span class="n">plot_x_position</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_global_counter</span><span class="p">()</span>
+
+        <span class="k">return</span> <span class="p">[</span><span class="n">MetricValue</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">metric_name</span><span class="p">,</span> <span class="n">metric_value</span><span class="p">,</span> <span class="n">plot_x_position</span><span class="p">)]</span>
+
+<div class="viewcode-block" id="GenericStreamForgetting.metric_update"><a class="viewcode-back" href="../../../../../autoapi/avalanche/evaluation/metrics/#avalanche.evaluation.metrics.forgetting_bwt.GenericStreamForgetting.metric_update">[docs]</a>    <span class="k">def</span> <span class="nf">metric_update</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">strategy</span><span class="p">):</span>
+        <span class="k">raise</span> <span class="ne">NotImplementedError</span></div>
+
+<div class="viewcode-block" id="GenericStreamForgetting.metric_result"><a class="viewcode-back" href="../../../../../autoapi/avalanche/evaluation/metrics/#avalanche.evaluation.metrics.forgetting_bwt.GenericStreamForgetting.metric_result">[docs]</a>    <span class="k">def</span> <span class="nf">metric_result</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">strategy</span><span class="p">):</span>
+        <span class="k">raise</span> <span class="ne">NotImplementedError</span></div>
+
+<div class="viewcode-block" id="GenericStreamForgetting.__str__"><a class="viewcode-back" href="../../../../../autoapi/avalanche/evaluation/metrics/#avalanche.evaluation.metrics.forgetting_bwt.GenericStreamForgetting.__str__">[docs]</a>    <span class="k">def</span> <span class="fm">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">raise</span> <span class="ne">NotImplementedError</span></div></div>
 
 
-<div class="viewcode-block" id="StreamForgetting"><a class="viewcode-back" href="../../../../../autoapi/avalanche/evaluation/metrics/#avalanche.evaluation.metrics.forgetting_bwt.StreamForgetting">[docs]</a><span class="k">class</span> <span class="nc">StreamForgetting</span><span class="p">(</span><span class="n">PluginMetric</span><span class="p">[</span><span class="n">Dict</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">float</span><span class="p">]]):</span>
+<div class="viewcode-block" id="StreamForgetting"><a class="viewcode-back" href="../../../../../autoapi/avalanche/evaluation/metrics/#avalanche.evaluation.metrics.forgetting_bwt.StreamForgetting">[docs]</a><span class="k">class</span> <span class="nc">StreamForgetting</span><span class="p">(</span><span class="n">GenericStreamForgetting</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    The StreamForgetting metric, describing the average evaluation accuracy loss</span>
 <span class="sd">    detected over all experiences observed during training.</span>
@@ -436,143 +612,138 @@
 
         <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
 
-        <span class="bp">self</span><span class="o">.</span><span class="n">stream_forgetting</span> <span class="o">=</span> <span class="n">Mean</span><span class="p">()</span>
-        <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        The average forgetting over all experiences</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-
-        <span class="bp">self</span><span class="o">.</span><span class="n">forgetting</span> <span class="o">=</span> <span class="n">Forgetting</span><span class="p">()</span>
-        <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        The general metric to compute forgetting</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-
-        <span class="bp">self</span><span class="o">.</span><span class="n">_current_accuracy</span> <span class="o">=</span> <span class="n">Accuracy</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_current_metric</span> <span class="o">=</span> <span class="n">Accuracy</span><span class="p">()</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        The average accuracy over the current evaluation experience</span>
 <span class="sd">        &quot;&quot;&quot;</span>
 
-        <span class="bp">self</span><span class="o">.</span><span class="n">eval_exp_id</span> <span class="o">=</span> <span class="kc">None</span>
-        <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        The current evaluation experience id</span>
-<span class="sd">        &quot;&quot;&quot;</span>
+<div class="viewcode-block" id="StreamForgetting.metric_update"><a class="viewcode-back" href="../../../../../autoapi/avalanche/evaluation/metrics/#avalanche.evaluation.metrics.forgetting_bwt.StreamForgetting.metric_update">[docs]</a>    <span class="k">def</span> <span class="nf">metric_update</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">strategy</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_current_metric</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">strategy</span><span class="o">.</span><span class="n">mb_y</span><span class="p">,</span>
+                                    <span class="n">strategy</span><span class="o">.</span><span class="n">mb_output</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span></div>
 
-        <span class="bp">self</span><span class="o">.</span><span class="n">train_exp_id</span> <span class="o">=</span> <span class="kc">None</span>
-        <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        The last encountered training experience id</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-
-<div class="viewcode-block" id="StreamForgetting.reset"><a class="viewcode-back" href="../../../../../autoapi/avalanche/evaluation/metrics/#avalanche.evaluation.metrics.forgetting_bwt.StreamForgetting.reset">[docs]</a>    <span class="k">def</span> <span class="nf">reset</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Resets the forgetting metrics.</span>
-
-<span class="sd">        Beware that this will also reset the initial accuracy of each</span>
-<span class="sd">        experience!</span>
-
-<span class="sd">        :return: None.</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">forgetting</span><span class="o">.</span><span class="n">reset</span><span class="p">()</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">stream_forgetting</span><span class="o">.</span><span class="n">reset</span><span class="p">()</span></div>
-
-<div class="viewcode-block" id="StreamForgetting.reset_last_accuracy"><a class="viewcode-back" href="../../../../../autoapi/avalanche/evaluation/metrics/#avalanche.evaluation.metrics.forgetting_bwt.StreamForgetting.reset_last_accuracy">[docs]</a>    <span class="k">def</span> <span class="nf">reset_last_accuracy</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Resets the last accuracy.</span>
-
-<span class="sd">        This will preserve the initial accuracy value of each experience.</span>
-<span class="sd">        To be used at the beginning of each eval experience.</span>
-
-<span class="sd">        :return: None.</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">forgetting</span><span class="o">.</span><span class="n">reset_last</span><span class="p">()</span></div>
-
-<div class="viewcode-block" id="StreamForgetting.exp_update"><a class="viewcode-back" href="../../../../../autoapi/avalanche/evaluation/metrics/#avalanche.evaluation.metrics.forgetting_bwt.StreamForgetting.exp_update">[docs]</a>    <span class="k">def</span> <span class="nf">exp_update</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span><span class="p">,</span> <span class="n">initial</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Update forgetting metric.</span>
-<span class="sd">        See `Forgetting` for more detailed information.</span>
-
-<span class="sd">        :param k: key to update</span>
-<span class="sd">        :param v: value associated to k</span>
-<span class="sd">        :param initial: update initial value. If False, update</span>
-<span class="sd">            last value.</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">forgetting</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">k</span><span class="p">,</span> <span class="n">v</span><span class="p">,</span> <span class="n">initial</span><span class="o">=</span><span class="n">initial</span><span class="p">)</span></div>
-
-<div class="viewcode-block" id="StreamForgetting.exp_result"><a class="viewcode-back" href="../../../../../autoapi/avalanche/evaluation/metrics/#avalanche.evaluation.metrics.forgetting_bwt.StreamForgetting.exp_result">[docs]</a>    <span class="k">def</span> <span class="nf">exp_result</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">k</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Union</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">float</span><span class="p">]]:</span>
-        <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Result for experience defined by a key.</span>
-<span class="sd">        See `Forgetting` documentation for more detailed information.</span>
-
-<span class="sd">        k: optional key from which compute forgetting.</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">forgetting</span><span class="o">.</span><span class="n">result</span><span class="p">(</span><span class="n">k</span><span class="o">=</span><span class="n">k</span><span class="p">)</span></div>
-
-<div class="viewcode-block" id="StreamForgetting.result"><a class="viewcode-back" href="../../../../../autoapi/avalanche/evaluation/metrics/#avalanche.evaluation.metrics.forgetting_bwt.StreamForgetting.result">[docs]</a>    <span class="k">def</span> <span class="nf">result</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">k</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Union</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">float</span><span class="p">]]:</span>
-        <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        The average forgetting over all experience.</span>
-
-<span class="sd">        k: optional key from which compute forgetting.</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">stream_forgetting</span><span class="o">.</span><span class="n">result</span><span class="p">()</span></div>
-
-<div class="viewcode-block" id="StreamForgetting.before_training_exp"><a class="viewcode-back" href="../../../../../autoapi/avalanche/evaluation/metrics/#avalanche.evaluation.metrics.forgetting_bwt.StreamForgetting.before_training_exp">[docs]</a>    <span class="k">def</span> <span class="nf">before_training_exp</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">strategy</span><span class="p">:</span> <span class="s1">&#39;BaseStrategy&#39;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">train_exp_id</span> <span class="o">=</span> <span class="n">strategy</span><span class="o">.</span><span class="n">experience</span><span class="o">.</span><span class="n">current_experience</span></div>
-
-<div class="viewcode-block" id="StreamForgetting.before_eval"><a class="viewcode-back" href="../../../../../autoapi/avalanche/evaluation/metrics/#avalanche.evaluation.metrics.forgetting_bwt.StreamForgetting.before_eval">[docs]</a>    <span class="k">def</span> <span class="nf">before_eval</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">strategy</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">reset_last_accuracy</span><span class="p">()</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">stream_forgetting</span><span class="o">.</span><span class="n">reset</span><span class="p">()</span></div>
-
-<div class="viewcode-block" id="StreamForgetting.before_eval_exp"><a class="viewcode-back" href="../../../../../autoapi/avalanche/evaluation/metrics/#avalanche.evaluation.metrics.forgetting_bwt.StreamForgetting.before_eval_exp">[docs]</a>    <span class="k">def</span> <span class="nf">before_eval_exp</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">strategy</span><span class="p">:</span> <span class="s1">&#39;BaseStrategy&#39;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_current_accuracy</span><span class="o">.</span><span class="n">reset</span><span class="p">()</span></div>
-
-<div class="viewcode-block" id="StreamForgetting.after_eval_iteration"><a class="viewcode-back" href="../../../../../autoapi/avalanche/evaluation/metrics/#avalanche.evaluation.metrics.forgetting_bwt.StreamForgetting.after_eval_iteration">[docs]</a>    <span class="k">def</span> <span class="nf">after_eval_iteration</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">strategy</span><span class="p">:</span> <span class="s1">&#39;BaseStrategy&#39;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">after_eval_iteration</span><span class="p">(</span><span class="n">strategy</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">eval_exp_id</span> <span class="o">=</span> <span class="n">strategy</span><span class="o">.</span><span class="n">experience</span><span class="o">.</span><span class="n">current_experience</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_current_accuracy</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">strategy</span><span class="o">.</span><span class="n">mb_y</span><span class="p">,</span>
-                                      <span class="n">strategy</span><span class="o">.</span><span class="n">mb_output</span><span class="p">)</span></div>
-
-<div class="viewcode-block" id="StreamForgetting.after_eval_exp"><a class="viewcode-back" href="../../../../../autoapi/avalanche/evaluation/metrics/#avalanche.evaluation.metrics.forgetting_bwt.StreamForgetting.after_eval_exp">[docs]</a>    <span class="k">def</span> <span class="nf">after_eval_exp</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">strategy</span><span class="p">:</span> <span class="s1">&#39;BaseStrategy&#39;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="c1"># update experience on which training just ended</span>
-        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">train_exp_id</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">eval_exp_id</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">exp_update</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">eval_exp_id</span><span class="p">,</span>
-                            <span class="bp">self</span><span class="o">.</span><span class="n">_current_accuracy</span><span class="o">.</span><span class="n">result</span><span class="p">(),</span>
-                            <span class="n">initial</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-        <span class="k">else</span><span class="p">:</span>
-            <span class="c1"># update other experiences</span>
-            <span class="c1"># if experience has not been encountered in training</span>
-            <span class="c1"># its value will not be considered in forgetting</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">exp_update</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">eval_exp_id</span><span class="p">,</span>
-                            <span class="bp">self</span><span class="o">.</span><span class="n">_current_accuracy</span><span class="o">.</span><span class="n">result</span><span class="p">())</span>
-
-        <span class="c1"># this checks if the evaluation experience has been</span>
-        <span class="c1"># already encountered at training time</span>
-        <span class="c1"># before the last training.</span>
-        <span class="c1"># If not, forgetting should not be returned.</span>
-        <span class="n">exp_forgetting</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">exp_result</span><span class="p">(</span><span class="n">k</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">eval_exp_id</span><span class="p">)</span>
-        <span class="k">if</span> <span class="n">exp_forgetting</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">stream_forgetting</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">exp_forgetting</span><span class="p">,</span> <span class="n">weight</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span></div>
-
-<div class="viewcode-block" id="StreamForgetting.after_eval"><a class="viewcode-back" href="../../../../../autoapi/avalanche/evaluation/metrics/#avalanche.evaluation.metrics.forgetting_bwt.StreamForgetting.after_eval">[docs]</a>    <span class="k">def</span> <span class="nf">after_eval</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">strategy</span><span class="p">:</span> <span class="s1">&#39;BaseStrategy&#39;</span><span class="p">)</span> <span class="o">-&gt;</span> \
-            <span class="s1">&#39;MetricResult&#39;</span><span class="p">:</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_package_result</span><span class="p">(</span><span class="n">strategy</span><span class="p">)</span></div>
-
-    <span class="k">def</span> <span class="nf">_package_result</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">strategy</span><span class="p">:</span> <span class="s1">&#39;BaseStrategy&#39;</span><span class="p">)</span> <span class="o">-&gt;</span> \
-            <span class="n">MetricResult</span><span class="p">:</span>
-        <span class="n">metric_value</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">result</span><span class="p">()</span>
-
-        <span class="n">phase_name</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">phase_and_task</span><span class="p">(</span><span class="n">strategy</span><span class="p">)</span>
-        <span class="n">stream</span> <span class="o">=</span> <span class="n">stream_type</span><span class="p">(</span><span class="n">strategy</span><span class="o">.</span><span class="n">experience</span><span class="p">)</span>
-        <span class="n">metric_name</span> <span class="o">=</span> <span class="s1">&#39;</span><span class="si">{}</span><span class="s1">/</span><span class="si">{}</span><span class="s1">_phase/</span><span class="si">{}</span><span class="s1">_stream&#39;</span> \
-            <span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="p">),</span>
-                    <span class="n">phase_name</span><span class="p">,</span>
-                    <span class="n">stream</span><span class="p">)</span>
-        <span class="n">plot_x_position</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_global_counter</span><span class="p">()</span>
-
-        <span class="k">return</span> <span class="p">[</span><span class="n">MetricValue</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">metric_name</span><span class="p">,</span> <span class="n">metric_value</span><span class="p">,</span> <span class="n">plot_x_position</span><span class="p">)]</span>
+<div class="viewcode-block" id="StreamForgetting.metric_result"><a class="viewcode-back" href="../../../../../autoapi/avalanche/evaluation/metrics/#avalanche.evaluation.metrics.forgetting_bwt.StreamForgetting.metric_result">[docs]</a>    <span class="k">def</span> <span class="nf">metric_result</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">strategy</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_current_metric</span><span class="o">.</span><span class="n">result</span><span class="p">(</span><span class="mi">0</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span></div>
 
 <div class="viewcode-block" id="StreamForgetting.__str__"><a class="viewcode-back" href="../../../../../autoapi/avalanche/evaluation/metrics/#avalanche.evaluation.metrics.forgetting_bwt.StreamForgetting.__str__">[docs]</a>    <span class="k">def</span> <span class="fm">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">return</span> <span class="s2">&quot;StreamForgetting&quot;</span></div></div>
 
 
-<div class="viewcode-block" id="forgetting_metrics"><a class="viewcode-back" href="../../../../../autoapi/avalanche/evaluation/metrics/#avalanche.evaluation.metrics.forgetting_bwt.forgetting_metrics">[docs]</a><span class="k">def</span> <span class="nf">forgetting_metrics</span><span class="p">(</span><span class="o">*</span><span class="p">,</span> <span class="n">experience</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">stream</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span> \
+<div class="viewcode-block" id="GenericTaskForgetting"><a class="viewcode-back" href="../../../../../autoapi/avalanche/evaluation/metrics/#avalanche.evaluation.metrics.forgetting_bwt.GenericTaskForgetting">[docs]</a><span class="k">class</span> <span class="nc">GenericTaskForgetting</span><span class="p">(</span><span class="n">PluginMetric</span><span class="p">[</span><span class="n">Dict</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">float</span><span class="p">]]):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    The GenericTaskForgetting metric, describing the average evaluation</span>
+<span class="sd">    change in the desired metric detected over all tasks observed</span>
+<span class="sd">    during training and evaluation.</span>
+
+<span class="sd">    In particular, the user should override:</span>
+<span class="sd">    * __init__ by calling `super` and instantiating the</span>
+<span class="sd">      `self.current_train_metric` and `current_eval_metric` properties as</span>
+<span class="sd">      valid avalanche metrics (the same metric for both properties).</span>
+<span class="sd">      The metric should be able to return values for each task separately.</span>
+<span class="sd">    * `metric_update`, to update `current_metric`</span>
+<span class="sd">    * `__str__` to define the experience forgetting  name.</span>
+
+<span class="sd">    This plugin metric, computed over all observed experiences during training,</span>
+<span class="sd">    is the average over the difference between the metric result obtained</span>
+<span class="sd">    after first training on a experience and the metric result obtained</span>
+<span class="sd">    on the same experience at the end of successive experiences.</span>
+
+<span class="sd">    This metric is computed during the eval phase only.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">forgetting</span> <span class="o">=</span> <span class="n">Forgetting</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_current_train_metric</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_current_eval_metric</span> <span class="o">=</span> <span class="kc">None</span>
+
+<div class="viewcode-block" id="GenericTaskForgetting.reset"><a class="viewcode-back" href="../../../../../autoapi/avalanche/evaluation/metrics/#avalanche.evaluation.metrics.forgetting_bwt.GenericTaskForgetting.reset">[docs]</a>    <span class="k">def</span> <span class="nf">reset</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">forgetting</span><span class="o">.</span><span class="n">reset</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="GenericTaskForgetting.result"><a class="viewcode-back" href="../../../../../autoapi/avalanche/evaluation/metrics/#avalanche.evaluation.metrics.forgetting_bwt.GenericTaskForgetting.result">[docs]</a>    <span class="k">def</span> <span class="nf">result</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">forgetting</span><span class="o">.</span><span class="n">result</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="GenericTaskForgetting.update"><a class="viewcode-back" href="../../../../../autoapi/avalanche/evaluation/metrics/#avalanche.evaluation.metrics.forgetting_bwt.GenericTaskForgetting.update">[docs]</a>    <span class="k">def</span> <span class="nf">update</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span><span class="p">,</span> <span class="n">initial</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">forgetting</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">k</span><span class="p">,</span> <span class="n">v</span><span class="p">,</span> <span class="n">initial</span><span class="o">=</span><span class="n">initial</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="GenericTaskForgetting.before_training"><a class="viewcode-back" href="../../../../../autoapi/avalanche/evaluation/metrics/#avalanche.evaluation.metrics.forgetting_bwt.GenericTaskForgetting.before_training">[docs]</a>    <span class="k">def</span> <span class="nf">before_training</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">strategy</span><span class="p">:</span> <span class="s1">&#39;BaseStrategy&#39;</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_current_train_metric</span><span class="o">.</span><span class="n">reset</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="GenericTaskForgetting.after_training_iteration"><a class="viewcode-back" href="../../../../../autoapi/avalanche/evaluation/metrics/#avalanche.evaluation.metrics.forgetting_bwt.GenericTaskForgetting.after_training_iteration">[docs]</a>    <span class="k">def</span> <span class="nf">after_training_iteration</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">strategy</span><span class="p">:</span> <span class="s1">&#39;BaseStrategy&#39;</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">after_training_iteration</span><span class="p">(</span><span class="n">strategy</span><span class="p">)</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">unique_tasks</span> <span class="o">=</span> <span class="n">strategy</span><span class="o">.</span><span class="n">mb_task_id</span><span class="o">.</span><span class="n">unique</span><span class="p">()</span>
+            <span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="n">unique_tasks</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_current_train_metric</span><span class="o">.</span><span class="n">reset</span><span class="p">(</span><span class="n">t</span><span class="o">.</span><span class="n">item</span><span class="p">())</span>
+        <span class="k">except</span> <span class="ne">AssertionError</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_current_train_metric</span><span class="o">.</span><span class="n">reset</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">metric_update</span><span class="p">(</span><span class="n">strategy</span><span class="p">,</span> <span class="n">train</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="GenericTaskForgetting.before_eval"><a class="viewcode-back" href="../../../../../autoapi/avalanche/evaluation/metrics/#avalanche.evaluation.metrics.forgetting_bwt.GenericTaskForgetting.before_eval">[docs]</a>    <span class="k">def</span> <span class="nf">before_eval</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">strategy</span><span class="p">:</span> <span class="s1">&#39;BaseStrategy&#39;</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">forgetting</span><span class="o">.</span><span class="n">reset_last</span><span class="p">()</span>
+        <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_current_train_metric</span><span class="o">.</span><span class="n">result</span><span class="p">()</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">k</span><span class="p">,</span> <span class="n">v</span><span class="p">,</span> <span class="n">initial</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_current_eval_metric</span><span class="o">.</span><span class="n">reset</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="GenericTaskForgetting.after_eval_iteration"><a class="viewcode-back" href="../../../../../autoapi/avalanche/evaluation/metrics/#avalanche.evaluation.metrics.forgetting_bwt.GenericTaskForgetting.after_eval_iteration">[docs]</a>    <span class="k">def</span> <span class="nf">after_eval_iteration</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">strategy</span><span class="p">:</span> <span class="s1">&#39;BaseStrategy&#39;</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">after_eval_iteration</span><span class="p">(</span><span class="n">strategy</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">metric_update</span><span class="p">(</span><span class="n">strategy</span><span class="p">,</span> <span class="n">train</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="GenericTaskForgetting.after_eval"><a class="viewcode-back" href="../../../../../autoapi/avalanche/evaluation/metrics/#avalanche.evaluation.metrics.forgetting_bwt.GenericTaskForgetting.after_eval">[docs]</a>    <span class="k">def</span> <span class="nf">after_eval</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">strategy</span><span class="p">:</span> <span class="s1">&#39;BaseStrategy&#39;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="s1">&#39;MetricResult&#39;</span><span class="p">:</span>
+        <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_current_eval_metric</span><span class="o">.</span><span class="n">result</span><span class="p">()</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">k</span><span class="p">,</span> <span class="n">v</span><span class="p">,</span> <span class="n">initial</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_package_result</span><span class="p">(</span><span class="n">strategy</span><span class="p">)</span></div>
+
+    <span class="k">def</span> <span class="nf">_package_result</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">strategy</span><span class="p">:</span> <span class="s1">&#39;BaseStrategy&#39;</span><span class="p">)</span> <span class="o">-&gt;</span> \
+            <span class="n">MetricResult</span><span class="p">:</span>
+        <span class="n">metric_value</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">result</span><span class="p">()</span>
+        <span class="n">plot_x_position</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_global_counter</span><span class="p">()</span>
+        <span class="n">results</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">metric_value</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+            <span class="n">metric_name</span> <span class="o">=</span> <span class="n">get_metric_name</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">strategy</span><span class="p">,</span> <span class="n">add_experience</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+                                          <span class="n">add_task</span><span class="o">=</span><span class="n">k</span><span class="p">)</span>
+            <span class="n">results</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">MetricValue</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">metric_name</span><span class="p">,</span> <span class="n">v</span><span class="p">,</span> <span class="n">plot_x_position</span><span class="p">))</span>
+
+        <span class="k">return</span> <span class="n">results</span>
+
+<div class="viewcode-block" id="GenericTaskForgetting.metric_update"><a class="viewcode-back" href="../../../../../autoapi/avalanche/evaluation/metrics/#avalanche.evaluation.metrics.forgetting_bwt.GenericTaskForgetting.metric_update">[docs]</a>    <span class="k">def</span> <span class="nf">metric_update</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">strategy</span><span class="p">,</span> <span class="n">train</span><span class="p">):</span>
+        <span class="k">raise</span> <span class="ne">NotImplementedError</span></div>
+
+<div class="viewcode-block" id="GenericTaskForgetting.__str__"><a class="viewcode-back" href="../../../../../autoapi/avalanche/evaluation/metrics/#avalanche.evaluation.metrics.forgetting_bwt.GenericTaskForgetting.__str__">[docs]</a>    <span class="k">def</span> <span class="fm">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">raise</span> <span class="ne">NotImplementedError</span></div></div>
+
+
+<div class="viewcode-block" id="TaskForgetting"><a class="viewcode-back" href="../../../../../autoapi/avalanche/evaluation/metrics/#avalanche.evaluation.metrics.forgetting_bwt.TaskForgetting">[docs]</a><span class="k">class</span> <span class="nc">TaskForgetting</span><span class="p">(</span><span class="n">GenericTaskForgetting</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    The Task Forgetting metric returns the amount of forgetting</span>
+<span class="sd">    on each task separately. The task-wise forgetting is computed</span>
+<span class="sd">    as the difference between the average accuracy when last training</span>
+<span class="sd">    on the task and the average accuracy when last evaluating on the same task.</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_current_train_metric</span> <span class="o">=</span> <span class="n">Accuracy</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_current_eval_metric</span> <span class="o">=</span> <span class="n">Accuracy</span><span class="p">()</span>
+
+<div class="viewcode-block" id="TaskForgetting.metric_update"><a class="viewcode-back" href="../../../../../autoapi/avalanche/evaluation/metrics/#avalanche.evaluation.metrics.forgetting_bwt.TaskForgetting.metric_update">[docs]</a>    <span class="k">def</span> <span class="nf">metric_update</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">strategy</span><span class="p">,</span> <span class="n">train</span><span class="p">):</span>
+        <span class="c1"># task labels defined for each experience</span>
+        <span class="n">task_labels</span> <span class="o">=</span> <span class="n">strategy</span><span class="o">.</span><span class="n">experience</span><span class="o">.</span><span class="n">task_labels</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">task_labels</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="c1"># task labels defined for each pattern</span>
+            <span class="n">task_labels</span> <span class="o">=</span> <span class="n">strategy</span><span class="o">.</span><span class="n">mb_task_id</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">task_labels</span> <span class="o">=</span> <span class="n">task_labels</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="k">if</span> <span class="n">train</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_current_train_metric</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">strategy</span><span class="o">.</span><span class="n">mb_output</span><span class="p">,</span> <span class="n">strategy</span><span class="o">.</span><span class="n">mb_y</span><span class="p">,</span>
+                                              <span class="n">task_labels</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_current_eval_metric</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">strategy</span><span class="o">.</span><span class="n">mb_output</span><span class="p">,</span> <span class="n">strategy</span><span class="o">.</span><span class="n">mb_y</span><span class="p">,</span>
+                                             <span class="n">task_labels</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="TaskForgetting.__str__"><a class="viewcode-back" href="../../../../../autoapi/avalanche/evaluation/metrics/#avalanche.evaluation.metrics.forgetting_bwt.TaskForgetting.__str__">[docs]</a>    <span class="k">def</span> <span class="fm">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="s2">&quot;TaskForgetting&quot;</span></div></div>
+
+
+<div class="viewcode-block" id="forgetting_metrics"><a class="viewcode-back" href="../../../../../autoapi/avalanche/evaluation/metrics/#avalanche.evaluation.metrics.forgetting_bwt.forgetting_metrics">[docs]</a><span class="k">def</span> <span class="nf">forgetting_metrics</span><span class="p">(</span><span class="o">*</span><span class="p">,</span> <span class="n">experience</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">stream</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">task</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span> \
         <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="n">PluginMetric</span><span class="p">]:</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Helper method that can be used to obtain the desired set of</span>
@@ -583,6 +754,8 @@
 <span class="sd">    :param stream: If True, will return a metric able to log</span>
 <span class="sd">        the forgetting averaged over the evaluation stream experiences,</span>
 <span class="sd">        which have been observed during training.</span>
+<span class="sd">    :param task: If True, will return a metric able to log the forgetting</span>
+<span class="sd">        across each task encountered during training and evaluation.</span>
 
 <span class="sd">    :return: A list of plugin metrics.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
@@ -594,6 +767,9 @@
 
     <span class="k">if</span> <span class="n">stream</span><span class="p">:</span>
         <span class="n">metrics</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">StreamForgetting</span><span class="p">())</span>
+
+    <span class="k">if</span> <span class="n">task</span><span class="p">:</span>
+        <span class="n">metrics</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">TaskForgetting</span><span class="p">())</span>
 
     <span class="k">return</span> <span class="n">metrics</span></div>
 
@@ -704,7 +880,32 @@
         <span class="k">return</span> <span class="s2">&quot;StreamBWT&quot;</span></div></div>
 
 
-<div class="viewcode-block" id="bwt_metrics"><a class="viewcode-back" href="../../../../../autoapi/avalanche/evaluation/metrics/#avalanche.evaluation.metrics.forgetting_bwt.bwt_metrics">[docs]</a><span class="k">def</span> <span class="nf">bwt_metrics</span><span class="p">(</span><span class="o">*</span><span class="p">,</span> <span class="n">experience</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">stream</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span> \
+<div class="viewcode-block" id="TaskBWT"><a class="viewcode-back" href="../../../../../autoapi/avalanche/evaluation/metrics/#avalanche.evaluation.metrics.forgetting_bwt.TaskBWT">[docs]</a><span class="k">class</span> <span class="nc">TaskBWT</span><span class="p">(</span><span class="n">TaskForgetting</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    The TaskBWT metric, emitting the average BWT task-wise.</span>
+
+<span class="sd">    This plugin metric, computed over all observed tasks during training,</span>
+<span class="sd">    is the average over the difference between the last accuracy result</span>
+<span class="sd">    obtained on a task and the accuracy result obtained when last</span>
+<span class="sd">    training on that task.</span>
+
+<span class="sd">    This metric is computed during the eval phase only.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+<div class="viewcode-block" id="TaskBWT.result"><a class="viewcode-back" href="../../../../../autoapi/avalanche/evaluation/metrics/#avalanche.evaluation.metrics.forgetting_bwt.TaskBWT.result">[docs]</a>    <span class="k">def</span> <span class="nf">result</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Union</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">float</span><span class="p">]]:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Result for experience defined by a key.</span>
+<span class="sd">        See `BWT` documentation for more detailed information.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">forgetting</span> <span class="o">=</span> <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">result</span><span class="p">()</span>
+        <span class="k">return</span> <span class="n">forgetting_to_bwt</span><span class="p">(</span><span class="n">forgetting</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="TaskBWT.__str__"><a class="viewcode-back" href="../../../../../autoapi/avalanche/evaluation/metrics/#avalanche.evaluation.metrics.forgetting_bwt.TaskBWT.__str__">[docs]</a>    <span class="k">def</span> <span class="fm">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="s2">&quot;TaskBWT&quot;</span></div></div>
+
+
+<div class="viewcode-block" id="bwt_metrics"><a class="viewcode-back" href="../../../../../autoapi/avalanche/evaluation/metrics/#avalanche.evaluation.metrics.forgetting_bwt.bwt_metrics">[docs]</a><span class="k">def</span> <span class="nf">bwt_metrics</span><span class="p">(</span><span class="o">*</span><span class="p">,</span> <span class="n">experience</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">stream</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">task</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span> \
         <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="n">PluginMetric</span><span class="p">]:</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Helper method that can be used to obtain the desired set of</span>
@@ -715,7 +916,8 @@
 <span class="sd">    :param stream: If True, will return a metric able to log</span>
 <span class="sd">        the backward transfer averaged over the evaluation stream experiences</span>
 <span class="sd">        which have been observed during training.</span>
-
+<span class="sd">    :param task: If True, will return a metric able to log</span>
+<span class="sd">        the backward transfer for each task in the evaluation stream</span>
 <span class="sd">    :return: A list of plugin metrics.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
@@ -727,17 +929,25 @@
     <span class="k">if</span> <span class="n">stream</span><span class="p">:</span>
         <span class="n">metrics</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">StreamBWT</span><span class="p">())</span>
 
+    <span class="k">if</span> <span class="n">task</span><span class="p">:</span>
+        <span class="n">metrics</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">TaskBWT</span><span class="p">())</span>
+
     <span class="k">return</span> <span class="n">metrics</span></div>
 
 
 <span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span>
     <span class="s1">&#39;Forgetting&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;GenericExperienceForgetting&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;GenericStreamForgetting&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;GenericTaskForgetting&#39;</span><span class="p">,</span>
     <span class="s1">&#39;ExperienceForgetting&#39;</span><span class="p">,</span>
     <span class="s1">&#39;StreamForgetting&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;TaskForgetting&#39;</span><span class="p">,</span>
     <span class="s1">&#39;forgetting_metrics&#39;</span><span class="p">,</span>
     <span class="s1">&#39;BWT&#39;</span><span class="p">,</span>
     <span class="s1">&#39;ExperienceBWT&#39;</span><span class="p">,</span>
     <span class="s1">&#39;StreamBWT&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;TaskBWT&#39;</span><span class="p">,</span>
     <span class="s1">&#39;bwt_metrics&#39;</span>
 <span class="p">]</span>
 </pre></div>

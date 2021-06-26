@@ -13,11 +13,16 @@ Classes
 .. autoapisummary::
 
    avalanche.evaluation.metrics.forgetting_bwt.Forgetting
+   avalanche.evaluation.metrics.forgetting_bwt.GenericExperienceForgetting
    avalanche.evaluation.metrics.forgetting_bwt.ExperienceForgetting
+   avalanche.evaluation.metrics.forgetting_bwt.GenericStreamForgetting
    avalanche.evaluation.metrics.forgetting_bwt.StreamForgetting
+   avalanche.evaluation.metrics.forgetting_bwt.GenericTaskForgetting
+   avalanche.evaluation.metrics.forgetting_bwt.TaskForgetting
    avalanche.evaluation.metrics.forgetting_bwt.BWT
    avalanche.evaluation.metrics.forgetting_bwt.ExperienceBWT
    avalanche.evaluation.metrics.forgetting_bwt.StreamBWT
+   avalanche.evaluation.metrics.forgetting_bwt.TaskBWT
 
 
 
@@ -95,21 +100,29 @@ Functions
 
 
 
-.. py:class:: ExperienceForgetting
+.. py:class:: GenericExperienceForgetting
 
    Bases: :class:`PluginMetric[Dict[int, float]]`
 
-   The ExperienceForgetting metric, describing the accuracy loss
-   detected for a certain experience.
+   The GenericExperienceForgetting metric, describing the change in
+   a metric detected for a certain experience. The user should
+   subclass this and provide the desired metric.
+
+   In particular, the user should override:
+   * __init__ by calling `super` and instantiating the `self.current_metric`
+   property as a valid avalanche metric
+   * `metric_update`, to update `current_metric`
+   * `metric_result` to get the result from `current_metric`.
+   * `__str__` to define the experience forgetting  name.
 
    This plugin metric, computed separately for each experience,
-   is the difference between the accuracy result obtained after
-   first training on a experience and the accuracy result obtained
+   is the difference between the metric result obtained after
+   first training on a experience and the metric result obtained
    on the same experience at the end of successive experiences.
 
    This metric is computed during the eval phase only.
 
-   Creates an instance of the ExperienceForgetting metric.
+   Creates an instance of the GenericExperienceForgetting metric.
 
    .. attribute:: forgetting
       
@@ -133,17 +146,17 @@ Functions
 
       Resets the metric.
 
-      Beware that this will also reset the initial accuracy of each
+      Beware that this will also reset the initial metric of each
       experience!
 
       :return: None.
 
 
-   .. method:: reset_last_accuracy(self) -> None
+   .. method:: reset_last(self) -> None
 
-      Resets the last accuracy.
+      Resets the last metric value.
 
-      This will preserve the initial accuracy value of each experience.
+      This will preserve the initial metric value of each experience.
       To be used at the beginning of each eval experience.
 
       :return: None.
@@ -193,27 +206,72 @@ Functions
       Called after `eval_exp` by the `BaseStrategy`. 
 
 
+   .. method:: metric_update(self, strategy)
+      :abstractmethod:
+
+
+   .. method:: metric_result(self, strategy)
+      :abstractmethod:
+
+
+   .. method:: __str__(self)
+      :abstractmethod:
+
+      Return str(self).
+
+
+
+.. py:class:: ExperienceForgetting
+
+   Bases: :class:`avalanche.evaluation.metrics.forgetting_bwt.GenericExperienceForgetting`
+
+   The ExperienceForgetting metric, describing the accuracy loss
+   detected for a certain experience.
+
+   This plugin metric, computed separately for each experience,
+   is the difference between the accuracy result obtained after
+   first training on a experience and the accuracy result obtained
+   on the same experience at the end of successive experiences.
+
+   This metric is computed during the eval phase only.
+
+   Creates an instance of the ExperienceForgetting metric.
+
+   .. method:: metric_update(self, strategy)
+
+
+   .. method:: metric_result(self, strategy)
+
+
    .. method:: __str__(self)
 
       Return str(self).
 
 
 
-.. py:class:: StreamForgetting
+.. py:class:: GenericStreamForgetting
 
-   Bases: :class:`PluginMetric[Dict[int, float]]`
+   Bases: :class:`avalanche.evaluation.metrics.forgetting_bwt.GenericExperienceForgetting`
 
-   The StreamForgetting metric, describing the average evaluation accuracy loss
-   detected over all experiences observed during training.
+   The GenericStreamForgetting metric, describing the average evaluation
+   change in the desired metric detected over all experiences observed
+   during training.
+
+   In particular, the user should override:
+   * __init__ by calling `super` and instantiating the `self.current_metric`
+   property as a valid avalanche metric
+   * `metric_update`, to update `current_metric`
+   * `metric_result` to get the result from `current_metric`.
+   * `__str__` to define the experience forgetting  name.
 
    This plugin metric, computed over all observed experiences during training,
-   is the average over the difference between the accuracy result obtained
-   after first training on a experience and the accuracy result obtained
+   is the average over the difference between the metric result obtained
+   after first training on a experience and the metric result obtained
    on the same experience at the end of successive experiences.
 
    This metric is computed during the eval phase only.
 
-   Creates an instance of the StreamForgetting metric.
+   Creates an instance of the GenericStreamForgetting metric.
 
    .. attribute:: stream_forgetting
       
@@ -221,40 +279,12 @@ Functions
       The average forgetting over all experiences
 
 
-   .. attribute:: forgetting
-      
-
-      The general metric to compute forgetting
-
-
-   .. attribute:: eval_exp_id
-      
-
-      The current evaluation experience id
-
-
-   .. attribute:: train_exp_id
-      
-
-      The last encountered training experience id
-
-
    .. method:: reset(self) -> None
 
       Resets the forgetting metrics.
 
-      Beware that this will also reset the initial accuracy of each
+      Beware that this will also reset the initial metric value of each
       experience!
-
-      :return: None.
-
-
-   .. method:: reset_last_accuracy(self) -> None
-
-      Resets the last accuracy.
-
-      This will preserve the initial accuracy value of each experience.
-      To be used at the beginning of each eval experience.
 
       :return: None.
 
@@ -285,25 +315,9 @@ Functions
       k: optional key from which compute forgetting.
 
 
-   .. method:: before_training_exp(self, strategy: BaseStrategy) -> None
-
-      Called before `train_exp` by the `BaseStrategy`. 
-
-
    .. method:: before_eval(self, strategy) -> None
 
       Called before `eval` by the `BaseStrategy`. 
-
-
-   .. method:: before_eval_exp(self, strategy: BaseStrategy) -> None
-
-      Called before `eval_exp` by the `BaseStrategy`. 
-
-
-   .. method:: after_eval_iteration(self, strategy: BaseStrategy) -> None
-
-      Called after the end of an iteration by the
-      `BaseStrategy`. 
 
 
    .. method:: after_eval_exp(self, strategy: BaseStrategy) -> None
@@ -316,13 +330,149 @@ Functions
       Called after `eval` by the `BaseStrategy`. 
 
 
+   .. method:: metric_update(self, strategy)
+      :abstractmethod:
+
+
+   .. method:: metric_result(self, strategy)
+      :abstractmethod:
+
+
+   .. method:: __str__(self)
+      :abstractmethod:
+
+      Return str(self).
+
+
+
+.. py:class:: StreamForgetting
+
+   Bases: :class:`avalanche.evaluation.metrics.forgetting_bwt.GenericStreamForgetting`
+
+   The StreamForgetting metric, describing the average evaluation accuracy loss
+   detected over all experiences observed during training.
+
+   This plugin metric, computed over all observed experiences during training,
+   is the average over the difference between the accuracy result obtained
+   after first training on a experience and the accuracy result obtained
+   on the same experience at the end of successive experiences.
+
+   This metric is computed during the eval phase only.
+
+   Creates an instance of the StreamForgetting metric.
+
+   .. method:: metric_update(self, strategy)
+
+
+   .. method:: metric_result(self, strategy)
+
+
    .. method:: __str__(self)
 
       Return str(self).
 
 
 
-.. function:: forgetting_metrics(*, experience=False, stream=False) -> List[PluginMetric]
+.. py:class:: GenericTaskForgetting
+
+   Bases: :class:`PluginMetric[Dict[int, float]]`
+
+   The GenericTaskForgetting metric, describing the average evaluation
+   change in the desired metric detected over all tasks observed
+   during training and evaluation.
+
+   In particular, the user should override:
+   * __init__ by calling `super` and instantiating the
+     `self.current_train_metric` and `current_eval_metric` properties as
+     valid avalanche metrics (the same metric for both properties).
+     The metric should be able to return values for each task separately.
+   * `metric_update`, to update `current_metric`
+   * `__str__` to define the experience forgetting  name.
+
+   This plugin metric, computed over all observed experiences during training,
+   is the average over the difference between the metric result obtained
+   after first training on a experience and the metric result obtained
+   on the same experience at the end of successive experiences.
+
+   This metric is computed during the eval phase only.
+
+   Creates an instance of a plugin metric.
+
+   Child classes can safely invoke this (super) constructor as the first
+   experience.
+
+   .. method:: reset(self, **kwargs) -> None
+
+
+   .. method:: result(self, **kwargs)
+
+
+   .. method:: update(self, k, v, initial)
+
+
+   .. method:: before_training(self, strategy: BaseStrategy)
+
+      Called before `train` by the `BaseStrategy`. 
+
+
+   .. method:: after_training_iteration(self, strategy: BaseStrategy)
+
+      Called after the end of a training iteration by the
+      `BaseStrategy`. 
+
+
+   .. method:: before_eval(self, strategy: BaseStrategy)
+
+      Called before `eval` by the `BaseStrategy`. 
+
+
+   .. method:: after_eval_iteration(self, strategy: BaseStrategy)
+
+      Called after the end of an iteration by the
+      `BaseStrategy`. 
+
+
+   .. method:: after_eval(self, strategy: BaseStrategy) -> 'MetricResult'
+
+      Called after `eval` by the `BaseStrategy`. 
+
+
+   .. method:: metric_update(self, strategy, train)
+      :abstractmethod:
+
+
+   .. method:: __str__(self)
+      :abstractmethod:
+
+      Return str(self).
+
+
+
+.. py:class:: TaskForgetting
+
+   Bases: :class:`avalanche.evaluation.metrics.forgetting_bwt.GenericTaskForgetting`
+
+   The Task Forgetting metric returns the amount of forgetting
+   on each task separately. The task-wise forgetting is computed
+   as the difference between the average accuracy when last training
+   on the task and the average accuracy when last evaluating on the same task.
+
+
+   Creates an instance of a plugin metric.
+
+   Child classes can safely invoke this (super) constructor as the first
+   experience.
+
+   .. method:: metric_update(self, strategy, train)
+
+
+   .. method:: __str__(self)
+
+      Return str(self).
+
+
+
+.. function:: forgetting_metrics(*, experience=False, stream=False, task=False) -> List[PluginMetric]
 
    Helper method that can be used to obtain the desired set of
    plugin metrics.
@@ -332,6 +482,8 @@ Functions
    :param stream: If True, will return a metric able to log
        the forgetting averaged over the evaluation stream experiences,
        which have been observed during training.
+   :param task: If True, will return a metric able to log the forgetting
+       across each task encountered during training and evaluation.
 
    :return: A list of plugin metrics.
 
@@ -430,7 +582,37 @@ Functions
 
 
 
-.. function:: bwt_metrics(*, experience=False, stream=False) -> List[PluginMetric]
+.. py:class:: TaskBWT
+
+   Bases: :class:`avalanche.evaluation.metrics.forgetting_bwt.TaskForgetting`
+
+   The TaskBWT metric, emitting the average BWT task-wise.
+
+   This plugin metric, computed over all observed tasks during training,
+   is the average over the difference between the last accuracy result
+   obtained on a task and the accuracy result obtained when last
+   training on that task.
+
+   This metric is computed during the eval phase only.
+
+   Creates an instance of a plugin metric.
+
+   Child classes can safely invoke this (super) constructor as the first
+   experience.
+
+   .. method:: result(self) -> Union[float, None, Dict[int, float]]
+
+      Result for experience defined by a key.
+      See `BWT` documentation for more detailed information.
+
+
+   .. method:: __str__(self)
+
+      Return str(self).
+
+
+
+.. function:: bwt_metrics(*, experience=False, stream=False, task=False) -> List[PluginMetric]
 
    Helper method that can be used to obtain the desired set of
    plugin metrics.
@@ -440,7 +622,8 @@ Functions
    :param stream: If True, will return a metric able to log
        the backward transfer averaged over the evaluation stream experiences
        which have been observed during training.
-
+   :param task: If True, will return a metric able to log
+       the backward transfer for each task in the evaluation stream
    :return: A list of plugin metrics.
 
 

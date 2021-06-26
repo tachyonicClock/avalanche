@@ -133,7 +133,7 @@ Functions
 
    Creates an instance of the average epoch cpu usage metric.
 
-   .. method:: result(self) -> float
+   .. method:: result(self, strategy) -> float
 
 
    .. method:: before_training_epoch(self, strategy)

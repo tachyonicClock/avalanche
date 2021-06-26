@@ -359,7 +359,7 @@ of each evaluation stream.</p></td>
 <td><p>The standalone sum metric.</p></td>
 </tr>
 <tr class="row-odd"><td><p><a class="reference internal" href="#avalanche.evaluation.metrics.Accuracy" title="avalanche.evaluation.metrics.Accuracy"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Accuracy</span></code></a></p></td>
-<td><p>The Accuracy metric. This is a standalone metric</p></td>
+<td><p>The Accuracy metric. This is a standalone metric.</p></td>
 </tr>
 <tr class="row-even"><td><p><a class="reference internal" href="#avalanche.evaluation.metrics.MinibatchAccuracy" title="avalanche.evaluation.metrics.MinibatchAccuracy"><code class="xref py py-obj docutils literal notranslate"><span class="pre">MinibatchAccuracy</span></code></a></p></td>
 <td><p>The minibatch plugin accuracy metric.</p></td>
@@ -421,11 +421,23 @@ of each evaluation stream.</p></td>
 <tr class="row-odd"><td><p><a class="reference internal" href="#avalanche.evaluation.metrics.Forgetting" title="avalanche.evaluation.metrics.Forgetting"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Forgetting</span></code></a></p></td>
 <td><p>The standalone Forgetting metric.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#avalanche.evaluation.metrics.ExperienceForgetting" title="avalanche.evaluation.metrics.ExperienceForgetting"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ExperienceForgetting</span></code></a></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#avalanche.evaluation.metrics.GenericExperienceForgetting" title="avalanche.evaluation.metrics.GenericExperienceForgetting"><code class="xref py py-obj docutils literal notranslate"><span class="pre">GenericExperienceForgetting</span></code></a></p></td>
+<td><p>The GenericExperienceForgetting metric, describing the change in</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#avalanche.evaluation.metrics.GenericStreamForgetting" title="avalanche.evaluation.metrics.GenericStreamForgetting"><code class="xref py py-obj docutils literal notranslate"><span class="pre">GenericStreamForgetting</span></code></a></p></td>
+<td><p>The GenericStreamForgetting metric, describing the average evaluation</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#avalanche.evaluation.metrics.GenericTaskForgetting" title="avalanche.evaluation.metrics.GenericTaskForgetting"><code class="xref py py-obj docutils literal notranslate"><span class="pre">GenericTaskForgetting</span></code></a></p></td>
+<td><p>The GenericTaskForgetting metric, describing the average evaluation</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#avalanche.evaluation.metrics.ExperienceForgetting" title="avalanche.evaluation.metrics.ExperienceForgetting"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ExperienceForgetting</span></code></a></p></td>
 <td><p>The ExperienceForgetting metric, describing the accuracy loss</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#avalanche.evaluation.metrics.StreamForgetting" title="avalanche.evaluation.metrics.StreamForgetting"><code class="xref py py-obj docutils literal notranslate"><span class="pre">StreamForgetting</span></code></a></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#avalanche.evaluation.metrics.StreamForgetting" title="avalanche.evaluation.metrics.StreamForgetting"><code class="xref py py-obj docutils literal notranslate"><span class="pre">StreamForgetting</span></code></a></p></td>
 <td><p>The StreamForgetting metric, describing the average evaluation accuracy loss</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#avalanche.evaluation.metrics.TaskForgetting" title="avalanche.evaluation.metrics.TaskForgetting"><code class="xref py py-obj docutils literal notranslate"><span class="pre">TaskForgetting</span></code></a></p></td>
+<td><p>The Task Forgetting metric returns the amount of forgetting</p></td>
 </tr>
 <tr class="row-even"><td><p><a class="reference internal" href="#avalanche.evaluation.metrics.BWT" title="avalanche.evaluation.metrics.BWT"><code class="xref py py-obj docutils literal notranslate"><span class="pre">BWT</span></code></a></p></td>
 <td><p>The standalone Backward Transfer metric.</p></td>
@@ -436,82 +448,85 @@ of each evaluation stream.</p></td>
 <tr class="row-even"><td><p><a class="reference internal" href="#avalanche.evaluation.metrics.StreamBWT" title="avalanche.evaluation.metrics.StreamBWT"><code class="xref py py-obj docutils literal notranslate"><span class="pre">StreamBWT</span></code></a></p></td>
 <td><p>The StreamBWT metric, emitting the average BWT across all experiences</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#avalanche.evaluation.metrics.MaxGPU" title="avalanche.evaluation.metrics.MaxGPU"><code class="xref py py-obj docutils literal notranslate"><span class="pre">MaxGPU</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#avalanche.evaluation.metrics.TaskBWT" title="avalanche.evaluation.metrics.TaskBWT"><code class="xref py py-obj docutils literal notranslate"><span class="pre">TaskBWT</span></code></a></p></td>
+<td><p>The TaskBWT metric, emitting the average BWT task-wise.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#avalanche.evaluation.metrics.MaxGPU" title="avalanche.evaluation.metrics.MaxGPU"><code class="xref py py-obj docutils literal notranslate"><span class="pre">MaxGPU</span></code></a></p></td>
 <td><p>The standalone GPU usage metric.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#avalanche.evaluation.metrics.MinibatchMaxGPU" title="avalanche.evaluation.metrics.MinibatchMaxGPU"><code class="xref py py-obj docutils literal notranslate"><span class="pre">MinibatchMaxGPU</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#avalanche.evaluation.metrics.MinibatchMaxGPU" title="avalanche.evaluation.metrics.MinibatchMaxGPU"><code class="xref py py-obj docutils literal notranslate"><span class="pre">MinibatchMaxGPU</span></code></a></p></td>
 <td><p>The Minibatch Max GPU metric.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#avalanche.evaluation.metrics.EpochMaxGPU" title="avalanche.evaluation.metrics.EpochMaxGPU"><code class="xref py py-obj docutils literal notranslate"><span class="pre">EpochMaxGPU</span></code></a></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#avalanche.evaluation.metrics.EpochMaxGPU" title="avalanche.evaluation.metrics.EpochMaxGPU"><code class="xref py py-obj docutils literal notranslate"><span class="pre">EpochMaxGPU</span></code></a></p></td>
 <td><p>The Epoch Max GPU metric.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#avalanche.evaluation.metrics.ExperienceMaxGPU" title="avalanche.evaluation.metrics.ExperienceMaxGPU"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ExperienceMaxGPU</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#avalanche.evaluation.metrics.ExperienceMaxGPU" title="avalanche.evaluation.metrics.ExperienceMaxGPU"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ExperienceMaxGPU</span></code></a></p></td>
 <td><p>The Experience Max GPU metric.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#avalanche.evaluation.metrics.StreamMaxGPU" title="avalanche.evaluation.metrics.StreamMaxGPU"><code class="xref py py-obj docutils literal notranslate"><span class="pre">StreamMaxGPU</span></code></a></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#avalanche.evaluation.metrics.StreamMaxGPU" title="avalanche.evaluation.metrics.StreamMaxGPU"><code class="xref py py-obj docutils literal notranslate"><span class="pre">StreamMaxGPU</span></code></a></p></td>
 <td><p>The Stream Max GPU metric.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#avalanche.evaluation.metrics.Loss" title="avalanche.evaluation.metrics.Loss"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Loss</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#avalanche.evaluation.metrics.Loss" title="avalanche.evaluation.metrics.Loss"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Loss</span></code></a></p></td>
 <td><p>The standalone Loss metric. This is a general metric</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#avalanche.evaluation.metrics.MinibatchLoss" title="avalanche.evaluation.metrics.MinibatchLoss"><code class="xref py py-obj docutils literal notranslate"><span class="pre">MinibatchLoss</span></code></a></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#avalanche.evaluation.metrics.MinibatchLoss" title="avalanche.evaluation.metrics.MinibatchLoss"><code class="xref py py-obj docutils literal notranslate"><span class="pre">MinibatchLoss</span></code></a></p></td>
 <td><p>The minibatch loss metric.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#avalanche.evaluation.metrics.EpochLoss" title="avalanche.evaluation.metrics.EpochLoss"><code class="xref py py-obj docutils literal notranslate"><span class="pre">EpochLoss</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#avalanche.evaluation.metrics.EpochLoss" title="avalanche.evaluation.metrics.EpochLoss"><code class="xref py py-obj docutils literal notranslate"><span class="pre">EpochLoss</span></code></a></p></td>
 <td><p>The average loss over a single training epoch.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#avalanche.evaluation.metrics.RunningEpochLoss" title="avalanche.evaluation.metrics.RunningEpochLoss"><code class="xref py py-obj docutils literal notranslate"><span class="pre">RunningEpochLoss</span></code></a></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#avalanche.evaluation.metrics.RunningEpochLoss" title="avalanche.evaluation.metrics.RunningEpochLoss"><code class="xref py py-obj docutils literal notranslate"><span class="pre">RunningEpochLoss</span></code></a></p></td>
 <td><p>The average loss across all minibatches up to the current</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#avalanche.evaluation.metrics.ExperienceLoss" title="avalanche.evaluation.metrics.ExperienceLoss"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ExperienceLoss</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#avalanche.evaluation.metrics.ExperienceLoss" title="avalanche.evaluation.metrics.ExperienceLoss"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ExperienceLoss</span></code></a></p></td>
 <td><p>At the end of each experience, this metric reports</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#avalanche.evaluation.metrics.StreamLoss" title="avalanche.evaluation.metrics.StreamLoss"><code class="xref py py-obj docutils literal notranslate"><span class="pre">StreamLoss</span></code></a></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#avalanche.evaluation.metrics.StreamLoss" title="avalanche.evaluation.metrics.StreamLoss"><code class="xref py py-obj docutils literal notranslate"><span class="pre">StreamLoss</span></code></a></p></td>
 <td><p>At the end of the entire stream of experiences, this metric reports the</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#avalanche.evaluation.metrics.MAC" title="avalanche.evaluation.metrics.MAC"><code class="xref py py-obj docutils literal notranslate"><span class="pre">MAC</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#avalanche.evaluation.metrics.MAC" title="avalanche.evaluation.metrics.MAC"><code class="xref py py-obj docutils literal notranslate"><span class="pre">MAC</span></code></a></p></td>
 <td><p>Standalone Multiply-and-accumulate metric. Provides a lower bound of the</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#avalanche.evaluation.metrics.MinibatchMAC" title="avalanche.evaluation.metrics.MinibatchMAC"><code class="xref py py-obj docutils literal notranslate"><span class="pre">MinibatchMAC</span></code></a></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#avalanche.evaluation.metrics.MinibatchMAC" title="avalanche.evaluation.metrics.MinibatchMAC"><code class="xref py py-obj docutils literal notranslate"><span class="pre">MinibatchMAC</span></code></a></p></td>
 <td><p>The minibatch MAC metric.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#avalanche.evaluation.metrics.EpochMAC" title="avalanche.evaluation.metrics.EpochMAC"><code class="xref py py-obj docutils literal notranslate"><span class="pre">EpochMAC</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#avalanche.evaluation.metrics.EpochMAC" title="avalanche.evaluation.metrics.EpochMAC"><code class="xref py py-obj docutils literal notranslate"><span class="pre">EpochMAC</span></code></a></p></td>
 <td><p>The MAC at the end of each epoch computed on a</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#avalanche.evaluation.metrics.ExperienceMAC" title="avalanche.evaluation.metrics.ExperienceMAC"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ExperienceMAC</span></code></a></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#avalanche.evaluation.metrics.ExperienceMAC" title="avalanche.evaluation.metrics.ExperienceMAC"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ExperienceMAC</span></code></a></p></td>
 <td><p>At the end of each experience, this metric reports the</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#avalanche.evaluation.metrics.MaxRAM" title="avalanche.evaluation.metrics.MaxRAM"><code class="xref py py-obj docutils literal notranslate"><span class="pre">MaxRAM</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#avalanche.evaluation.metrics.MaxRAM" title="avalanche.evaluation.metrics.MaxRAM"><code class="xref py py-obj docutils literal notranslate"><span class="pre">MaxRAM</span></code></a></p></td>
 <td><p>The standalone RAM usage metric.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#avalanche.evaluation.metrics.MinibatchMaxRAM" title="avalanche.evaluation.metrics.MinibatchMaxRAM"><code class="xref py py-obj docutils literal notranslate"><span class="pre">MinibatchMaxRAM</span></code></a></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#avalanche.evaluation.metrics.MinibatchMaxRAM" title="avalanche.evaluation.metrics.MinibatchMaxRAM"><code class="xref py py-obj docutils literal notranslate"><span class="pre">MinibatchMaxRAM</span></code></a></p></td>
 <td><p>The Minibatch Max RAM metric.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#avalanche.evaluation.metrics.EpochMaxRAM" title="avalanche.evaluation.metrics.EpochMaxRAM"><code class="xref py py-obj docutils literal notranslate"><span class="pre">EpochMaxRAM</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#avalanche.evaluation.metrics.EpochMaxRAM" title="avalanche.evaluation.metrics.EpochMaxRAM"><code class="xref py py-obj docutils literal notranslate"><span class="pre">EpochMaxRAM</span></code></a></p></td>
 <td><p>The Epoch Max RAM metric.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#avalanche.evaluation.metrics.ExperienceMaxRAM" title="avalanche.evaluation.metrics.ExperienceMaxRAM"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ExperienceMaxRAM</span></code></a></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#avalanche.evaluation.metrics.ExperienceMaxRAM" title="avalanche.evaluation.metrics.ExperienceMaxRAM"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ExperienceMaxRAM</span></code></a></p></td>
 <td><p>The Experience Max RAM metric.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#avalanche.evaluation.metrics.StreamMaxRAM" title="avalanche.evaluation.metrics.StreamMaxRAM"><code class="xref py py-obj docutils literal notranslate"><span class="pre">StreamMaxRAM</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#avalanche.evaluation.metrics.StreamMaxRAM" title="avalanche.evaluation.metrics.StreamMaxRAM"><code class="xref py py-obj docutils literal notranslate"><span class="pre">StreamMaxRAM</span></code></a></p></td>
 <td><p>The Stream Max RAM metric.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#avalanche.evaluation.metrics.ElapsedTime" title="avalanche.evaluation.metrics.ElapsedTime"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ElapsedTime</span></code></a></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#avalanche.evaluation.metrics.ElapsedTime" title="avalanche.evaluation.metrics.ElapsedTime"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ElapsedTime</span></code></a></p></td>
 <td><p>The standalone Elapsed Time metric.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#avalanche.evaluation.metrics.MinibatchTime" title="avalanche.evaluation.metrics.MinibatchTime"><code class="xref py py-obj docutils literal notranslate"><span class="pre">MinibatchTime</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#avalanche.evaluation.metrics.MinibatchTime" title="avalanche.evaluation.metrics.MinibatchTime"><code class="xref py py-obj docutils literal notranslate"><span class="pre">MinibatchTime</span></code></a></p></td>
 <td><p>The minibatch time metric.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#avalanche.evaluation.metrics.EpochTime" title="avalanche.evaluation.metrics.EpochTime"><code class="xref py py-obj docutils literal notranslate"><span class="pre">EpochTime</span></code></a></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#avalanche.evaluation.metrics.EpochTime" title="avalanche.evaluation.metrics.EpochTime"><code class="xref py py-obj docutils literal notranslate"><span class="pre">EpochTime</span></code></a></p></td>
 <td><p>The epoch elapsed time metric.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#avalanche.evaluation.metrics.RunningEpochTime" title="avalanche.evaluation.metrics.RunningEpochTime"><code class="xref py py-obj docutils literal notranslate"><span class="pre">RunningEpochTime</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#avalanche.evaluation.metrics.RunningEpochTime" title="avalanche.evaluation.metrics.RunningEpochTime"><code class="xref py py-obj docutils literal notranslate"><span class="pre">RunningEpochTime</span></code></a></p></td>
 <td><p>The running epoch time metric.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#avalanche.evaluation.metrics.ExperienceTime" title="avalanche.evaluation.metrics.ExperienceTime"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ExperienceTime</span></code></a></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#avalanche.evaluation.metrics.ExperienceTime" title="avalanche.evaluation.metrics.ExperienceTime"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ExperienceTime</span></code></a></p></td>
 <td><p>The experience time metric.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#avalanche.evaluation.metrics.StreamTime" title="avalanche.evaluation.metrics.StreamTime"><code class="xref py py-obj docutils literal notranslate"><span class="pre">StreamTime</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#avalanche.evaluation.metrics.StreamTime" title="avalanche.evaluation.metrics.StreamTime"><code class="xref py py-obj docutils literal notranslate"><span class="pre">StreamTime</span></code></a></p></td>
 <td><p>The stream time metric.</p></td>
 </tr>
 </tbody>
@@ -537,10 +552,10 @@ of each evaluation stream.</p></td>
 <tr class="row-even"><td><p><a class="reference internal" href="#avalanche.evaluation.metrics.disk_usage_metrics" title="avalanche.evaluation.metrics.disk_usage_metrics"><code class="xref py py-obj docutils literal notranslate"><span class="pre">disk_usage_metrics</span></code></a>(*, paths_to_monitor=None, minibatch=False, epoch=False, experience=False, stream=False) → List[PluginMetric]</p></td>
 <td><p>Helper method that can be used to obtain the desired set of</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#avalanche.evaluation.metrics.forgetting_metrics" title="avalanche.evaluation.metrics.forgetting_metrics"><code class="xref py py-obj docutils literal notranslate"><span class="pre">forgetting_metrics</span></code></a>(*, experience=False, stream=False) → List[PluginMetric]</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#avalanche.evaluation.metrics.forgetting_metrics" title="avalanche.evaluation.metrics.forgetting_metrics"><code class="xref py py-obj docutils literal notranslate"><span class="pre">forgetting_metrics</span></code></a>(*, experience=False, stream=False, task=False) → List[PluginMetric]</p></td>
 <td><p>Helper method that can be used to obtain the desired set of</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#avalanche.evaluation.metrics.bwt_metrics" title="avalanche.evaluation.metrics.bwt_metrics"><code class="xref py py-obj docutils literal notranslate"><span class="pre">bwt_metrics</span></code></a>(*, experience=False, stream=False) → List[PluginMetric]</p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#avalanche.evaluation.metrics.bwt_metrics" title="avalanche.evaluation.metrics.bwt_metrics"><code class="xref py py-obj docutils literal notranslate"><span class="pre">bwt_metrics</span></code></a>(*, experience=False, stream=False, task=False) → List[PluginMetric]</p></td>
 <td><p>Helper method that can be used to obtain the desired set of</p></td>
 </tr>
 <tr class="row-odd"><td><p><a class="reference internal" href="#avalanche.evaluation.metrics.gpu_usage_metrics" title="avalanche.evaluation.metrics.gpu_usage_metrics"><code class="xref py py-obj docutils literal notranslate"><span class="pre">gpu_usage_metrics</span></code></a>(gpu_id, every=0.5, minibatch=False, epoch=False, experience=False, stream=False) → List[PluginMetric]</p></td>
@@ -671,11 +686,10 @@ can be retrieved using the <cite>result</cite> method.</p>
 <dt class="sig sig-object py" id="avalanche.evaluation.metrics.Accuracy">
 <em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">avalanche.evaluation.metrics.</span></span><span class="sig-name descname"><span class="pre">Accuracy</span></span><a class="reference internal" href="../../../../_modules/avalanche/evaluation/metrics/accuracy/#Accuracy"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.evaluation.metrics.Accuracy" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">Metric[float]</span></code></p>
-<p>The Accuracy metric. This is a standalone metric
-used to compute more specific ones.</p>
-<p>Instances of this metric keeps the running average accuracy
-over multiple &lt;prediction, target&gt; pairs of Tensors,
-provided incrementally.
+<p>The Accuracy metric. This is a standalone metric.</p>
+<p>The metric keeps a dictionary of &lt;task_label, accuracy value&gt; pairs.
+and update the values through a running average over multiple
+&lt;prediction, target&gt; pairs of Tensors, provided incrementally.
 The “prediction” and “target” tensors may contain plain labels or
 one-hot/logit vectors.</p>
 <p>Each time <cite>result</cite> is called, this metric emits the average accuracy
@@ -688,8 +702,12 @@ value of 0. The metric can be updated by using the <cite>update</cite> method
 while the running accuracy can be retrieved using the <cite>result</cite> method.</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="avalanche.evaluation.metrics.Accuracy.update">
-<span class="sig-name descname"><span class="pre">update</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">predicted_y</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Tensor</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">true_y</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Tensor</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">None</span><a class="reference internal" href="../../../../_modules/avalanche/evaluation/metrics/accuracy/#Accuracy.update"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.evaluation.metrics.Accuracy.update" title="Permalink to this definition">¶</a></dt>
-<dd><p>Update the running accuracy given the true and predicted labels.</p>
+<span class="sig-name descname"><span class="pre">update</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">predicted_y</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Tensor</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">true_y</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Tensor</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">task_labels</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">,</span> </span><span class="pre">Tensor</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">None</span><a class="reference internal" href="../../../../_modules/avalanche/evaluation/metrics/accuracy/#Accuracy.update"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.evaluation.metrics.Accuracy.update" title="Permalink to this definition">¶</a></dt>
+<dd><p>Update the running accuracy given the true and predicted labels.
+Parameter <cite>task_labels</cite> is used to decide how to update the inner
+dictionary: if Float, only the dictionary value related to that task
+is updated. If Tensor, all the dictionary elements belonging to the
+task labels will be updated.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
@@ -697,6 +715,9 @@ while the running accuracy can be retrieved using the <cite>result</cite> method
 are supported.</p></li>
 <li><p><strong>true_y</strong> – The ground truth. Both labels and one-hot vectors
 are supported.</p></li>
+<li><p><strong>task_labels</strong> – the int task label associated to the current
+experience or the task labels vector showing the task label
+for each pattern.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns</dt>
@@ -707,20 +728,30 @@ are supported.</p></li>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="avalanche.evaluation.metrics.Accuracy.result">
-<span class="sig-name descname"><span class="pre">result</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">float</span><a class="reference internal" href="../../../../_modules/avalanche/evaluation/metrics/accuracy/#Accuracy.result"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.evaluation.metrics.Accuracy.result" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">result</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">task_label</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">,</span> </span><span class="pre">float</span><span class="p"><span class="pre">]</span></span><a class="reference internal" href="../../../../_modules/avalanche/evaluation/metrics/accuracy/#Accuracy.result"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.evaluation.metrics.Accuracy.result" title="Permalink to this definition">¶</a></dt>
 <dd><p>Retrieves the running accuracy.</p>
 <p>Calling this method will not change the internal state of the metric.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Returns</dt>
-<dd class="field-odd"><p>The running accuracy, as a float value between 0 and 1.</p>
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>task_label</strong> – if None, return the entire dictionary of accuracies
+for each task. Otherwise return the dictionary
+<cite>{task_label: accuracy}</cite>.</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>A dict of running accuracies for each task label,
+where each value is a float value between 0 and 1.</p>
 </dd>
 </dl>
 </dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="avalanche.evaluation.metrics.Accuracy.reset">
-<span class="sig-name descname"><span class="pre">reset</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">None</span><a class="reference internal" href="../../../../_modules/avalanche/evaluation/metrics/accuracy/#Accuracy.reset"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.evaluation.metrics.Accuracy.reset" title="Permalink to this definition">¶</a></dt>
-<dd><p>Resets the metric.</p>
+<span class="sig-name descname"><span class="pre">reset</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">task_label</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">None</span><a class="reference internal" href="../../../../_modules/avalanche/evaluation/metrics/accuracy/#Accuracy.reset"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.evaluation.metrics.Accuracy.reset" title="Permalink to this definition">¶</a></dt>
+<dd><p>Resets the metric.
+:param task_label: if None, reset the entire dictionary.</p>
+<blockquote>
+<div><p>Otherwise, reset the value associated to <cite>task_label</cite>.</p>
+</div></blockquote>
 <dl class="field-list simple">
 <dt class="field-odd">Returns</dt>
 <dd class="field-odd"><p>None.</p>
@@ -1251,7 +1282,7 @@ to the current epoch iteration.</p>
 <p>Creates an instance of the average epoch cpu usage metric.</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="avalanche.evaluation.metrics.RunningEpochCPUUsage.result">
-<span class="sig-name descname"><span class="pre">result</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">float</span><a class="reference internal" href="../../../../_modules/avalanche/evaluation/metrics/cpu_usage/#RunningEpochCPUUsage.result"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.evaluation.metrics.RunningEpochCPUUsage.result" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">result</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">strategy</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">float</span><a class="reference internal" href="../../../../_modules/avalanche/evaluation/metrics/cpu_usage/#RunningEpochCPUUsage.result"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.evaluation.metrics.RunningEpochCPUUsage.result" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
@@ -1569,40 +1600,47 @@ value recorded for that key.</p>
 </dd></dl>
 
 <dl class="py class">
-<dt class="sig sig-object py" id="avalanche.evaluation.metrics.ExperienceForgetting">
-<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">avalanche.evaluation.metrics.</span></span><span class="sig-name descname"><span class="pre">ExperienceForgetting</span></span><a class="reference internal" href="../../../../_modules/avalanche/evaluation/metrics/forgetting_bwt/#ExperienceForgetting"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.evaluation.metrics.ExperienceForgetting" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="avalanche.evaluation.metrics.GenericExperienceForgetting">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">avalanche.evaluation.metrics.</span></span><span class="sig-name descname"><span class="pre">GenericExperienceForgetting</span></span><a class="reference internal" href="../../../../_modules/avalanche/evaluation/metrics/forgetting_bwt/#GenericExperienceForgetting"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.evaluation.metrics.GenericExperienceForgetting" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">PluginMetric[Dict[int,</span> <span class="pre">float]]</span></code></p>
-<p>The ExperienceForgetting metric, describing the accuracy loss
-detected for a certain experience.</p>
+<p>The GenericExperienceForgetting metric, describing the change in
+a metric detected for a certain experience. The user should
+subclass this and provide the desired metric.</p>
+<p>In particular, the user should override:
+* __init__ by calling <cite>super</cite> and instantiating the <cite>self.current_metric</cite>
+property as a valid avalanche metric
+* <cite>metric_update</cite>, to update <cite>current_metric</cite>
+* <cite>metric_result</cite> to get the result from <cite>current_metric</cite>.
+* <cite>__str__</cite> to define the experience forgetting  name.</p>
 <p>This plugin metric, computed separately for each experience,
-is the difference between the accuracy result obtained after
-first training on a experience and the accuracy result obtained
+is the difference between the metric result obtained after
+first training on a experience and the metric result obtained
 on the same experience at the end of successive experiences.</p>
 <p>This metric is computed during the eval phase only.</p>
-<p>Creates an instance of the ExperienceForgetting metric.</p>
+<p>Creates an instance of the GenericExperienceForgetting metric.</p>
 <dl class="py attribute">
-<dt class="sig sig-object py" id="avalanche.evaluation.metrics.ExperienceForgetting.forgetting">
-<span class="sig-name descname"><span class="pre">forgetting</span></span><a class="headerlink" href="#avalanche.evaluation.metrics.ExperienceForgetting.forgetting" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="avalanche.evaluation.metrics.GenericExperienceForgetting.forgetting">
+<span class="sig-name descname"><span class="pre">forgetting</span></span><a class="headerlink" href="#avalanche.evaluation.metrics.GenericExperienceForgetting.forgetting" title="Permalink to this definition">¶</a></dt>
 <dd><p>The general metric to compute forgetting</p>
 </dd></dl>
 
 <dl class="py attribute">
-<dt class="sig sig-object py" id="avalanche.evaluation.metrics.ExperienceForgetting.eval_exp_id">
-<span class="sig-name descname"><span class="pre">eval_exp_id</span></span><a class="headerlink" href="#avalanche.evaluation.metrics.ExperienceForgetting.eval_exp_id" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="avalanche.evaluation.metrics.GenericExperienceForgetting.eval_exp_id">
+<span class="sig-name descname"><span class="pre">eval_exp_id</span></span><a class="headerlink" href="#avalanche.evaluation.metrics.GenericExperienceForgetting.eval_exp_id" title="Permalink to this definition">¶</a></dt>
 <dd><p>The current evaluation experience id</p>
 </dd></dl>
 
 <dl class="py attribute">
-<dt class="sig sig-object py" id="avalanche.evaluation.metrics.ExperienceForgetting.train_exp_id">
-<span class="sig-name descname"><span class="pre">train_exp_id</span></span><a class="headerlink" href="#avalanche.evaluation.metrics.ExperienceForgetting.train_exp_id" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="avalanche.evaluation.metrics.GenericExperienceForgetting.train_exp_id">
+<span class="sig-name descname"><span class="pre">train_exp_id</span></span><a class="headerlink" href="#avalanche.evaluation.metrics.GenericExperienceForgetting.train_exp_id" title="Permalink to this definition">¶</a></dt>
 <dd><p>The last encountered training experience id</p>
 </dd></dl>
 
 <dl class="py method">
-<dt class="sig sig-object py" id="avalanche.evaluation.metrics.ExperienceForgetting.reset">
-<span class="sig-name descname"><span class="pre">reset</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">None</span><a class="reference internal" href="../../../../_modules/avalanche/evaluation/metrics/forgetting_bwt/#ExperienceForgetting.reset"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.evaluation.metrics.ExperienceForgetting.reset" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="avalanche.evaluation.metrics.GenericExperienceForgetting.reset">
+<span class="sig-name descname"><span class="pre">reset</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">None</span><a class="reference internal" href="../../../../_modules/avalanche/evaluation/metrics/forgetting_bwt/#GenericExperienceForgetting.reset"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.evaluation.metrics.GenericExperienceForgetting.reset" title="Permalink to this definition">¶</a></dt>
 <dd><p>Resets the metric.</p>
-<p>Beware that this will also reset the initial accuracy of each
+<p>Beware that this will also reset the initial metric of each
 experience!</p>
 <dl class="field-list simple">
 <dt class="field-odd">Returns</dt>
@@ -1612,10 +1650,10 @@ experience!</p>
 </dd></dl>
 
 <dl class="py method">
-<dt class="sig sig-object py" id="avalanche.evaluation.metrics.ExperienceForgetting.reset_last_accuracy">
-<span class="sig-name descname"><span class="pre">reset_last_accuracy</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">None</span><a class="reference internal" href="../../../../_modules/avalanche/evaluation/metrics/forgetting_bwt/#ExperienceForgetting.reset_last_accuracy"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.evaluation.metrics.ExperienceForgetting.reset_last_accuracy" title="Permalink to this definition">¶</a></dt>
-<dd><p>Resets the last accuracy.</p>
-<p>This will preserve the initial accuracy value of each experience.
+<dt class="sig sig-object py" id="avalanche.evaluation.metrics.GenericExperienceForgetting.reset_last">
+<span class="sig-name descname"><span class="pre">reset_last</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">None</span><a class="reference internal" href="../../../../_modules/avalanche/evaluation/metrics/forgetting_bwt/#GenericExperienceForgetting.reset_last"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.evaluation.metrics.GenericExperienceForgetting.reset_last" title="Permalink to this definition">¶</a></dt>
+<dd><p>Resets the last metric value.</p>
+<p>This will preserve the initial metric value of each experience.
 To be used at the beginning of each eval experience.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Returns</dt>
@@ -1625,8 +1663,8 @@ To be used at the beginning of each eval experience.</p>
 </dd></dl>
 
 <dl class="py method">
-<dt class="sig sig-object py" id="avalanche.evaluation.metrics.ExperienceForgetting.update">
-<span class="sig-name descname"><span class="pre">update</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">k</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">v</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">initial</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/avalanche/evaluation/metrics/forgetting_bwt/#ExperienceForgetting.update"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.evaluation.metrics.ExperienceForgetting.update" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="avalanche.evaluation.metrics.GenericExperienceForgetting.update">
+<span class="sig-name descname"><span class="pre">update</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">k</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">v</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">initial</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/avalanche/evaluation/metrics/forgetting_bwt/#GenericExperienceForgetting.update"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.evaluation.metrics.GenericExperienceForgetting.update" title="Permalink to this definition">¶</a></dt>
 <dd><p>Update forgetting metric.
 See <cite>Forgetting</cite> for more detailed information.</p>
 <dl class="field-list simple">
@@ -1642,42 +1680,274 @@ last value.</p></li>
 </dd></dl>
 
 <dl class="py method">
-<dt class="sig sig-object py" id="avalanche.evaluation.metrics.ExperienceForgetting.result">
-<span class="sig-name descname"><span class="pre">result</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">k</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">,</span> </span><span class="pre">None</span><span class="p"><span class="pre">,</span> </span><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">,</span> </span><span class="pre">float</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span><a class="reference internal" href="../../../../_modules/avalanche/evaluation/metrics/forgetting_bwt/#ExperienceForgetting.result"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.evaluation.metrics.ExperienceForgetting.result" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="avalanche.evaluation.metrics.GenericExperienceForgetting.result">
+<span class="sig-name descname"><span class="pre">result</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">k</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">,</span> </span><span class="pre">None</span><span class="p"><span class="pre">,</span> </span><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">,</span> </span><span class="pre">float</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span><a class="reference internal" href="../../../../_modules/avalanche/evaluation/metrics/forgetting_bwt/#GenericExperienceForgetting.result"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.evaluation.metrics.GenericExperienceForgetting.result" title="Permalink to this definition">¶</a></dt>
 <dd><p>See <cite>Forgetting</cite> documentation for more detailed information.</p>
 <p>k: optional key from which compute forgetting.</p>
 </dd></dl>
 
 <dl class="py method">
-<dt class="sig sig-object py" id="avalanche.evaluation.metrics.ExperienceForgetting.before_training_exp">
-<span class="sig-name descname"><span class="pre">before_training_exp</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">strategy</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">BaseStrategy</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">None</span><a class="reference internal" href="../../../../_modules/avalanche/evaluation/metrics/forgetting_bwt/#ExperienceForgetting.before_training_exp"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.evaluation.metrics.ExperienceForgetting.before_training_exp" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="avalanche.evaluation.metrics.GenericExperienceForgetting.before_training_exp">
+<span class="sig-name descname"><span class="pre">before_training_exp</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">strategy</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">BaseStrategy</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">None</span><a class="reference internal" href="../../../../_modules/avalanche/evaluation/metrics/forgetting_bwt/#GenericExperienceForgetting.before_training_exp"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.evaluation.metrics.GenericExperienceForgetting.before_training_exp" title="Permalink to this definition">¶</a></dt>
 <dd><p>Called before <cite>train_exp</cite> by the <cite>BaseStrategy</cite>.</p>
 </dd></dl>
 
 <dl class="py method">
-<dt class="sig sig-object py" id="avalanche.evaluation.metrics.ExperienceForgetting.before_eval">
-<span class="sig-name descname"><span class="pre">before_eval</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">strategy</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">None</span><a class="reference internal" href="../../../../_modules/avalanche/evaluation/metrics/forgetting_bwt/#ExperienceForgetting.before_eval"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.evaluation.metrics.ExperienceForgetting.before_eval" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="avalanche.evaluation.metrics.GenericExperienceForgetting.before_eval">
+<span class="sig-name descname"><span class="pre">before_eval</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">strategy</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">None</span><a class="reference internal" href="../../../../_modules/avalanche/evaluation/metrics/forgetting_bwt/#GenericExperienceForgetting.before_eval"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.evaluation.metrics.GenericExperienceForgetting.before_eval" title="Permalink to this definition">¶</a></dt>
 <dd><p>Called before <cite>eval</cite> by the <cite>BaseStrategy</cite>.</p>
 </dd></dl>
 
 <dl class="py method">
-<dt class="sig sig-object py" id="avalanche.evaluation.metrics.ExperienceForgetting.before_eval_exp">
-<span class="sig-name descname"><span class="pre">before_eval_exp</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">strategy</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">BaseStrategy</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">None</span><a class="reference internal" href="../../../../_modules/avalanche/evaluation/metrics/forgetting_bwt/#ExperienceForgetting.before_eval_exp"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.evaluation.metrics.ExperienceForgetting.before_eval_exp" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="avalanche.evaluation.metrics.GenericExperienceForgetting.before_eval_exp">
+<span class="sig-name descname"><span class="pre">before_eval_exp</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">strategy</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">BaseStrategy</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">None</span><a class="reference internal" href="../../../../_modules/avalanche/evaluation/metrics/forgetting_bwt/#GenericExperienceForgetting.before_eval_exp"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.evaluation.metrics.GenericExperienceForgetting.before_eval_exp" title="Permalink to this definition">¶</a></dt>
 <dd><p>Called before <cite>eval_exp</cite> by the <cite>BaseStrategy</cite>.</p>
 </dd></dl>
 
 <dl class="py method">
-<dt class="sig sig-object py" id="avalanche.evaluation.metrics.ExperienceForgetting.after_eval_iteration">
-<span class="sig-name descname"><span class="pre">after_eval_iteration</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">strategy</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">BaseStrategy</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">None</span><a class="reference internal" href="../../../../_modules/avalanche/evaluation/metrics/forgetting_bwt/#ExperienceForgetting.after_eval_iteration"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.evaluation.metrics.ExperienceForgetting.after_eval_iteration" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="avalanche.evaluation.metrics.GenericExperienceForgetting.after_eval_iteration">
+<span class="sig-name descname"><span class="pre">after_eval_iteration</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">strategy</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">BaseStrategy</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">None</span><a class="reference internal" href="../../../../_modules/avalanche/evaluation/metrics/forgetting_bwt/#GenericExperienceForgetting.after_eval_iteration"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.evaluation.metrics.GenericExperienceForgetting.after_eval_iteration" title="Permalink to this definition">¶</a></dt>
 <dd><p>Called after the end of an iteration by the
 <cite>BaseStrategy</cite>.</p>
 </dd></dl>
 
 <dl class="py method">
-<dt class="sig sig-object py" id="avalanche.evaluation.metrics.ExperienceForgetting.after_eval_exp">
-<span class="sig-name descname"><span class="pre">after_eval_exp</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">strategy</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">BaseStrategy</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">MetricResult</span><a class="reference internal" href="../../../../_modules/avalanche/evaluation/metrics/forgetting_bwt/#ExperienceForgetting.after_eval_exp"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.evaluation.metrics.ExperienceForgetting.after_eval_exp" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="avalanche.evaluation.metrics.GenericExperienceForgetting.after_eval_exp">
+<span class="sig-name descname"><span class="pre">after_eval_exp</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">strategy</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">BaseStrategy</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">MetricResult</span><a class="reference internal" href="../../../../_modules/avalanche/evaluation/metrics/forgetting_bwt/#GenericExperienceForgetting.after_eval_exp"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.evaluation.metrics.GenericExperienceForgetting.after_eval_exp" title="Permalink to this definition">¶</a></dt>
 <dd><p>Called after <cite>eval_exp</cite> by the <cite>BaseStrategy</cite>.</p>
 </dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="avalanche.evaluation.metrics.GenericExperienceForgetting.metric_update">
+<em class="property"><span class="pre">abstract</span> </em><span class="sig-name descname"><span class="pre">metric_update</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">strategy</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/avalanche/evaluation/metrics/forgetting_bwt/#GenericExperienceForgetting.metric_update"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.evaluation.metrics.GenericExperienceForgetting.metric_update" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="avalanche.evaluation.metrics.GenericExperienceForgetting.metric_result">
+<em class="property"><span class="pre">abstract</span> </em><span class="sig-name descname"><span class="pre">metric_result</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">strategy</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/avalanche/evaluation/metrics/forgetting_bwt/#GenericExperienceForgetting.metric_result"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.evaluation.metrics.GenericExperienceForgetting.metric_result" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="avalanche.evaluation.metrics.GenericExperienceForgetting.__str__">
+<em class="property"><span class="pre">abstract</span> </em><span class="sig-name descname"><span class="pre">__str__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/avalanche/evaluation/metrics/forgetting_bwt/#GenericExperienceForgetting.__str__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.evaluation.metrics.GenericExperienceForgetting.__str__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return str(self).</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="avalanche.evaluation.metrics.GenericStreamForgetting">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">avalanche.evaluation.metrics.</span></span><span class="sig-name descname"><span class="pre">GenericStreamForgetting</span></span><a class="reference internal" href="../../../../_modules/avalanche/evaluation/metrics/forgetting_bwt/#GenericStreamForgetting"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.evaluation.metrics.GenericStreamForgetting" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="forgetting_bwt/#avalanche.evaluation.metrics.forgetting_bwt.GenericExperienceForgetting" title="avalanche.evaluation.metrics.forgetting_bwt.GenericExperienceForgetting"><code class="xref py py-class docutils literal notranslate"><span class="pre">avalanche.evaluation.metrics.forgetting_bwt.GenericExperienceForgetting</span></code></a></p>
+<p>The GenericStreamForgetting metric, describing the average evaluation
+change in the desired metric detected over all experiences observed
+during training.</p>
+<p>In particular, the user should override:
+* __init__ by calling <cite>super</cite> and instantiating the <cite>self.current_metric</cite>
+property as a valid avalanche metric
+* <cite>metric_update</cite>, to update <cite>current_metric</cite>
+* <cite>metric_result</cite> to get the result from <cite>current_metric</cite>.
+* <cite>__str__</cite> to define the experience forgetting  name.</p>
+<p>This plugin metric, computed over all observed experiences during training,
+is the average over the difference between the metric result obtained
+after first training on a experience and the metric result obtained
+on the same experience at the end of successive experiences.</p>
+<p>This metric is computed during the eval phase only.</p>
+<p>Creates an instance of the GenericStreamForgetting metric.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="avalanche.evaluation.metrics.GenericStreamForgetting.stream_forgetting">
+<span class="sig-name descname"><span class="pre">stream_forgetting</span></span><a class="headerlink" href="#avalanche.evaluation.metrics.GenericStreamForgetting.stream_forgetting" title="Permalink to this definition">¶</a></dt>
+<dd><p>The average forgetting over all experiences</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="avalanche.evaluation.metrics.GenericStreamForgetting.reset">
+<span class="sig-name descname"><span class="pre">reset</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">None</span><a class="reference internal" href="../../../../_modules/avalanche/evaluation/metrics/forgetting_bwt/#GenericStreamForgetting.reset"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.evaluation.metrics.GenericStreamForgetting.reset" title="Permalink to this definition">¶</a></dt>
+<dd><p>Resets the forgetting metrics.</p>
+<p>Beware that this will also reset the initial metric value of each
+experience!</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>None.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="avalanche.evaluation.metrics.GenericStreamForgetting.exp_update">
+<span class="sig-name descname"><span class="pre">exp_update</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">k</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">v</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">initial</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/avalanche/evaluation/metrics/forgetting_bwt/#GenericStreamForgetting.exp_update"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.evaluation.metrics.GenericStreamForgetting.exp_update" title="Permalink to this definition">¶</a></dt>
+<dd><p>Update forgetting metric.
+See <cite>Forgetting</cite> for more detailed information.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>k</strong> – key to update</p></li>
+<li><p><strong>v</strong> – value associated to k</p></li>
+<li><p><strong>initial</strong> – update initial value. If False, update
+last value.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="avalanche.evaluation.metrics.GenericStreamForgetting.exp_result">
+<span class="sig-name descname"><span class="pre">exp_result</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">k</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">,</span> </span><span class="pre">None</span><span class="p"><span class="pre">,</span> </span><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">,</span> </span><span class="pre">float</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span><a class="reference internal" href="../../../../_modules/avalanche/evaluation/metrics/forgetting_bwt/#GenericStreamForgetting.exp_result"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.evaluation.metrics.GenericStreamForgetting.exp_result" title="Permalink to this definition">¶</a></dt>
+<dd><p>Result for experience defined by a key.
+See <cite>Forgetting</cite> documentation for more detailed information.</p>
+<p>k: optional key from which compute forgetting.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="avalanche.evaluation.metrics.GenericStreamForgetting.result">
+<span class="sig-name descname"><span class="pre">result</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">k</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">,</span> </span><span class="pre">None</span><span class="p"><span class="pre">,</span> </span><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">,</span> </span><span class="pre">float</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span><a class="reference internal" href="../../../../_modules/avalanche/evaluation/metrics/forgetting_bwt/#GenericStreamForgetting.result"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.evaluation.metrics.GenericStreamForgetting.result" title="Permalink to this definition">¶</a></dt>
+<dd><p>The average forgetting over all experience.</p>
+<p>k: optional key from which compute forgetting.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="avalanche.evaluation.metrics.GenericStreamForgetting.before_eval">
+<span class="sig-name descname"><span class="pre">before_eval</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">strategy</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">None</span><a class="reference internal" href="../../../../_modules/avalanche/evaluation/metrics/forgetting_bwt/#GenericStreamForgetting.before_eval"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.evaluation.metrics.GenericStreamForgetting.before_eval" title="Permalink to this definition">¶</a></dt>
+<dd><p>Called before <cite>eval</cite> by the <cite>BaseStrategy</cite>.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="avalanche.evaluation.metrics.GenericStreamForgetting.after_eval_exp">
+<span class="sig-name descname"><span class="pre">after_eval_exp</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">strategy</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">BaseStrategy</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">None</span><a class="reference internal" href="../../../../_modules/avalanche/evaluation/metrics/forgetting_bwt/#GenericStreamForgetting.after_eval_exp"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.evaluation.metrics.GenericStreamForgetting.after_eval_exp" title="Permalink to this definition">¶</a></dt>
+<dd><p>Called after <cite>eval_exp</cite> by the <cite>BaseStrategy</cite>.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="avalanche.evaluation.metrics.GenericStreamForgetting.after_eval">
+<span class="sig-name descname"><span class="pre">after_eval</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">strategy</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">BaseStrategy</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">MetricResult</span><a class="reference internal" href="../../../../_modules/avalanche/evaluation/metrics/forgetting_bwt/#GenericStreamForgetting.after_eval"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.evaluation.metrics.GenericStreamForgetting.after_eval" title="Permalink to this definition">¶</a></dt>
+<dd><p>Called after <cite>eval</cite> by the <cite>BaseStrategy</cite>.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="avalanche.evaluation.metrics.GenericStreamForgetting.metric_update">
+<em class="property"><span class="pre">abstract</span> </em><span class="sig-name descname"><span class="pre">metric_update</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">strategy</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/avalanche/evaluation/metrics/forgetting_bwt/#GenericStreamForgetting.metric_update"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.evaluation.metrics.GenericStreamForgetting.metric_update" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="avalanche.evaluation.metrics.GenericStreamForgetting.metric_result">
+<em class="property"><span class="pre">abstract</span> </em><span class="sig-name descname"><span class="pre">metric_result</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">strategy</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/avalanche/evaluation/metrics/forgetting_bwt/#GenericStreamForgetting.metric_result"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.evaluation.metrics.GenericStreamForgetting.metric_result" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="avalanche.evaluation.metrics.GenericStreamForgetting.__str__">
+<em class="property"><span class="pre">abstract</span> </em><span class="sig-name descname"><span class="pre">__str__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/avalanche/evaluation/metrics/forgetting_bwt/#GenericStreamForgetting.__str__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.evaluation.metrics.GenericStreamForgetting.__str__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return str(self).</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="avalanche.evaluation.metrics.GenericTaskForgetting">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">avalanche.evaluation.metrics.</span></span><span class="sig-name descname"><span class="pre">GenericTaskForgetting</span></span><a class="reference internal" href="../../../../_modules/avalanche/evaluation/metrics/forgetting_bwt/#GenericTaskForgetting"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.evaluation.metrics.GenericTaskForgetting" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">PluginMetric[Dict[int,</span> <span class="pre">float]]</span></code></p>
+<p>The GenericTaskForgetting metric, describing the average evaluation
+change in the desired metric detected over all tasks observed
+during training and evaluation.</p>
+<p>In particular, the user should override:
+* __init__ by calling <cite>super</cite> and instantiating the</p>
+<blockquote>
+<div><p><cite>self.current_train_metric</cite> and <cite>current_eval_metric</cite> properties as
+valid avalanche metrics (the same metric for both properties).
+The metric should be able to return values for each task separately.</p>
+</div></blockquote>
+<ul class="simple">
+<li><p><cite>metric_update</cite>, to update <cite>current_metric</cite></p></li>
+<li><p><cite>__str__</cite> to define the experience forgetting  name.</p></li>
+</ul>
+<p>This plugin metric, computed over all observed experiences during training,
+is the average over the difference between the metric result obtained
+after first training on a experience and the metric result obtained
+on the same experience at the end of successive experiences.</p>
+<p>This metric is computed during the eval phase only.</p>
+<p>Creates an instance of a plugin metric.</p>
+<p>Child classes can safely invoke this (super) constructor as the first
+experience.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="avalanche.evaluation.metrics.GenericTaskForgetting.reset">
+<span class="sig-name descname"><span class="pre">reset</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">None</span><a class="reference internal" href="../../../../_modules/avalanche/evaluation/metrics/forgetting_bwt/#GenericTaskForgetting.reset"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.evaluation.metrics.GenericTaskForgetting.reset" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="avalanche.evaluation.metrics.GenericTaskForgetting.result">
+<span class="sig-name descname"><span class="pre">result</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/avalanche/evaluation/metrics/forgetting_bwt/#GenericTaskForgetting.result"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.evaluation.metrics.GenericTaskForgetting.result" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="avalanche.evaluation.metrics.GenericTaskForgetting.update">
+<span class="sig-name descname"><span class="pre">update</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">k</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">v</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">initial</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/avalanche/evaluation/metrics/forgetting_bwt/#GenericTaskForgetting.update"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.evaluation.metrics.GenericTaskForgetting.update" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="avalanche.evaluation.metrics.GenericTaskForgetting.before_training">
+<span class="sig-name descname"><span class="pre">before_training</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">strategy</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">BaseStrategy</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/avalanche/evaluation/metrics/forgetting_bwt/#GenericTaskForgetting.before_training"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.evaluation.metrics.GenericTaskForgetting.before_training" title="Permalink to this definition">¶</a></dt>
+<dd><p>Called before <cite>train</cite> by the <cite>BaseStrategy</cite>.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="avalanche.evaluation.metrics.GenericTaskForgetting.after_training_iteration">
+<span class="sig-name descname"><span class="pre">after_training_iteration</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">strategy</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">BaseStrategy</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/avalanche/evaluation/metrics/forgetting_bwt/#GenericTaskForgetting.after_training_iteration"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.evaluation.metrics.GenericTaskForgetting.after_training_iteration" title="Permalink to this definition">¶</a></dt>
+<dd><p>Called after the end of a training iteration by the
+<cite>BaseStrategy</cite>.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="avalanche.evaluation.metrics.GenericTaskForgetting.before_eval">
+<span class="sig-name descname"><span class="pre">before_eval</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">strategy</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">BaseStrategy</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/avalanche/evaluation/metrics/forgetting_bwt/#GenericTaskForgetting.before_eval"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.evaluation.metrics.GenericTaskForgetting.before_eval" title="Permalink to this definition">¶</a></dt>
+<dd><p>Called before <cite>eval</cite> by the <cite>BaseStrategy</cite>.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="avalanche.evaluation.metrics.GenericTaskForgetting.after_eval_iteration">
+<span class="sig-name descname"><span class="pre">after_eval_iteration</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">strategy</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">BaseStrategy</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/avalanche/evaluation/metrics/forgetting_bwt/#GenericTaskForgetting.after_eval_iteration"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.evaluation.metrics.GenericTaskForgetting.after_eval_iteration" title="Permalink to this definition">¶</a></dt>
+<dd><p>Called after the end of an iteration by the
+<cite>BaseStrategy</cite>.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="avalanche.evaluation.metrics.GenericTaskForgetting.after_eval">
+<span class="sig-name descname"><span class="pre">after_eval</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">strategy</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">BaseStrategy</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">MetricResult</span><a class="reference internal" href="../../../../_modules/avalanche/evaluation/metrics/forgetting_bwt/#GenericTaskForgetting.after_eval"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.evaluation.metrics.GenericTaskForgetting.after_eval" title="Permalink to this definition">¶</a></dt>
+<dd><p>Called after <cite>eval</cite> by the <cite>BaseStrategy</cite>.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="avalanche.evaluation.metrics.GenericTaskForgetting.metric_update">
+<em class="property"><span class="pre">abstract</span> </em><span class="sig-name descname"><span class="pre">metric_update</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">strategy</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">train</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/avalanche/evaluation/metrics/forgetting_bwt/#GenericTaskForgetting.metric_update"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.evaluation.metrics.GenericTaskForgetting.metric_update" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="avalanche.evaluation.metrics.GenericTaskForgetting.__str__">
+<em class="property"><span class="pre">abstract</span> </em><span class="sig-name descname"><span class="pre">__str__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/avalanche/evaluation/metrics/forgetting_bwt/#GenericTaskForgetting.__str__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.evaluation.metrics.GenericTaskForgetting.__str__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return str(self).</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="avalanche.evaluation.metrics.ExperienceForgetting">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">avalanche.evaluation.metrics.</span></span><span class="sig-name descname"><span class="pre">ExperienceForgetting</span></span><a class="reference internal" href="../../../../_modules/avalanche/evaluation/metrics/forgetting_bwt/#ExperienceForgetting"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.evaluation.metrics.ExperienceForgetting" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="forgetting_bwt/#avalanche.evaluation.metrics.forgetting_bwt.GenericExperienceForgetting" title="avalanche.evaluation.metrics.forgetting_bwt.GenericExperienceForgetting"><code class="xref py py-class docutils literal notranslate"><span class="pre">avalanche.evaluation.metrics.forgetting_bwt.GenericExperienceForgetting</span></code></a></p>
+<p>The ExperienceForgetting metric, describing the accuracy loss
+detected for a certain experience.</p>
+<p>This plugin metric, computed separately for each experience,
+is the difference between the accuracy result obtained after
+first training on a experience and the accuracy result obtained
+on the same experience at the end of successive experiences.</p>
+<p>This metric is computed during the eval phase only.</p>
+<p>Creates an instance of the ExperienceForgetting metric.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="avalanche.evaluation.metrics.ExperienceForgetting.metric_update">
+<span class="sig-name descname"><span class="pre">metric_update</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">strategy</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/avalanche/evaluation/metrics/forgetting_bwt/#ExperienceForgetting.metric_update"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.evaluation.metrics.ExperienceForgetting.metric_update" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="avalanche.evaluation.metrics.ExperienceForgetting.metric_result">
+<span class="sig-name descname"><span class="pre">metric_result</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">strategy</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/avalanche/evaluation/metrics/forgetting_bwt/#ExperienceForgetting.metric_result"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.evaluation.metrics.ExperienceForgetting.metric_result" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="avalanche.evaluation.metrics.ExperienceForgetting.__str__">
@@ -1690,7 +1960,7 @@ last value.</p></li>
 <dl class="py class">
 <dt class="sig sig-object py" id="avalanche.evaluation.metrics.StreamForgetting">
 <em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">avalanche.evaluation.metrics.</span></span><span class="sig-name descname"><span class="pre">StreamForgetting</span></span><a class="reference internal" href="../../../../_modules/avalanche/evaluation/metrics/forgetting_bwt/#StreamForgetting"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.evaluation.metrics.StreamForgetting" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">PluginMetric[Dict[int,</span> <span class="pre">float]]</span></code></p>
+<dd><p>Bases: <a class="reference internal" href="forgetting_bwt/#avalanche.evaluation.metrics.forgetting_bwt.GenericStreamForgetting" title="avalanche.evaluation.metrics.forgetting_bwt.GenericStreamForgetting"><code class="xref py py-class docutils literal notranslate"><span class="pre">avalanche.evaluation.metrics.forgetting_bwt.GenericStreamForgetting</span></code></a></p>
 <p>The StreamForgetting metric, describing the average evaluation accuracy loss
 detected over all experiences observed during training.</p>
 <p>This plugin metric, computed over all observed experiences during training,
@@ -1699,124 +1969,15 @@ after first training on a experience and the accuracy result obtained
 on the same experience at the end of successive experiences.</p>
 <p>This metric is computed during the eval phase only.</p>
 <p>Creates an instance of the StreamForgetting metric.</p>
-<dl class="py attribute">
-<dt class="sig sig-object py" id="avalanche.evaluation.metrics.StreamForgetting.stream_forgetting">
-<span class="sig-name descname"><span class="pre">stream_forgetting</span></span><a class="headerlink" href="#avalanche.evaluation.metrics.StreamForgetting.stream_forgetting" title="Permalink to this definition">¶</a></dt>
-<dd><p>The average forgetting over all experiences</p>
-</dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="avalanche.evaluation.metrics.StreamForgetting.forgetting">
-<span class="sig-name descname"><span class="pre">forgetting</span></span><a class="headerlink" href="#avalanche.evaluation.metrics.StreamForgetting.forgetting" title="Permalink to this definition">¶</a></dt>
-<dd><p>The general metric to compute forgetting</p>
-</dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="avalanche.evaluation.metrics.StreamForgetting.eval_exp_id">
-<span class="sig-name descname"><span class="pre">eval_exp_id</span></span><a class="headerlink" href="#avalanche.evaluation.metrics.StreamForgetting.eval_exp_id" title="Permalink to this definition">¶</a></dt>
-<dd><p>The current evaluation experience id</p>
-</dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="avalanche.evaluation.metrics.StreamForgetting.train_exp_id">
-<span class="sig-name descname"><span class="pre">train_exp_id</span></span><a class="headerlink" href="#avalanche.evaluation.metrics.StreamForgetting.train_exp_id" title="Permalink to this definition">¶</a></dt>
-<dd><p>The last encountered training experience id</p>
-</dd></dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="avalanche.evaluation.metrics.StreamForgetting.metric_update">
+<span class="sig-name descname"><span class="pre">metric_update</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">strategy</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/avalanche/evaluation/metrics/forgetting_bwt/#StreamForgetting.metric_update"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.evaluation.metrics.StreamForgetting.metric_update" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
 
 <dl class="py method">
-<dt class="sig sig-object py" id="avalanche.evaluation.metrics.StreamForgetting.reset">
-<span class="sig-name descname"><span class="pre">reset</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">None</span><a class="reference internal" href="../../../../_modules/avalanche/evaluation/metrics/forgetting_bwt/#StreamForgetting.reset"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.evaluation.metrics.StreamForgetting.reset" title="Permalink to this definition">¶</a></dt>
-<dd><p>Resets the forgetting metrics.</p>
-<p>Beware that this will also reset the initial accuracy of each
-experience!</p>
-<dl class="field-list simple">
-<dt class="field-odd">Returns</dt>
-<dd class="field-odd"><p>None.</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="avalanche.evaluation.metrics.StreamForgetting.reset_last_accuracy">
-<span class="sig-name descname"><span class="pre">reset_last_accuracy</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">None</span><a class="reference internal" href="../../../../_modules/avalanche/evaluation/metrics/forgetting_bwt/#StreamForgetting.reset_last_accuracy"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.evaluation.metrics.StreamForgetting.reset_last_accuracy" title="Permalink to this definition">¶</a></dt>
-<dd><p>Resets the last accuracy.</p>
-<p>This will preserve the initial accuracy value of each experience.
-To be used at the beginning of each eval experience.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Returns</dt>
-<dd class="field-odd"><p>None.</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="avalanche.evaluation.metrics.StreamForgetting.exp_update">
-<span class="sig-name descname"><span class="pre">exp_update</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">k</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">v</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">initial</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/avalanche/evaluation/metrics/forgetting_bwt/#StreamForgetting.exp_update"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.evaluation.metrics.StreamForgetting.exp_update" title="Permalink to this definition">¶</a></dt>
-<dd><p>Update forgetting metric.
-See <cite>Forgetting</cite> for more detailed information.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>k</strong> – key to update</p></li>
-<li><p><strong>v</strong> – value associated to k</p></li>
-<li><p><strong>initial</strong> – update initial value. If False, update
-last value.</p></li>
-</ul>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="avalanche.evaluation.metrics.StreamForgetting.exp_result">
-<span class="sig-name descname"><span class="pre">exp_result</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">k</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">,</span> </span><span class="pre">None</span><span class="p"><span class="pre">,</span> </span><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">,</span> </span><span class="pre">float</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span><a class="reference internal" href="../../../../_modules/avalanche/evaluation/metrics/forgetting_bwt/#StreamForgetting.exp_result"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.evaluation.metrics.StreamForgetting.exp_result" title="Permalink to this definition">¶</a></dt>
-<dd><p>Result for experience defined by a key.
-See <cite>Forgetting</cite> documentation for more detailed information.</p>
-<p>k: optional key from which compute forgetting.</p>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="avalanche.evaluation.metrics.StreamForgetting.result">
-<span class="sig-name descname"><span class="pre">result</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">k</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">,</span> </span><span class="pre">None</span><span class="p"><span class="pre">,</span> </span><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">,</span> </span><span class="pre">float</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span><a class="reference internal" href="../../../../_modules/avalanche/evaluation/metrics/forgetting_bwt/#StreamForgetting.result"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.evaluation.metrics.StreamForgetting.result" title="Permalink to this definition">¶</a></dt>
-<dd><p>The average forgetting over all experience.</p>
-<p>k: optional key from which compute forgetting.</p>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="avalanche.evaluation.metrics.StreamForgetting.before_training_exp">
-<span class="sig-name descname"><span class="pre">before_training_exp</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">strategy</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">BaseStrategy</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">None</span><a class="reference internal" href="../../../../_modules/avalanche/evaluation/metrics/forgetting_bwt/#StreamForgetting.before_training_exp"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.evaluation.metrics.StreamForgetting.before_training_exp" title="Permalink to this definition">¶</a></dt>
-<dd><p>Called before <cite>train_exp</cite> by the <cite>BaseStrategy</cite>.</p>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="avalanche.evaluation.metrics.StreamForgetting.before_eval">
-<span class="sig-name descname"><span class="pre">before_eval</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">strategy</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">None</span><a class="reference internal" href="../../../../_modules/avalanche/evaluation/metrics/forgetting_bwt/#StreamForgetting.before_eval"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.evaluation.metrics.StreamForgetting.before_eval" title="Permalink to this definition">¶</a></dt>
-<dd><p>Called before <cite>eval</cite> by the <cite>BaseStrategy</cite>.</p>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="avalanche.evaluation.metrics.StreamForgetting.before_eval_exp">
-<span class="sig-name descname"><span class="pre">before_eval_exp</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">strategy</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">BaseStrategy</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">None</span><a class="reference internal" href="../../../../_modules/avalanche/evaluation/metrics/forgetting_bwt/#StreamForgetting.before_eval_exp"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.evaluation.metrics.StreamForgetting.before_eval_exp" title="Permalink to this definition">¶</a></dt>
-<dd><p>Called before <cite>eval_exp</cite> by the <cite>BaseStrategy</cite>.</p>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="avalanche.evaluation.metrics.StreamForgetting.after_eval_iteration">
-<span class="sig-name descname"><span class="pre">after_eval_iteration</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">strategy</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">BaseStrategy</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">None</span><a class="reference internal" href="../../../../_modules/avalanche/evaluation/metrics/forgetting_bwt/#StreamForgetting.after_eval_iteration"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.evaluation.metrics.StreamForgetting.after_eval_iteration" title="Permalink to this definition">¶</a></dt>
-<dd><p>Called after the end of an iteration by the
-<cite>BaseStrategy</cite>.</p>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="avalanche.evaluation.metrics.StreamForgetting.after_eval_exp">
-<span class="sig-name descname"><span class="pre">after_eval_exp</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">strategy</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">BaseStrategy</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">None</span><a class="reference internal" href="../../../../_modules/avalanche/evaluation/metrics/forgetting_bwt/#StreamForgetting.after_eval_exp"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.evaluation.metrics.StreamForgetting.after_eval_exp" title="Permalink to this definition">¶</a></dt>
-<dd><p>Called after <cite>eval_exp</cite> by the <cite>BaseStrategy</cite>.</p>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="avalanche.evaluation.metrics.StreamForgetting.after_eval">
-<span class="sig-name descname"><span class="pre">after_eval</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">strategy</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">BaseStrategy</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">MetricResult</span><a class="reference internal" href="../../../../_modules/avalanche/evaluation/metrics/forgetting_bwt/#StreamForgetting.after_eval"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.evaluation.metrics.StreamForgetting.after_eval" title="Permalink to this definition">¶</a></dt>
-<dd><p>Called after <cite>eval</cite> by the <cite>BaseStrategy</cite>.</p>
-</dd></dl>
+<dt class="sig sig-object py" id="avalanche.evaluation.metrics.StreamForgetting.metric_result">
+<span class="sig-name descname"><span class="pre">metric_result</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">strategy</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/avalanche/evaluation/metrics/forgetting_bwt/#StreamForgetting.metric_result"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.evaluation.metrics.StreamForgetting.metric_result" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="avalanche.evaluation.metrics.StreamForgetting.__str__">
@@ -1826,9 +1987,33 @@ See <cite>Forgetting</cite> documentation for more detailed information.</p>
 
 </dd></dl>
 
+<dl class="py class">
+<dt class="sig sig-object py" id="avalanche.evaluation.metrics.TaskForgetting">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">avalanche.evaluation.metrics.</span></span><span class="sig-name descname"><span class="pre">TaskForgetting</span></span><a class="reference internal" href="../../../../_modules/avalanche/evaluation/metrics/forgetting_bwt/#TaskForgetting"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.evaluation.metrics.TaskForgetting" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="forgetting_bwt/#avalanche.evaluation.metrics.forgetting_bwt.GenericTaskForgetting" title="avalanche.evaluation.metrics.forgetting_bwt.GenericTaskForgetting"><code class="xref py py-class docutils literal notranslate"><span class="pre">avalanche.evaluation.metrics.forgetting_bwt.GenericTaskForgetting</span></code></a></p>
+<p>The Task Forgetting metric returns the amount of forgetting
+on each task separately. The task-wise forgetting is computed
+as the difference between the average accuracy when last training
+on the task and the average accuracy when last evaluating on the same task.</p>
+<p>Creates an instance of a plugin metric.</p>
+<p>Child classes can safely invoke this (super) constructor as the first
+experience.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="avalanche.evaluation.metrics.TaskForgetting.metric_update">
+<span class="sig-name descname"><span class="pre">metric_update</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">strategy</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">train</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/avalanche/evaluation/metrics/forgetting_bwt/#TaskForgetting.metric_update"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.evaluation.metrics.TaskForgetting.metric_update" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="avalanche.evaluation.metrics.TaskForgetting.__str__">
+<span class="sig-name descname"><span class="pre">__str__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/avalanche/evaluation/metrics/forgetting_bwt/#TaskForgetting.__str__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.evaluation.metrics.TaskForgetting.__str__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return str(self).</p>
+</dd></dl>
+
+</dd></dl>
+
 <dl class="py function">
 <dt class="sig sig-object py" id="avalanche.evaluation.metrics.forgetting_metrics">
-<span class="sig-prename descclassname"><span class="pre">avalanche.evaluation.metrics.</span></span><span class="sig-name descname"><span class="pre">forgetting_metrics</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">experience</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">stream</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">PluginMetric</span><span class="p"><span class="pre">]</span></span><a class="reference internal" href="../../../../_modules/avalanche/evaluation/metrics/forgetting_bwt/#forgetting_metrics"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.evaluation.metrics.forgetting_metrics" title="Permalink to this definition">¶</a></dt>
+<span class="sig-prename descclassname"><span class="pre">avalanche.evaluation.metrics.</span></span><span class="sig-name descname"><span class="pre">forgetting_metrics</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">experience</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">stream</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">task</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">PluginMetric</span><span class="p"><span class="pre">]</span></span><a class="reference internal" href="../../../../_modules/avalanche/evaluation/metrics/forgetting_bwt/#forgetting_metrics"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.evaluation.metrics.forgetting_metrics" title="Permalink to this definition">¶</a></dt>
 <dd><p>Helper method that can be used to obtain the desired set of
 plugin metrics.</p>
 <dl class="field-list simple">
@@ -1839,6 +2024,8 @@ the forgetting on each evaluation experience.</p></li>
 <li><p><strong>stream</strong> – If True, will return a metric able to log
 the forgetting averaged over the evaluation stream experiences,
 which have been observed during training.</p></li>
+<li><p><strong>task</strong> – If True, will return a metric able to log the forgetting
+across each task encountered during training and evaluation.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns</dt>
@@ -1940,9 +2127,37 @@ See <cite>BWT</cite> documentation for more detailed information.</p>
 
 </dd></dl>
 
+<dl class="py class">
+<dt class="sig sig-object py" id="avalanche.evaluation.metrics.TaskBWT">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">avalanche.evaluation.metrics.</span></span><span class="sig-name descname"><span class="pre">TaskBWT</span></span><a class="reference internal" href="../../../../_modules/avalanche/evaluation/metrics/forgetting_bwt/#TaskBWT"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.evaluation.metrics.TaskBWT" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="forgetting_bwt/#avalanche.evaluation.metrics.forgetting_bwt.TaskForgetting" title="avalanche.evaluation.metrics.forgetting_bwt.TaskForgetting"><code class="xref py py-class docutils literal notranslate"><span class="pre">avalanche.evaluation.metrics.forgetting_bwt.TaskForgetting</span></code></a></p>
+<p>The TaskBWT metric, emitting the average BWT task-wise.</p>
+<p>This plugin metric, computed over all observed tasks during training,
+is the average over the difference between the last accuracy result
+obtained on a task and the accuracy result obtained when last
+training on that task.</p>
+<p>This metric is computed during the eval phase only.</p>
+<p>Creates an instance of a plugin metric.</p>
+<p>Child classes can safely invoke this (super) constructor as the first
+experience.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="avalanche.evaluation.metrics.TaskBWT.result">
+<span class="sig-name descname"><span class="pre">result</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">,</span> </span><span class="pre">None</span><span class="p"><span class="pre">,</span> </span><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">,</span> </span><span class="pre">float</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span><a class="reference internal" href="../../../../_modules/avalanche/evaluation/metrics/forgetting_bwt/#TaskBWT.result"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.evaluation.metrics.TaskBWT.result" title="Permalink to this definition">¶</a></dt>
+<dd><p>Result for experience defined by a key.
+See <cite>BWT</cite> documentation for more detailed information.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="avalanche.evaluation.metrics.TaskBWT.__str__">
+<span class="sig-name descname"><span class="pre">__str__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/avalanche/evaluation/metrics/forgetting_bwt/#TaskBWT.__str__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.evaluation.metrics.TaskBWT.__str__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return str(self).</p>
+</dd></dl>
+
+</dd></dl>
+
 <dl class="py function">
 <dt class="sig sig-object py" id="avalanche.evaluation.metrics.bwt_metrics">
-<span class="sig-prename descclassname"><span class="pre">avalanche.evaluation.metrics.</span></span><span class="sig-name descname"><span class="pre">bwt_metrics</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">experience</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">stream</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">PluginMetric</span><span class="p"><span class="pre">]</span></span><a class="reference internal" href="../../../../_modules/avalanche/evaluation/metrics/forgetting_bwt/#bwt_metrics"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.evaluation.metrics.bwt_metrics" title="Permalink to this definition">¶</a></dt>
+<span class="sig-prename descclassname"><span class="pre">avalanche.evaluation.metrics.</span></span><span class="sig-name descname"><span class="pre">bwt_metrics</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">experience</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">stream</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">task</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">PluginMetric</span><span class="p"><span class="pre">]</span></span><a class="reference internal" href="../../../../_modules/avalanche/evaluation/metrics/forgetting_bwt/#bwt_metrics"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.evaluation.metrics.bwt_metrics" title="Permalink to this definition">¶</a></dt>
 <dd><p>Helper method that can be used to obtain the desired set of
 plugin metrics.</p>
 <dl class="field-list simple">
@@ -1953,6 +2168,8 @@ the backward transfer on each evaluation experience.</p></li>
 <li><p><strong>stream</strong> – If True, will return a metric able to log
 the backward transfer averaged over the evaluation stream experiences
 which have been observed during training.</p></li>
+<li><p><strong>task</strong> – If True, will return a metric able to log
+the backward transfer for each task in the evaluation stream</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns</dt>
@@ -2160,7 +2377,7 @@ usage</p></li>
 </dl>
 <dl class="py method">
 <dt class="sig sig-object py" id="avalanche.evaluation.metrics.StreamMaxGPU.before_eval">
-<span class="sig-name descname"><span class="pre">before_eval</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">strategy</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">MetricResult</span><a class="reference internal" href="../../../../_modules/avalanche/evaluation/metrics/gpu_usage/#StreamMaxGPU.before_eval"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.evaluation.metrics.StreamMaxGPU.before_eval" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">before_eval</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">strategy</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/avalanche/evaluation/metrics/gpu_usage/#StreamMaxGPU.before_eval"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.evaluation.metrics.StreamMaxGPU.before_eval" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
@@ -2223,7 +2440,7 @@ value of 0. The metric can be updated by using the <cite>update</cite> method
 while the running loss can be retrieved using the <cite>result</cite> method.</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="avalanche.evaluation.metrics.Loss.update">
-<span class="sig-name descname"><span class="pre">update</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">loss</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Tensor</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">patterns</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">None</span><a class="reference internal" href="../../../../_modules/avalanche/evaluation/metrics/loss/#Loss.update"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.evaluation.metrics.Loss.update" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">update</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">loss</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Tensor</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">patterns</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">task_label</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">None</span><a class="reference internal" href="../../../../_modules/avalanche/evaluation/metrics/loss/#Loss.update"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.evaluation.metrics.Loss.update" title="Permalink to this definition">¶</a></dt>
 <dd><p>Update the running loss given the loss Tensor and the minibatch size.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -2231,6 +2448,7 @@ while the running loss can be retrieved using the <cite>result</cite> method.</p
 <li><p><strong>loss</strong> – The loss Tensor. Different reduction types don’t affect
 the result.</p></li>
 <li><p><strong>patterns</strong> – The number of patterns in the minibatch.</p></li>
+<li><p><strong>task_label</strong> – the task label associated to the current experience</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns</dt>
@@ -2241,9 +2459,13 @@ the result.</p></li>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="avalanche.evaluation.metrics.Loss.result">
-<span class="sig-name descname"><span class="pre">result</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">float</span><a class="reference internal" href="../../../../_modules/avalanche/evaluation/metrics/loss/#Loss.result"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.evaluation.metrics.Loss.result" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">result</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">task_label</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">,</span> </span><span class="pre">float</span><span class="p"><span class="pre">]</span></span><a class="reference internal" href="../../../../_modules/avalanche/evaluation/metrics/loss/#Loss.result"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.evaluation.metrics.Loss.result" title="Permalink to this definition">¶</a></dt>
 <dd><p>Retrieves the running average loss per pattern.</p>
-<p>Calling this method will not change the internal state of the metric.</p>
+<p>Calling this method will not change the internal state of the metric.
+:param task_label: None to return metric values for all the task labels.</p>
+<blockquote>
+<div><p>If an int, return value only for that task label</p>
+</div></blockquote>
 <dl class="field-list simple">
 <dt class="field-odd">Returns</dt>
 <dd class="field-odd"><p>The running loss, as a float.</p>
@@ -2253,11 +2475,15 @@ the result.</p></li>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="avalanche.evaluation.metrics.Loss.reset">
-<span class="sig-name descname"><span class="pre">reset</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">None</span><a class="reference internal" href="../../../../_modules/avalanche/evaluation/metrics/loss/#Loss.reset"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.evaluation.metrics.Loss.reset" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">reset</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">task_label</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">None</span><a class="reference internal" href="../../../../_modules/avalanche/evaluation/metrics/loss/#Loss.reset"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.evaluation.metrics.Loss.reset" title="Permalink to this definition">¶</a></dt>
 <dd><p>Resets the metric.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Returns</dt>
-<dd class="field-odd"><p>None.</p>
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>task_label</strong> – None to reset all metric values. If an int,
+reset metric value corresponding to that task label.</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>None.</p>
 </dd>
 </dl>
 </dd></dl>
@@ -2685,7 +2911,7 @@ This plugin metric only works at eval time.</p>
 </div></blockquote>
 <dl class="py method">
 <dt class="sig sig-object py" id="avalanche.evaluation.metrics.StreamMaxRAM.before_eval">
-<span class="sig-name descname"><span class="pre">before_eval</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">strategy</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">MetricResult</span><a class="reference internal" href="../../../../_modules/avalanche/evaluation/metrics/ram_usage/#StreamMaxRAM.before_eval"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.evaluation.metrics.StreamMaxRAM.before_eval" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">before_eval</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">strategy</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/avalanche/evaluation/metrics/ram_usage/#StreamMaxRAM.before_eval"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.evaluation.metrics.StreamMaxRAM.before_eval" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
@@ -2816,7 +3042,7 @@ This plugin metric only works at training time.</p>
 <p>Creates an instance of the epoch time metric.</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="avalanche.evaluation.metrics.EpochTime.before_training_epoch">
-<span class="sig-name descname"><span class="pre">before_training_epoch</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">strategy</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">MetricResult</span><a class="reference internal" href="../../../../_modules/avalanche/evaluation/metrics/timing/#EpochTime.before_training_epoch"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.evaluation.metrics.EpochTime.before_training_epoch" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">before_training_epoch</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">strategy</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/avalanche/evaluation/metrics/timing/#EpochTime.before_training_epoch"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.evaluation.metrics.EpochTime.before_training_epoch" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
@@ -2838,7 +3064,7 @@ epoch and the current iteration.</p>
 <p>Creates an instance of the running epoch time metric..</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="avalanche.evaluation.metrics.RunningEpochTime.before_training_epoch">
-<span class="sig-name descname"><span class="pre">before_training_epoch</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">strategy</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">MetricResult</span><a class="reference internal" href="../../../../_modules/avalanche/evaluation/metrics/timing/#RunningEpochTime.before_training_epoch"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.evaluation.metrics.RunningEpochTime.before_training_epoch" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">before_training_epoch</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">strategy</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/avalanche/evaluation/metrics/timing/#RunningEpochTime.before_training_epoch"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.evaluation.metrics.RunningEpochTime.before_training_epoch" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
@@ -2848,7 +3074,7 @@ epoch and the current iteration.</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="avalanche.evaluation.metrics.RunningEpochTime.result">
-<span class="sig-name descname"><span class="pre">result</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">float</span><a class="reference internal" href="../../../../_modules/avalanche/evaluation/metrics/timing/#RunningEpochTime.result"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.evaluation.metrics.RunningEpochTime.result" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">result</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">strategy</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">float</span><a class="reference internal" href="../../../../_modules/avalanche/evaluation/metrics/timing/#RunningEpochTime.result"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.evaluation.metrics.RunningEpochTime.result" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
@@ -2869,7 +3095,7 @@ experience.</p>
 <p>Creates an instance of the experience time metric.</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="avalanche.evaluation.metrics.ExperienceTime.before_eval_exp">
-<span class="sig-name descname"><span class="pre">before_eval_exp</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">strategy</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">BaseStrategy</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">MetricResult</span><a class="reference internal" href="../../../../_modules/avalanche/evaluation/metrics/timing/#ExperienceTime.before_eval_exp"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.evaluation.metrics.ExperienceTime.before_eval_exp" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">before_eval_exp</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">strategy</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">BaseStrategy</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/avalanche/evaluation/metrics/timing/#ExperienceTime.before_eval_exp"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.evaluation.metrics.ExperienceTime.before_eval_exp" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
@@ -2890,7 +3116,7 @@ this plugin metric emits the average time of that stream.</p>
 <p>Creates an instance of the stream time metric.</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="avalanche.evaluation.metrics.StreamTime.before_eval">
-<span class="sig-name descname"><span class="pre">before_eval</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">strategy</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">BaseStrategy</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">MetricResult</span><a class="reference internal" href="../../../../_modules/avalanche/evaluation/metrics/timing/#StreamTime.before_eval"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.evaluation.metrics.StreamTime.before_eval" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">before_eval</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">strategy</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">BaseStrategy</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/avalanche/evaluation/metrics/timing/#StreamTime.before_eval"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.evaluation.metrics.StreamTime.before_eval" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py method">

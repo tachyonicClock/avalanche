@@ -402,21 +402,6 @@
     <span class="k">return</span> <span class="n">fig</span></div>
 
 
-<div class="viewcode-block" id="get_task_label"><a class="viewcode-back" href="../../../../autoapi/avalanche/evaluation/metric_utils/#avalanche.evaluation.metric_utils.get_task_label">[docs]</a><span class="k">def</span> <span class="nf">get_task_label</span><span class="p">(</span><span class="n">strategy</span><span class="p">:</span> <span class="s2">&quot;BaseStrategy&quot;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
-    <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Returns the current task label.</span>
-
-<span class="sd">    The current task label depends on the phase. During the training</span>
-<span class="sd">    phase, the task label is the one defined in the &quot;train_task_label&quot;</span>
-<span class="sd">    field. On the contrary, during the eval phase the task label is the one</span>
-<span class="sd">    defined in the &quot;eval_task_label&quot; field.</span>
-
-<span class="sd">    :param strategy: The strategy instance to get the task label from.</span>
-<span class="sd">    :return: The current train or eval task label.</span>
-<span class="sd">    &quot;&quot;&quot;</span>
-    <span class="k">return</span> <span class="n">strategy</span><span class="o">.</span><span class="n">experience</span><span class="o">.</span><span class="n">task_label</span></div>
-
-
 <div class="viewcode-block" id="stream_type"><a class="viewcode-back" href="../../../../autoapi/avalanche/evaluation/metric_utils/#avalanche.evaluation.metric_utils.stream_type">[docs]</a><span class="k">def</span> <span class="nf">stream_type</span><span class="p">(</span><span class="n">experience</span><span class="p">:</span> <span class="s1">&#39;Experience&#39;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Returns the stream name from which the experience belongs to.</span>
@@ -442,10 +427,16 @@
 <span class="sd">        associated task label.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
-    <span class="k">if</span> <span class="n">strategy</span><span class="o">.</span><span class="n">is_eval</span><span class="p">:</span>
-        <span class="k">return</span> <span class="n">EVAL</span><span class="p">,</span> <span class="n">strategy</span><span class="o">.</span><span class="n">experience</span><span class="o">.</span><span class="n">task_label</span>
+    <span class="n">task</span> <span class="o">=</span> <span class="n">strategy</span><span class="o">.</span><span class="n">experience</span><span class="o">.</span><span class="n">task_labels</span>
+    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">task</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">:</span>
+        <span class="n">task</span> <span class="o">=</span> <span class="kc">None</span>  <span class="c1"># task labels per patterns</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">task</span> <span class="o">=</span> <span class="n">task</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
 
-    <span class="k">return</span> <span class="n">TRAIN</span><span class="p">,</span> <span class="n">strategy</span><span class="o">.</span><span class="n">experience</span><span class="o">.</span><span class="n">task_label</span></div>
+    <span class="k">if</span> <span class="n">strategy</span><span class="o">.</span><span class="n">is_eval</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">EVAL</span><span class="p">,</span> <span class="n">task</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">TRAIN</span><span class="p">,</span> <span class="n">task</span></div>
 
 
 <div class="viewcode-block" id="bytes2human"><a class="viewcode-back" href="../../../../autoapi/avalanche/evaluation/metric_utils/#avalanche.evaluation.metric_utils.bytes2human">[docs]</a><span class="k">def</span> <span class="nf">bytes2human</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
@@ -484,14 +475,24 @@
 <span class="sd">    :param add_experience: if True, add eval_exp_id to the main metric name.</span>
 <span class="sd">            Default to False.</span>
 <span class="sd">    :param add_task: if True the main metric name will include the task</span>
-<span class="sd">        information. Otherwise, it will not.</span>
+<span class="sd">        information. If False, no task label will be displayed.</span>
+<span class="sd">        If an int, that value will be used as task label for the metric name.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="n">phase_name</span><span class="p">,</span> <span class="n">task_label</span> <span class="o">=</span> <span class="n">phase_and_task</span><span class="p">(</span><span class="n">strategy</span><span class="p">)</span>
     <span class="n">stream</span> <span class="o">=</span> <span class="n">stream_type</span><span class="p">(</span><span class="n">strategy</span><span class="o">.</span><span class="n">experience</span><span class="p">)</span>
-    <span class="n">base_name</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">metric</span><span class="si">}</span><span class="s2">/</span><span class="si">{</span><span class="n">phase_name</span><span class="si">}</span><span class="s2">_phase/</span><span class="si">{</span><span class="n">stream</span><span class="si">}</span><span class="s2">_stream&quot;</span>
-    <span class="n">task_name</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;/Task</span><span class="si">{</span><span class="n">task_label</span><span class="si">:</span><span class="s2">03</span><span class="si">}</span><span class="s2">&quot;</span>
-    <span class="n">exp_name</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;/Exp</span><span class="si">{</span><span class="n">strategy</span><span class="o">.</span><span class="n">experience</span><span class="o">.</span><span class="n">current_experience</span><span class="si">:</span><span class="s2">03</span><span class="si">}</span><span class="s2">&quot;</span>
+    <span class="n">base_name</span> <span class="o">=</span> <span class="s1">&#39;</span><span class="si">{}</span><span class="s1">/</span><span class="si">{}</span><span class="s1">_phase/</span><span class="si">{}</span><span class="s1">_stream&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">metric</span><span class="p">),</span>
+                                               <span class="n">phase_name</span><span class="p">,</span> <span class="n">stream</span><span class="p">)</span>
+    <span class="n">exp_name</span> <span class="o">=</span> <span class="s1">&#39;/Exp</span><span class="si">{:03}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">strategy</span><span class="o">.</span><span class="n">experience</span><span class="o">.</span><span class="n">current_experience</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">task_label</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">and</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">add_task</span><span class="p">,</span> <span class="nb">bool</span><span class="p">):</span>
+        <span class="n">add_task</span> <span class="o">=</span> <span class="kc">False</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">add_task</span><span class="p">,</span> <span class="nb">bool</span><span class="p">)</span> <span class="ow">and</span> <span class="n">add_task</span><span class="p">:</span>
+            <span class="n">task_name</span> <span class="o">=</span> <span class="s1">&#39;/Task</span><span class="si">{:03}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">task_label</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">add_task</span><span class="p">,</span> <span class="nb">int</span><span class="p">):</span>
+            <span class="n">task_name</span> <span class="o">=</span> <span class="s1">&#39;/Task</span><span class="si">{:03}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">add_task</span><span class="p">)</span>
+            <span class="n">add_task</span> <span class="o">=</span> <span class="kc">True</span>
 
     <span class="k">if</span> <span class="n">add_experience</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">add_task</span><span class="p">:</span>
         <span class="k">return</span> <span class="n">base_name</span> <span class="o">+</span> <span class="n">exp_name</span>
@@ -505,7 +506,6 @@
 
 <span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span>
     <span class="s2">&quot;default_cm_image_creator&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;get_task_label&quot;</span><span class="p">,</span>
     <span class="s2">&quot;phase_and_task&quot;</span><span class="p">,</span>
     <span class="s2">&quot;get_metric_name&quot;</span><span class="p">,</span>
     <span class="s2">&quot;stream_type&quot;</span><span class="p">,</span>

@@ -193,7 +193,7 @@
 </colgroup>
 <tbody>
 <tr class="row-odd"><td><p><a class="reference internal" href="#avalanche.evaluation.metrics.accuracy.Accuracy" title="avalanche.evaluation.metrics.accuracy.Accuracy"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Accuracy</span></code></a></p></td>
-<td><p>The Accuracy metric. This is a standalone metric</p></td>
+<td><p>The Accuracy metric. This is a standalone metric.</p></td>
 </tr>
 <tr class="row-even"><td><p><a class="reference internal" href="#avalanche.evaluation.metrics.accuracy.MinibatchAccuracy" title="avalanche.evaluation.metrics.accuracy.MinibatchAccuracy"><code class="xref py py-obj docutils literal notranslate"><span class="pre">MinibatchAccuracy</span></code></a></p></td>
 <td><p>The minibatch plugin accuracy metric.</p></td>
@@ -230,11 +230,10 @@
 <dt class="sig sig-object py" id="avalanche.evaluation.metrics.accuracy.Accuracy">
 <em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">avalanche.evaluation.metrics.accuracy.</span></span><span class="sig-name descname"><span class="pre">Accuracy</span></span><a class="reference internal" href="../../../../../_modules/avalanche/evaluation/metrics/accuracy/#Accuracy"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.evaluation.metrics.accuracy.Accuracy" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">Metric[float]</span></code></p>
-<p>The Accuracy metric. This is a standalone metric
-used to compute more specific ones.</p>
-<p>Instances of this metric keeps the running average accuracy
-over multiple &lt;prediction, target&gt; pairs of Tensors,
-provided incrementally.
+<p>The Accuracy metric. This is a standalone metric.</p>
+<p>The metric keeps a dictionary of &lt;task_label, accuracy value&gt; pairs.
+and update the values through a running average over multiple
+&lt;prediction, target&gt; pairs of Tensors, provided incrementally.
 The “prediction” and “target” tensors may contain plain labels or
 one-hot/logit vectors.</p>
 <p>Each time <cite>result</cite> is called, this metric emits the average accuracy
@@ -247,8 +246,12 @@ value of 0. The metric can be updated by using the <cite>update</cite> method
 while the running accuracy can be retrieved using the <cite>result</cite> method.</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="avalanche.evaluation.metrics.accuracy.Accuracy.update">
-<span class="sig-name descname"><span class="pre">update</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">predicted_y</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Tensor</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">true_y</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Tensor</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">None</span><a class="reference internal" href="../../../../../_modules/avalanche/evaluation/metrics/accuracy/#Accuracy.update"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.evaluation.metrics.accuracy.Accuracy.update" title="Permalink to this definition">¶</a></dt>
-<dd><p>Update the running accuracy given the true and predicted labels.</p>
+<span class="sig-name descname"><span class="pre">update</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">predicted_y</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Tensor</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">true_y</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Tensor</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">task_labels</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">,</span> </span><span class="pre">Tensor</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">None</span><a class="reference internal" href="../../../../../_modules/avalanche/evaluation/metrics/accuracy/#Accuracy.update"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.evaluation.metrics.accuracy.Accuracy.update" title="Permalink to this definition">¶</a></dt>
+<dd><p>Update the running accuracy given the true and predicted labels.
+Parameter <cite>task_labels</cite> is used to decide how to update the inner
+dictionary: if Float, only the dictionary value related to that task
+is updated. If Tensor, all the dictionary elements belonging to the
+task labels will be updated.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
@@ -256,6 +259,9 @@ while the running accuracy can be retrieved using the <cite>result</cite> method
 are supported.</p></li>
 <li><p><strong>true_y</strong> – The ground truth. Both labels and one-hot vectors
 are supported.</p></li>
+<li><p><strong>task_labels</strong> – the int task label associated to the current
+experience or the task labels vector showing the task label
+for each pattern.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns</dt>
@@ -266,20 +272,30 @@ are supported.</p></li>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="avalanche.evaluation.metrics.accuracy.Accuracy.result">
-<span class="sig-name descname"><span class="pre">result</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">float</span><a class="reference internal" href="../../../../../_modules/avalanche/evaluation/metrics/accuracy/#Accuracy.result"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.evaluation.metrics.accuracy.Accuracy.result" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">result</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">task_label</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">,</span> </span><span class="pre">float</span><span class="p"><span class="pre">]</span></span><a class="reference internal" href="../../../../../_modules/avalanche/evaluation/metrics/accuracy/#Accuracy.result"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.evaluation.metrics.accuracy.Accuracy.result" title="Permalink to this definition">¶</a></dt>
 <dd><p>Retrieves the running accuracy.</p>
 <p>Calling this method will not change the internal state of the metric.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Returns</dt>
-<dd class="field-odd"><p>The running accuracy, as a float value between 0 and 1.</p>
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>task_label</strong> – if None, return the entire dictionary of accuracies
+for each task. Otherwise return the dictionary
+<cite>{task_label: accuracy}</cite>.</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>A dict of running accuracies for each task label,
+where each value is a float value between 0 and 1.</p>
 </dd>
 </dl>
 </dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="avalanche.evaluation.metrics.accuracy.Accuracy.reset">
-<span class="sig-name descname"><span class="pre">reset</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">None</span><a class="reference internal" href="../../../../../_modules/avalanche/evaluation/metrics/accuracy/#Accuracy.reset"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.evaluation.metrics.accuracy.Accuracy.reset" title="Permalink to this definition">¶</a></dt>
-<dd><p>Resets the metric.</p>
+<span class="sig-name descname"><span class="pre">reset</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">task_label</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">None</span><a class="reference internal" href="../../../../../_modules/avalanche/evaluation/metrics/accuracy/#Accuracy.reset"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.evaluation.metrics.accuracy.Accuracy.reset" title="Permalink to this definition">¶</a></dt>
+<dd><p>Resets the metric.
+:param task_label: if None, reset the entire dictionary.</p>
+<blockquote>
+<div><p>Otherwise, reset the value associated to <cite>task_label</cite>.</p>
+</div></blockquote>
 <dl class="field-list simple">
 <dt class="field-odd">Returns</dt>
 <dd class="field-odd"><p>None.</p>

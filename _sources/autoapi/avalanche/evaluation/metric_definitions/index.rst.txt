@@ -41,14 +41,14 @@ Classes
    created within `PluginMetric`, which is then responsible for its
    update and results. See :class:`PluginMetric` for more details.
 
-   .. method:: result(self) -> Optional[TResult]
+   .. method:: result(self, **kwargs) -> Optional[TResult]
 
       Obtains the value of the metric.
 
       :return: The value of the metric.
 
 
-   .. method:: reset(self) -> None
+   .. method:: reset(self, **kwargs) -> None
 
       Resets the metric internal state.
 
@@ -86,7 +86,7 @@ Classes
       Counter that can be used by each metric to get increasing x values.
 
 
-   .. method:: result(self) -> Optional[TResult]
+   .. method:: result(self, **kwargs) -> Optional[TResult]
       :abstractmethod:
 
       Obtains the value of the metric.
@@ -94,7 +94,7 @@ Classes
       :return: The value of the metric.
 
 
-   .. method:: reset(self) -> None
+   .. method:: reset(self, **kwargs) -> None
       :abstractmethod:
 
       Resets the metric internal state.
@@ -255,10 +255,10 @@ Classes
    Child classes can safely invoke this (super) constructor as the first
    experience.
 
-   .. method:: reset(self) -> None
+   .. method:: reset(self, strategy) -> None
 
 
-   .. method:: result(self) -> float
+   .. method:: result(self, strategy)
 
 
    .. method:: update(self, strategy)
@@ -316,12 +316,6 @@ Classes
       Called before `eval_exp` by the `BaseStrategy`. 
 
 
-   .. method:: after_eval_iteration(self, strategy: BaseStrategy)
-
-      Called after the end of an iteration by the
-      `BaseStrategy`. 
-
-
    .. method:: after_eval_exp(self, strategy: BaseStrategy)
 
       Called after `eval_exp` by the `BaseStrategy`. 
@@ -335,6 +329,12 @@ Classes
    .. method:: before_eval_iteration(self, strategy: BaseStrategy)
 
       Called before the start of a training iteration by the
+      `BaseStrategy`. 
+
+
+   .. method:: after_eval_iteration(self, strategy: BaseStrategy)
+
+      Called after the end of an iteration by the
       `BaseStrategy`. 
 
 

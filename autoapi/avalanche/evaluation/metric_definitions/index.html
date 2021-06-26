@@ -224,7 +224,7 @@ created within <cite>PluginMetric</cite>, which is then responsible for its
 update and results. See <a class="reference internal" href="#avalanche.evaluation.metric_definitions.PluginMetric" title="avalanche.evaluation.metric_definitions.PluginMetric"><code class="xref py py-class docutils literal notranslate"><span class="pre">PluginMetric</span></code></a> for more details.</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="avalanche.evaluation.metric_definitions.Metric.result">
-<span class="sig-name descname"><span class="pre">result</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">TResult</span><span class="p"><span class="pre">]</span></span><a class="reference internal" href="../../../../_modules/avalanche/evaluation/metric_definitions/#Metric.result"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.evaluation.metric_definitions.Metric.result" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">result</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">TResult</span><span class="p"><span class="pre">]</span></span><a class="reference internal" href="../../../../_modules/avalanche/evaluation/metric_definitions/#Metric.result"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.evaluation.metric_definitions.Metric.result" title="Permalink to this definition">¶</a></dt>
 <dd><p>Obtains the value of the metric.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Returns</dt>
@@ -235,7 +235,7 @@ update and results. See <a class="reference internal" href="#avalanche.evaluatio
 
 <dl class="py method">
 <dt class="sig sig-object py" id="avalanche.evaluation.metric_definitions.Metric.reset">
-<span class="sig-name descname"><span class="pre">reset</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">None</span><a class="reference internal" href="../../../../_modules/avalanche/evaluation/metric_definitions/#Metric.reset"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.evaluation.metric_definitions.Metric.reset" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">reset</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">None</span><a class="reference internal" href="../../../../_modules/avalanche/evaluation/metric_definitions/#Metric.reset"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.evaluation.metric_definitions.Metric.reset" title="Permalink to this definition">¶</a></dt>
 <dd><p>Resets the metric internal state.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Returns</dt>
@@ -272,7 +272,7 @@ experience.</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="avalanche.evaluation.metric_definitions.PluginMetric.result">
-<em class="property"><span class="pre">abstract</span> </em><span class="sig-name descname"><span class="pre">result</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">TResult</span><span class="p"><span class="pre">]</span></span><a class="reference internal" href="../../../../_modules/avalanche/evaluation/metric_definitions/#PluginMetric.result"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.evaluation.metric_definitions.PluginMetric.result" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">abstract</span> </em><span class="sig-name descname"><span class="pre">result</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">TResult</span><span class="p"><span class="pre">]</span></span><a class="reference internal" href="../../../../_modules/avalanche/evaluation/metric_definitions/#PluginMetric.result"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.evaluation.metric_definitions.PluginMetric.result" title="Permalink to this definition">¶</a></dt>
 <dd><p>Obtains the value of the metric.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Returns</dt>
@@ -283,7 +283,7 @@ experience.</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="avalanche.evaluation.metric_definitions.PluginMetric.reset">
-<em class="property"><span class="pre">abstract</span> </em><span class="sig-name descname"><span class="pre">reset</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">None</span><a class="reference internal" href="../../../../_modules/avalanche/evaluation/metric_definitions/#PluginMetric.reset"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.evaluation.metric_definitions.PluginMetric.reset" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">abstract</span> </em><span class="sig-name descname"><span class="pre">reset</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">None</span><a class="reference internal" href="../../../../_modules/avalanche/evaluation/metric_definitions/#PluginMetric.reset"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.evaluation.metric_definitions.PluginMetric.reset" title="Permalink to this definition">¶</a></dt>
 <dd><p>Resets the metric internal state.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Returns</dt>
@@ -476,12 +476,12 @@ metrics.</p>
 experience.</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="avalanche.evaluation.metric_definitions.GenericPluginMetric.reset">
-<span class="sig-name descname"><span class="pre">reset</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">None</span><a class="reference internal" href="../../../../_modules/avalanche/evaluation/metric_definitions/#GenericPluginMetric.reset"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.evaluation.metric_definitions.GenericPluginMetric.reset" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">reset</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">strategy</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">None</span><a class="reference internal" href="../../../../_modules/avalanche/evaluation/metric_definitions/#GenericPluginMetric.reset"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.evaluation.metric_definitions.GenericPluginMetric.reset" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="avalanche.evaluation.metric_definitions.GenericPluginMetric.result">
-<span class="sig-name descname"><span class="pre">result</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">float</span><a class="reference internal" href="../../../../_modules/avalanche/evaluation/metric_definitions/#GenericPluginMetric.result"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.evaluation.metric_definitions.GenericPluginMetric.result" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">result</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">strategy</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/avalanche/evaluation/metric_definitions/#GenericPluginMetric.result"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.evaluation.metric_definitions.GenericPluginMetric.result" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
@@ -552,13 +552,6 @@ experience.</p>
 </dd></dl>
 
 <dl class="py method">
-<dt class="sig sig-object py" id="avalanche.evaluation.metric_definitions.GenericPluginMetric.after_eval_iteration">
-<span class="sig-name descname"><span class="pre">after_eval_iteration</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">strategy</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">BaseStrategy</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/avalanche/evaluation/metric_definitions/#GenericPluginMetric.after_eval_iteration"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.evaluation.metric_definitions.GenericPluginMetric.after_eval_iteration" title="Permalink to this definition">¶</a></dt>
-<dd><p>Called after the end of an iteration by the
-<cite>BaseStrategy</cite>.</p>
-</dd></dl>
-
-<dl class="py method">
 <dt class="sig sig-object py" id="avalanche.evaluation.metric_definitions.GenericPluginMetric.after_eval_exp">
 <span class="sig-name descname"><span class="pre">after_eval_exp</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">strategy</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">BaseStrategy</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/avalanche/evaluation/metric_definitions/#GenericPluginMetric.after_eval_exp"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.evaluation.metric_definitions.GenericPluginMetric.after_eval_exp" title="Permalink to this definition">¶</a></dt>
 <dd><p>Called after <cite>eval_exp</cite> by the <cite>BaseStrategy</cite>.</p>
@@ -574,6 +567,13 @@ experience.</p>
 <dt class="sig sig-object py" id="avalanche.evaluation.metric_definitions.GenericPluginMetric.before_eval_iteration">
 <span class="sig-name descname"><span class="pre">before_eval_iteration</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">strategy</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">BaseStrategy</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/avalanche/evaluation/metric_definitions/#GenericPluginMetric.before_eval_iteration"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.evaluation.metric_definitions.GenericPluginMetric.before_eval_iteration" title="Permalink to this definition">¶</a></dt>
 <dd><p>Called before the start of a training iteration by the
+<cite>BaseStrategy</cite>.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="avalanche.evaluation.metric_definitions.GenericPluginMetric.after_eval_iteration">
+<span class="sig-name descname"><span class="pre">after_eval_iteration</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">strategy</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">BaseStrategy</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/avalanche/evaluation/metric_definitions/#GenericPluginMetric.after_eval_iteration"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.evaluation.metric_definitions.GenericPluginMetric.after_eval_iteration" title="Permalink to this definition">¶</a></dt>
+<dd><p>Called after the end of an iteration by the
 <cite>BaseStrategy</cite>.</p>
 </dd></dl>
 

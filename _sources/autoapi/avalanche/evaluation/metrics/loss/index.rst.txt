@@ -54,29 +54,33 @@ Functions
    value of 0. The metric can be updated by using the `update` method
    while the running loss can be retrieved using the `result` method.
 
-   .. method:: update(self, loss: Tensor, patterns: int) -> None
+   .. method:: update(self, loss: Tensor, patterns: int, task_label: int) -> None
 
       Update the running loss given the loss Tensor and the minibatch size.
 
       :param loss: The loss Tensor. Different reduction types don't affect
           the result.
       :param patterns: The number of patterns in the minibatch.
+      :param task_label: the task label associated to the current experience
       :return: None.
 
 
-   .. method:: result(self) -> float
+   .. method:: result(self, task_label=None) -> Dict[int, float]
 
       Retrieves the running average loss per pattern.
 
       Calling this method will not change the internal state of the metric.
-
+      :param task_label: None to return metric values for all the task labels.
+          If an int, return value only for that task label
       :return: The running loss, as a float.
 
 
-   .. method:: reset(self) -> None
+   .. method:: reset(self, task_label=None) -> None
 
       Resets the metric.
 
+      :param task_label: None to reset all metric values. If an int,
+          reset metric value corresponding to that task label.
       :return: None.
 
 

@@ -190,13 +190,15 @@
 <span class="c1"># Website: www.continualai.org                                                 #</span>
 <span class="c1">################################################################################</span>
 
-<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">List</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">List</span><span class="p">,</span> <span class="n">Dict</span>
 
 <span class="kn">import</span> <span class="nn">torch</span>
 <span class="kn">from</span> <span class="nn">torch</span> <span class="kn">import</span> <span class="n">Tensor</span>
 
 <span class="kn">from</span> <span class="nn">avalanche.evaluation</span> <span class="kn">import</span> <span class="n">PluginMetric</span><span class="p">,</span> <span class="n">Metric</span><span class="p">,</span> <span class="n">GenericPluginMetric</span>
 <span class="kn">from</span> <span class="nn">avalanche.evaluation.metrics.mean</span> <span class="kn">import</span> <span class="n">Mean</span>
+<span class="kn">from</span> <span class="nn">avalanche.evaluation.metric_utils</span> <span class="kn">import</span> <span class="n">phase_and_task</span>
+<span class="kn">from</span> <span class="nn">collections</span> <span class="kn">import</span> <span class="n">defaultdict</span>
 
 
 <div class="viewcode-block" id="Loss"><a class="viewcode-back" href="../../../../../autoapi/avalanche/evaluation/metrics/loss/#avalanche.evaluation.metrics.Loss">[docs]</a><span class="k">class</span> <span class="nc">Loss</span><span class="p">(</span><span class="n">Metric</span><span class="p">[</span><span class="nb">float</span><span class="p">]):</span>
@@ -224,37 +226,53 @@
 <span class="sd">        value of 0. The metric can be updated by using the `update` method</span>
 <span class="sd">        while the running loss can be retrieved using the `result` method.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_mean_loss</span> <span class="o">=</span> <span class="n">Mean</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_mean_loss</span> <span class="o">=</span> <span class="n">defaultdict</span><span class="p">(</span><span class="n">Mean</span><span class="p">)</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        The mean utility that will be used to store the running accuracy</span>
+<span class="sd">        for each task label.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
 
 <div class="viewcode-block" id="Loss.update"><a class="viewcode-back" href="../../../../../autoapi/avalanche/evaluation/metrics/loss/#avalanche.evaluation.metrics.Loss.update">[docs]</a>    <span class="nd">@torch</span><span class="o">.</span><span class="n">no_grad</span><span class="p">()</span>
-    <span class="k">def</span> <span class="nf">update</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">loss</span><span class="p">:</span> <span class="n">Tensor</span><span class="p">,</span> <span class="n">patterns</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">update</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">loss</span><span class="p">:</span> <span class="n">Tensor</span><span class="p">,</span> <span class="n">patterns</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">task_label</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Update the running loss given the loss Tensor and the minibatch size.</span>
 
 <span class="sd">        :param loss: The loss Tensor. Different reduction types don&#39;t affect</span>
 <span class="sd">            the result.</span>
 <span class="sd">        :param patterns: The number of patterns in the minibatch.</span>
+<span class="sd">        :param task_label: the task label associated to the current experience</span>
 <span class="sd">        :return: None.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_mean_loss</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">torch</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">loss</span><span class="p">),</span> <span class="n">weight</span><span class="o">=</span><span class="n">patterns</span><span class="p">)</span></div>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_mean_loss</span><span class="p">[</span><span class="n">task_label</span><span class="p">]</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">torch</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">loss</span><span class="p">),</span> <span class="n">weight</span><span class="o">=</span><span class="n">patterns</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="Loss.result"><a class="viewcode-back" href="../../../../../autoapi/avalanche/evaluation/metrics/loss/#avalanche.evaluation.metrics.Loss.result">[docs]</a>    <span class="k">def</span> <span class="nf">result</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
+<div class="viewcode-block" id="Loss.result"><a class="viewcode-back" href="../../../../../autoapi/avalanche/evaluation/metrics/loss/#avalanche.evaluation.metrics.Loss.result">[docs]</a>    <span class="k">def</span> <span class="nf">result</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">task_label</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">float</span><span class="p">]:</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Retrieves the running average loss per pattern.</span>
 
 <span class="sd">        Calling this method will not change the internal state of the metric.</span>
-
+<span class="sd">        :param task_label: None to return metric values for all the task labels.</span>
+<span class="sd">            If an int, return value only for that task label</span>
 <span class="sd">        :return: The running loss, as a float.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_mean_loss</span><span class="o">.</span><span class="n">result</span><span class="p">()</span></div>
+        <span class="k">assert</span><span class="p">(</span><span class="n">task_label</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">or</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">task_label</span><span class="p">,</span> <span class="nb">int</span><span class="p">))</span>
+        <span class="k">if</span> <span class="n">task_label</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">return</span> <span class="p">{</span><span class="n">k</span><span class="p">:</span> <span class="n">v</span><span class="o">.</span><span class="n">result</span><span class="p">()</span> <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_mean_loss</span><span class="o">.</span><span class="n">items</span><span class="p">()}</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span> <span class="p">{</span><span class="n">task_label</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">_mean_loss</span><span class="p">[</span><span class="n">task_label</span><span class="p">]</span><span class="o">.</span><span class="n">result</span><span class="p">()}</span></div>
 
-<div class="viewcode-block" id="Loss.reset"><a class="viewcode-back" href="../../../../../autoapi/avalanche/evaluation/metrics/loss/#avalanche.evaluation.metrics.Loss.reset">[docs]</a>    <span class="k">def</span> <span class="nf">reset</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<div class="viewcode-block" id="Loss.reset"><a class="viewcode-back" href="../../../../../autoapi/avalanche/evaluation/metrics/loss/#avalanche.evaluation.metrics.Loss.reset">[docs]</a>    <span class="k">def</span> <span class="nf">reset</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">task_label</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Resets the metric.</span>
 
+<span class="sd">        :param task_label: None to reset all metric values. If an int,</span>
+<span class="sd">            reset metric value corresponding to that task label.</span>
 <span class="sd">        :return: None.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_mean_loss</span><span class="o">.</span><span class="n">reset</span><span class="p">()</span></div></div>
+        <span class="k">assert</span><span class="p">(</span><span class="n">task_label</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">or</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">task_label</span><span class="p">,</span> <span class="nb">int</span><span class="p">))</span>
+        <span class="k">if</span> <span class="n">task_label</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_mean_loss</span> <span class="o">=</span> <span class="n">defaultdict</span><span class="p">(</span><span class="n">Mean</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_mean_loss</span><span class="p">[</span><span class="n">task_label</span><span class="p">]</span><span class="o">.</span><span class="n">reset</span><span class="p">()</span></div></div>
 
 
 <span class="k">class</span> <span class="nc">LossPluginMetric</span><span class="p">(</span><span class="n">GenericPluginMetric</span><span class="p">[</span><span class="nb">float</span><span class="p">]):</span>
@@ -263,8 +281,29 @@
         <span class="nb">super</span><span class="p">(</span><span class="n">LossPluginMetric</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_loss</span><span class="p">,</span> <span class="n">reset_at</span><span class="p">,</span> <span class="n">emit_at</span><span class="p">,</span> <span class="n">mode</span><span class="p">)</span>
 
+    <span class="k">def</span> <span class="nf">reset</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">strategy</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_reset_at</span> <span class="o">==</span> <span class="s1">&#39;stream&#39;</span> <span class="ow">or</span> <span class="n">strategy</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_metric</span><span class="o">.</span><span class="n">reset</span><span class="p">()</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_metric</span><span class="o">.</span><span class="n">reset</span><span class="p">(</span><span class="n">phase_and_task</span><span class="p">(</span><span class="n">strategy</span><span class="p">)[</span><span class="mi">1</span><span class="p">])</span>
+
+    <span class="k">def</span> <span class="nf">result</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">strategy</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_emit_at</span> <span class="o">==</span> <span class="s1">&#39;stream&#39;</span> <span class="ow">or</span> <span class="n">strategy</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_metric</span><span class="o">.</span><span class="n">result</span><span class="p">()</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_metric</span><span class="o">.</span><span class="n">result</span><span class="p">(</span><span class="n">phase_and_task</span><span class="p">(</span><span class="n">strategy</span><span class="p">)[</span><span class="mi">1</span><span class="p">])</span>
+
     <span class="k">def</span> <span class="nf">update</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">strategy</span><span class="p">):</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_loss</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">strategy</span><span class="o">.</span><span class="n">loss</span><span class="p">,</span> <span class="n">patterns</span><span class="o">=</span><span class="nb">len</span><span class="p">(</span><span class="n">strategy</span><span class="o">.</span><span class="n">mb_y</span><span class="p">))</span>
+        <span class="c1"># task labels defined for each experience</span>
+        <span class="n">task_labels</span> <span class="o">=</span> <span class="n">strategy</span><span class="o">.</span><span class="n">experience</span><span class="o">.</span><span class="n">task_labels</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">task_labels</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="c1"># task labels defined for each pattern</span>
+            <span class="c1"># fall back to single task case</span>
+            <span class="n">task_label</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">task_label</span> <span class="o">=</span> <span class="n">task_labels</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_loss</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">strategy</span><span class="o">.</span><span class="n">loss</span><span class="p">,</span>
+                          <span class="n">patterns</span><span class="o">=</span><span class="nb">len</span><span class="p">(</span><span class="n">strategy</span><span class="o">.</span><span class="n">mb_y</span><span class="p">),</span> <span class="n">task_label</span><span class="o">=</span><span class="n">task_label</span><span class="p">)</span>
 
 
 <div class="viewcode-block" id="MinibatchLoss"><a class="viewcode-back" href="../../../../../autoapi/avalanche/evaluation/metrics/loss/#avalanche.evaluation.metrics.MinibatchLoss">[docs]</a><span class="k">class</span> <span class="nc">MinibatchLoss</span><span class="p">(</span><span class="n">LossPluginMetric</span><span class="p">):</span>

@@ -196,7 +196,7 @@
 
 <span class="kn">from</span> <span class="nn">avalanche.evaluation.metric_results</span> <span class="kn">import</span> <span class="n">MetricValue</span><span class="p">,</span> <span class="n">TensorImage</span>
 <span class="kn">from</span> <span class="nn">avalanche.logging</span> <span class="kn">import</span> <span class="n">StrategyLogger</span>
-<span class="kn">from</span> <span class="nn">avalanche.evaluation.metric_utils</span> <span class="kn">import</span> <span class="n">stream_type</span>
+<span class="kn">from</span> <span class="nn">avalanche.evaluation.metric_utils</span> <span class="kn">import</span> <span class="n">stream_type</span><span class="p">,</span> <span class="n">phase_and_task</span>
 
 <span class="k">if</span> <span class="n">TYPE_CHECKING</span><span class="p">:</span>
     <span class="kn">from</span> <span class="nn">avalanche.training.strategies</span> <span class="kn">import</span> <span class="n">BaseStrategy</span>
@@ -284,10 +284,16 @@
                        <span class="n">metric_values</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="s1">&#39;MetricValue&#39;</span><span class="p">],</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
         <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">after_eval_exp</span><span class="p">(</span><span class="n">strategy</span><span class="p">,</span> <span class="n">metric_values</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
         <span class="n">exp_id</span> <span class="o">=</span> <span class="n">strategy</span><span class="o">.</span><span class="n">experience</span><span class="o">.</span><span class="n">current_experience</span>
-        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;&gt; Eval on experience </span><span class="si">{</span><span class="n">exp_id</span><span class="si">}</span><span class="s1"> (Task &#39;</span>
-              <span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">strategy</span><span class="o">.</span><span class="n">experience</span><span class="o">.</span><span class="n">task_label</span><span class="si">}</span><span class="s1">) &#39;</span>
-              <span class="sa">f</span><span class="s1">&#39;from </span><span class="si">{</span><span class="n">stream_type</span><span class="p">(</span><span class="n">strategy</span><span class="o">.</span><span class="n">experience</span><span class="p">)</span><span class="si">}</span><span class="s1"> stream ended.&#39;</span><span class="p">,</span>
-              <span class="n">file</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">file</span><span class="p">,</span> <span class="n">flush</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+        <span class="n">task_id</span> <span class="o">=</span> <span class="n">phase_and_task</span><span class="p">(</span><span class="n">strategy</span><span class="p">)[</span><span class="mi">1</span><span class="p">]</span>
+        <span class="k">if</span> <span class="n">task_id</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;&gt; Eval on experience </span><span class="si">{</span><span class="n">exp_id</span><span class="si">}</span><span class="s1"> &#39;</span>
+                  <span class="sa">f</span><span class="s1">&#39;from </span><span class="si">{</span><span class="n">stream_type</span><span class="p">(</span><span class="n">strategy</span><span class="o">.</span><span class="n">experience</span><span class="p">)</span><span class="si">}</span><span class="s1"> stream ended.&#39;</span><span class="p">,</span>
+                  <span class="n">file</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">file</span><span class="p">,</span> <span class="n">flush</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;&gt; Eval on experience </span><span class="si">{</span><span class="n">exp_id</span><span class="si">}</span><span class="s1"> (Task &#39;</span>
+                  <span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">task_id</span><span class="si">}</span><span class="s1">) &#39;</span>
+                  <span class="sa">f</span><span class="s1">&#39;from </span><span class="si">{</span><span class="n">stream_type</span><span class="p">(</span><span class="n">strategy</span><span class="o">.</span><span class="n">experience</span><span class="p">)</span><span class="si">}</span><span class="s1"> stream ended.&#39;</span><span class="p">,</span>
+                  <span class="n">file</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">file</span><span class="p">,</span> <span class="n">flush</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">print_current_metrics</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">metric_vals</span> <span class="o">=</span> <span class="p">{}</span></div>
 
@@ -316,11 +322,18 @@
     <span class="k">def</span> <span class="nf">_on_exp_start</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">strategy</span><span class="p">:</span> <span class="s1">&#39;BaseStrategy&#39;</span><span class="p">):</span>
         <span class="n">action_name</span> <span class="o">=</span> <span class="s1">&#39;training&#39;</span> <span class="k">if</span> <span class="n">strategy</span><span class="o">.</span><span class="n">is_training</span> <span class="k">else</span> <span class="s1">&#39;eval&#39;</span>
         <span class="n">exp_id</span> <span class="o">=</span> <span class="n">strategy</span><span class="o">.</span><span class="n">experience</span><span class="o">.</span><span class="n">current_experience</span>
-        <span class="n">task_id</span> <span class="o">=</span> <span class="n">strategy</span><span class="o">.</span><span class="n">experience</span><span class="o">.</span><span class="n">task_label</span>
+        <span class="n">task_id</span> <span class="o">=</span> <span class="n">phase_and_task</span><span class="p">(</span><span class="n">strategy</span><span class="p">)[</span><span class="mi">1</span><span class="p">]</span>
         <span class="n">stream</span> <span class="o">=</span> <span class="n">stream_type</span><span class="p">(</span><span class="n">strategy</span><span class="o">.</span><span class="n">experience</span><span class="p">)</span>
-        <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;-- Starting </span><span class="si">{}</span><span class="s1"> on experience </span><span class="si">{}</span><span class="s1"> (Task </span><span class="si">{}</span><span class="s1">) from </span><span class="si">{}</span><span class="s1"> stream --&#39;</span>
-              <span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">action_name</span><span class="p">,</span> <span class="n">exp_id</span><span class="p">,</span> <span class="n">task_id</span><span class="p">,</span> <span class="n">stream</span><span class="p">),</span> <span class="n">file</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">file</span><span class="p">,</span>
-              <span class="n">flush</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span></div>
+        <span class="k">if</span> <span class="n">task_id</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;-- Starting </span><span class="si">{}</span><span class="s1"> on experience </span><span class="si">{}</span><span class="s1"> from </span><span class="si">{}</span><span class="s1"> stream --&#39;</span>
+                  <span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">action_name</span><span class="p">,</span> <span class="n">exp_id</span><span class="p">,</span> <span class="n">stream</span><span class="p">),</span>
+                  <span class="n">file</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">file</span><span class="p">,</span>
+                  <span class="n">flush</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;-- Starting </span><span class="si">{}</span><span class="s1"> on experience </span><span class="si">{}</span><span class="s1"> (Task </span><span class="si">{}</span><span class="s1">) from </span><span class="si">{}</span><span class="s1"> stream --&#39;</span>
+                  <span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">action_name</span><span class="p">,</span> <span class="n">exp_id</span><span class="p">,</span> <span class="n">task_id</span><span class="p">,</span> <span class="n">stream</span><span class="p">),</span>
+                  <span class="n">file</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">file</span><span class="p">,</span>
+                  <span class="n">flush</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span></div>
 </pre></div>
 
            </div>

@@ -175,7 +175,7 @@ Functions
    :param every: seconds after which update the maximum GPU
        usage
 
-   .. method:: before_eval(self, strategy) -> MetricResult
+   .. method:: before_eval(self, strategy)
 
 
    .. method:: after_eval(self, strategy: BaseStrategy) -> MetricResult

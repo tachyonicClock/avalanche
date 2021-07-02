@@ -227,59 +227,59 @@
 </colgroup>
 <tbody>
 <tr class="row-odd"><td><p><a class="reference internal" href="#avalanche.benchmarks.classic.SplitCIFAR10" title="avalanche.benchmarks.classic.SplitCIFAR10"><code class="xref py py-obj docutils literal notranslate"><span class="pre">SplitCIFAR10</span></code></a>(n_experiences: int, *, first_exp_with_half_classes: bool = False, return_task_id=False, seed: Optional[int] = None, fixed_class_order: Optional[Sequence[int]] = None, shuffle: bool = True, train_transform: Optional[Any] = _default_cifar10_train_transform, eval_transform: Optional[Any] = _default_cifar10_eval_transform, dataset_root: Union[str, Path] = None) → NCScenario</p></td>
-<td><p>Creates a CL scenario using the CIFAR10 dataset.</p></td>
+<td><p>Creates a CL benchmark using the CIFAR10 dataset.</p></td>
 </tr>
 <tr class="row-even"><td><p><a class="reference internal" href="#avalanche.benchmarks.classic.SplitCIFAR100" title="avalanche.benchmarks.classic.SplitCIFAR100"><code class="xref py py-obj docutils literal notranslate"><span class="pre">SplitCIFAR100</span></code></a>(n_experiences: int, *, first_exp_with_half_classes: bool = False, return_task_id=False, seed: Optional[int] = None, fixed_class_order: Optional[Sequence[int]] = None, shuffle: bool = True, train_transform: Optional[Any] = _default_cifar100_train_transform, eval_transform: Optional[Any] = _default_cifar100_eval_transform, dataset_root: Union[str, Path] = None)</p></td>
-<td><p>Creates a CL scenario using the CIFAR100 dataset.</p></td>
+<td><p>Creates a CL benchmark using the CIFAR100 dataset.</p></td>
 </tr>
 <tr class="row-odd"><td><p><a class="reference internal" href="#avalanche.benchmarks.classic.SplitCIFAR110" title="avalanche.benchmarks.classic.SplitCIFAR110"><code class="xref py py-obj docutils literal notranslate"><span class="pre">SplitCIFAR110</span></code></a>(n_experiences: int, *, seed: Optional[int] = None, fixed_class_order: Optional[Sequence[int]] = None, train_transform: Optional[Any] = _default_cifar100_train_transform, eval_transform: Optional[Any] = _default_cifar100_eval_transform, dataset_root_cifar10: Union[str, Path] = None, dataset_root_cifar100: Union[str, Path] = None) → NCScenario</p></td>
-<td><p>Creates a CL scenario using both the CIFAR100 and CIFAR10 datasets.</p></td>
+<td><p>Creates a CL benchmark using both the CIFAR100 and CIFAR10 datasets.</p></td>
 </tr>
 <tr class="row-even"><td><p><a class="reference internal" href="#avalanche.benchmarks.classic.SplitCUB200" title="avalanche.benchmarks.classic.SplitCUB200"><code class="xref py py-obj docutils literal notranslate"><span class="pre">SplitCUB200</span></code></a>(n_experiences=11, *, classes_first_batch=100, return_task_id=False, seed=0, fixed_class_order=None, shuffle=False, train_transform: Optional[Any] = _default_train_transform, eval_transform: Optional[Any] = _default_eval_transform, dataset_root: Union[str, Path] = None)</p></td>
-<td><p>Creates a CL scenario using the Cub-200 dataset.</p></td>
+<td><p>Creates a CL benchmark using the Cub-200 dataset.</p></td>
 </tr>
 <tr class="row-odd"><td><p><a class="reference internal" href="#avalanche.benchmarks.classic.SplitFMNIST" title="avalanche.benchmarks.classic.SplitFMNIST"><code class="xref py py-obj docutils literal notranslate"><span class="pre">SplitFMNIST</span></code></a>(n_experiences: int, *, first_batch_with_half_classes: bool = False, return_task_id=False, seed: Optional[int] = None, fixed_class_order: Optional[Sequence[int]] = None, shuffle: bool = True, train_transform: Optional[Any] = _default_fmnist_train_transform, eval_transform: Optional[Any] = _default_fmnist_eval_transform, dataset_root: Union[str, Path] = None)</p></td>
-<td><p>Creates a CL scenario using the Fashion MNIST dataset.</p></td>
+<td><p>Creates a CL benchmark using the Fashion MNIST dataset.</p></td>
 </tr>
 <tr class="row-even"><td><p><a class="reference internal" href="#avalanche.benchmarks.classic.SplitImageNet" title="avalanche.benchmarks.classic.SplitImageNet"><code class="xref py py-obj docutils literal notranslate"><span class="pre">SplitImageNet</span></code></a>(dataset_root: Union[str, Path], *, n_experiences=10, per_exp_classes=None, return_task_id=False, seed=0, fixed_class_order=None, shuffle: bool = True, train_transform: Optional[Any] = _default_train_transform, eval_transform: Optional[Any] = _default_eval_transform)</p></td>
-<td><p>Creates a CL scenario using the ImageNet dataset.</p></td>
+<td><p>Creates a CL benchmark using the ImageNet dataset.</p></td>
 </tr>
 <tr class="row-odd"><td><p><a class="reference internal" href="#avalanche.benchmarks.classic.SplitMNIST" title="avalanche.benchmarks.classic.SplitMNIST"><code class="xref py py-obj docutils literal notranslate"><span class="pre">SplitMNIST</span></code></a>(n_experiences: int, *, return_task_id=False, seed: Optional[int] = None, fixed_class_order: Optional[Sequence[int]] = None, shuffle: bool = True, train_transform: Optional[Any] = _default_mnist_train_transform, eval_transform: Optional[Any] = _default_mnist_eval_transform, dataset_root: Union[str, Path] = None)</p></td>
-<td><p>Creates a CL scenario using the MNIST dataset.</p></td>
+<td><p>Creates a CL benchmark using the MNIST dataset.</p></td>
 </tr>
 <tr class="row-even"><td><p><a class="reference internal" href="#avalanche.benchmarks.classic.PermutedMNIST" title="avalanche.benchmarks.classic.PermutedMNIST"><code class="xref py py-obj docutils literal notranslate"><span class="pre">PermutedMNIST</span></code></a>(n_experiences: int, *, seed: Optional[int] = None, train_transform: Optional[Any] = _default_mnist_train_transform, eval_transform: Optional[Any] = _default_mnist_eval_transform, dataset_root: Union[str, Path] = None) → NCScenario</p></td>
-<td><p>Creates a Permuted MNIST scenario.</p></td>
+<td><p>Creates a Permuted MNIST benchmark.</p></td>
 </tr>
 <tr class="row-odd"><td><p><a class="reference internal" href="#avalanche.benchmarks.classic.RotatedMNIST" title="avalanche.benchmarks.classic.RotatedMNIST"><code class="xref py py-obj docutils literal notranslate"><span class="pre">RotatedMNIST</span></code></a>(n_experiences: int, *, seed: Optional[int] = None, rotations_list: Optional[Sequence[int]] = None, train_transform: Optional[Any] = _default_mnist_train_transform, eval_transform: Optional[Any] = _default_mnist_eval_transform, dataset_root: Union[str, Path] = None) → NCScenario</p></td>
-<td><p>Creates a Rotated MNIST scenario.</p></td>
+<td><p>Creates a Rotated MNIST benchmark.</p></td>
 </tr>
 <tr class="row-even"><td><p><a class="reference internal" href="#avalanche.benchmarks.classic.SplitOmniglot" title="avalanche.benchmarks.classic.SplitOmniglot"><code class="xref py py-obj docutils literal notranslate"><span class="pre">SplitOmniglot</span></code></a>(n_experiences: int, *, return_task_id=False, seed: Optional[int] = None, fixed_class_order: Optional[Sequence[int]] = None, shuffle: bool = True, train_transform: Optional[Any] = _default_omniglot_train_transform, eval_transform: Optional[Any] = _default_omniglot_eval_transform, dataset_root: Union[str, Path] = None)</p></td>
-<td><p>Creates a CL scenario using the OMNIGLOT dataset.</p></td>
+<td><p>Creates a CL benchmark using the OMNIGLOT dataset.</p></td>
 </tr>
 <tr class="row-odd"><td><p><a class="reference internal" href="#avalanche.benchmarks.classic.PermutedOmniglot" title="avalanche.benchmarks.classic.PermutedOmniglot"><code class="xref py py-obj docutils literal notranslate"><span class="pre">PermutedOmniglot</span></code></a>(n_experiences: int, *, seed: Optional[int] = None, train_transform: Optional[Any] = _default_omniglot_train_transform, eval_transform: Optional[Any] = _default_omniglot_eval_transform, dataset_root: Union[str, Path] = None) → NCScenario</p></td>
-<td><p>Creates a Permuted Omniglot scenario.</p></td>
+<td><p>Creates a Permuted Omniglot benchmark.</p></td>
 </tr>
 <tr class="row-even"><td><p><a class="reference internal" href="#avalanche.benchmarks.classic.RotatedOmniglot" title="avalanche.benchmarks.classic.RotatedOmniglot"><code class="xref py py-obj docutils literal notranslate"><span class="pre">RotatedOmniglot</span></code></a>(n_experiences: int, *, seed: Optional[int] = None, rotations_list: Optional[Sequence[int]] = None, train_transform: Optional[Any] = _default_omniglot_train_transform, eval_transform: Optional[Any] = _default_omniglot_eval_transform, dataset_root: Union[str, Path] = None) → NCScenario</p></td>
-<td><p>Creates a Rotated Omniglot scenario.</p></td>
+<td><p>Creates a Rotated Omniglot benchmark.</p></td>
 </tr>
 <tr class="row-odd"><td><p><a class="reference internal" href="#avalanche.benchmarks.classic.CORe50" title="avalanche.benchmarks.classic.CORe50"><code class="xref py py-obj docutils literal notranslate"><span class="pre">CORe50</span></code></a>(*, scenario: str = 'nicv2_391', run: int = 0, object_lvl: bool = True, mini: bool = False, train_transform: Optional[Any] = _default_train_transform, eval_transform: Optional[Any] = _default_eval_transform, dataset_root: Union[str, Path] = None)</p></td>
-<td><p>Creates a CL scenario for CORe50.</p></td>
+<td><p>Creates a CL benchmark for CORe50.</p></td>
 </tr>
 <tr class="row-even"><td><p><a class="reference internal" href="#avalanche.benchmarks.classic.SplitTinyImageNet" title="avalanche.benchmarks.classic.SplitTinyImageNet"><code class="xref py py-obj docutils literal notranslate"><span class="pre">SplitTinyImageNet</span></code></a>(n_experiences=10, *, return_task_id=False, seed=0, fixed_class_order=None, shuffle: bool = True, train_transform: Optional[Any] = _default_train_transform, eval_transform: Optional[Any] = _default_eval_transform, dataset_root: Union[str, Path] = None)</p></td>
-<td><p>Creates a CL scenario using the Tiny ImageNet dataset.</p></td>
+<td><p>Creates a CL benchmark using the Tiny ImageNet dataset.</p></td>
 </tr>
 <tr class="row-odd"><td><p><a class="reference internal" href="#avalanche.benchmarks.classic.OpenLORIS" title="avalanche.benchmarks.classic.OpenLORIS"><code class="xref py py-obj docutils literal notranslate"><span class="pre">OpenLORIS</span></code></a>(*, factor: Literal['clutter', 'illumination', 'occlusion', 'pixel', 'mixture-iros'] = 'clutter', train_transform: Optional[Any] = None, eval_transform: Optional[Any] = None, dataset_root: Union[str, Path] = None)</p></td>
-<td><p>Creates a CL scenario for OpenLORIS.</p></td>
+<td><p>Creates a CL benchmark for OpenLORIS.</p></td>
 </tr>
 </tbody>
 </table>
 <dl class="py function">
 <dt class="sig sig-object py" id="avalanche.benchmarks.classic.SplitCIFAR10">
 <span class="sig-prename descclassname"><span class="pre">avalanche.benchmarks.classic.</span></span><span class="sig-name descname"><span class="pre">SplitCIFAR10</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">n_experiences</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">first_exp_with_half_classes</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">bool</span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">return_task_id</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">seed</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">]</span></span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fixed_class_order</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">Sequence</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">shuffle</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">bool</span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">train_transform</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">_default_cifar10_train_transform</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">eval_transform</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">_default_cifar10_eval_transform</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dataset_root</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span> </span><span class="pre">Path</span><span class="p"><span class="pre">]</span></span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">NCScenario</span><a class="reference internal" href="../../../../_modules/avalanche/benchmarks/classic/ccifar10/#SplitCIFAR10"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.benchmarks.classic.SplitCIFAR10" title="Permalink to this definition">¶</a></dt>
-<dd><p>Creates a CL scenario using the CIFAR10 dataset.</p>
+<dd><p>Creates a CL benchmark using the CIFAR10 dataset.</p>
 <p>If the dataset is not present in the computer, this method will
 automatically download and store it.</p>
-<p>The returned scenario will return experiences containing all patterns of a
+<p>The returned benchmark will return experiences containing all patterns of a
 subset of classes, which means that each class is only seen “once”.
 This is one of the most common scenarios in the Continual Learning
 literature. Common names used in literature to describe this kind of
@@ -288,17 +288,17 @@ an equal amount of classes will be assigned to each experience.</p>
 <p>This generator doesn’t force a choice on the availability of task labels,
 a choice that is left to the user (see the <cite>return_task_id</cite> parameter for
 more info on task labels).</p>
-<p>The scenario instance returned by this method will have two fields,
+<p>The benchmark instance returned by this method will have two fields,
 <cite>train_stream</cite> and <cite>test_stream</cite>, which can be iterated to obtain
 training and test <code class="xref py py-class docutils literal notranslate"><span class="pre">Experience</span></code>. Each Experience contains the
 <cite>dataset</cite> and the associated task label.</p>
-<p>The scenario API is quite simple and is uniform across all scenario
+<p>The benchmark API is quite simple and is uniform across all benchmark
 generators. It is recommended to check the tutorial of the “benchmark” API,
 which contains usage examples ranging from “basic” to “advanced”.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>n_experiences</strong> – The number of experiences in the current scenario.
+<li><p><strong>n_experiences</strong> – The number of experiences in the current benchmark.
 The value of this parameter should be a divisor of 10 if
 <cite>first_task_with_half_classes</cite> is False, a divisor of 5 otherwise.</p></li>
 <li><p><strong>first_exp_with_half_classes</strong> – A boolean value that indicates if a
@@ -342,10 +342,10 @@ means that the default location for ‘cifar10’ will be used.</p></li>
 <dl class="py function">
 <dt class="sig sig-object py" id="avalanche.benchmarks.classic.SplitCIFAR100">
 <span class="sig-prename descclassname"><span class="pre">avalanche.benchmarks.classic.</span></span><span class="sig-name descname"><span class="pre">SplitCIFAR100</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">n_experiences</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">first_exp_with_half_classes</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">bool</span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">return_task_id</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">seed</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">]</span></span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fixed_class_order</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">Sequence</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">shuffle</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">bool</span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">train_transform</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">_default_cifar100_train_transform</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">eval_transform</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">_default_cifar100_eval_transform</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dataset_root</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span> </span><span class="pre">Path</span><span class="p"><span class="pre">]</span></span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/avalanche/benchmarks/classic/ccifar100/#SplitCIFAR100"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.benchmarks.classic.SplitCIFAR100" title="Permalink to this definition">¶</a></dt>
-<dd><p>Creates a CL scenario using the CIFAR100 dataset.</p>
+<dd><p>Creates a CL benchmark using the CIFAR100 dataset.</p>
 <p>If the dataset is not present in the computer, this method will
 automatically download and store it.</p>
-<p>The returned scenario will return experiences containing all patterns of a
+<p>The returned benchmark will return experiences containing all patterns of a
 subset of classes, which means that each class is only seen “once”.
 This is one of the most common scenarios in the Continual Learning
 literature. Common names used in literature to describe this kind of
@@ -354,18 +354,18 @@ an equal amount of classes will be assigned to each experience.</p>
 <p>This generator doesn’t force a choice on the availability of task labels,
 a choice that is left to the user (see the <cite>return_task_id</cite> parameter for
 more info on task labels).</p>
-<p>The scenario instance returned by this method will have two fields,
+<p>The benchmark instance returned by this method will have two fields,
 <cite>train_stream</cite> and <cite>test_stream</cite>, which can be iterated to obtain
 training and test <code class="xref py py-class docutils literal notranslate"><span class="pre">Experience</span></code>. Each Experience contains the
 <cite>dataset</cite> and the associated task label.</p>
-<p>The scenario API is quite simple and is uniform across all scenario
+<p>The benchmark API is quite simple and is uniform across all benchmark
 generators. It is recommended to check the tutorial of the “benchmark” API,
 which contains usage examples ranging from “basic” to “advanced”.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>n_experiences</strong> – The number of incremental experiences in the current
-scenario. The value of this parameter should be a divisor of 100 if
+benchmark. The value of this parameter should be a divisor of 100 if
 first_task_with_half_classes is False, a divisor of 50 otherwise.</p></li>
 <li><p><strong>first_exp_with_half_classes</strong> – A boolean value that indicates if a
 first pretraining batch containing half of the classes should be used.
@@ -408,30 +408,30 @@ means that the default location for ‘cifar100’ will be used.</p></li>
 <dl class="py function">
 <dt class="sig sig-object py" id="avalanche.benchmarks.classic.SplitCIFAR110">
 <span class="sig-prename descclassname"><span class="pre">avalanche.benchmarks.classic.</span></span><span class="sig-name descname"><span class="pre">SplitCIFAR110</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">n_experiences</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">seed</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">]</span></span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fixed_class_order</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">Sequence</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">train_transform</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">_default_cifar100_train_transform</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">eval_transform</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">_default_cifar100_eval_transform</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dataset_root_cifar10</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span> </span><span class="pre">Path</span><span class="p"><span class="pre">]</span></span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dataset_root_cifar100</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span> </span><span class="pre">Path</span><span class="p"><span class="pre">]</span></span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">NCScenario</span><a class="reference internal" href="../../../../_modules/avalanche/benchmarks/classic/ccifar100/#SplitCIFAR110"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.benchmarks.classic.SplitCIFAR110" title="Permalink to this definition">¶</a></dt>
-<dd><p>Creates a CL scenario using both the CIFAR100 and CIFAR10 datasets.</p>
+<dd><p>Creates a CL benchmark using both the CIFAR100 and CIFAR10 datasets.</p>
 <p>If the datasets are not present in the computer, this method will
 automatically download and store them in the data folder.</p>
 <p>The CIFAR10 dataset is used to create the first experience, while the
 remaining <cite>n_experiences-1</cite> experiences will be created from CIFAR100.</p>
-<p>The returned scenario will return experiences containing all patterns of a
+<p>The returned benchmark will return experiences containing all patterns of a
 subset of classes, which means that each class is only seen “once”.
 This is one of the most common scenarios in the Continual Learning
 literature. Common names used in literature to describe this kind of
 scenario are “Class Incremental”, “New Classes”, etc. By default,
 an equal amount of classes will be assigned to each experience.</p>
 <p>This generator will apply a task label “0” to all experiences.</p>
-<p>The scenario instance returned by this method will have two fields,
+<p>The benchmark instance returned by this method will have two fields,
 <cite>train_stream</cite> and <cite>test_stream</cite>, which can be iterated to obtain
 training and test <code class="xref py py-class docutils literal notranslate"><span class="pre">Experience</span></code>. Each Experience contains the
 <cite>dataset</cite> and the associated task label (always “0” for this specific
 benchmark).</p>
-<p>The scenario API is quite simple and is uniform across all scenario
+<p>The benchmark API is quite simple and is uniform across all benchmark
 generators. It is recommended to check the tutorial of the “benchmark” API,
 which contains usage examples ranging from “basic” to “advanced”.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>n_experiences</strong> – The number of experiences for the entire scenario.
+<li><p><strong>n_experiences</strong> – The number of experiences for the entire benchmark.
 The first experience will contain the entire CIFAR10 dataset, while the
 other n-1 experiences will be obtained from CIFAR100.</p></li>
 <li><p><strong>seed</strong> – A valid int used to initialize the random number generator.
@@ -471,10 +471,10 @@ Defaults to None, which means that the default location for
 <dl class="py function">
 <dt class="sig sig-object py" id="avalanche.benchmarks.classic.SplitCUB200">
 <span class="sig-prename descclassname"><span class="pre">avalanche.benchmarks.classic.</span></span><span class="sig-name descname"><span class="pre">SplitCUB200</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">n_experiences</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">11</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">classes_first_batch</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">100</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">return_task_id</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">seed</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fixed_class_order</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">shuffle</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">train_transform</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">_default_train_transform</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">eval_transform</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">_default_eval_transform</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dataset_root</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span> </span><span class="pre">Path</span><span class="p"><span class="pre">]</span></span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/avalanche/benchmarks/classic/ccub200/#SplitCUB200"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.benchmarks.classic.SplitCUB200" title="Permalink to this definition">¶</a></dt>
-<dd><p>Creates a CL scenario using the Cub-200 dataset.</p>
+<dd><p>Creates a CL benchmark using the Cub-200 dataset.</p>
 <p>If the dataset is not present in the computer, <strong>this method will NOT be
 able automatically download</strong> and store it.</p>
-<p>The returned scenario will return experiences containing all patterns of a
+<p>The returned benchmark will return experiences containing all patterns of a
 subset of classes, which means that each class is only seen “once”.
 This is one of the most common scenarios in the Continual Learning
 literature. Common names used in literature to describe this kind of
@@ -483,17 +483,17 @@ an equal amount of classes will be assigned to each experience.</p>
 <p>This generator doesn’t force a choice on the availability of task labels,
 a choice that is left to the user (see the <cite>return_task_id</cite> parameter for
 more info on task labels).</p>
-<p>The scenario instance returned by this method will have two fields,
+<p>The benchmark instance returned by this method will have two fields,
 <cite>train_stream</cite> and <cite>test_stream</cite>, which can be iterated to obtain
 training and test <code class="xref py py-class docutils literal notranslate"><span class="pre">Experience</span></code>. Each Experience contains the
 <cite>dataset</cite> and the associated task label.</p>
-<p>The scenario API is quite simple and is uniform across all scenario
+<p>The benchmark API is quite simple and is uniform across all benchmark
 generators. It is recommended to check the tutorial of the “benchmark” API,
 which contains usage examples ranging from “basic” to “advanced”.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>n_experiences</strong> – The number of experiences in the current scenario.
+<li><p><strong>n_experiences</strong> – The number of experiences in the current benchmark.
 Defaults to 11.</p></li>
 <li><p><strong>classes_first_batch</strong> – Number of classes in the first batch.
 Usually this is set to 500. Defaults to 100.</p></li>
@@ -533,10 +533,10 @@ Defaults to None, which means that the default location for
 <dl class="py function">
 <dt class="sig sig-object py" id="avalanche.benchmarks.classic.SplitFMNIST">
 <span class="sig-prename descclassname"><span class="pre">avalanche.benchmarks.classic.</span></span><span class="sig-name descname"><span class="pre">SplitFMNIST</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">n_experiences</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">first_batch_with_half_classes</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">bool</span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">return_task_id</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">seed</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">]</span></span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fixed_class_order</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">Sequence</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">shuffle</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">bool</span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">train_transform</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">_default_fmnist_train_transform</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">eval_transform</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">_default_fmnist_eval_transform</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dataset_root</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span> </span><span class="pre">Path</span><span class="p"><span class="pre">]</span></span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/avalanche/benchmarks/classic/cfashion_mnist/#SplitFMNIST"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.benchmarks.classic.SplitFMNIST" title="Permalink to this definition">¶</a></dt>
-<dd><p>Creates a CL scenario using the Fashion MNIST dataset.</p>
+<dd><p>Creates a CL benchmark using the Fashion MNIST dataset.</p>
 <p>If the dataset is not present in the computer, this method will
 automatically download and store it.</p>
-<p>The returned scenario will return experiences containing all patterns of a
+<p>The returned benchmark will return experiences containing all patterns of a
 subset of classes, which means that each class is only seen “once”.
 This is one of the most common scenarios in the Continual Learning
 literature. Common names used in literature to describe this kind of
@@ -545,18 +545,18 @@ an equal amount of classes will be assigned to each experience.</p>
 <p>This generator doesn’t force a choice on the availability of task labels,
 a choice that is left to the user (see the <cite>return_task_id</cite> parameter for
 more info on task labels).</p>
-<p>The scenario instance returned by this method will have two fields,
+<p>The benchmark instance returned by this method will have two fields,
 <cite>train_stream</cite> and <cite>test_stream</cite>, which can be iterated to obtain
 training and test <code class="xref py py-class docutils literal notranslate"><span class="pre">Experience</span></code>. Each Experience contains the
 <cite>dataset</cite> and the associated task label.</p>
-<p>The scenario API is quite simple and is uniform across all scenario
+<p>The benchmark API is quite simple and is uniform across all benchmark
 generators. It is recommended to check the tutorial of the “benchmark” API,
 which contains usage examples ranging from “basic” to “advanced”.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>n_experiences</strong> – The number of experiences in the current
-scenario. If the first experience is a “pretraining” step and it
+benchmark. If the first experience is a “pretraining” step and it
 contains half of the classes. The value of this parameter should be a
 divisor of 10 if first_task_with_half_classes if false, a divisor of 5
 otherwise.</p></li>
@@ -602,10 +602,10 @@ means that the default location for ‘fashionmnist’ will be used.</p></li>
 <dl class="py function">
 <dt class="sig sig-object py" id="avalanche.benchmarks.classic.SplitImageNet">
 <span class="sig-prename descclassname"><span class="pre">avalanche.benchmarks.classic.</span></span><span class="sig-name descname"><span class="pre">SplitImageNet</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dataset_root</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span> </span><span class="pre">Path</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n_experiences</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">10</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">per_exp_classes</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">return_task_id</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">seed</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fixed_class_order</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">shuffle</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">bool</span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">train_transform</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">_default_train_transform</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">eval_transform</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">_default_eval_transform</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/avalanche/benchmarks/classic/cimagenet/#SplitImageNet"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.benchmarks.classic.SplitImageNet" title="Permalink to this definition">¶</a></dt>
-<dd><p>Creates a CL scenario using the ImageNet dataset.</p>
+<dd><p>Creates a CL benchmark using the ImageNet dataset.</p>
 <p>If the dataset is not present in the computer, <strong>this method will NOT be
 able automatically download</strong> and store it.</p>
-<p>The returned scenario will return experiences containing all patterns of a
+<p>The returned benchmark will return experiences containing all patterns of a
 subset of classes, which means that each class is only seen “once”.
 This is one of the most common scenarios in the Continual Learning
 literature. Common names used in literature to describe this kind of
@@ -614,18 +614,18 @@ an equal amount of classes will be assigned to each experience.</p>
 <p>This generator doesn’t force a choice on the availability of task labels,
 a choice that is left to the user (see the <cite>return_task_id</cite> parameter for
 more info on task labels).</p>
-<p>The scenario instance returned by this method will have two fields,
+<p>The benchmark instance returned by this method will have two fields,
 <cite>train_stream</cite> and <cite>test_stream</cite>, which can be iterated to obtain
 training and test <code class="xref py py-class docutils literal notranslate"><span class="pre">Experience</span></code>. Each Experience contains the
 <cite>dataset</cite> and the associated task label.</p>
-<p>The scenario API is quite simple and is uniform across all scenario
+<p>The benchmark API is quite simple and is uniform across all benchmark
 generators. It is recommended to check the tutorial of the “benchmark” API,
 which contains usage examples ranging from “basic” to “advanced”.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>dataset_root</strong> – Base path where Imagenet data is stored.</p></li>
-<li><p><strong>n_experiences</strong> – The number of experiences in the current scenario.</p></li>
+<li><p><strong>n_experiences</strong> – The number of experiences in the current benchmark.</p></li>
 <li><p><strong>per_exp_classes</strong> – Is not None, a dictionary whose keys are
 (0-indexed) experience IDs and their values are the number of classes
 to include in the respective experiences. The dictionary doesn’t
@@ -670,10 +670,10 @@ will be used.</p></li>
 <dl class="py function">
 <dt class="sig sig-object py" id="avalanche.benchmarks.classic.SplitMNIST">
 <span class="sig-prename descclassname"><span class="pre">avalanche.benchmarks.classic.</span></span><span class="sig-name descname"><span class="pre">SplitMNIST</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">n_experiences</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">return_task_id</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">seed</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">]</span></span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fixed_class_order</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">Sequence</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">shuffle</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">bool</span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">train_transform</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">_default_mnist_train_transform</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">eval_transform</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">_default_mnist_eval_transform</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dataset_root</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span> </span><span class="pre">Path</span><span class="p"><span class="pre">]</span></span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/avalanche/benchmarks/classic/cmnist/#SplitMNIST"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.benchmarks.classic.SplitMNIST" title="Permalink to this definition">¶</a></dt>
-<dd><p>Creates a CL scenario using the MNIST dataset.</p>
+<dd><p>Creates a CL benchmark using the MNIST dataset.</p>
 <p>If the dataset is not present in the computer, this method will
 automatically download and store it.</p>
-<p>The returned scenario will return experiences containing all patterns of a
+<p>The returned benchmark will return experiences containing all patterns of a
 subset of classes, which means that each class is only seen “once”.
 This is one of the most common scenarios in the Continual Learning
 literature. Common names used in literature to describe this kind of
@@ -682,18 +682,18 @@ an equal amount of classes will be assigned to each experience.</p>
 <p>This generator doesn’t force a choice on the availability of task labels,
 a choice that is left to the user (see the <cite>return_task_id</cite> parameter for
 more info on task labels).</p>
-<p>The scenario instance returned by this method will have two fields,
+<p>The benchmark instance returned by this method will have two fields,
 <cite>train_stream</cite> and <cite>test_stream</cite>, which can be iterated to obtain
 training and test <code class="xref py py-class docutils literal notranslate"><span class="pre">Experience</span></code>. Each Experience contains the
 <cite>dataset</cite> and the associated task label.</p>
-<p>The scenario API is quite simple and is uniform across all scenario
+<p>The benchmark API is quite simple and is uniform across all benchmark
 generators. It is recommended to check the tutorial of the “benchmark” API,
 which contains usage examples ranging from “basic” to “advanced”.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>n_experiences</strong> – The number of incremental experiences in the current
-scenario.
+benchmark.
 The value of this parameter should be a divisor of 10.</p></li>
 <li><p><strong>return_task_id</strong> – if True, a progressive task id is returned for every
 experience. If False, all experiences will have a task ID of 0.</p></li>
@@ -730,26 +730,26 @@ means that the default location for ‘mnist’ will be used.</p></li>
 <dl class="py function">
 <dt class="sig sig-object py" id="avalanche.benchmarks.classic.PermutedMNIST">
 <span class="sig-prename descclassname"><span class="pre">avalanche.benchmarks.classic.</span></span><span class="sig-name descname"><span class="pre">PermutedMNIST</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">n_experiences</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">seed</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">]</span></span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">train_transform</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">_default_mnist_train_transform</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">eval_transform</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">_default_mnist_eval_transform</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dataset_root</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span> </span><span class="pre">Path</span><span class="p"><span class="pre">]</span></span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">NCScenario</span><a class="reference internal" href="../../../../_modules/avalanche/benchmarks/classic/cmnist/#PermutedMNIST"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.benchmarks.classic.PermutedMNIST" title="Permalink to this definition">¶</a></dt>
-<dd><p>Creates a Permuted MNIST scenario.</p>
+<dd><p>Creates a Permuted MNIST benchmark.</p>
 <p>If the dataset is not present in the computer, this method will
 automatically download and store it.</p>
 <p>Random pixel permutations are used to permute the MNIST images in
 <code class="docutils literal notranslate"><span class="pre">n_experiences</span></code> different manners. This means that each experience is
 composed of all the original 10 MNIST classes, but the pixel in the images
 are permuted in a different way.</p>
-<p>The scenario instance returned by this method will have two fields,
+<p>The benchmark instance returned by this method will have two fields,
 <cite>train_stream</cite> and <cite>test_stream</cite>, which can be iterated to obtain
 training and test <code class="xref py py-class docutils literal notranslate"><span class="pre">Experience</span></code>. Each Experience contains the
 <cite>dataset</cite> and the associated task label.</p>
 <p>A progressive task label, starting from “0”, is applied to each experience.</p>
-<p>The scenario API is quite simple and is uniform across all scenario
+<p>The benchmark API is quite simple and is uniform across all benchmark
 generators. It is recommended to check the tutorial of the “benchmark” API,
 which contains usage examples ranging from “basic” to “advanced”.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>n_experiences</strong> – The number of experiences (tasks) in the current
-scenario. It indicates how many different permutations of the MNIST
+benchmark. It indicates how many different permutations of the MNIST
 dataset have to be created.
 The value of this parameter should be a divisor of 10.</p></li>
 <li><p><strong>seed</strong> – A valid int used to initialize the random number generator.
@@ -779,25 +779,25 @@ means that the default location for ‘mnist’ will be used.</p></li>
 <dl class="py function">
 <dt class="sig sig-object py" id="avalanche.benchmarks.classic.RotatedMNIST">
 <span class="sig-prename descclassname"><span class="pre">avalanche.benchmarks.classic.</span></span><span class="sig-name descname"><span class="pre">RotatedMNIST</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">n_experiences</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">seed</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">]</span></span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">rotations_list</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">Sequence</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">train_transform</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">_default_mnist_train_transform</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">eval_transform</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">_default_mnist_eval_transform</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dataset_root</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span> </span><span class="pre">Path</span><span class="p"><span class="pre">]</span></span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">NCScenario</span><a class="reference internal" href="../../../../_modules/avalanche/benchmarks/classic/cmnist/#RotatedMNIST"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.benchmarks.classic.RotatedMNIST" title="Permalink to this definition">¶</a></dt>
-<dd><p>Creates a Rotated MNIST scenario.</p>
+<dd><p>Creates a Rotated MNIST benchmark.</p>
 <p>If the dataset is not present in the computer, this method will
 automatically download and store it.</p>
 <p>Random angles are used to rotate the MNIST images in <code class="docutils literal notranslate"><span class="pre">n_experiences</span></code>
 different manners. This means that each experience is composed of all the
 original 10 MNIST classes, but each image is rotated in a different way.</p>
-<p>The scenario instance returned by this method will have two fields,
+<p>The benchmark instance returned by this method will have two fields,
 <cite>train_stream</cite> and <cite>test_stream</cite>, which can be iterated to obtain
 training and test <code class="xref py py-class docutils literal notranslate"><span class="pre">Experience</span></code>. Each Experience contains the
 <cite>dataset</cite> and the associated task label.</p>
 <p>A progressive task label, starting from “0”, is applied to each experience.</p>
-<p>The scenario API is quite simple and is uniform across all scenario
+<p>The benchmark API is quite simple and is uniform across all benchmark
 generators. It is recommended to check the tutorial of the “benchmark” API,
 which contains usage examples ranging from “basic” to “advanced”.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>n_experiences</strong> – The number of experiences (tasks) in the current
-scenario. It indicates how many different rotations of the MNIST
+benchmark. It indicates how many different rotations of the MNIST
 dataset have to be created.
 The value of this parameter should be a divisor of 10.</p></li>
 <li><p><strong>seed</strong> – A valid int used to initialize the random number generator.
@@ -834,10 +834,10 @@ means that the default location for ‘mnist’ will be used.</p></li>
 <dl class="py function">
 <dt class="sig sig-object py" id="avalanche.benchmarks.classic.SplitOmniglot">
 <span class="sig-prename descclassname"><span class="pre">avalanche.benchmarks.classic.</span></span><span class="sig-name descname"><span class="pre">SplitOmniglot</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">n_experiences</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">return_task_id</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">seed</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">]</span></span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fixed_class_order</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">Sequence</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">shuffle</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">bool</span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">train_transform</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">_default_omniglot_train_transform</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">eval_transform</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">_default_omniglot_eval_transform</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dataset_root</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span> </span><span class="pre">Path</span><span class="p"><span class="pre">]</span></span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/avalanche/benchmarks/classic/comniglot/#SplitOmniglot"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.benchmarks.classic.SplitOmniglot" title="Permalink to this definition">¶</a></dt>
-<dd><p>Creates a CL scenario using the OMNIGLOT dataset.</p>
+<dd><p>Creates a CL benchmark using the OMNIGLOT dataset.</p>
 <p>If the dataset is not present in the computer, this method will
 automatically download and store it.</p>
-<p>The returned scenario will return experiences containing all patterns of a
+<p>The returned benchmark will return experiences containing all patterns of a
 subset of classes, which means that each class is only seen “once”.
 This is one of the most common scenarios in the Continual Learning
 literature. Common names used in literature to describe this kind of
@@ -848,18 +848,18 @@ experiences can be 1, 2, 4, 241, 482, 964.</p>
 <p>This generator doesn’t force a choice on the availability of task labels,
 a choice that is left to the user (see the <cite>return_task_id</cite> parameter for
 more info on task labels).</p>
-<p>The scenario instance returned by this method will have two fields,
+<p>The benchmark instance returned by this method will have two fields,
 <cite>train_stream</cite> and <cite>test_stream</cite>, which can be iterated to obtain
 training and test <code class="xref py py-class docutils literal notranslate"><span class="pre">Experience</span></code>. Each Experience contains the
 <cite>dataset</cite> and the associated task label.</p>
-<p>The scenario API is quite simple and is uniform across all scenario
+<p>The benchmark API is quite simple and is uniform across all benchmark
 generators. It is recommended to check the tutorial of the “benchmark” API,
 which contains usage examples ranging from “basic” to “advanced”.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>n_experiences</strong> – The number of incremental experiences in the current
-scenario. The value of this parameter should be a divisor of 10.</p></li>
+benchmark. The value of this parameter should be a divisor of 10.</p></li>
 <li><p><strong>return_task_id</strong> – if True, a progressive task id is returned for every
 experience. If False, all experiences will have a task ID of 0.</p></li>
 <li><p><strong>seed</strong> – A valid int used to initialize the random number generator.
@@ -895,26 +895,26 @@ means that the default location for ‘omniglot’ will be used.</p></li>
 <dl class="py function">
 <dt class="sig sig-object py" id="avalanche.benchmarks.classic.PermutedOmniglot">
 <span class="sig-prename descclassname"><span class="pre">avalanche.benchmarks.classic.</span></span><span class="sig-name descname"><span class="pre">PermutedOmniglot</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">n_experiences</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">seed</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">]</span></span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">train_transform</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">_default_omniglot_train_transform</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">eval_transform</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">_default_omniglot_eval_transform</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dataset_root</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span> </span><span class="pre">Path</span><span class="p"><span class="pre">]</span></span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">NCScenario</span><a class="reference internal" href="../../../../_modules/avalanche/benchmarks/classic/comniglot/#PermutedOmniglot"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.benchmarks.classic.PermutedOmniglot" title="Permalink to this definition">¶</a></dt>
-<dd><p>Creates a Permuted Omniglot scenario.</p>
+<dd><p>Creates a Permuted Omniglot benchmark.</p>
 <p>If the dataset is not present in the computer, this method will
 automatically download and store it.</p>
 <p>Random pixel permutations are used to permute the Omniglot images in
 <code class="docutils literal notranslate"><span class="pre">n_experiences</span></code> different manners. This means that each experience is
 composed of all the original 964 Omniglot classes, but the pixel in the
 images are permuted in a different way.</p>
-<p>The scenario instance returned by this method will have two fields,
+<p>The benchmark instance returned by this method will have two fields,
 <cite>train_stream</cite> and <cite>test_stream</cite>, which can be iterated to obtain
 training and test <code class="xref py py-class docutils literal notranslate"><span class="pre">Experience</span></code>. Each Experience contains the
 <cite>dataset</cite> and the associated task label.</p>
 <p>A progressive task label, starting from “0”, is applied to each experience.</p>
-<p>The scenario API is quite simple and is uniform across all scenario
+<p>The benchmark API is quite simple and is uniform across all benchmark
 generators. It is recommended to check the tutorial of the “benchmark” API,
 which contains usage examples ranging from “basic” to “advanced”.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>n_experiences</strong> – The number of experiences (tasks) in the current
-scenario. It indicates how many different permutations of the Omniglot
+benchmark. It indicates how many different permutations of the Omniglot
 dataset have to be created.</p></li>
 <li><p><strong>seed</strong> – A valid int used to initialize the random number generator.
 Can be None.</p></li>
@@ -943,26 +943,26 @@ means that the default location for ‘omniglot’ will be used.</p></li>
 <dl class="py function">
 <dt class="sig sig-object py" id="avalanche.benchmarks.classic.RotatedOmniglot">
 <span class="sig-prename descclassname"><span class="pre">avalanche.benchmarks.classic.</span></span><span class="sig-name descname"><span class="pre">RotatedOmniglot</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">n_experiences</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">seed</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">]</span></span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">rotations_list</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">Sequence</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">train_transform</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">_default_omniglot_train_transform</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">eval_transform</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">_default_omniglot_eval_transform</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dataset_root</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span> </span><span class="pre">Path</span><span class="p"><span class="pre">]</span></span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">NCScenario</span><a class="reference internal" href="../../../../_modules/avalanche/benchmarks/classic/comniglot/#RotatedOmniglot"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.benchmarks.classic.RotatedOmniglot" title="Permalink to this definition">¶</a></dt>
-<dd><p>Creates a Rotated Omniglot scenario.</p>
+<dd><p>Creates a Rotated Omniglot benchmark.</p>
 <p>If the dataset is not present in the computer, this method will
 automatically download and store it.</p>
 <p>Random angles are used to rotate the Omniglot images in <code class="docutils literal notranslate"><span class="pre">n_experiences</span></code>
 different manners. This means that each experience is
 composed of all the original 964 Omniglot classes, but each image is
 rotated in a different way.</p>
-<p>The scenario instance returned by this method will have two fields,
+<p>The benchmark instance returned by this method will have two fields,
 <cite>train_stream</cite> and <cite>test_stream</cite>, which can be iterated to obtain
 training and test <code class="xref py py-class docutils literal notranslate"><span class="pre">Experience</span></code>. Each Experience contains the
 <cite>dataset</cite> and the associated task label.</p>
 <p>A progressive task label, starting from “0”, is applied to each experience.</p>
-<p>The scenario API is quite simple and is uniform across all scenario
+<p>The benchmark API is quite simple and is uniform across all benchmark
 generators. It is recommended to check the tutorial of the “benchmark” API,
 which contains usage examples ranging from “basic” to “advanced”.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>n_experiences</strong> – The number of experiences (tasks) in the current
-scenario. It indicates how many different rotations of the Omniglot
+benchmark. It indicates how many different rotations of the Omniglot
 dataset have to be created.</p></li>
 <li><p><strong>seed</strong> – A valid int used to initialize the random number generator.
 Can be None.</p></li>
@@ -998,16 +998,16 @@ means that the default location for ‘omniglot’ will be used.</p></li>
 <dl class="py function">
 <dt class="sig sig-object py" id="avalanche.benchmarks.classic.CORe50">
 <span class="sig-prename descclassname"><span class="pre">avalanche.benchmarks.classic.</span></span><span class="sig-name descname"><span class="pre">CORe50</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">scenario</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">'nicv2_391'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">run</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">int</span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">object_lvl</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">bool</span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mini</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">bool</span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">train_transform</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">_default_train_transform</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">eval_transform</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">_default_eval_transform</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dataset_root</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span> </span><span class="pre">Path</span><span class="p"><span class="pre">]</span></span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/avalanche/benchmarks/classic/core50/#CORe50"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.benchmarks.classic.CORe50" title="Permalink to this definition">¶</a></dt>
-<dd><p>Creates a CL scenario for CORe50.</p>
+<dd><p>Creates a CL benchmark for CORe50.</p>
 <p>If the dataset is not present in the computer, this method will
 automatically download and store it.</p>
 <p>This generator can be used to obtain the NI, NC, NIC and NICv2-* scenarios.</p>
-<p>The scenario instance returned by this method will have two fields,
+<p>The benchmark instance returned by this method will have two fields,
 <cite>train_stream</cite> and <cite>test_stream</cite>, which can be iterated to obtain
 training and test <code class="xref py py-class docutils literal notranslate"><span class="pre">Experience</span></code>. Each Experience contains the
 <cite>dataset</cite> and the associated task label.</p>
 <p>The task label “0” will be assigned to each experience.</p>
-<p>The scenario API is quite simple and is uniform across all scenario
+<p>The benchmark API is quite simple and is uniform across all benchmark
 generators. It is recommended to check the tutorial of the “benchmark” API,
 which contains usage examples ranging from “basic” to “advanced”.</p>
 <dl class="field-list simple">
@@ -1015,7 +1015,7 @@ which contains usage examples ranging from “basic” to “advanced”.</p>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>scenario</strong> – CORe50 main scenario. It can be chosen between ‘ni’, ‘nc’,
 ‘nic’, ‘nicv2_79’, ‘nicv2_196’ or ‘nicv2_391.’</p></li>
-<li><p><strong>run</strong> – number of run for the scenario. Each run defines a different
+<li><p><strong>run</strong> – number of run for the benchmark. Each run defines a different
 ordering. Must be a number between 0 and 9.</p></li>
 <li><p><strong>object_lvl</strong> – True for a 50-way classification at the object level.
 False if you want to use the categories as classes. Default to True.</p></li>
@@ -1044,10 +1044,10 @@ location for
 <dl class="py function">
 <dt class="sig sig-object py" id="avalanche.benchmarks.classic.SplitTinyImageNet">
 <span class="sig-prename descclassname"><span class="pre">avalanche.benchmarks.classic.</span></span><span class="sig-name descname"><span class="pre">SplitTinyImageNet</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">n_experiences</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">10</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">return_task_id</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">seed</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fixed_class_order</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">shuffle</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">bool</span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">train_transform</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">_default_train_transform</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">eval_transform</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">_default_eval_transform</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dataset_root</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span> </span><span class="pre">Path</span><span class="p"><span class="pre">]</span></span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/avalanche/benchmarks/classic/ctiny_imagenet/#SplitTinyImageNet"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.benchmarks.classic.SplitTinyImageNet" title="Permalink to this definition">¶</a></dt>
-<dd><p>Creates a CL scenario using the Tiny ImageNet dataset.</p>
+<dd><p>Creates a CL benchmark using the Tiny ImageNet dataset.</p>
 <p>If the dataset is not present in the computer, this method will
 automatically download and store it.</p>
-<p>The returned scenario will return experiences containing all patterns of a
+<p>The returned benchmark will return experiences containing all patterns of a
 subset of classes, which means that each class is only seen “once”.
 This is one of the most common scenarios in the Continual Learning
 literature. Common names used in literature to describe this kind of
@@ -1056,17 +1056,17 @@ an equal amount of classes will be assigned to each experience.</p>
 <p>This generator doesn’t force a choice on the availability of task labels,
 a choice that is left to the user (see the <cite>return_task_id</cite> parameter for
 more info on task labels).</p>
-<p>The scenario instance returned by this method will have two fields,
+<p>The benchmark instance returned by this method will have two fields,
 <cite>train_stream</cite> and <cite>test_stream</cite>, which can be iterated to obtain
 training and test <code class="xref py py-class docutils literal notranslate"><span class="pre">Experience</span></code>. Each Experience contains the
 <cite>dataset</cite> and the associated task label.</p>
-<p>The scenario API is quite simple and is uniform across all scenario
+<p>The benchmark API is quite simple and is uniform across all benchmark
 generators. It is recommended to check the tutorial of the “benchmark” API,
 which contains usage examples ranging from “basic” to “advanced”.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>n_experiences</strong> – The number of experiences in the current scenario.</p></li>
+<li><p><strong>n_experiences</strong> – The number of experiences in the current benchmark.</p></li>
 <li><p><strong>return_task_id</strong> – if True, a progressive task id is returned for every
 experience. If False, all experiences will have a task ID of 0.</p></li>
 <li><p><strong>seed</strong> – A valid int used to initialize the random number generator.
@@ -1103,18 +1103,18 @@ Defaults to None, which means that the default location for
 <dl class="py function">
 <dt class="sig sig-object py" id="avalanche.benchmarks.classic.OpenLORIS">
 <span class="sig-prename descclassname"><span class="pre">avalanche.benchmarks.classic.</span></span><span class="sig-name descname"><span class="pre">OpenLORIS</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">factor</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Literal</span><span class="p"><span class="pre">[</span></span><span class="pre">clutter</span><span class="p"><span class="pre">,</span> </span><span class="pre">illumination</span><span class="p"><span class="pre">,</span> </span><span class="pre">occlusion</span><span class="p"><span class="pre">,</span> </span><span class="pre">pixel</span><span class="p"><span class="pre">,</span> </span><span class="pre">mixture-iros</span><span class="p"><span class="pre">]</span></span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">'clutter'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">train_transform</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">eval_transform</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dataset_root</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span> </span><span class="pre">Path</span><span class="p"><span class="pre">]</span></span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/avalanche/benchmarks/classic/openloris/#OpenLORIS"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.benchmarks.classic.OpenLORIS" title="Permalink to this definition">¶</a></dt>
-<dd><p>Creates a CL scenario for OpenLORIS.</p>
+<dd><p>Creates a CL benchmark for OpenLORIS.</p>
 <p>If the dataset is not present in the computer, <strong>this method will NOT be
 able automatically download</strong> and store it.</p>
 <p>This generator can be used to obtain scenarios based on different “factors”.
 Valid factors include ‘clutter’, ‘illumination’, ‘occlusion’, ‘pixel’, or
 ‘mixture-iros’.</p>
-<p>The scenario instance returned by this method will have two fields,
+<p>The benchmark instance returned by this method will have two fields,
 <cite>train_stream</cite> and <cite>test_stream</cite>, which can be iterated to obtain
 training and test <code class="xref py py-class docutils literal notranslate"><span class="pre">Experience</span></code>. Each Experience contains the
 <cite>dataset</cite> and the associated task label.</p>
 <p>The task label “0” will be assigned to each experience.</p>
-<p>The scenario API is quite simple and is uniform across all scenario
+<p>The benchmark API is quite simple and is uniform across all benchmark
 generators. It is recommended to check the tutorial of the “benchmark” API,
 which contains usage examples ranging from “basic” to “advanced”.</p>
 <dl class="field-list simple">

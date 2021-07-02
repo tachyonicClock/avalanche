@@ -251,7 +251,7 @@ If this dictionary contains the definition for “train” or “test”
 streams then those definition will override the <cite>train_datasets</cite> and
 <cite>test_datasets</cite> parameters.</p></li>
 <li><p><strong>complete_test_set_only</strong> – If True, only the complete test set will
-be returned by the scenario. This means that the <code class="docutils literal notranslate"><span class="pre">test_dataset_list</span></code>
+be returned by the benchmark. This means that the <code class="docutils literal notranslate"><span class="pre">test_dataset_list</span></code>
 parameter must be list with a single element (the complete test set).
 Defaults to False.</p></li>
 <li><p><strong>train_transform</strong> – The transformation to apply to the training data,
@@ -368,7 +368,7 @@ test streams). If this dictionary contains the definition for
 “train” or “test” streams then those definition will override the
 <cite>train_generator</cite> and <cite>test_generator</cite> parameters.</p></li>
 <li><p><strong>complete_test_set_only</strong> – If True, only the complete test set will
-be returned by the scenario. This means that the <code class="docutils literal notranslate"><span class="pre">test_generator</span></code>
+be returned by the benchmark. This means that the <code class="docutils literal notranslate"><span class="pre">test_generator</span></code>
 parameter must define a stream with a single experience (the complete
 test set). Defaults to False.</p></li>
 <li><p><strong>train_transform</strong> – The transformation to apply to the training data,
@@ -450,7 +450,7 @@ for each experience. Each value describes the task label that will be
 applied to all patterns of a certain experience. For more info on that,
 see the function description.</p></li>
 <li><p><strong>complete_test_set_only</strong> – If True, only the complete test set will
-be returned by the scenario. This means that the <code class="docutils literal notranslate"><span class="pre">test_file_lists</span></code>
+be returned by the benchmark. This means that the <code class="docutils literal notranslate"><span class="pre">test_file_lists</span></code>
 parameter must be list with a single element (the complete test set).
 Alternatively, can be a plain string or <code class="xref py py-class docutils literal notranslate"><span class="pre">Path</span></code> object.
 Defaults to False.</p></li>
@@ -530,7 +530,7 @@ for each experience. Each value describes the task label that will be
 applied to all patterns of a certain experience. For more info on that,
 see the function description.</p></li>
 <li><p><strong>complete_test_set_only</strong> – If True, only the complete test set will
-be returned by the scenario. This means that the <code class="docutils literal notranslate"><span class="pre">test_list_of_files</span></code>
+be returned by the benchmark. This means that the <code class="docutils literal notranslate"><span class="pre">test_list_of_files</span></code>
 parameter must define a single experience (the complete test set).
 Defaults to False.</p></li>
 <li><p><strong>train_transform</strong> – The transformation to apply to the training data,
@@ -571,7 +571,7 @@ will override the <cite>train_transform</cite>, <cite>train_target_transform</ci
 be created from each Tensor tuple (x, y, z, …) and each of those training
 datasets will be considered a separate training experience. Using this
 helper function is the lowest-level way to create a Continual Learning
-scenario. When possible, consider using higher level helpers.</p>
+benchmark. When possible, consider using higher level helpers.</p>
 <p>Experiences are defined by passing lists of tensors as the <cite>train_tensors</cite>,
 <cite>test_tensors</cite> (and <cite>other_streams_tensors</cite>) parameters. Those parameters
 must be lists containing lists of tensors, one list for each experience.
@@ -611,7 +611,7 @@ for each experience. Each value describes the task label that will be
 applied to all patterns of a certain experience. For more info on that,
 see the function description.</p></li>
 <li><p><strong>complete_test_set_only</strong> – If True, only the complete test set will
-be returned by the scenario. This means that <code class="docutils literal notranslate"><span class="pre">test_tensors</span></code> must
+be returned by the benchmark. This means that <code class="docutils literal notranslate"><span class="pre">test_tensors</span></code> must
 define a single experience. Defaults to False.</p></li>
 <li><p><strong>train_transform</strong> – The transformation to apply to the training data,
 e.g. a random crop, a normalization or a concatenation of different

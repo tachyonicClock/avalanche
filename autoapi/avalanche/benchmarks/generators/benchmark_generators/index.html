@@ -226,10 +226,10 @@ an increasing task label or if, at the contrary, a default task label “0”
 has to be assigned to all experiences. This can be useful when
 differentiating between Single-Incremental-Task and Multi-Task scenarios.</p>
 <p>There are other important parameters that can be specified in order to tweak
-the behaviour of the resulting scenario. Please take a few minutes to read
+the behaviour of the resulting benchmark. Please take a few minutes to read
 and understand them as they may save you a lot of work.</p>
 <p>This generator features a integrated reproducibility mechanism that allows
-the user to store and later re-load a scenario. For more info see the
+the user to store and later re-load a benchmark. For more info see the
 <code class="docutils literal notranslate"><span class="pre">reproducibility_data</span></code> parameter.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -290,7 +290,7 @@ e.g. a random crop, a normalization or a concatenation of different
 transformations (see torchvision.transform documentation for a
 comprehensive list of possible transformations). Defaults to None.</p></li>
 <li><p><strong>reproducibility_data</strong> – If not None, overrides all the other
-scenario definition options. This is usually a dictionary containing
+benchmark definition options. This is usually a dictionary containing
 data used to reproduce a specific experiment. One can use the
 <code class="docutils literal notranslate"><span class="pre">get_reproducibility_data</span></code> method to get (and even distribute)
 the experiment setup so that it can be loaded by passing it as this
@@ -319,10 +319,10 @@ an increasing task label or if, at the contrary, a default task label “0”
 has to be assigned to all experiences. This can be useful when
 differentiating between Single-Incremental-Task and Multi-Task scenarios.</p>
 <p>There are other important parameters that can be specified in order to tweak
-the behaviour of the resulting scenario. Please take a few minutes to read
+the behaviour of the resulting benchmark. Please take a few minutes to read
 and understand them as they may save you a lot of work.</p>
 <p>This generator features an integrated reproducibility mechanism that allows
-the user to store and later re-load a scenario. For more info see the
+the user to store and later re-load a benchmark. For more info see the
 <code class="docutils literal notranslate"><span class="pre">reproducibility_data</span></code> parameter.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -356,7 +356,7 @@ e.g. a random crop, a normalization or a concatenation of different
 transformations (see torchvision.transform documentation for a
 comprehensive list of possible transformations). Defaults to None.</p></li>
 <li><p><strong>reproducibility_data</strong> – If not None, overrides all the other
-scenario definition options, including <code class="docutils literal notranslate"><span class="pre">fixed_exp_assignment</span></code>.
+benchmark definition options, including <code class="docutils literal notranslate"><span class="pre">fixed_exp_assignment</span></code>.
 This is usually a dictionary containing data used to
 reproduce a specific experiment. One can use the
 <code class="docutils literal notranslate"><span class="pre">get_reproducibility_data</span></code> method to get (and even distribute)

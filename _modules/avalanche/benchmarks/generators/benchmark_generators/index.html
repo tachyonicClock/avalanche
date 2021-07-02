@@ -250,11 +250,11 @@
 <span class="sd">    differentiating between Single-Incremental-Task and Multi-Task scenarios.</span>
 
 <span class="sd">    There are other important parameters that can be specified in order to tweak</span>
-<span class="sd">    the behaviour of the resulting scenario. Please take a few minutes to read</span>
+<span class="sd">    the behaviour of the resulting benchmark. Please take a few minutes to read</span>
 <span class="sd">    and understand them as they may save you a lot of work.</span>
 
 <span class="sd">    This generator features a integrated reproducibility mechanism that allows</span>
-<span class="sd">    the user to store and later re-load a scenario. For more info see the</span>
+<span class="sd">    the user to store and later re-load a benchmark. For more info see the</span>
 <span class="sd">    ``reproducibility_data`` parameter.</span>
 
 <span class="sd">    :param train_dataset: A list of training datasets, or a single dataset.</span>
@@ -313,7 +313,7 @@
 <span class="sd">        transformations (see torchvision.transform documentation for a</span>
 <span class="sd">        comprehensive list of possible transformations). Defaults to None.</span>
 <span class="sd">    :param reproducibility_data: If not None, overrides all the other</span>
-<span class="sd">        scenario definition options. This is usually a dictionary containing</span>
+<span class="sd">        benchmark definition options. This is usually a dictionary containing</span>
 <span class="sd">        data used to reproduce a specific experiment. One can use the</span>
 <span class="sd">        ``get_reproducibility_data`` method to get (and even distribute)</span>
 <span class="sd">        the experiment setup so that it can be loaded by passing it as this</span>
@@ -353,7 +353,7 @@
 
         <span class="k">if</span> <span class="n">one_dataset_per_exp</span><span class="p">:</span>
             <span class="c1"># If one_dataset_per_exp is True, each dataset will be treated as</span>
-            <span class="c1"># a experience. In this scenario, shuffle refers to the experience</span>
+            <span class="c1"># a experience. In this benchmark, shuffle refers to the experience</span>
             <span class="c1"># order, not to the class one.</span>
             <span class="n">fixed_class_order</span><span class="p">,</span> <span class="n">per_exp_classes</span> <span class="o">=</span> \
                 <span class="n">_one_dataset_per_exp_class_order</span><span class="p">(</span><span class="n">mapping</span><span class="p">,</span> <span class="n">shuffle</span><span class="p">,</span> <span class="n">seed</span><span class="p">)</span>
@@ -423,11 +423,11 @@
 <span class="sd">    differentiating between Single-Incremental-Task and Multi-Task scenarios.</span>
 
 <span class="sd">    There are other important parameters that can be specified in order to tweak</span>
-<span class="sd">    the behaviour of the resulting scenario. Please take a few minutes to read</span>
+<span class="sd">    the behaviour of the resulting benchmark. Please take a few minutes to read</span>
 <span class="sd">    and understand them as they may save you a lot of work.</span>
 
 <span class="sd">    This generator features an integrated reproducibility mechanism that allows</span>
-<span class="sd">    the user to store and later re-load a scenario. For more info see the</span>
+<span class="sd">    the user to store and later re-load a benchmark. For more info see the</span>
 <span class="sd">    ``reproducibility_data`` parameter.</span>
 
 <span class="sd">    :param train_dataset: A list of training datasets, or a single dataset.</span>
@@ -459,7 +459,7 @@
 <span class="sd">        transformations (see torchvision.transform documentation for a</span>
 <span class="sd">        comprehensive list of possible transformations). Defaults to None.</span>
 <span class="sd">    :param reproducibility_data: If not None, overrides all the other</span>
-<span class="sd">        scenario definition options, including ``fixed_exp_assignment``.</span>
+<span class="sd">        benchmark definition options, including ``fixed_exp_assignment``.</span>
 <span class="sd">        This is usually a dictionary containing data used to</span>
 <span class="sd">        reproduce a specific experiment. One can use the</span>
 <span class="sd">        ``get_reproducibility_data`` method to get (and even distribute)</span>

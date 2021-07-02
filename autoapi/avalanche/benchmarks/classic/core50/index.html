@@ -182,8 +182,8 @@
             
   <div class="section" id="module-avalanche.benchmarks.classic.core50">
 <span id="avalanche-benchmarks-classic-core50"></span><h1><a class="reference internal" href="#module-avalanche.benchmarks.classic.core50" title="avalanche.benchmarks.classic.core50"><code class="xref py py-mod docutils literal notranslate"><span class="pre">avalanche.benchmarks.classic.core50</span></code></a><a class="headerlink" href="#module-avalanche.benchmarks.classic.core50" title="Permalink to this headline">¶</a></h1>
-<p>This module contains the high-level CORe50 scenario generator. It
-basically returns a iterable scenario object <code class="docutils literal notranslate"><span class="pre">GenericCLScenario</span></code> given a
+<p>This module contains the high-level CORe50 benchmark generator. It
+basically returns a iterable benchmark object <code class="docutils literal notranslate"><span class="pre">GenericCLScenario</span></code> given a
 number of configuration parameters.</p>
 <div class="section" id="module-contents">
 <h2>Module Contents<a class="headerlink" href="#module-contents" title="Permalink to this headline">¶</a></h2>
@@ -196,23 +196,23 @@ number of configuration parameters.</p>
 </colgroup>
 <tbody>
 <tr class="row-odd"><td><p><a class="reference internal" href="#avalanche.benchmarks.classic.core50.CORe50" title="avalanche.benchmarks.classic.core50.CORe50"><code class="xref py py-obj docutils literal notranslate"><span class="pre">CORe50</span></code></a>(*, scenario: str = 'nicv2_391', run: int = 0, object_lvl: bool = True, mini: bool = False, train_transform: Optional[Any] = _default_train_transform, eval_transform: Optional[Any] = _default_eval_transform, dataset_root: Union[str, Path] = None)</p></td>
-<td><p>Creates a CL scenario for CORe50.</p></td>
+<td><p>Creates a CL benchmark for CORe50.</p></td>
 </tr>
 </tbody>
 </table>
 <dl class="py function">
 <dt class="sig sig-object py" id="avalanche.benchmarks.classic.core50.CORe50">
 <span class="sig-prename descclassname"><span class="pre">avalanche.benchmarks.classic.core50.</span></span><span class="sig-name descname"><span class="pre">CORe50</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">scenario</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">'nicv2_391'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">run</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">int</span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">object_lvl</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">bool</span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mini</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">bool</span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">train_transform</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">_default_train_transform</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">eval_transform</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">_default_eval_transform</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dataset_root</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span> </span><span class="pre">Path</span><span class="p"><span class="pre">]</span></span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../_modules/avalanche/benchmarks/classic/core50/#CORe50"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.benchmarks.classic.core50.CORe50" title="Permalink to this definition">¶</a></dt>
-<dd><p>Creates a CL scenario for CORe50.</p>
+<dd><p>Creates a CL benchmark for CORe50.</p>
 <p>If the dataset is not present in the computer, this method will
 automatically download and store it.</p>
 <p>This generator can be used to obtain the NI, NC, NIC and NICv2-* scenarios.</p>
-<p>The scenario instance returned by this method will have two fields,
+<p>The benchmark instance returned by this method will have two fields,
 <cite>train_stream</cite> and <cite>test_stream</cite>, which can be iterated to obtain
 training and test <code class="xref py py-class docutils literal notranslate"><span class="pre">Experience</span></code>. Each Experience contains the
 <cite>dataset</cite> and the associated task label.</p>
 <p>The task label “0” will be assigned to each experience.</p>
-<p>The scenario API is quite simple and is uniform across all scenario
+<p>The benchmark API is quite simple and is uniform across all benchmark
 generators. It is recommended to check the tutorial of the “benchmark” API,
 which contains usage examples ranging from “basic” to “advanced”.</p>
 <dl class="field-list simple">
@@ -220,7 +220,7 @@ which contains usage examples ranging from “basic” to “advanced”.</p>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>scenario</strong> – CORe50 main scenario. It can be chosen between ‘ni’, ‘nc’,
 ‘nic’, ‘nicv2_79’, ‘nicv2_196’ or ‘nicv2_391.’</p></li>
-<li><p><strong>run</strong> – number of run for the scenario. Each run defines a different
+<li><p><strong>run</strong> – number of run for the benchmark. Each run defines a different
 ordering. Must be a number between 0 and 9.</p></li>
 <li><p><strong>object_lvl</strong> – True for a 50-way classification at the object level.
 False if you want to use the categories as classes. Default to True.</p></li>

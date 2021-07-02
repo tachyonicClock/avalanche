@@ -193,17 +193,17 @@
 </colgroup>
 <tbody>
 <tr class="row-odd"><td><p><a class="reference internal" href="#avalanche.benchmarks.classic.ccifar10.SplitCIFAR10" title="avalanche.benchmarks.classic.ccifar10.SplitCIFAR10"><code class="xref py py-obj docutils literal notranslate"><span class="pre">SplitCIFAR10</span></code></a>(n_experiences: int, *, first_exp_with_half_classes: bool = False, return_task_id=False, seed: Optional[int] = None, fixed_class_order: Optional[Sequence[int]] = None, shuffle: bool = True, train_transform: Optional[Any] = _default_cifar10_train_transform, eval_transform: Optional[Any] = _default_cifar10_eval_transform, dataset_root: Union[str, Path] = None) → NCScenario</p></td>
-<td><p>Creates a CL scenario using the CIFAR10 dataset.</p></td>
+<td><p>Creates a CL benchmark using the CIFAR10 dataset.</p></td>
 </tr>
 </tbody>
 </table>
 <dl class="py function">
 <dt class="sig sig-object py" id="avalanche.benchmarks.classic.ccifar10.SplitCIFAR10">
 <span class="sig-prename descclassname"><span class="pre">avalanche.benchmarks.classic.ccifar10.</span></span><span class="sig-name descname"><span class="pre">SplitCIFAR10</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">n_experiences</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">first_exp_with_half_classes</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">bool</span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">return_task_id</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">seed</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">]</span></span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fixed_class_order</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">Sequence</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">shuffle</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">bool</span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">train_transform</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">_default_cifar10_train_transform</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">eval_transform</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">_default_cifar10_eval_transform</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dataset_root</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span> </span><span class="pre">Path</span><span class="p"><span class="pre">]</span></span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">NCScenario</span><a class="reference internal" href="../../../../../_modules/avalanche/benchmarks/classic/ccifar10/#SplitCIFAR10"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.benchmarks.classic.ccifar10.SplitCIFAR10" title="Permalink to this definition">¶</a></dt>
-<dd><p>Creates a CL scenario using the CIFAR10 dataset.</p>
+<dd><p>Creates a CL benchmark using the CIFAR10 dataset.</p>
 <p>If the dataset is not present in the computer, this method will
 automatically download and store it.</p>
-<p>The returned scenario will return experiences containing all patterns of a
+<p>The returned benchmark will return experiences containing all patterns of a
 subset of classes, which means that each class is only seen “once”.
 This is one of the most common scenarios in the Continual Learning
 literature. Common names used in literature to describe this kind of
@@ -212,17 +212,17 @@ an equal amount of classes will be assigned to each experience.</p>
 <p>This generator doesn’t force a choice on the availability of task labels,
 a choice that is left to the user (see the <cite>return_task_id</cite> parameter for
 more info on task labels).</p>
-<p>The scenario instance returned by this method will have two fields,
+<p>The benchmark instance returned by this method will have two fields,
 <cite>train_stream</cite> and <cite>test_stream</cite>, which can be iterated to obtain
 training and test <code class="xref py py-class docutils literal notranslate"><span class="pre">Experience</span></code>. Each Experience contains the
 <cite>dataset</cite> and the associated task label.</p>
-<p>The scenario API is quite simple and is uniform across all scenario
+<p>The benchmark API is quite simple and is uniform across all benchmark
 generators. It is recommended to check the tutorial of the “benchmark” API,
 which contains usage examples ranging from “basic” to “advanced”.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>n_experiences</strong> – The number of experiences in the current scenario.
+<li><p><strong>n_experiences</strong> – The number of experiences in the current benchmark.
 The value of this parameter should be a divisor of 10 if
 <cite>first_task_with_half_classes</cite> is False, a divisor of 5 otherwise.</p></li>
 <li><p><strong>first_exp_with_half_classes</strong> – A boolean value that indicates if a

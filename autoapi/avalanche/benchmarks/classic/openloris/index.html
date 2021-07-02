@@ -182,8 +182,8 @@
             
   <div class="section" id="module-avalanche.benchmarks.classic.openloris">
 <span id="avalanche-benchmarks-classic-openloris"></span><h1><a class="reference internal" href="#module-avalanche.benchmarks.classic.openloris" title="avalanche.benchmarks.classic.openloris"><code class="xref py py-mod docutils literal notranslate"><span class="pre">avalanche.benchmarks.classic.openloris</span></code></a><a class="headerlink" href="#module-avalanche.benchmarks.classic.openloris" title="Permalink to this headline">¶</a></h1>
-<p>This module contains the high-level OpenLORIS scenario/factor generator.
-It basically returns a iterable scenario object <code class="docutils literal notranslate"><span class="pre">GenericCLScenario</span></code> given
+<p>This module contains the high-level OpenLORIS benchmark/factor generator.
+It basically returns a iterable benchmark object <code class="docutils literal notranslate"><span class="pre">GenericCLScenario</span></code> given
 a number of configuration parameters.</p>
 <div class="section" id="module-contents">
 <h2>Module Contents<a class="headerlink" href="#module-contents" title="Permalink to this headline">¶</a></h2>
@@ -196,25 +196,25 @@ a number of configuration parameters.</p>
 </colgroup>
 <tbody>
 <tr class="row-odd"><td><p><a class="reference internal" href="#avalanche.benchmarks.classic.openloris.OpenLORIS" title="avalanche.benchmarks.classic.openloris.OpenLORIS"><code class="xref py py-obj docutils literal notranslate"><span class="pre">OpenLORIS</span></code></a>(*, factor: Literal['clutter', 'illumination', 'occlusion', 'pixel', 'mixture-iros'] = 'clutter', train_transform: Optional[Any] = None, eval_transform: Optional[Any] = None, dataset_root: Union[str, Path] = None)</p></td>
-<td><p>Creates a CL scenario for OpenLORIS.</p></td>
+<td><p>Creates a CL benchmark for OpenLORIS.</p></td>
 </tr>
 </tbody>
 </table>
 <dl class="py function">
 <dt class="sig sig-object py" id="avalanche.benchmarks.classic.openloris.OpenLORIS">
 <span class="sig-prename descclassname"><span class="pre">avalanche.benchmarks.classic.openloris.</span></span><span class="sig-name descname"><span class="pre">OpenLORIS</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">factor</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Literal</span><span class="p"><span class="pre">[</span></span><span class="pre">clutter</span><span class="p"><span class="pre">,</span> </span><span class="pre">illumination</span><span class="p"><span class="pre">,</span> </span><span class="pre">occlusion</span><span class="p"><span class="pre">,</span> </span><span class="pre">pixel</span><span class="p"><span class="pre">,</span> </span><span class="pre">mixture-iros</span><span class="p"><span class="pre">]</span></span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">'clutter'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">train_transform</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">eval_transform</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dataset_root</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span> </span><span class="pre">Path</span><span class="p"><span class="pre">]</span></span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../_modules/avalanche/benchmarks/classic/openloris/#OpenLORIS"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.benchmarks.classic.openloris.OpenLORIS" title="Permalink to this definition">¶</a></dt>
-<dd><p>Creates a CL scenario for OpenLORIS.</p>
+<dd><p>Creates a CL benchmark for OpenLORIS.</p>
 <p>If the dataset is not present in the computer, <strong>this method will NOT be
 able automatically download</strong> and store it.</p>
 <p>This generator can be used to obtain scenarios based on different “factors”.
 Valid factors include ‘clutter’, ‘illumination’, ‘occlusion’, ‘pixel’, or
 ‘mixture-iros’.</p>
-<p>The scenario instance returned by this method will have two fields,
+<p>The benchmark instance returned by this method will have two fields,
 <cite>train_stream</cite> and <cite>test_stream</cite>, which can be iterated to obtain
 training and test <code class="xref py py-class docutils literal notranslate"><span class="pre">Experience</span></code>. Each Experience contains the
 <cite>dataset</cite> and the associated task label.</p>
 <p>The task label “0” will be assigned to each experience.</p>
-<p>The scenario API is quite simple and is uniform across all scenario
+<p>The benchmark API is quite simple and is uniform across all benchmark
 generators. It is recommended to check the tutorial of the “benchmark” API,
 which contains usage examples ranging from “basic” to “advanced”.</p>
 <dl class="field-list simple">

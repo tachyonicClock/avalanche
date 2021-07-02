@@ -205,7 +205,7 @@ Classes
        means that the definition for the test stream must contain the
        definition for a single experience.
    :param experience_factory: If not None, a callable that, given the
-       scenario instance and the experience ID, returns a experience
+       benchmark instance and the experience ID, returns a experience
        instance. This parameter is usually used in subclasses (when
        invoking the super constructor) to specialize the experience class.
        Defaults to None, which means that the :class:`GenericExperience`
@@ -333,7 +333,7 @@ Classes
 
 
 
-.. py:class:: GenericScenarioStream(: TGenericScenarioStream, name: str, scenario: TGenericCLScenario, *, slice_ids: List[int] = None)
+.. py:class:: GenericScenarioStream(: TGenericScenarioStream, name: str, benchmark: TGenericCLScenario, *, slice_ids: List[int] = None)
 
    Bases: :class:`Generic[TExperience, TGenericCLScenario]`, :class:`ScenarioStream[TGenericCLScenario, TExperience]`, :class:`Sequence[TExperience]`
 
@@ -360,10 +360,10 @@ Classes
       The name of the stream (for instance: "train", "test", "valid", ...).
 
 
-   .. attribute:: scenario
+   .. attribute:: benchmark
       
 
-      A reference to the scenario.
+      A reference to the benchmark.
 
 
    .. method:: __len__(self) -> int
@@ -430,7 +430,7 @@ Classes
    experience of a New Instance scenario will contain patterns from previously
    seen classes.
 
-   Creates an instance of the abstract experience given the scenario
+   Creates an instance of the abstract experience given the benchmark
    stream, the current experience ID and data about the classes timeline.
 
    :param origin_stream: The stream from which this experience was
@@ -487,7 +487,7 @@ Classes
 
    This experience implementation uses the generic experience-patterns
    assignment defined in the :class:`GenericCLScenario` instance. Instances of
-   this class are usually obtained from a scenario stream.
+   this class are usually obtained from a benchmark stream.
 
    Creates an instance of a generic experience given the stream from this
    experience was taken and and the current experience ID.

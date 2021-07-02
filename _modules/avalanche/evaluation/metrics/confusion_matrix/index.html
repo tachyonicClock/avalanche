@@ -520,12 +520,12 @@
 
     <span class="k">def</span> <span class="nf">_get_display_class_order</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">exp_cm</span><span class="p">:</span> <span class="n">Tensor</span><span class="p">,</span> <span class="n">strategy</span><span class="p">:</span> <span class="s1">&#39;BaseStrategy&#39;</span>
                                  <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">ndarray</span><span class="p">:</span>
-        <span class="n">scenario</span> <span class="o">=</span> <span class="n">strategy</span><span class="o">.</span><span class="n">experience</span><span class="o">.</span><span class="n">scenario</span>
+        <span class="n">benchmark</span> <span class="o">=</span> <span class="n">strategy</span><span class="o">.</span><span class="n">experience</span><span class="o">.</span><span class="n">benchmark</span>
 
-        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">absolute_class_order</span> <span class="ow">or</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">scenario</span><span class="p">,</span> <span class="n">NCScenario</span><span class="p">):</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">absolute_class_order</span> <span class="ow">or</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">benchmark</span><span class="p">,</span> <span class="n">NCScenario</span><span class="p">):</span>
             <span class="k">return</span> <span class="n">arange</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">exp_cm</span><span class="p">))</span>
 
-        <span class="k">return</span> <span class="n">scenario</span><span class="o">.</span><span class="n">classes_order</span>
+        <span class="k">return</span> <span class="n">benchmark</span><span class="o">.</span><span class="n">classes_order</span>
 
 <div class="viewcode-block" id="StreamConfusionMatrix.__str__"><a class="viewcode-back" href="../../../../../autoapi/avalanche/evaluation/metrics/#avalanche.evaluation.metrics.confusion_matrix.StreamConfusionMatrix.__str__">[docs]</a>    <span class="k">def</span> <span class="fm">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">return</span> <span class="s2">&quot;ConfusionMatrix_Stream&quot;</span></div></div>

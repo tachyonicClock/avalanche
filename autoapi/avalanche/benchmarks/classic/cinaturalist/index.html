@@ -193,14 +193,14 @@
 </colgroup>
 <tbody>
 <tr class="row-odd"><td><p><a class="reference internal" href="#avalanche.benchmarks.classic.cinaturalist.SplitInaturalist" title="avalanche.benchmarks.classic.cinaturalist.SplitInaturalist"><code class="xref py py-obj docutils literal notranslate"><span class="pre">SplitInaturalist</span></code></a>(*, super_categories=None, return_task_id=False, download=False, seed=0, train_transform: Optional[Any] = _default_train_transform, eval_transform: Optional[Any] = _default_eval_transform, dataset_root: Union[str, Path] = None)</p></td>
-<td><p>Creates a CL scenario using the iNaturalist2018 dataset.</p></td>
+<td><p>Creates a CL benchmark using the iNaturalist2018 dataset.</p></td>
 </tr>
 </tbody>
 </table>
 <dl class="py function">
 <dt class="sig sig-object py" id="avalanche.benchmarks.classic.cinaturalist.SplitInaturalist">
 <span class="sig-prename descclassname"><span class="pre">avalanche.benchmarks.classic.cinaturalist.</span></span><span class="sig-name descname"><span class="pre">SplitInaturalist</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">super_categories</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">return_task_id</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">download</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">seed</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">train_transform</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">_default_train_transform</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">eval_transform</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">_default_eval_transform</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dataset_root</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span> </span><span class="pre">Path</span><span class="p"><span class="pre">]</span></span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../_modules/avalanche/benchmarks/classic/cinaturalist/#SplitInaturalist"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.benchmarks.classic.cinaturalist.SplitInaturalist" title="Permalink to this definition">¶</a></dt>
-<dd><p>Creates a CL scenario using the iNaturalist2018 dataset.
+<dd><p>Creates a CL benchmark using the iNaturalist2018 dataset.
 A selection of supercategories (by default 10) define the experiences.
 Note that the supercategories are highly imbalanced in the number of classes
 and the amount of data available.</p>
@@ -218,7 +218,7 @@ The survey uses only the original iNaturalist2018 training dataset split
 into 70/10/20 for train/val/test streams. This method instead uses the full
 iNaturalist2018 training set to make the <cite>train_stream</cite>, whereas the
 <cite>test_stream</cite> is defined by the original iNaturalist2018 validation data.</p>
-<p>The returned scenario will return experiences containing all patterns of a
+<p>The returned benchmark will return experiences containing all patterns of a
 subset of classes, which means that each class is only seen “once”.
 This is one of the most common scenarios in the Continual Learning
 literature. Common names used in literature to describe this kind of
@@ -227,11 +227,11 @@ an equal amount of classes will be assigned to each experience.</p>
 <p>This generator doesn’t force a choice on the availability of task labels,
 a choice that is left to the user (see the <cite>return_task_id</cite> parameter for
 more info on task labels).</p>
-<p>The scenario instance returned by this method will have two fields,
+<p>The benchmark instance returned by this method will have two fields,
 <cite>train_stream</cite> and <cite>test_stream</cite>, which can be iterated to obtain
 training and test <code class="xref py py-class docutils literal notranslate"><span class="pre">Experience</span></code>. Each Experience contains the
 <cite>dataset</cite> and the associated task label.</p>
-<p>The scenario API is quite simple and is uniform across all scenario
+<p>The benchmark API is quite simple and is uniform across all benchmark
 generators. It is recommended to check the tutorial of the “benchmark” API,
 which contains usage examples ranging from “basic” to “advanced”.</p>
 <dl class="field-list simple">

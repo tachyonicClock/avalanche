@@ -742,9 +742,9 @@ In order to monitor the performance on held-out experience
 associated to the current training experience, set
 <cite>eval_every=1</cite> (or larger value) in the strategy constructor
 and pass the eval experience to the <cite>train</cite> method:
-<cite>for i, exp in enumerate(scenario.train_stream):</cite></p>
+<cite>for i, exp in enumerate(benchmark.train_stream):</cite></p>
 <blockquote>
-<div><p><cite>strategy.train(exp, eval_streams=[scenario.test_stream[i]])</cite></p>
+<div><p><cite>strategy.train(exp, eval_streams=[benchmark.test_stream[i]])</cite></p>
 </div></blockquote>
 <p>When not provided, validation loss and validation accuracy
 will be logged as zero.</p>

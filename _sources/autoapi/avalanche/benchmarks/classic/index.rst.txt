@@ -61,12 +61,12 @@ Functions
 
 .. function:: SplitCIFAR10(n_experiences: int, *, first_exp_with_half_classes: bool = False, return_task_id=False, seed: Optional[int] = None, fixed_class_order: Optional[Sequence[int]] = None, shuffle: bool = True, train_transform: Optional[Any] = _default_cifar10_train_transform, eval_transform: Optional[Any] = _default_cifar10_eval_transform, dataset_root: Union[str, Path] = None) -> NCScenario
 
-   Creates a CL scenario using the CIFAR10 dataset.
+   Creates a CL benchmark using the CIFAR10 dataset.
 
    If the dataset is not present in the computer, this method will
    automatically download and store it.
 
-   The returned scenario will return experiences containing all patterns of a
+   The returned benchmark will return experiences containing all patterns of a
    subset of classes, which means that each class is only seen "once".
    This is one of the most common scenarios in the Continual Learning
    literature. Common names used in literature to describe this kind of
@@ -77,16 +77,16 @@ Functions
    a choice that is left to the user (see the `return_task_id` parameter for
    more info on task labels).
 
-   The scenario instance returned by this method will have two fields,
+   The benchmark instance returned by this method will have two fields,
    `train_stream` and `test_stream`, which can be iterated to obtain
    training and test :class:`Experience`. Each Experience contains the
    `dataset` and the associated task label.
 
-   The scenario API is quite simple and is uniform across all scenario
+   The benchmark API is quite simple and is uniform across all benchmark
    generators. It is recommended to check the tutorial of the "benchmark" API,
    which contains usage examples ranging from "basic" to "advanced".
 
-   :param n_experiences: The number of experiences in the current scenario.
+   :param n_experiences: The number of experiences in the current benchmark.
        The value of this parameter should be a divisor of 10 if
        `first_task_with_half_classes` is False, a divisor of 5 otherwise.
    :param first_exp_with_half_classes: A boolean value that indicates if a
@@ -125,12 +125,12 @@ Functions
 
 .. function:: SplitCIFAR100(n_experiences: int, *, first_exp_with_half_classes: bool = False, return_task_id=False, seed: Optional[int] = None, fixed_class_order: Optional[Sequence[int]] = None, shuffle: bool = True, train_transform: Optional[Any] = _default_cifar100_train_transform, eval_transform: Optional[Any] = _default_cifar100_eval_transform, dataset_root: Union[str, Path] = None)
 
-   Creates a CL scenario using the CIFAR100 dataset.
+   Creates a CL benchmark using the CIFAR100 dataset.
 
    If the dataset is not present in the computer, this method will
    automatically download and store it.
 
-   The returned scenario will return experiences containing all patterns of a
+   The returned benchmark will return experiences containing all patterns of a
    subset of classes, which means that each class is only seen "once".
    This is one of the most common scenarios in the Continual Learning
    literature. Common names used in literature to describe this kind of
@@ -141,17 +141,17 @@ Functions
    a choice that is left to the user (see the `return_task_id` parameter for
    more info on task labels).
 
-   The scenario instance returned by this method will have two fields,
+   The benchmark instance returned by this method will have two fields,
    `train_stream` and `test_stream`, which can be iterated to obtain
    training and test :class:`Experience`. Each Experience contains the
    `dataset` and the associated task label.
 
-   The scenario API is quite simple and is uniform across all scenario
+   The benchmark API is quite simple and is uniform across all benchmark
    generators. It is recommended to check the tutorial of the "benchmark" API,
    which contains usage examples ranging from "basic" to "advanced".
 
    :param n_experiences: The number of incremental experiences in the current
-       scenario. The value of this parameter should be a divisor of 100 if
+       benchmark. The value of this parameter should be a divisor of 100 if
        first_task_with_half_classes is False, a divisor of 50 otherwise.
    :param first_exp_with_half_classes: A boolean value that indicates if a
        first pretraining batch containing half of the classes should be used.
@@ -189,7 +189,7 @@ Functions
 
 .. function:: SplitCIFAR110(n_experiences: int, *, seed: Optional[int] = None, fixed_class_order: Optional[Sequence[int]] = None, train_transform: Optional[Any] = _default_cifar100_train_transform, eval_transform: Optional[Any] = _default_cifar100_eval_transform, dataset_root_cifar10: Union[str, Path] = None, dataset_root_cifar100: Union[str, Path] = None) -> NCScenario
 
-   Creates a CL scenario using both the CIFAR100 and CIFAR10 datasets.
+   Creates a CL benchmark using both the CIFAR100 and CIFAR10 datasets.
 
    If the datasets are not present in the computer, this method will
    automatically download and store them in the data folder.
@@ -197,7 +197,7 @@ Functions
    The CIFAR10 dataset is used to create the first experience, while the
    remaining `n_experiences-1` experiences will be created from CIFAR100.
 
-   The returned scenario will return experiences containing all patterns of a
+   The returned benchmark will return experiences containing all patterns of a
    subset of classes, which means that each class is only seen "once".
    This is one of the most common scenarios in the Continual Learning
    literature. Common names used in literature to describe this kind of
@@ -206,17 +206,17 @@ Functions
 
    This generator will apply a task label "0" to all experiences.
 
-   The scenario instance returned by this method will have two fields,
+   The benchmark instance returned by this method will have two fields,
    `train_stream` and `test_stream`, which can be iterated to obtain
    training and test :class:`Experience`. Each Experience contains the
    `dataset` and the associated task label (always "0" for this specific
    benchmark).
 
-   The scenario API is quite simple and is uniform across all scenario
+   The benchmark API is quite simple and is uniform across all benchmark
    generators. It is recommended to check the tutorial of the "benchmark" API,
    which contains usage examples ranging from "basic" to "advanced".
 
-   :param n_experiences: The number of experiences for the entire scenario.
+   :param n_experiences: The number of experiences for the entire benchmark.
        The first experience will contain the entire CIFAR10 dataset, while the
        other n-1 experiences will be obtained from CIFAR100.
    :param seed: A valid int used to initialize the random number generator.
@@ -251,12 +251,12 @@ Functions
 
 .. function:: SplitCUB200(n_experiences=11, *, classes_first_batch=100, return_task_id=False, seed=0, fixed_class_order=None, shuffle=False, train_transform: Optional[Any] = _default_train_transform, eval_transform: Optional[Any] = _default_eval_transform, dataset_root: Union[str, Path] = None)
 
-   Creates a CL scenario using the Cub-200 dataset.
+   Creates a CL benchmark using the Cub-200 dataset.
 
    If the dataset is not present in the computer, **this method will NOT be
    able automatically download** and store it.
 
-   The returned scenario will return experiences containing all patterns of a
+   The returned benchmark will return experiences containing all patterns of a
    subset of classes, which means that each class is only seen "once".
    This is one of the most common scenarios in the Continual Learning
    literature. Common names used in literature to describe this kind of
@@ -267,16 +267,16 @@ Functions
    a choice that is left to the user (see the `return_task_id` parameter for
    more info on task labels).
 
-   The scenario instance returned by this method will have two fields,
+   The benchmark instance returned by this method will have two fields,
    `train_stream` and `test_stream`, which can be iterated to obtain
    training and test :class:`Experience`. Each Experience contains the
    `dataset` and the associated task label.
 
-   The scenario API is quite simple and is uniform across all scenario
+   The benchmark API is quite simple and is uniform across all benchmark
    generators. It is recommended to check the tutorial of the "benchmark" API,
    which contains usage examples ranging from "basic" to "advanced".
 
-   :param n_experiences: The number of experiences in the current scenario.
+   :param n_experiences: The number of experiences in the current benchmark.
        Defaults to 11.
    :param classes_first_batch: Number of classes in the first batch.
        Usually this is set to 500. Defaults to 100.
@@ -311,12 +311,12 @@ Functions
 
 .. function:: SplitFMNIST(n_experiences: int, *, first_batch_with_half_classes: bool = False, return_task_id=False, seed: Optional[int] = None, fixed_class_order: Optional[Sequence[int]] = None, shuffle: bool = True, train_transform: Optional[Any] = _default_fmnist_train_transform, eval_transform: Optional[Any] = _default_fmnist_eval_transform, dataset_root: Union[str, Path] = None)
 
-   Creates a CL scenario using the Fashion MNIST dataset.
+   Creates a CL benchmark using the Fashion MNIST dataset.
 
    If the dataset is not present in the computer, this method will
    automatically download and store it.
 
-   The returned scenario will return experiences containing all patterns of a
+   The returned benchmark will return experiences containing all patterns of a
    subset of classes, which means that each class is only seen "once".
    This is one of the most common scenarios in the Continual Learning
    literature. Common names used in literature to describe this kind of
@@ -327,17 +327,17 @@ Functions
    a choice that is left to the user (see the `return_task_id` parameter for
    more info on task labels).
 
-   The scenario instance returned by this method will have two fields,
+   The benchmark instance returned by this method will have two fields,
    `train_stream` and `test_stream`, which can be iterated to obtain
    training and test :class:`Experience`. Each Experience contains the
    `dataset` and the associated task label.
 
-   The scenario API is quite simple and is uniform across all scenario
+   The benchmark API is quite simple and is uniform across all benchmark
    generators. It is recommended to check the tutorial of the "benchmark" API,
    which contains usage examples ranging from "basic" to "advanced".
 
    :param n_experiences: The number of experiences in the current
-       scenario. If the first experience is a "pretraining" step and it
+       benchmark. If the first experience is a "pretraining" step and it
        contains half of the classes. The value of this parameter should be a
        divisor of 10 if first_task_with_half_classes if false, a divisor of 5
        otherwise.
@@ -378,12 +378,12 @@ Functions
 
 .. function:: SplitImageNet(dataset_root: Union[str, Path], *, n_experiences=10, per_exp_classes=None, return_task_id=False, seed=0, fixed_class_order=None, shuffle: bool = True, train_transform: Optional[Any] = _default_train_transform, eval_transform: Optional[Any] = _default_eval_transform)
 
-   Creates a CL scenario using the ImageNet dataset.
+   Creates a CL benchmark using the ImageNet dataset.
 
    If the dataset is not present in the computer, **this method will NOT be
    able automatically download** and store it.
 
-   The returned scenario will return experiences containing all patterns of a
+   The returned benchmark will return experiences containing all patterns of a
    subset of classes, which means that each class is only seen "once".
    This is one of the most common scenarios in the Continual Learning
    literature. Common names used in literature to describe this kind of
@@ -394,17 +394,17 @@ Functions
    a choice that is left to the user (see the `return_task_id` parameter for
    more info on task labels).
 
-   The scenario instance returned by this method will have two fields,
+   The benchmark instance returned by this method will have two fields,
    `train_stream` and `test_stream`, which can be iterated to obtain
    training and test :class:`Experience`. Each Experience contains the
    `dataset` and the associated task label.
 
-   The scenario API is quite simple and is uniform across all scenario
+   The benchmark API is quite simple and is uniform across all benchmark
    generators. It is recommended to check the tutorial of the "benchmark" API,
    which contains usage examples ranging from "basic" to "advanced".
 
    :param dataset_root: Base path where Imagenet data is stored.
-   :param n_experiences: The number of experiences in the current scenario.
+   :param n_experiences: The number of experiences in the current benchmark.
    :param per_exp_classes: Is not None, a dictionary whose keys are
        (0-indexed) experience IDs and their values are the number of classes
        to include in the respective experiences. The dictionary doesn't
@@ -444,12 +444,12 @@ Functions
 
 .. function:: SplitMNIST(n_experiences: int, *, return_task_id=False, seed: Optional[int] = None, fixed_class_order: Optional[Sequence[int]] = None, shuffle: bool = True, train_transform: Optional[Any] = _default_mnist_train_transform, eval_transform: Optional[Any] = _default_mnist_eval_transform, dataset_root: Union[str, Path] = None)
 
-   Creates a CL scenario using the MNIST dataset.
+   Creates a CL benchmark using the MNIST dataset.
 
    If the dataset is not present in the computer, this method will
    automatically download and store it.
 
-   The returned scenario will return experiences containing all patterns of a
+   The returned benchmark will return experiences containing all patterns of a
    subset of classes, which means that each class is only seen "once".
    This is one of the most common scenarios in the Continual Learning
    literature. Common names used in literature to describe this kind of
@@ -460,17 +460,17 @@ Functions
    a choice that is left to the user (see the `return_task_id` parameter for
    more info on task labels).
 
-   The scenario instance returned by this method will have two fields,
+   The benchmark instance returned by this method will have two fields,
    `train_stream` and `test_stream`, which can be iterated to obtain
    training and test :class:`Experience`. Each Experience contains the
    `dataset` and the associated task label.
 
-   The scenario API is quite simple and is uniform across all scenario
+   The benchmark API is quite simple and is uniform across all benchmark
    generators. It is recommended to check the tutorial of the "benchmark" API,
    which contains usage examples ranging from "basic" to "advanced".
 
    :param n_experiences: The number of incremental experiences in the current
-       scenario.
+       benchmark.
        The value of this parameter should be a divisor of 10.
    :param return_task_id: if True, a progressive task id is returned for every
        experience. If False, all experiences will have a task ID of 0.
@@ -502,7 +502,7 @@ Functions
 
 .. function:: PermutedMNIST(n_experiences: int, *, seed: Optional[int] = None, train_transform: Optional[Any] = _default_mnist_train_transform, eval_transform: Optional[Any] = _default_mnist_eval_transform, dataset_root: Union[str, Path] = None) -> NCScenario
 
-   Creates a Permuted MNIST scenario.
+   Creates a Permuted MNIST benchmark.
 
    If the dataset is not present in the computer, this method will
    automatically download and store it.
@@ -512,19 +512,19 @@ Functions
    composed of all the original 10 MNIST classes, but the pixel in the images
    are permuted in a different way.
 
-   The scenario instance returned by this method will have two fields,
+   The benchmark instance returned by this method will have two fields,
    `train_stream` and `test_stream`, which can be iterated to obtain
    training and test :class:`Experience`. Each Experience contains the
    `dataset` and the associated task label.
 
    A progressive task label, starting from "0", is applied to each experience.
 
-   The scenario API is quite simple and is uniform across all scenario
+   The benchmark API is quite simple and is uniform across all benchmark
    generators. It is recommended to check the tutorial of the "benchmark" API,
    which contains usage examples ranging from "basic" to "advanced".
 
    :param n_experiences: The number of experiences (tasks) in the current
-       scenario. It indicates how many different permutations of the MNIST
+       benchmark. It indicates how many different permutations of the MNIST
        dataset have to be created.
        The value of this parameter should be a divisor of 10.
    :param seed: A valid int used to initialize the random number generator.
@@ -549,7 +549,7 @@ Functions
 
 .. function:: RotatedMNIST(n_experiences: int, *, seed: Optional[int] = None, rotations_list: Optional[Sequence[int]] = None, train_transform: Optional[Any] = _default_mnist_train_transform, eval_transform: Optional[Any] = _default_mnist_eval_transform, dataset_root: Union[str, Path] = None) -> NCScenario
 
-   Creates a Rotated MNIST scenario.
+   Creates a Rotated MNIST benchmark.
 
    If the dataset is not present in the computer, this method will
    automatically download and store it.
@@ -558,19 +558,19 @@ Functions
    different manners. This means that each experience is composed of all the
    original 10 MNIST classes, but each image is rotated in a different way.
 
-   The scenario instance returned by this method will have two fields,
+   The benchmark instance returned by this method will have two fields,
    `train_stream` and `test_stream`, which can be iterated to obtain
    training and test :class:`Experience`. Each Experience contains the
    `dataset` and the associated task label.
 
    A progressive task label, starting from "0", is applied to each experience.
 
-   The scenario API is quite simple and is uniform across all scenario
+   The benchmark API is quite simple and is uniform across all benchmark
    generators. It is recommended to check the tutorial of the "benchmark" API,
    which contains usage examples ranging from "basic" to "advanced".
 
    :param n_experiences: The number of experiences (tasks) in the current
-       scenario. It indicates how many different rotations of the MNIST
+       benchmark. It indicates how many different rotations of the MNIST
        dataset have to be created.
        The value of this parameter should be a divisor of 10.
    :param seed: A valid int used to initialize the random number generator.
@@ -602,12 +602,12 @@ Functions
 
 .. function:: SplitOmniglot(n_experiences: int, *, return_task_id=False, seed: Optional[int] = None, fixed_class_order: Optional[Sequence[int]] = None, shuffle: bool = True, train_transform: Optional[Any] = _default_omniglot_train_transform, eval_transform: Optional[Any] = _default_omniglot_eval_transform, dataset_root: Union[str, Path] = None)
 
-   Creates a CL scenario using the OMNIGLOT dataset.
+   Creates a CL benchmark using the OMNIGLOT dataset.
 
    If the dataset is not present in the computer, this method will
    automatically download and store it.
 
-   The returned scenario will return experiences containing all patterns of a
+   The returned benchmark will return experiences containing all patterns of a
    subset of classes, which means that each class is only seen "once".
    This is one of the most common scenarios in the Continual Learning
    literature. Common names used in literature to describe this kind of
@@ -621,17 +621,17 @@ Functions
    a choice that is left to the user (see the `return_task_id` parameter for
    more info on task labels).
 
-   The scenario instance returned by this method will have two fields,
+   The benchmark instance returned by this method will have two fields,
    `train_stream` and `test_stream`, which can be iterated to obtain
    training and test :class:`Experience`. Each Experience contains the
    `dataset` and the associated task label.
 
-   The scenario API is quite simple and is uniform across all scenario
+   The benchmark API is quite simple and is uniform across all benchmark
    generators. It is recommended to check the tutorial of the "benchmark" API,
    which contains usage examples ranging from "basic" to "advanced".
 
    :param n_experiences: The number of incremental experiences in the current
-       scenario. The value of this parameter should be a divisor of 10.
+       benchmark. The value of this parameter should be a divisor of 10.
    :param return_task_id: if True, a progressive task id is returned for every
        experience. If False, all experiences will have a task ID of 0.
    :param seed: A valid int used to initialize the random number generator.
@@ -662,7 +662,7 @@ Functions
 
 .. function:: PermutedOmniglot(n_experiences: int, *, seed: Optional[int] = None, train_transform: Optional[Any] = _default_omniglot_train_transform, eval_transform: Optional[Any] = _default_omniglot_eval_transform, dataset_root: Union[str, Path] = None) -> NCScenario
 
-   Creates a Permuted Omniglot scenario.
+   Creates a Permuted Omniglot benchmark.
 
    If the dataset is not present in the computer, this method will
    automatically download and store it.
@@ -672,19 +672,19 @@ Functions
    composed of all the original 964 Omniglot classes, but the pixel in the
    images are permuted in a different way.
 
-   The scenario instance returned by this method will have two fields,
+   The benchmark instance returned by this method will have two fields,
    `train_stream` and `test_stream`, which can be iterated to obtain
    training and test :class:`Experience`. Each Experience contains the
    `dataset` and the associated task label.
 
    A progressive task label, starting from "0", is applied to each experience.
 
-   The scenario API is quite simple and is uniform across all scenario
+   The benchmark API is quite simple and is uniform across all benchmark
    generators. It is recommended to check the tutorial of the "benchmark" API,
    which contains usage examples ranging from "basic" to "advanced".
 
    :param n_experiences: The number of experiences (tasks) in the current
-       scenario. It indicates how many different permutations of the Omniglot
+       benchmark. It indicates how many different permutations of the Omniglot
        dataset have to be created.
    :param seed: A valid int used to initialize the random number generator.
        Can be None.
@@ -708,7 +708,7 @@ Functions
 
 .. function:: RotatedOmniglot(n_experiences: int, *, seed: Optional[int] = None, rotations_list: Optional[Sequence[int]] = None, train_transform: Optional[Any] = _default_omniglot_train_transform, eval_transform: Optional[Any] = _default_omniglot_eval_transform, dataset_root: Union[str, Path] = None) -> NCScenario
 
-   Creates a Rotated Omniglot scenario.
+   Creates a Rotated Omniglot benchmark.
 
    If the dataset is not present in the computer, this method will
    automatically download and store it.
@@ -718,19 +718,19 @@ Functions
    composed of all the original 964 Omniglot classes, but each image is
    rotated in a different way.
 
-   The scenario instance returned by this method will have two fields,
+   The benchmark instance returned by this method will have two fields,
    `train_stream` and `test_stream`, which can be iterated to obtain
    training and test :class:`Experience`. Each Experience contains the
    `dataset` and the associated task label.
 
    A progressive task label, starting from "0", is applied to each experience.
 
-   The scenario API is quite simple and is uniform across all scenario
+   The benchmark API is quite simple and is uniform across all benchmark
    generators. It is recommended to check the tutorial of the "benchmark" API,
    which contains usage examples ranging from "basic" to "advanced".
 
    :param n_experiences: The number of experiences (tasks) in the current
-       scenario. It indicates how many different rotations of the Omniglot
+       benchmark. It indicates how many different rotations of the Omniglot
        dataset have to be created.
    :param seed: A valid int used to initialize the random number generator.
        Can be None.
@@ -761,27 +761,27 @@ Functions
 
 .. function:: CORe50(*, scenario: str = 'nicv2_391', run: int = 0, object_lvl: bool = True, mini: bool = False, train_transform: Optional[Any] = _default_train_transform, eval_transform: Optional[Any] = _default_eval_transform, dataset_root: Union[str, Path] = None)
 
-   Creates a CL scenario for CORe50.
+   Creates a CL benchmark for CORe50.
 
    If the dataset is not present in the computer, this method will
    automatically download and store it.
 
    This generator can be used to obtain the NI, NC, NIC and NICv2-* scenarios.
 
-   The scenario instance returned by this method will have two fields,
+   The benchmark instance returned by this method will have two fields,
    `train_stream` and `test_stream`, which can be iterated to obtain
    training and test :class:`Experience`. Each Experience contains the
    `dataset` and the associated task label.
 
    The task label "0" will be assigned to each experience.
 
-   The scenario API is quite simple and is uniform across all scenario
+   The benchmark API is quite simple and is uniform across all benchmark
    generators. It is recommended to check the tutorial of the "benchmark" API,
    which contains usage examples ranging from "basic" to "advanced".
 
    :param scenario: CORe50 main scenario. It can be chosen between 'ni', 'nc',
        'nic', 'nicv2_79', 'nicv2_196' or 'nicv2_391.'
-   :param run: number of run for the scenario. Each run defines a different
+   :param run: number of run for the benchmark. Each run defines a different
        ordering. Must be a number between 0 and 9.
    :param object_lvl: True for a 50-way classification at the object level.
        False if you want to use the categories as classes. Default to True.
@@ -805,12 +805,12 @@ Functions
 
 .. function:: SplitTinyImageNet(n_experiences=10, *, return_task_id=False, seed=0, fixed_class_order=None, shuffle: bool = True, train_transform: Optional[Any] = _default_train_transform, eval_transform: Optional[Any] = _default_eval_transform, dataset_root: Union[str, Path] = None)
 
-   Creates a CL scenario using the Tiny ImageNet dataset.
+   Creates a CL benchmark using the Tiny ImageNet dataset.
 
    If the dataset is not present in the computer, this method will
    automatically download and store it.
 
-   The returned scenario will return experiences containing all patterns of a
+   The returned benchmark will return experiences containing all patterns of a
    subset of classes, which means that each class is only seen "once".
    This is one of the most common scenarios in the Continual Learning
    literature. Common names used in literature to describe this kind of
@@ -821,16 +821,16 @@ Functions
    a choice that is left to the user (see the `return_task_id` parameter for
    more info on task labels).
 
-   The scenario instance returned by this method will have two fields,
+   The benchmark instance returned by this method will have two fields,
    `train_stream` and `test_stream`, which can be iterated to obtain
    training and test :class:`Experience`. Each Experience contains the
    `dataset` and the associated task label.
 
-   The scenario API is quite simple and is uniform across all scenario
+   The benchmark API is quite simple and is uniform across all benchmark
    generators. It is recommended to check the tutorial of the "benchmark" API,
    which contains usage examples ranging from "basic" to "advanced".
 
-   :param n_experiences: The number of experiences in the current scenario.
+   :param n_experiences: The number of experiences in the current benchmark.
    :param return_task_id: if True, a progressive task id is returned for every
        experience. If False, all experiences will have a task ID of 0.
    :param seed: A valid int used to initialize the random number generator.
@@ -862,7 +862,7 @@ Functions
 
 .. function:: OpenLORIS(*, factor: Literal['clutter', 'illumination', 'occlusion', 'pixel', 'mixture-iros'] = 'clutter', train_transform: Optional[Any] = None, eval_transform: Optional[Any] = None, dataset_root: Union[str, Path] = None)
 
-   Creates a CL scenario for OpenLORIS.
+   Creates a CL benchmark for OpenLORIS.
 
    If the dataset is not present in the computer, **this method will NOT be
    able automatically download** and store it.
@@ -871,14 +871,14 @@ Functions
    Valid factors include 'clutter', 'illumination', 'occlusion', 'pixel', or
    'mixture-iros'.
 
-   The scenario instance returned by this method will have two fields,
+   The benchmark instance returned by this method will have two fields,
    `train_stream` and `test_stream`, which can be iterated to obtain
    training and test :class:`Experience`. Each Experience contains the
    `dataset` and the associated task label.
 
    The task label "0" will be assigned to each experience.
 
-   The scenario API is quite simple and is uniform across all scenario
+   The benchmark API is quite simple and is uniform across all benchmark
    generators. It is recommended to check the tutorial of the "benchmark" API,
    which contains usage examples ranging from "basic" to "advanced".
 

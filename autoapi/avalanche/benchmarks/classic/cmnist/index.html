@@ -193,23 +193,23 @@
 </colgroup>
 <tbody>
 <tr class="row-odd"><td><p><a class="reference internal" href="#avalanche.benchmarks.classic.cmnist.SplitMNIST" title="avalanche.benchmarks.classic.cmnist.SplitMNIST"><code class="xref py py-obj docutils literal notranslate"><span class="pre">SplitMNIST</span></code></a>(n_experiences: int, *, return_task_id=False, seed: Optional[int] = None, fixed_class_order: Optional[Sequence[int]] = None, shuffle: bool = True, train_transform: Optional[Any] = _default_mnist_train_transform, eval_transform: Optional[Any] = _default_mnist_eval_transform, dataset_root: Union[str, Path] = None)</p></td>
-<td><p>Creates a CL scenario using the MNIST dataset.</p></td>
+<td><p>Creates a CL benchmark using the MNIST dataset.</p></td>
 </tr>
 <tr class="row-even"><td><p><a class="reference internal" href="#avalanche.benchmarks.classic.cmnist.PermutedMNIST" title="avalanche.benchmarks.classic.cmnist.PermutedMNIST"><code class="xref py py-obj docutils literal notranslate"><span class="pre">PermutedMNIST</span></code></a>(n_experiences: int, *, seed: Optional[int] = None, train_transform: Optional[Any] = _default_mnist_train_transform, eval_transform: Optional[Any] = _default_mnist_eval_transform, dataset_root: Union[str, Path] = None) → NCScenario</p></td>
-<td><p>Creates a Permuted MNIST scenario.</p></td>
+<td><p>Creates a Permuted MNIST benchmark.</p></td>
 </tr>
 <tr class="row-odd"><td><p><a class="reference internal" href="#avalanche.benchmarks.classic.cmnist.RotatedMNIST" title="avalanche.benchmarks.classic.cmnist.RotatedMNIST"><code class="xref py py-obj docutils literal notranslate"><span class="pre">RotatedMNIST</span></code></a>(n_experiences: int, *, seed: Optional[int] = None, rotations_list: Optional[Sequence[int]] = None, train_transform: Optional[Any] = _default_mnist_train_transform, eval_transform: Optional[Any] = _default_mnist_eval_transform, dataset_root: Union[str, Path] = None) → NCScenario</p></td>
-<td><p>Creates a Rotated MNIST scenario.</p></td>
+<td><p>Creates a Rotated MNIST benchmark.</p></td>
 </tr>
 </tbody>
 </table>
 <dl class="py function">
 <dt class="sig sig-object py" id="avalanche.benchmarks.classic.cmnist.SplitMNIST">
 <span class="sig-prename descclassname"><span class="pre">avalanche.benchmarks.classic.cmnist.</span></span><span class="sig-name descname"><span class="pre">SplitMNIST</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">n_experiences</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">return_task_id</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">seed</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">]</span></span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fixed_class_order</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">Sequence</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">shuffle</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">bool</span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">train_transform</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">_default_mnist_train_transform</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">eval_transform</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">_default_mnist_eval_transform</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dataset_root</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span> </span><span class="pre">Path</span><span class="p"><span class="pre">]</span></span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../_modules/avalanche/benchmarks/classic/cmnist/#SplitMNIST"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.benchmarks.classic.cmnist.SplitMNIST" title="Permalink to this definition">¶</a></dt>
-<dd><p>Creates a CL scenario using the MNIST dataset.</p>
+<dd><p>Creates a CL benchmark using the MNIST dataset.</p>
 <p>If the dataset is not present in the computer, this method will
 automatically download and store it.</p>
-<p>The returned scenario will return experiences containing all patterns of a
+<p>The returned benchmark will return experiences containing all patterns of a
 subset of classes, which means that each class is only seen “once”.
 This is one of the most common scenarios in the Continual Learning
 literature. Common names used in literature to describe this kind of
@@ -218,18 +218,18 @@ an equal amount of classes will be assigned to each experience.</p>
 <p>This generator doesn’t force a choice on the availability of task labels,
 a choice that is left to the user (see the <cite>return_task_id</cite> parameter for
 more info on task labels).</p>
-<p>The scenario instance returned by this method will have two fields,
+<p>The benchmark instance returned by this method will have two fields,
 <cite>train_stream</cite> and <cite>test_stream</cite>, which can be iterated to obtain
 training and test <code class="xref py py-class docutils literal notranslate"><span class="pre">Experience</span></code>. Each Experience contains the
 <cite>dataset</cite> and the associated task label.</p>
-<p>The scenario API is quite simple and is uniform across all scenario
+<p>The benchmark API is quite simple and is uniform across all benchmark
 generators. It is recommended to check the tutorial of the “benchmark” API,
 which contains usage examples ranging from “basic” to “advanced”.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>n_experiences</strong> – The number of incremental experiences in the current
-scenario.
+benchmark.
 The value of this parameter should be a divisor of 10.</p></li>
 <li><p><strong>return_task_id</strong> – if True, a progressive task id is returned for every
 experience. If False, all experiences will have a task ID of 0.</p></li>
@@ -266,26 +266,26 @@ means that the default location for ‘mnist’ will be used.</p></li>
 <dl class="py function">
 <dt class="sig sig-object py" id="avalanche.benchmarks.classic.cmnist.PermutedMNIST">
 <span class="sig-prename descclassname"><span class="pre">avalanche.benchmarks.classic.cmnist.</span></span><span class="sig-name descname"><span class="pre">PermutedMNIST</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">n_experiences</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">seed</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">]</span></span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">train_transform</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">_default_mnist_train_transform</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">eval_transform</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">_default_mnist_eval_transform</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dataset_root</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span> </span><span class="pre">Path</span><span class="p"><span class="pre">]</span></span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">NCScenario</span><a class="reference internal" href="../../../../../_modules/avalanche/benchmarks/classic/cmnist/#PermutedMNIST"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.benchmarks.classic.cmnist.PermutedMNIST" title="Permalink to this definition">¶</a></dt>
-<dd><p>Creates a Permuted MNIST scenario.</p>
+<dd><p>Creates a Permuted MNIST benchmark.</p>
 <p>If the dataset is not present in the computer, this method will
 automatically download and store it.</p>
 <p>Random pixel permutations are used to permute the MNIST images in
 <code class="docutils literal notranslate"><span class="pre">n_experiences</span></code> different manners. This means that each experience is
 composed of all the original 10 MNIST classes, but the pixel in the images
 are permuted in a different way.</p>
-<p>The scenario instance returned by this method will have two fields,
+<p>The benchmark instance returned by this method will have two fields,
 <cite>train_stream</cite> and <cite>test_stream</cite>, which can be iterated to obtain
 training and test <code class="xref py py-class docutils literal notranslate"><span class="pre">Experience</span></code>. Each Experience contains the
 <cite>dataset</cite> and the associated task label.</p>
 <p>A progressive task label, starting from “0”, is applied to each experience.</p>
-<p>The scenario API is quite simple and is uniform across all scenario
+<p>The benchmark API is quite simple and is uniform across all benchmark
 generators. It is recommended to check the tutorial of the “benchmark” API,
 which contains usage examples ranging from “basic” to “advanced”.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>n_experiences</strong> – The number of experiences (tasks) in the current
-scenario. It indicates how many different permutations of the MNIST
+benchmark. It indicates how many different permutations of the MNIST
 dataset have to be created.
 The value of this parameter should be a divisor of 10.</p></li>
 <li><p><strong>seed</strong> – A valid int used to initialize the random number generator.
@@ -315,25 +315,25 @@ means that the default location for ‘mnist’ will be used.</p></li>
 <dl class="py function">
 <dt class="sig sig-object py" id="avalanche.benchmarks.classic.cmnist.RotatedMNIST">
 <span class="sig-prename descclassname"><span class="pre">avalanche.benchmarks.classic.cmnist.</span></span><span class="sig-name descname"><span class="pre">RotatedMNIST</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">n_experiences</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">seed</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">]</span></span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">rotations_list</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">Sequence</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">train_transform</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">_default_mnist_train_transform</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">eval_transform</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">_default_mnist_eval_transform</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dataset_root</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span> </span><span class="pre">Path</span><span class="p"><span class="pre">]</span></span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">NCScenario</span><a class="reference internal" href="../../../../../_modules/avalanche/benchmarks/classic/cmnist/#RotatedMNIST"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.benchmarks.classic.cmnist.RotatedMNIST" title="Permalink to this definition">¶</a></dt>
-<dd><p>Creates a Rotated MNIST scenario.</p>
+<dd><p>Creates a Rotated MNIST benchmark.</p>
 <p>If the dataset is not present in the computer, this method will
 automatically download and store it.</p>
 <p>Random angles are used to rotate the MNIST images in <code class="docutils literal notranslate"><span class="pre">n_experiences</span></code>
 different manners. This means that each experience is composed of all the
 original 10 MNIST classes, but each image is rotated in a different way.</p>
-<p>The scenario instance returned by this method will have two fields,
+<p>The benchmark instance returned by this method will have two fields,
 <cite>train_stream</cite> and <cite>test_stream</cite>, which can be iterated to obtain
 training and test <code class="xref py py-class docutils literal notranslate"><span class="pre">Experience</span></code>. Each Experience contains the
 <cite>dataset</cite> and the associated task label.</p>
 <p>A progressive task label, starting from “0”, is applied to each experience.</p>
-<p>The scenario API is quite simple and is uniform across all scenario
+<p>The benchmark API is quite simple and is uniform across all benchmark
 generators. It is recommended to check the tutorial of the “benchmark” API,
 which contains usage examples ranging from “basic” to “advanced”.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>n_experiences</strong> – The number of experiences (tasks) in the current
-scenario. It indicates how many different rotations of the MNIST
+benchmark. It indicates how many different rotations of the MNIST
 dataset have to be created.
 The value of this parameter should be a divisor of 10.</p></li>
 <li><p><strong>seed</strong> – A valid int used to initialize the random number generator.

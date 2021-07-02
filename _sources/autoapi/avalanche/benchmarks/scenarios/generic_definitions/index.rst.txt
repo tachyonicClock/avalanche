@@ -57,10 +57,10 @@ Classes
       A reference to the original stream from which this experience was obtained.
 
 
-   .. attribute:: scenario
+   .. attribute:: benchmark
       :annotation: :TScenario
 
-      A reference to the scenario.
+      A reference to the benchmark.
 
 
    .. attribute:: current_experience
@@ -101,6 +101,12 @@ Classes
       multiple tasks, accessing this property will result in an exception.
 
 
+   .. method:: scenario(self) -> TScenario
+      :property:
+
+      This property is DEPRECATED, use self.benchmark instead.
+
+
 
 .. py:class:: ScenarioStream
 
@@ -120,10 +126,16 @@ Classes
       The name of the stream.
 
 
-   .. attribute:: scenario
+   .. attribute:: benchmark
       :annotation: :TScenario
 
       A reference to the scenario this stream belongs to.
+
+
+   .. method:: scenario(self) -> TScenario
+      :property:
+
+      This property is DEPRECATED, use self.benchmark instead.
 
 
    .. method:: __getitem__(self: TScenarioStream, experience_idx: Union[int, slice, Iterable[int]]) -> Union[TExperience, TScenarioStream]

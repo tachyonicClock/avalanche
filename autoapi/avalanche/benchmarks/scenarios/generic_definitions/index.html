@@ -238,9 +238,9 @@ scenario the Experience may be composed by patterns from different tasks.</p>
 </dd></dl>
 
 <dl class="py attribute">
-<dt class="sig sig-object py" id="avalanche.benchmarks.scenarios.generic_definitions.Experience.scenario">
-<span class="sig-name descname"><span class="pre">scenario</span></span><em class="property"> <span class="pre">:TScenario</span></em><a class="headerlink" href="#avalanche.benchmarks.scenarios.generic_definitions.Experience.scenario" title="Permalink to this definition">¶</a></dt>
-<dd><p>A reference to the scenario.</p>
+<dt class="sig sig-object py" id="avalanche.benchmarks.scenarios.generic_definitions.Experience.benchmark">
+<span class="sig-name descname"><span class="pre">benchmark</span></span><em class="property"> <span class="pre">:TScenario</span></em><a class="headerlink" href="#avalanche.benchmarks.scenarios.generic_definitions.Experience.benchmark" title="Permalink to this definition">¶</a></dt>
+<dd><p>A reference to the benchmark.</p>
 </dd></dl>
 
 <dl class="py attribute">
@@ -280,6 +280,12 @@ single task label are present. If this experience contains patterns from
 multiple tasks, accessing this property will result in an exception.</p>
 </dd></dl>
 
+<dl class="py method">
+<dt class="sig sig-object py" id="avalanche.benchmarks.scenarios.generic_definitions.Experience.scenario">
+<em class="property"><span class="pre">property</span> </em><span class="sig-name descname"><span class="pre">scenario</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em><span class="sig-paren">)</span> &#x2192; <a class="reference internal" href="#avalanche.benchmarks.scenarios.generic_definitions.TScenario" title="avalanche.benchmarks.scenarios.generic_definitions.TScenario"><span class="pre">TScenario</span></a><a class="headerlink" href="#avalanche.benchmarks.scenarios.generic_definitions.Experience.scenario" title="Permalink to this definition">¶</a></dt>
+<dd><p>This property is DEPRECATED, use self.benchmark instead.</p>
+</dd></dl>
+
 </dd></dl>
 
 <dl class="py class">
@@ -299,9 +305,15 @@ stream.</p>
 </dd></dl>
 
 <dl class="py attribute">
-<dt class="sig sig-object py" id="avalanche.benchmarks.scenarios.generic_definitions.ScenarioStream.scenario">
-<span class="sig-name descname"><span class="pre">scenario</span></span><em class="property"> <span class="pre">:TScenario</span></em><a class="headerlink" href="#avalanche.benchmarks.scenarios.generic_definitions.ScenarioStream.scenario" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="avalanche.benchmarks.scenarios.generic_definitions.ScenarioStream.benchmark">
+<span class="sig-name descname"><span class="pre">benchmark</span></span><em class="property"> <span class="pre">:TScenario</span></em><a class="headerlink" href="#avalanche.benchmarks.scenarios.generic_definitions.ScenarioStream.benchmark" title="Permalink to this definition">¶</a></dt>
 <dd><p>A reference to the scenario this stream belongs to.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="avalanche.benchmarks.scenarios.generic_definitions.ScenarioStream.scenario">
+<em class="property"><span class="pre">property</span> </em><span class="sig-name descname"><span class="pre">scenario</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em><span class="sig-paren">)</span> &#x2192; <a class="reference internal" href="#avalanche.benchmarks.scenarios.generic_definitions.TScenario" title="avalanche.benchmarks.scenarios.generic_definitions.TScenario"><span class="pre">TScenario</span></a><a class="headerlink" href="#avalanche.benchmarks.scenarios.generic_definitions.ScenarioStream.scenario" title="Permalink to this definition">¶</a></dt>
+<dd><p>This property is DEPRECATED, use self.benchmark instead.</p>
 </dd></dl>
 
 <dl class="py method">

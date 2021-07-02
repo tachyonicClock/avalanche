@@ -217,8 +217,8 @@
 <span class="sd">    associated to the current training experience, set</span>
 <span class="sd">    `eval_every=1` (or larger value) in the strategy constructor</span>
 <span class="sd">    and pass the eval experience to the `train` method:</span>
-<span class="sd">    `for i, exp in enumerate(scenario.train_stream):`</span>
-<span class="sd">        `strategy.train(exp, eval_streams=[scenario.test_stream[i]])`</span>
+<span class="sd">    `for i, exp in enumerate(benchmark.train_stream):`</span>
+<span class="sd">        `strategy.train(exp, eval_streams=[benchmark.test_stream[i]])`</span>
 
 <span class="sd">    When not provided, validation loss and validation accuracy</span>
 <span class="sd">    will be logged as zero.</span>

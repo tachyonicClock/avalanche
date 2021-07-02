@@ -308,7 +308,7 @@
 <span class="sd">            means that the definition for the test stream must contain the</span>
 <span class="sd">            definition for a single experience.</span>
 <span class="sd">        :param experience_factory: If not None, a callable that, given the</span>
-<span class="sd">            scenario instance and the experience ID, returns a experience</span>
+<span class="sd">            benchmark instance and the experience ID, returns a experience</span>
 <span class="sd">            instance. This parameter is usually used in subclasses (when</span>
 <span class="sd">            invoking the super constructor) to specialize the experience class.</span>
 <span class="sd">            Defaults to None, which means that the :class:`GenericExperience`</span>
@@ -676,7 +676,7 @@
 
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">:</span> <span class="n">TGenericScenarioStream</span><span class="p">,</span>
                  <span class="n">name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
-                 <span class="n">scenario</span><span class="p">:</span> <span class="n">TGenericCLScenario</span><span class="p">,</span>
+                 <span class="n">benchmark</span><span class="p">:</span> <span class="n">TGenericCLScenario</span><span class="p">,</span>
                  <span class="o">*</span><span class="p">,</span>
                  <span class="n">slice_ids</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">slice_ids</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="nb">int</span><span class="p">]]</span> <span class="o">=</span> <span class="n">slice_ids</span>
@@ -689,9 +689,9 @@
 <span class="sd">        The name of the stream (for instance: &quot;train&quot;, &quot;test&quot;, &quot;valid&quot;, ...).</span>
 <span class="sd">        &quot;&quot;&quot;</span>
 
-        <span class="bp">self</span><span class="o">.</span><span class="n">scenario</span> <span class="o">=</span> <span class="n">scenario</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">benchmark</span> <span class="o">=</span> <span class="n">benchmark</span>
         <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        A reference to the scenario.</span>
+<span class="sd">        A reference to the benchmark.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
 
 <div class="viewcode-block" id="GenericScenarioStream.__len__"><a class="viewcode-back" href="../../../../../autoapi/avalanche/benchmarks/scenarios/#avalanche.benchmarks.GenericScenarioStream.__len__">[docs]</a>    <span class="k">def</span> <span class="fm">__len__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
@@ -701,7 +701,7 @@
 <span class="sd">        :return: The number of experiences in this stream.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">slice_ids</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="k">return</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">scenario</span><span class="o">.</span><span class="n">stream_definitions</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">]</span><span class="o">.</span><span class="n">exps_data</span><span class="p">)</span>
+            <span class="k">return</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">benchmark</span><span class="o">.</span><span class="n">stream_definitions</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">]</span><span class="o">.</span><span class="n">exps_data</span><span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="k">return</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">slice_ids</span><span class="p">)</span></div>
 
@@ -720,9 +720,9 @@
         <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">exp_idx</span><span class="p">,</span> <span class="nb">int</span><span class="p">):</span>
             <span class="k">if</span> <span class="n">exp_idx</span> <span class="o">&lt;</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
                 <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">slice_ids</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-                    <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">scenario</span><span class="o">.</span><span class="n">experience_factory</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">exp_idx</span><span class="p">)</span>
+                    <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">benchmark</span><span class="o">.</span><span class="n">experience_factory</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">exp_idx</span><span class="p">)</span>
                 <span class="k">else</span><span class="p">:</span>
-                    <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">scenario</span><span class="o">.</span><span class="n">experience_factory</span><span class="p">(</span>
+                    <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">benchmark</span><span class="o">.</span><span class="n">experience_factory</span><span class="p">(</span>
                         <span class="bp">self</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">slice_ids</span><span class="p">[</span><span class="n">exp_idx</span><span class="p">])</span>
             <span class="k">raise</span> <span class="ne">IndexError</span><span class="p">(</span><span class="s1">&#39;Experience index out of bounds&#39;</span> <span class="o">+</span>
                              <span class="nb">str</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">exp_idx</span><span class="p">)))</span>
@@ -779,21 +779,21 @@
 <span class="sd">            currently loaded experiences will be dropped.</span>
 <span class="sd">        :return: None</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">scenario</span><span class="o">.</span><span class="n">stream_definitions</span><span class="p">[</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">benchmark</span><span class="o">.</span><span class="n">stream_definitions</span><span class="p">[</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">]</span><span class="o">.</span><span class="n">exps_data</span><span class="o">.</span><span class="n">drop_previous_experiences</span><span class="p">(</span><span class="n">to_exp</span><span class="p">)</span></div></div>
 
 
 <span class="k">class</span> <span class="nc">LazyStreamClassesInExps</span><span class="p">(</span><span class="n">Mapping</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Sequence</span><span class="p">[</span><span class="n">Optional</span><span class="p">[</span><span class="n">Set</span><span class="p">[</span><span class="nb">int</span><span class="p">]]]]):</span>
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">scenario</span><span class="p">:</span> <span class="n">GenericCLScenario</span><span class="p">):</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_scenario</span> <span class="o">=</span> <span class="n">scenario</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_default_lcie</span> <span class="o">=</span> <span class="n">LazyClassesInExps</span><span class="p">(</span><span class="n">scenario</span><span class="p">,</span> <span class="n">stream</span><span class="o">=</span><span class="s1">&#39;train&#39;</span><span class="p">)</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">benchmark</span><span class="p">:</span> <span class="n">GenericCLScenario</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_benchmark</span> <span class="o">=</span> <span class="n">benchmark</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_default_lcie</span> <span class="o">=</span> <span class="n">LazyClassesInExps</span><span class="p">(</span><span class="n">benchmark</span><span class="p">,</span> <span class="n">stream</span><span class="o">=</span><span class="s1">&#39;train&#39;</span><span class="p">)</span>
 
     <span class="k">def</span> <span class="fm">__len__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="k">return</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_scenario</span><span class="o">.</span><span class="n">stream_definitions</span><span class="p">)</span>
+        <span class="k">return</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_benchmark</span><span class="o">.</span><span class="n">stream_definitions</span><span class="p">)</span>
 
     <span class="k">def</span> <span class="fm">__getitem__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">stream_name_or_exp_id</span><span class="p">):</span>
         <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">stream_name_or_exp_id</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
-            <span class="k">return</span> <span class="n">LazyClassesInExps</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_scenario</span><span class="p">,</span>
+            <span class="k">return</span> <span class="n">LazyClassesInExps</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_benchmark</span><span class="p">,</span>
                                      <span class="n">stream</span><span class="o">=</span><span class="n">stream_name_or_exp_id</span><span class="p">)</span>
 
         <span class="n">warnings</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span>
@@ -803,16 +803,16 @@
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_default_lcie</span><span class="p">[</span><span class="n">stream_name_or_exp_id</span><span class="p">]</span>
 
     <span class="k">def</span> <span class="fm">__iter__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="k">yield from</span> <span class="bp">self</span><span class="o">.</span><span class="n">_scenario</span><span class="o">.</span><span class="n">stream_definitions</span><span class="o">.</span><span class="n">keys</span><span class="p">()</span>
+        <span class="k">yield from</span> <span class="bp">self</span><span class="o">.</span><span class="n">_benchmark</span><span class="o">.</span><span class="n">stream_definitions</span><span class="o">.</span><span class="n">keys</span><span class="p">()</span>
 
 
 <span class="k">class</span> <span class="nc">LazyClassesInExps</span><span class="p">(</span><span class="n">Sequence</span><span class="p">[</span><span class="n">Optional</span><span class="p">[</span><span class="n">Set</span><span class="p">[</span><span class="nb">int</span><span class="p">]]]):</span>
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">scenario</span><span class="p">:</span> <span class="n">GenericCLScenario</span><span class="p">,</span> <span class="n">stream</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s1">&#39;train&#39;</span><span class="p">):</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_scenario</span> <span class="o">=</span> <span class="n">scenario</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">benchmark</span><span class="p">:</span> <span class="n">GenericCLScenario</span><span class="p">,</span> <span class="n">stream</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s1">&#39;train&#39;</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_benchmark</span> <span class="o">=</span> <span class="n">benchmark</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_stream</span> <span class="o">=</span> <span class="n">stream</span>
 
     <span class="k">def</span> <span class="fm">__len__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="k">return</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_scenario</span><span class="o">.</span><span class="n">streams</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">_stream</span><span class="p">])</span>
+        <span class="k">return</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_benchmark</span><span class="o">.</span><span class="n">streams</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">_stream</span><span class="p">])</span>
 
     <span class="k">def</span> <span class="fm">__getitem__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">exp_id</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Set</span><span class="p">[</span><span class="nb">int</span><span class="p">]:</span>
         <span class="k">return</span> <span class="n">manage_advanced_indexing</span><span class="p">(</span>
@@ -825,7 +825,7 @@
                <span class="s1">&#39;]&#39;</span>
 
     <span class="k">def</span> <span class="nf">_get_single_exp_classes</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">exp_id</span><span class="p">):</span>
-        <span class="n">targets</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_scenario</span><span class="o">.</span><span class="n">stream_definitions</span><span class="p">[</span>
+        <span class="n">targets</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_benchmark</span><span class="o">.</span><span class="n">stream_definitions</span><span class="p">[</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_stream</span><span class="p">]</span><span class="o">.</span><span class="n">exps_data</span><span class="o">.</span><span class="n">targets_field_sequence</span><span class="p">[</span><span class="n">exp_id</span><span class="p">]</span>
         <span class="k">if</span> <span class="n">targets</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
             <span class="k">return</span> <span class="kc">None</span>
@@ -890,7 +890,7 @@
             <span class="n">classes_seen_so_far</span><span class="p">:</span> <span class="n">Sequence</span><span class="p">[</span><span class="nb">int</span><span class="p">],</span>
             <span class="n">future_classes</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Sequence</span><span class="p">[</span><span class="nb">int</span><span class="p">]]):</span>
         <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Creates an instance of the abstract experience given the scenario</span>
+<span class="sd">        Creates an instance of the abstract experience given the benchmark</span>
 <span class="sd">        stream, the current experience ID and data about the classes timeline.</span>
 
 <span class="sd">        :param origin_stream: The stream from which this experience was</span>
@@ -905,8 +905,8 @@
 
         <span class="bp">self</span><span class="o">.</span><span class="n">origin_stream</span><span class="p">:</span> <span class="n">TScenarioStream</span> <span class="o">=</span> <span class="n">origin_stream</span>
 
-        <span class="c1"># scenario keeps a reference to the base scenario</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">scenario</span><span class="p">:</span> <span class="n">TScenario</span> <span class="o">=</span> <span class="n">origin_stream</span><span class="o">.</span><span class="n">scenario</span>
+        <span class="c1"># benchmark keeps a reference to the base benchmark</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">benchmark</span><span class="p">:</span> <span class="n">TScenario</span> <span class="o">=</span> <span class="n">origin_stream</span><span class="o">.</span><span class="n">benchmark</span>
 
         <span class="c1"># current_experience is usually an incremental, 0-indexed, value used to</span>
         <span class="c1"># keep track of the current batch/task.</span>
@@ -951,7 +951,7 @@
 
 <span class="sd">    This experience implementation uses the generic experience-patterns</span>
 <span class="sd">    assignment defined in the :class:`GenericCLScenario` instance. Instances of</span>
-<span class="sd">    this class are usually obtained from a scenario stream.</span>
+<span class="sd">    this class are usually obtained from a benchmark stream.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">:</span> <span class="n">TGenericExperience</span><span class="p">,</span>
@@ -967,11 +967,11 @@
 <span class="sd">        :param current_experience: The current experience ID, as an integer.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">dataset</span><span class="p">:</span> <span class="n">AvalancheDataset</span> <span class="o">=</span> \
-            <span class="n">origin_stream</span><span class="o">.</span><span class="n">scenario</span><span class="o">.</span><span class="n">stream_definitions</span><span class="p">[</span>
+            <span class="n">origin_stream</span><span class="o">.</span><span class="n">benchmark</span><span class="o">.</span><span class="n">stream_definitions</span><span class="p">[</span>
                 <span class="n">origin_stream</span><span class="o">.</span><span class="n">name</span><span class="p">]</span><span class="o">.</span><span class="n">exps_data</span><span class="p">[</span><span class="n">current_experience</span><span class="p">]</span>
 
         <span class="p">(</span><span class="n">classes_in_this_exp</span><span class="p">,</span> <span class="n">previous_classes</span><span class="p">,</span> <span class="n">classes_seen_so_far</span><span class="p">,</span>
-         <span class="n">future_classes</span><span class="p">)</span> <span class="o">=</span> <span class="n">origin_stream</span><span class="o">.</span><span class="n">scenario</span><span class="o">.</span><span class="n">get_classes_timeline</span><span class="p">(</span>
+         <span class="n">future_classes</span><span class="p">)</span> <span class="o">=</span> <span class="n">origin_stream</span><span class="o">.</span><span class="n">benchmark</span><span class="o">.</span><span class="n">get_classes_timeline</span><span class="p">(</span>
             <span class="n">current_experience</span><span class="p">,</span> <span class="n">stream</span><span class="o">=</span><span class="n">origin_stream</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
 
         <span class="nb">super</span><span class="p">(</span><span class="n">GenericExperience</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span>
@@ -979,7 +979,7 @@
             <span class="n">previous_classes</span><span class="p">,</span> <span class="n">classes_seen_so_far</span><span class="p">,</span> <span class="n">future_classes</span><span class="p">)</span>
 
     <span class="k">def</span> <span class="nf">_get_stream_def</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">scenario</span><span class="o">.</span><span class="n">stream_definitions</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">origin_stream</span><span class="o">.</span><span class="n">name</span><span class="p">]</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">benchmark</span><span class="o">.</span><span class="n">stream_definitions</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">origin_stream</span><span class="o">.</span><span class="n">name</span><span class="p">]</span>
 
     <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">task_labels</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="nb">int</span><span class="p">]:</span>

@@ -309,9 +309,9 @@ scenario the Experience may be composed by patterns from different tasks.</p>
 </dd></dl>
 
 <dl class="py attribute">
-<dt class="sig sig-object py" id="avalanche.benchmarks.scenarios.Experience.scenario">
-<span class="sig-name descname"><span class="pre">scenario</span></span><em class="property"> <span class="pre">:TScenario</span></em><a class="headerlink" href="#avalanche.benchmarks.scenarios.Experience.scenario" title="Permalink to this definition">¶</a></dt>
-<dd><p>A reference to the scenario.</p>
+<dt class="sig sig-object py" id="avalanche.benchmarks.scenarios.Experience.benchmark">
+<span class="sig-name descname"><span class="pre">benchmark</span></span><em class="property"> <span class="pre">:TScenario</span></em><a class="headerlink" href="#avalanche.benchmarks.scenarios.Experience.benchmark" title="Permalink to this definition">¶</a></dt>
+<dd><p>A reference to the benchmark.</p>
 </dd></dl>
 
 <dl class="py attribute">
@@ -351,6 +351,12 @@ single task label are present. If this experience contains patterns from
 multiple tasks, accessing this property will result in an exception.</p>
 </dd></dl>
 
+<dl class="py method">
+<dt class="sig sig-object py" id="avalanche.benchmarks.scenarios.Experience.scenario">
+<em class="property"><span class="pre">property</span> </em><span class="sig-name descname"><span class="pre">scenario</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em><span class="sig-paren">)</span> &#x2192; <a class="reference internal" href="#avalanche.benchmarks.scenarios.TScenario" title="avalanche.benchmarks.scenarios.TScenario"><span class="pre">TScenario</span></a><a class="headerlink" href="#avalanche.benchmarks.scenarios.Experience.scenario" title="Permalink to this definition">¶</a></dt>
+<dd><p>This property is DEPRECATED, use self.benchmark instead.</p>
+</dd></dl>
+
 </dd></dl>
 
 <dl class="py data">
@@ -380,9 +386,15 @@ stream.</p>
 </dd></dl>
 
 <dl class="py attribute">
-<dt class="sig sig-object py" id="avalanche.benchmarks.scenarios.ScenarioStream.scenario">
-<span class="sig-name descname"><span class="pre">scenario</span></span><em class="property"> <span class="pre">:TScenario</span></em><a class="headerlink" href="#avalanche.benchmarks.scenarios.ScenarioStream.scenario" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="avalanche.benchmarks.scenarios.ScenarioStream.benchmark">
+<span class="sig-name descname"><span class="pre">benchmark</span></span><em class="property"> <span class="pre">:TScenario</span></em><a class="headerlink" href="#avalanche.benchmarks.scenarios.ScenarioStream.benchmark" title="Permalink to this definition">¶</a></dt>
 <dd><p>A reference to the scenario this stream belongs to.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="avalanche.benchmarks.scenarios.ScenarioStream.scenario">
+<em class="property"><span class="pre">property</span> </em><span class="sig-name descname"><span class="pre">scenario</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em><span class="sig-paren">)</span> &#x2192; <a class="reference internal" href="#avalanche.benchmarks.scenarios.TScenario" title="avalanche.benchmarks.scenarios.TScenario"><span class="pre">TScenario</span></a><a class="headerlink" href="#avalanche.benchmarks.scenarios.ScenarioStream.scenario" title="Permalink to this definition">¶</a></dt>
+<dd><p>This property is DEPRECATED, use self.benchmark instead.</p>
 </dd></dl>
 
 <dl class="py method">
@@ -598,7 +610,7 @@ a single experience containing the complete test set. This also
 means that the definition for the test stream must contain the
 definition for a single experience.</p></li>
 <li><p><strong>experience_factory</strong> – If not None, a callable that, given the
-scenario instance and the experience ID, returns a experience
+benchmark instance and the experience ID, returns a experience
 instance. This parameter is usually used in subclasses (when
 invoking the super constructor) to specialize the experience class.
 Defaults to None, which means that the <a class="reference internal" href="#avalanche.benchmarks.scenarios.GenericExperience" title="avalanche.benchmarks.scenarios.GenericExperience"><code class="xref py py-class docutils literal notranslate"><span class="pre">GenericExperience</span></code></a>
@@ -735,7 +747,7 @@ the benchmark is initialized by using a lazy generator.</p>
 
 <dl class="py class">
 <dt class="sig sig-object py" id="avalanche.benchmarks.scenarios.GenericScenarioStream">
-<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">avalanche.benchmarks.scenarios.</span></span><span class="sig-name descname"><span class="pre">GenericScenarioStream</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">:</span> <span class="pre">TGenericScenarioStream</span></em>, <em class="sig-param"><span class="pre">name:</span> <span class="pre">str</span></em>, <em class="sig-param"><span class="pre">scenario:</span> <span class="pre">TGenericCLScenario</span></em>, <em class="sig-param"><span class="pre">*</span></em>, <em class="sig-param"><span class="pre">slice_ids:</span> <span class="pre">List[int]</span> <span class="pre">=</span> <span class="pre">None</span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/avalanche/benchmarks/scenarios/generic_cl_scenario/#GenericScenarioStream"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.benchmarks.scenarios.GenericScenarioStream" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">avalanche.benchmarks.scenarios.</span></span><span class="sig-name descname"><span class="pre">GenericScenarioStream</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">:</span> <span class="pre">TGenericScenarioStream</span></em>, <em class="sig-param"><span class="pre">name:</span> <span class="pre">str</span></em>, <em class="sig-param"><span class="pre">benchmark:</span> <span class="pre">TGenericCLScenario</span></em>, <em class="sig-param"><span class="pre">*</span></em>, <em class="sig-param"><span class="pre">slice_ids:</span> <span class="pre">List[int]</span> <span class="pre">=</span> <span class="pre">None</span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/avalanche/benchmarks/scenarios/generic_cl_scenario/#GenericScenarioStream"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.benchmarks.scenarios.GenericScenarioStream" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">Generic[TExperience,</span> <span class="pre">TGenericCLScenario]</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">ScenarioStream[TGenericCLScenario,</span> <span class="pre">TExperience]</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">Sequence[TExperience]</span></code></p>
 <p>A scenario stream describes a sequence of incremental experiences.
 Experiences are described as <code class="xref py py-class docutils literal notranslate"><span class="pre">IExperience</span></code> instances. They contain a
@@ -758,9 +770,9 @@ Can be None, which means that this object is the original stream.</p>
 </dd></dl>
 
 <dl class="py attribute">
-<dt class="sig sig-object py" id="avalanche.benchmarks.scenarios.GenericScenarioStream.scenario">
-<span class="sig-name descname"><span class="pre">scenario</span></span><a class="headerlink" href="#avalanche.benchmarks.scenarios.GenericScenarioStream.scenario" title="Permalink to this definition">¶</a></dt>
-<dd><p>A reference to the scenario.</p>
+<dt class="sig sig-object py" id="avalanche.benchmarks.scenarios.GenericScenarioStream.benchmark">
+<span class="sig-name descname"><span class="pre">benchmark</span></span><a class="headerlink" href="#avalanche.benchmarks.scenarios.GenericScenarioStream.benchmark" title="Permalink to this definition">¶</a></dt>
+<dd><p>A reference to the benchmark.</p>
 </dd></dl>
 
 <dl class="py method">
@@ -842,7 +854,7 @@ creates the experience.</p>
 patterns belonging to a subset of classes of the original training set. An
 experience of a New Instance scenario will contain patterns from previously
 seen classes.</p>
-<p>Creates an instance of the abstract experience given the scenario
+<p>Creates an instance of the abstract experience given the benchmark
 stream, the current experience ID and data about the classes timeline.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -903,7 +915,7 @@ multiple tasks, accessing this property will result in an exception.</p>
 instance.</p>
 <p>This experience implementation uses the generic experience-patterns
 assignment defined in the <a class="reference internal" href="#avalanche.benchmarks.scenarios.GenericCLScenario" title="avalanche.benchmarks.scenarios.GenericCLScenario"><code class="xref py py-class docutils literal notranslate"><span class="pre">GenericCLScenario</span></code></a> instance. Instances of
-this class are usually obtained from a scenario stream.</p>
+this class are usually obtained from a benchmark stream.</p>
 <p>Creates an instance of a generic experience given the stream from this
 experience was taken and and the current experience ID.</p>
 <dl class="field-list simple">
@@ -1342,7 +1354,7 @@ test datasets must be used. Defaults to None.</p></li>
 <span class="sig-name descname"><span class="pre">class_mapping</span></span><em class="property"> <span class="pre">:List[int]</span> <span class="pre">=</span> <span class="pre">[]</span></em><a class="headerlink" href="#avalanche.benchmarks.scenarios.NCScenario.class_mapping" title="Permalink to this definition">¶</a></dt>
 <dd><p>class_mapping stores the class mapping so that
 <cite>mapped_class_id = class_mapping[original_class_id]</cite>.</p>
-<p>If the scenario is created with an amount of classes which is less than
+<p>If the benchmark is created with an amount of classes which is less than
 the amount of all classes in the dataset, then class_mapping will
 contain some -1 values corresponding to ignored classes. This can
 happen when passing a fixed class order to the constructor.</p>

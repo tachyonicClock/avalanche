@@ -88,10 +88,10 @@ Functions
       A reference to the original stream from which this experience was obtained.
 
 
-   .. attribute:: scenario
+   .. attribute:: benchmark
       :annotation: :TScenario
 
-      A reference to the scenario.
+      A reference to the benchmark.
 
 
    .. attribute:: current_experience
@@ -132,6 +132,12 @@ Functions
       multiple tasks, accessing this property will result in an exception.
 
 
+   .. method:: scenario(self) -> TScenario
+      :property:
+
+      This property is DEPRECATED, use self.benchmark instead.
+
+
 
 .. data:: TExperience
    
@@ -161,10 +167,16 @@ Functions
       The name of the stream.
 
 
-   .. attribute:: scenario
+   .. attribute:: benchmark
       :annotation: :TScenario
 
       A reference to the scenario this stream belongs to.
+
+
+   .. method:: scenario(self) -> TScenario
+      :property:
+
+      This property is DEPRECATED, use self.benchmark instead.
 
 
    .. method:: __getitem__(self: TScenarioStream, experience_idx: Union[int, slice, Iterable[int]]) -> Union[TExperience, TScenarioStream]
@@ -375,7 +387,7 @@ Functions
        means that the definition for the test stream must contain the
        definition for a single experience.
    :param experience_factory: If not None, a callable that, given the
-       scenario instance and the experience ID, returns a experience
+       benchmark instance and the experience ID, returns a experience
        instance. This parameter is usually used in subclasses (when
        invoking the super constructor) to specialize the experience class.
        Defaults to None, which means that the :class:`GenericExperience`
@@ -503,7 +515,7 @@ Functions
 
 
 
-.. py:class:: GenericScenarioStream(: TGenericScenarioStream, name: str, scenario: TGenericCLScenario, *, slice_ids: List[int] = None)
+.. py:class:: GenericScenarioStream(: TGenericScenarioStream, name: str, benchmark: TGenericCLScenario, *, slice_ids: List[int] = None)
 
    Bases: :class:`Generic[TExperience, TGenericCLScenario]`, :class:`ScenarioStream[TGenericCLScenario, TExperience]`, :class:`Sequence[TExperience]`
 
@@ -530,10 +542,10 @@ Functions
       The name of the stream (for instance: "train", "test", "valid", ...).
 
 
-   .. attribute:: scenario
+   .. attribute:: benchmark
       
 
-      A reference to the scenario.
+      A reference to the benchmark.
 
 
    .. method:: __len__(self) -> int
@@ -600,7 +612,7 @@ Functions
    experience of a New Instance scenario will contain patterns from previously
    seen classes.
 
-   Creates an instance of the abstract experience given the scenario
+   Creates an instance of the abstract experience given the benchmark
    stream, the current experience ID and data about the classes timeline.
 
    :param origin_stream: The stream from which this experience was
@@ -657,7 +669,7 @@ Functions
 
    This experience implementation uses the generic experience-patterns
    assignment defined in the :class:`GenericCLScenario` instance. Instances of
-   this class are usually obtained from a scenario stream.
+   this class are usually obtained from a benchmark stream.
 
    Creates an instance of a generic experience given the stream from this
    experience was taken and and the current experience ID.
@@ -1077,7 +1089,7 @@ Functions
       class_mapping stores the class mapping so that 
       `mapped_class_id = class_mapping[original_class_id]`. 
 
-      If the scenario is created with an amount of classes which is less than
+      If the benchmark is created with an amount of classes which is less than
       the amount of all classes in the dataset, then class_mapping will 
       contain some -1 values corresponding to ignored classes. This can
       happen when passing a fixed class order to the constructor.

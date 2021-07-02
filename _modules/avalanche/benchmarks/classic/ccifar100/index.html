@@ -230,12 +230,12 @@
         <span class="n">eval_transform</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Any</span><span class="p">]</span> <span class="o">=</span> <span class="n">_default_cifar100_eval_transform</span><span class="p">,</span>
         <span class="n">dataset_root</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Path</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Creates a CL scenario using the CIFAR100 dataset.</span>
+<span class="sd">    Creates a CL benchmark using the CIFAR100 dataset.</span>
 
 <span class="sd">    If the dataset is not present in the computer, this method will</span>
 <span class="sd">    automatically download and store it.</span>
 
-<span class="sd">    The returned scenario will return experiences containing all patterns of a</span>
+<span class="sd">    The returned benchmark will return experiences containing all patterns of a</span>
 <span class="sd">    subset of classes, which means that each class is only seen &quot;once&quot;.</span>
 <span class="sd">    This is one of the most common scenarios in the Continual Learning</span>
 <span class="sd">    literature. Common names used in literature to describe this kind of</span>
@@ -246,17 +246,17 @@
 <span class="sd">    a choice that is left to the user (see the `return_task_id` parameter for</span>
 <span class="sd">    more info on task labels).</span>
 
-<span class="sd">    The scenario instance returned by this method will have two fields,</span>
+<span class="sd">    The benchmark instance returned by this method will have two fields,</span>
 <span class="sd">    `train_stream` and `test_stream`, which can be iterated to obtain</span>
 <span class="sd">    training and test :class:`Experience`. Each Experience contains the</span>
 <span class="sd">    `dataset` and the associated task label.</span>
 
-<span class="sd">    The scenario API is quite simple and is uniform across all scenario</span>
+<span class="sd">    The benchmark API is quite simple and is uniform across all benchmark</span>
 <span class="sd">    generators. It is recommended to check the tutorial of the &quot;benchmark&quot; API,</span>
 <span class="sd">    which contains usage examples ranging from &quot;basic&quot; to &quot;advanced&quot;.</span>
 
 <span class="sd">    :param n_experiences: The number of incremental experiences in the current</span>
-<span class="sd">        scenario. The value of this parameter should be a divisor of 100 if</span>
+<span class="sd">        benchmark. The value of this parameter should be a divisor of 100 if</span>
 <span class="sd">        first_task_with_half_classes is False, a divisor of 50 otherwise.</span>
 <span class="sd">    :param first_exp_with_half_classes: A boolean value that indicates if a</span>
 <span class="sd">        first pretraining batch containing half of the classes should be used.</span>
@@ -330,7 +330,7 @@
         <span class="n">dataset_root_cifar10</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Path</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
         <span class="n">dataset_root_cifar100</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Path</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">NCScenario</span><span class="p">:</span>
     <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Creates a CL scenario using both the CIFAR100 and CIFAR10 datasets.</span>
+<span class="sd">    Creates a CL benchmark using both the CIFAR100 and CIFAR10 datasets.</span>
 
 <span class="sd">    If the datasets are not present in the computer, this method will</span>
 <span class="sd">    automatically download and store them in the data folder.</span>
@@ -338,7 +338,7 @@
 <span class="sd">    The CIFAR10 dataset is used to create the first experience, while the</span>
 <span class="sd">    remaining `n_experiences-1` experiences will be created from CIFAR100.</span>
 
-<span class="sd">    The returned scenario will return experiences containing all patterns of a</span>
+<span class="sd">    The returned benchmark will return experiences containing all patterns of a</span>
 <span class="sd">    subset of classes, which means that each class is only seen &quot;once&quot;.</span>
 <span class="sd">    This is one of the most common scenarios in the Continual Learning</span>
 <span class="sd">    literature. Common names used in literature to describe this kind of</span>
@@ -347,17 +347,17 @@
 
 <span class="sd">    This generator will apply a task label &quot;0&quot; to all experiences.</span>
 
-<span class="sd">    The scenario instance returned by this method will have two fields,</span>
+<span class="sd">    The benchmark instance returned by this method will have two fields,</span>
 <span class="sd">    `train_stream` and `test_stream`, which can be iterated to obtain</span>
 <span class="sd">    training and test :class:`Experience`. Each Experience contains the</span>
 <span class="sd">    `dataset` and the associated task label (always &quot;0&quot; for this specific</span>
 <span class="sd">    benchmark).</span>
 
-<span class="sd">    The scenario API is quite simple and is uniform across all scenario</span>
+<span class="sd">    The benchmark API is quite simple and is uniform across all benchmark</span>
 <span class="sd">    generators. It is recommended to check the tutorial of the &quot;benchmark&quot; API,</span>
 <span class="sd">    which contains usage examples ranging from &quot;basic&quot; to &quot;advanced&quot;.</span>
 
-<span class="sd">    :param n_experiences: The number of experiences for the entire scenario.</span>
+<span class="sd">    :param n_experiences: The number of experiences for the entire benchmark.</span>
 <span class="sd">        The first experience will contain the entire CIFAR10 dataset, while the</span>
 <span class="sd">        other n-1 experiences will be obtained from CIFAR100.</span>
 <span class="sd">    :param seed: A valid int used to initialize the random number generator.</span>

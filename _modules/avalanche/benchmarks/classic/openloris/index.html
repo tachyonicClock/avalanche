@@ -190,9 +190,10 @@
 <span class="c1"># Website: www.continualai.org                                                 #</span>
 <span class="c1">################################################################################</span>
 
-<span class="sd">&quot;&quot;&quot; This module contains the high-level OpenLORIS scenario/factor generator.</span>
-<span class="sd">It basically returns a iterable scenario object ``GenericCLScenario`` given</span>
+<span class="sd">&quot;&quot;&quot; This module contains the high-level OpenLORIS benchmark/factor generator.</span>
+<span class="sd">It basically returns a iterable benchmark object ``GenericCLScenario`` given</span>
 <span class="sd">a number of configuration parameters.&quot;&quot;&quot;</span>
+
 <span class="kn">from</span> <span class="nn">pathlib</span> <span class="kn">import</span> <span class="n">Path</span>
 <span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Union</span><span class="p">,</span> <span class="n">Any</span><span class="p">,</span> <span class="n">Optional</span>
 <span class="kn">from</span> <span class="nn">typing_extensions</span> <span class="kn">import</span> <span class="n">Literal</span>
@@ -230,7 +231,7 @@
         <span class="n">eval_transform</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Any</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
         <span class="n">dataset_root</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Path</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Creates a CL scenario for OpenLORIS.</span>
+<span class="sd">    Creates a CL benchmark for OpenLORIS.</span>
 
 <span class="sd">    If the dataset is not present in the computer, **this method will NOT be</span>
 <span class="sd">    able automatically download** and store it.</span>
@@ -239,14 +240,14 @@
 <span class="sd">    Valid factors include &#39;clutter&#39;, &#39;illumination&#39;, &#39;occlusion&#39;, &#39;pixel&#39;, or</span>
 <span class="sd">    &#39;mixture-iros&#39;.</span>
 
-<span class="sd">    The scenario instance returned by this method will have two fields,</span>
+<span class="sd">    The benchmark instance returned by this method will have two fields,</span>
 <span class="sd">    `train_stream` and `test_stream`, which can be iterated to obtain</span>
 <span class="sd">    training and test :class:`Experience`. Each Experience contains the</span>
 <span class="sd">    `dataset` and the associated task label.</span>
 
 <span class="sd">    The task label &quot;0&quot; will be assigned to each experience.</span>
 
-<span class="sd">    The scenario API is quite simple and is uniform across all scenario</span>
+<span class="sd">    The benchmark API is quite simple and is uniform across all benchmark</span>
 <span class="sd">    generators. It is recommended to check the tutorial of the &quot;benchmark&quot; API,</span>
 <span class="sd">    which contains usage examples ranging from &quot;basic&quot; to &quot;advanced&quot;.</span>
 

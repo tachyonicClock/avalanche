@@ -228,12 +228,12 @@
         <span class="n">eval_transform</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Any</span><span class="p">]</span> <span class="o">=</span> <span class="n">_default_eval_transform</span><span class="p">,</span>
         <span class="n">dataset_root</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Path</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Creates a CL scenario using the Cub-200 dataset.</span>
+<span class="sd">    Creates a CL benchmark using the Cub-200 dataset.</span>
 
 <span class="sd">    If the dataset is not present in the computer, **this method will NOT be</span>
 <span class="sd">    able automatically download** and store it.</span>
 
-<span class="sd">    The returned scenario will return experiences containing all patterns of a</span>
+<span class="sd">    The returned benchmark will return experiences containing all patterns of a</span>
 <span class="sd">    subset of classes, which means that each class is only seen &quot;once&quot;.</span>
 <span class="sd">    This is one of the most common scenarios in the Continual Learning</span>
 <span class="sd">    literature. Common names used in literature to describe this kind of</span>
@@ -244,16 +244,16 @@
 <span class="sd">    a choice that is left to the user (see the `return_task_id` parameter for</span>
 <span class="sd">    more info on task labels).</span>
 
-<span class="sd">    The scenario instance returned by this method will have two fields,</span>
+<span class="sd">    The benchmark instance returned by this method will have two fields,</span>
 <span class="sd">    `train_stream` and `test_stream`, which can be iterated to obtain</span>
 <span class="sd">    training and test :class:`Experience`. Each Experience contains the</span>
 <span class="sd">    `dataset` and the associated task label.</span>
 
-<span class="sd">    The scenario API is quite simple and is uniform across all scenario</span>
+<span class="sd">    The benchmark API is quite simple and is uniform across all benchmark</span>
 <span class="sd">    generators. It is recommended to check the tutorial of the &quot;benchmark&quot; API,</span>
 <span class="sd">    which contains usage examples ranging from &quot;basic&quot; to &quot;advanced&quot;.</span>
 
-<span class="sd">    :param n_experiences: The number of experiences in the current scenario.</span>
+<span class="sd">    :param n_experiences: The number of experiences in the current benchmark.</span>
 <span class="sd">        Defaults to 11.</span>
 <span class="sd">    :param classes_first_batch: Number of classes in the first batch.</span>
 <span class="sd">        Usually this is set to 500. Defaults to 100.</span>

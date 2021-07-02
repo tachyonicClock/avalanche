@@ -636,7 +636,7 @@ classifiers, progressive networks, …).</p>
 current experience.</p>
 <p>Output layer that incrementally adds units whenever new classes are
 encountered.</p>
-<p>Typically used in class-incremental scenarios where the number of
+<p>Typically used in class-incremental benchmarks where the number of
 classes grows over time.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -689,7 +689,7 @@ each sample in the mini-batch.</p>
 and calls <cite>forward_single_task</cite>. Subclasses must implement
 <cite>forward_single_task</cite> or override <a href="#id11"><span class="problematic" id="id12">`</span></a>forward.</p>
 <p>Multi-head classifier with separate heads for each task.</p>
-<p>Typically used in task-incremental scenarios where task labels are
+<p>Typically used in task-incremental benchmarks where task labels are
 available and provided to the model.</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
@@ -702,7 +702,7 @@ concatenate the samples together.</p>
 <p>These can be easily ensured in two possible ways:
 - each minibatch contains a single task, which is the case in most</p>
 <blockquote>
-<div><p>common scenarios in Avalanche. Some exceptions to this setting
+<div><p>common benchmarks in Avalanche. Some exceptions to this setting
 are multi-task replay or cumulative strategies.</p>
 </div></blockquote>
 <ul class="simple">

@@ -254,12 +254,12 @@
         <span class="n">eval_transform</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Any</span><span class="p">]</span> <span class="o">=</span> <span class="n">_default_omniglot_eval_transform</span><span class="p">,</span>
         <span class="n">dataset_root</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Path</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Creates a CL scenario using the OMNIGLOT dataset.</span>
+<span class="sd">    Creates a CL benchmark using the OMNIGLOT dataset.</span>
 
 <span class="sd">    If the dataset is not present in the computer, this method will</span>
 <span class="sd">    automatically download and store it.</span>
 
-<span class="sd">    The returned scenario will return experiences containing all patterns of a</span>
+<span class="sd">    The returned benchmark will return experiences containing all patterns of a</span>
 <span class="sd">    subset of classes, which means that each class is only seen &quot;once&quot;.</span>
 <span class="sd">    This is one of the most common scenarios in the Continual Learning</span>
 <span class="sd">    literature. Common names used in literature to describe this kind of</span>
@@ -273,17 +273,17 @@
 <span class="sd">    a choice that is left to the user (see the `return_task_id` parameter for</span>
 <span class="sd">    more info on task labels).</span>
 
-<span class="sd">    The scenario instance returned by this method will have two fields,</span>
+<span class="sd">    The benchmark instance returned by this method will have two fields,</span>
 <span class="sd">    `train_stream` and `test_stream`, which can be iterated to obtain</span>
 <span class="sd">    training and test :class:`Experience`. Each Experience contains the</span>
 <span class="sd">    `dataset` and the associated task label.</span>
 
-<span class="sd">    The scenario API is quite simple and is uniform across all scenario</span>
+<span class="sd">    The benchmark API is quite simple and is uniform across all benchmark</span>
 <span class="sd">    generators. It is recommended to check the tutorial of the &quot;benchmark&quot; API,</span>
 <span class="sd">    which contains usage examples ranging from &quot;basic&quot; to &quot;advanced&quot;.</span>
 
 <span class="sd">    :param n_experiences: The number of incremental experiences in the current</span>
-<span class="sd">        scenario. The value of this parameter should be a divisor of 10.</span>
+<span class="sd">        benchmark. The value of this parameter should be a divisor of 10.</span>
 <span class="sd">    :param return_task_id: if True, a progressive task id is returned for every</span>
 <span class="sd">        experience. If False, all experiences will have a task ID of 0.</span>
 <span class="sd">    :param seed: A valid int used to initialize the random number generator.</span>
@@ -347,7 +347,7 @@
         <span class="n">eval_transform</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Any</span><span class="p">]</span> <span class="o">=</span> <span class="n">_default_omniglot_eval_transform</span><span class="p">,</span>
         <span class="n">dataset_root</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Path</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">NCScenario</span><span class="p">:</span>
     <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Creates a Permuted Omniglot scenario.</span>
+<span class="sd">    Creates a Permuted Omniglot benchmark.</span>
 
 <span class="sd">    If the dataset is not present in the computer, this method will</span>
 <span class="sd">    automatically download and store it.</span>
@@ -357,19 +357,19 @@
 <span class="sd">    composed of all the original 964 Omniglot classes, but the pixel in the</span>
 <span class="sd">    images are permuted in a different way.</span>
 
-<span class="sd">    The scenario instance returned by this method will have two fields,</span>
+<span class="sd">    The benchmark instance returned by this method will have two fields,</span>
 <span class="sd">    `train_stream` and `test_stream`, which can be iterated to obtain</span>
 <span class="sd">    training and test :class:`Experience`. Each Experience contains the</span>
 <span class="sd">    `dataset` and the associated task label.</span>
 
 <span class="sd">    A progressive task label, starting from &quot;0&quot;, is applied to each experience.</span>
 
-<span class="sd">    The scenario API is quite simple and is uniform across all scenario</span>
+<span class="sd">    The benchmark API is quite simple and is uniform across all benchmark</span>
 <span class="sd">    generators. It is recommended to check the tutorial of the &quot;benchmark&quot; API,</span>
 <span class="sd">    which contains usage examples ranging from &quot;basic&quot; to &quot;advanced&quot;.</span>
 
 <span class="sd">    :param n_experiences: The number of experiences (tasks) in the current</span>
-<span class="sd">        scenario. It indicates how many different permutations of the Omniglot</span>
+<span class="sd">        benchmark. It indicates how many different permutations of the Omniglot</span>
 <span class="sd">        dataset have to be created.</span>
 <span class="sd">    :param seed: A valid int used to initialize the random number generator.</span>
 <span class="sd">        Can be None.</span>
@@ -445,7 +445,7 @@
         <span class="n">eval_transform</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Any</span><span class="p">]</span> <span class="o">=</span> <span class="n">_default_omniglot_eval_transform</span><span class="p">,</span>
         <span class="n">dataset_root</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Path</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">NCScenario</span><span class="p">:</span>
     <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Creates a Rotated Omniglot scenario.</span>
+<span class="sd">    Creates a Rotated Omniglot benchmark.</span>
 
 <span class="sd">    If the dataset is not present in the computer, this method will</span>
 <span class="sd">    automatically download and store it.</span>
@@ -455,19 +455,19 @@
 <span class="sd">    composed of all the original 964 Omniglot classes, but each image is</span>
 <span class="sd">    rotated in a different way.</span>
 
-<span class="sd">    The scenario instance returned by this method will have two fields,</span>
+<span class="sd">    The benchmark instance returned by this method will have two fields,</span>
 <span class="sd">    `train_stream` and `test_stream`, which can be iterated to obtain</span>
 <span class="sd">    training and test :class:`Experience`. Each Experience contains the</span>
 <span class="sd">    `dataset` and the associated task label.</span>
 
 <span class="sd">    A progressive task label, starting from &quot;0&quot;, is applied to each experience.</span>
 
-<span class="sd">    The scenario API is quite simple and is uniform across all scenario</span>
+<span class="sd">    The benchmark API is quite simple and is uniform across all benchmark</span>
 <span class="sd">    generators. It is recommended to check the tutorial of the &quot;benchmark&quot; API,</span>
 <span class="sd">    which contains usage examples ranging from &quot;basic&quot; to &quot;advanced&quot;.</span>
 
 <span class="sd">    :param n_experiences: The number of experiences (tasks) in the current</span>
-<span class="sd">        scenario. It indicates how many different rotations of the Omniglot</span>
+<span class="sd">        benchmark. It indicates how many different rotations of the Omniglot</span>
 <span class="sd">        dataset have to be created.</span>
 <span class="sd">    :param seed: A valid int used to initialize the random number generator.</span>
 <span class="sd">        Can be None.</span>

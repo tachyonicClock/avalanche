@@ -311,7 +311,7 @@
         <span class="sd">&quot;&quot;&quot; Output layer that incrementally adds units whenever new classes are</span>
 <span class="sd">        encountered.</span>
 
-<span class="sd">        Typically used in class-incremental scenarios where the number of</span>
+<span class="sd">        Typically used in class-incremental benchmarks where the number of</span>
 <span class="sd">        classes grows over time.</span>
 
 <span class="sd">        :param in_features: number of input features.</span>
@@ -354,7 +354,7 @@
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">in_features</span><span class="p">,</span> <span class="n">initial_out_features</span><span class="o">=</span><span class="mi">2</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot; Multi-head classifier with separate heads for each task.</span>
 
-<span class="sd">        Typically used in task-incremental scenarios where task labels are</span>
+<span class="sd">        Typically used in task-incremental benchmarks where task labels are</span>
 <span class="sd">        available and provided to the model.</span>
 
 <span class="sd">        .. note::</span>
@@ -368,7 +368,7 @@
 
 <span class="sd">            These can be easily ensured in two possible ways:</span>
 <span class="sd">            - each minibatch contains a single task, which is the case in most</span>
-<span class="sd">                common scenarios in Avalanche. Some exceptions to this setting</span>
+<span class="sd">                common benchmarks in Avalanche. Some exceptions to this setting</span>
 <span class="sd">                are multi-task replay or cumulative strategies.</span>
 <span class="sd">            - each head has the same size, which can be enforced by setting a</span>
 <span class="sd">                large enough `initial_out_features`.</span>

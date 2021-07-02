@@ -240,7 +240,7 @@
 <span class="sd">        streams then those definition will override the `train_datasets` and</span>
 <span class="sd">        `test_datasets` parameters.</span>
 <span class="sd">    :param complete_test_set_only: If True, only the complete test set will</span>
-<span class="sd">        be returned by the scenario. This means that the ``test_dataset_list``</span>
+<span class="sd">        be returned by the benchmark. This means that the ``test_dataset_list``</span>
 <span class="sd">        parameter must be list with a single element (the complete test set).</span>
 <span class="sd">        Defaults to False.</span>
 <span class="sd">    :param train_transform: The transformation to apply to the training data,</span>
@@ -428,7 +428,7 @@
 <span class="sd">        &quot;train&quot; or &quot;test&quot; streams then those definition will override the</span>
 <span class="sd">        `train_generator` and `test_generator` parameters.</span>
 <span class="sd">    :param complete_test_set_only: If True, only the complete test set will</span>
-<span class="sd">        be returned by the scenario. This means that the ``test_generator``</span>
+<span class="sd">        be returned by the benchmark. This means that the ``test_generator``</span>
 <span class="sd">        parameter must define a stream with a single experience (the complete</span>
 <span class="sd">        test set). Defaults to False.</span>
 <span class="sd">    :param train_transform: The transformation to apply to the training data,</span>
@@ -568,7 +568,7 @@
 <span class="sd">        applied to all patterns of a certain experience. For more info on that,</span>
 <span class="sd">        see the function description.</span>
 <span class="sd">    :param complete_test_set_only: If True, only the complete test set will</span>
-<span class="sd">        be returned by the scenario. This means that the ``test_file_lists``</span>
+<span class="sd">        be returned by the benchmark. This means that the ``test_file_lists``</span>
 <span class="sd">        parameter must be list with a single element (the complete test set).</span>
 <span class="sd">        Alternatively, can be a plain string or :class:`Path` object.</span>
 <span class="sd">        Defaults to False.</span>
@@ -693,7 +693,7 @@
 <span class="sd">        applied to all patterns of a certain experience. For more info on that,</span>
 <span class="sd">        see the function description.</span>
 <span class="sd">    :param complete_test_set_only: If True, only the complete test set will</span>
-<span class="sd">        be returned by the scenario. This means that the ``test_list_of_files``</span>
+<span class="sd">        be returned by the benchmark. This means that the ``test_list_of_files``</span>
 <span class="sd">        parameter must define a single experience (the complete test set).</span>
 <span class="sd">        Defaults to False.</span>
 <span class="sd">    :param train_transform: The transformation to apply to the training data,</span>
@@ -771,7 +771,7 @@
 <span class="sd">    be created from each Tensor tuple (x, y, z, ...) and each of those training</span>
 <span class="sd">    datasets will be considered a separate training experience. Using this</span>
 <span class="sd">    helper function is the lowest-level way to create a Continual Learning</span>
-<span class="sd">    scenario. When possible, consider using higher level helpers.</span>
+<span class="sd">    benchmark. When possible, consider using higher level helpers.</span>
 
 <span class="sd">    Experiences are defined by passing lists of tensors as the `train_tensors`,</span>
 <span class="sd">    `test_tensors` (and `other_streams_tensors`) parameters. Those parameters</span>
@@ -813,7 +813,7 @@
 <span class="sd">        applied to all patterns of a certain experience. For more info on that,</span>
 <span class="sd">        see the function description.</span>
 <span class="sd">    :param complete_test_set_only: If True, only the complete test set will</span>
-<span class="sd">        be returned by the scenario. This means that ``test_tensors`` must</span>
+<span class="sd">        be returned by the benchmark. This means that ``test_tensors`` must</span>
 <span class="sd">        define a single experience. Defaults to False.</span>
 <span class="sd">    :param train_transform: The transformation to apply to the training data,</span>
 <span class="sd">        e.g. a random crop, a normalization or a concatenation of different</span>

@@ -1,0 +1,19 @@
+:mod:`avalanche.evaluation.metrics.mean_scores`
+===============================================
+
+.. py:module:: avalanche.evaluation.metrics.mean_scores
+
+.. autoapi-nested-parse::
+
+   This metric was described in the IL2M paper:
+
+   E. Belouadah and A. Popescu,
+   "IL2M: Class Incremental Learning With Dual Memory,"
+   2019 IEEE/CVF International Conference on Computer Vision (ICCV),
+   2019, pp. 583-592, doi: 10.1109/ICCV.2019.00067.
+
+   It selects the scores of the true class and then average them for past and new
+   classes.
+
+
+

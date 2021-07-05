@@ -60,6 +60,14 @@ Classes
       :return: None.
 
 
+   .. method:: __add__(self, other: Mean) -> 'Mean'
+
+      Return a metric representing the weighted mean of the 2 means.
+
+      :param other: the other mean
+      :return: The weighted mean
+
+
 
 .. py:class:: Sum
 

@@ -337,6 +337,7 @@ of each evaluation stream.</p></td>
 <li class="toctree-l1"><a class="reference internal" href="loss/"><code class="xref py py-mod docutils literal notranslate"><span class="pre">avalanche.evaluation.metrics.loss</span></code></a></li>
 <li class="toctree-l1"><a class="reference internal" href="mac/"><code class="xref py py-mod docutils literal notranslate"><span class="pre">avalanche.evaluation.metrics.mac</span></code></a></li>
 <li class="toctree-l1"><a class="reference internal" href="mean/"><code class="xref py py-mod docutils literal notranslate"><span class="pre">avalanche.evaluation.metrics.mean</span></code></a></li>
+<li class="toctree-l1"><a class="reference internal" href="mean_scores/"><code class="xref py py-mod docutils literal notranslate"><span class="pre">avalanche.evaluation.metrics.mean_scores</span></code></a></li>
 <li class="toctree-l1"><a class="reference internal" href="ram_usage/"><code class="xref py py-mod docutils literal notranslate"><span class="pre">avalanche.evaluation.metrics.ram_usage</span></code></a></li>
 <li class="toctree-l1"><a class="reference internal" href="timing/"><code class="xref py py-mod docutils literal notranslate"><span class="pre">avalanche.evaluation.metrics.timing</span></code></a></li>
 </ul>
@@ -624,6 +625,20 @@ parameter.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Returns</dt>
 <dd class="field-odd"><p>None.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="avalanche.evaluation.metrics.Mean.__add__">
+<span class="sig-name descname"><span class="pre">__add__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">other</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><a class="reference internal" href="#avalanche.evaluation.metrics.Mean" title="avalanche.evaluation.metrics.Mean"><span class="pre">Mean</span></a></span></em><span class="sig-paren">)</span> &#x2192; <a class="reference internal" href="#avalanche.evaluation.metrics.Mean" title="avalanche.evaluation.metrics.Mean"><span class="pre">Mean</span></a><a class="reference internal" href="../../../../_modules/avalanche/evaluation/metrics/mean/#Mean.__add__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.evaluation.metrics.Mean.__add__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return a metric representing the weighted mean of the 2 means.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>other</strong> – the other mean</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>The weighted mean</p>
 </dd>
 </dl>
 </dd></dl>

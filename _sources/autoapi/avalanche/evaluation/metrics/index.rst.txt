@@ -113,6 +113,7 @@ Submodules
    loss/index.rst
    mac/index.rst
    mean/index.rst
+   mean_scores/index.rst
    ram_usage/index.rst
    timing/index.rst
 
@@ -246,6 +247,14 @@ Functions
       Resets the metric.
 
       :return: None.
+
+
+   .. method:: __add__(self, other: Mean) -> 'Mean'
+
+      Return a metric representing the weighted mean of the 2 means.
+
+      :param other: the other mean
+      :return: The weighted mean
 
 
 

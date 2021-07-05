@@ -249,7 +249,18 @@
 <span class="sd">        :return: None.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">summed</span> <span class="o">=</span> <span class="mf">0.0</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">weight</span> <span class="o">=</span> <span class="mf">0.0</span></div></div>
+        <span class="bp">self</span><span class="o">.</span><span class="n">weight</span> <span class="o">=</span> <span class="mf">0.0</span></div>
+
+<div class="viewcode-block" id="Mean.__add__"><a class="viewcode-back" href="../../../../../autoapi/avalanche/evaluation/metrics/mean/#avalanche.evaluation.metrics.Mean.__add__">[docs]</a>    <span class="k">def</span> <span class="fm">__add__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">:</span> <span class="s1">&#39;Mean&#39;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="s2">&quot;Mean&quot;</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Return a metric representing the weighted mean of the 2 means.</span>
+
+<span class="sd">        :param other: the other mean</span>
+<span class="sd">        :return: The weighted mean&quot;&quot;&quot;</span>
+        <span class="n">res</span> <span class="o">=</span> <span class="n">Mean</span><span class="p">()</span>
+        <span class="n">res</span><span class="o">.</span><span class="n">summed</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">summed</span> <span class="o">+</span> <span class="n">other</span><span class="o">.</span><span class="n">summed</span>
+        <span class="n">res</span><span class="o">.</span><span class="n">weight</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">weight</span> <span class="o">+</span> <span class="n">other</span><span class="o">.</span><span class="n">weight</span>
+        <span class="k">return</span> <span class="n">res</span></div></div>
 
 
 <div class="viewcode-block" id="Sum"><a class="viewcode-back" href="../../../../../autoapi/avalanche/evaluation/metrics/mean/#avalanche.evaluation.metrics.Sum">[docs]</a><span class="k">class</span> <span class="nc">Sum</span><span class="p">(</span><span class="n">Metric</span><span class="p">[</span><span class="nb">float</span><span class="p">]):</span>

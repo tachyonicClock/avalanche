@@ -141,7 +141,7 @@ Classes
 
 
 
-.. py:class:: EvaluationPlugin(*metrics: Union['PluginMetric', Sequence['PluginMetric']], loggers: Union['StrategyLogger', Sequence['StrategyLogger']] = None, collect_all=True)
+.. py:class:: EvaluationPlugin(*metrics: Union['PluginMetric', Sequence['PluginMetric']], loggers: Union['StrategyLogger', Sequence['StrategyLogger']] = None, collect_all=True, benchmark=None, strict_checks=False)
 
    Bases: :class:`avalanche.training.plugins.strategy_plugin.StrategyPlugin`
 
@@ -163,6 +163,18 @@ Classes
    :param collect_all: if True, collect in a separate dictionary all
        metric curves values. This dictionary is accessible with
        `get_all_metrics` method.
+   :param benchmark: continual learning benchmark needed to check stream
+       completeness during evaluation or other kind of properties. If
+       None, no check will be conducted and the plugin will emit a
+       warning to signal this fact.
+   :param strict_checks: if True, `benchmark` has to be provided.
+       In this case, only full evaluation streams are admitted when
+       calling `eval`. An error will be raised otherwise. When False,
+       `benchmark` can be `None` and only warnings will be raised.
+
+   .. method:: active(self)
+      :property:
+
 
    .. method:: get_last_metrics(self)
 

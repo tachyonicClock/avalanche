@@ -238,6 +238,12 @@ Classes
       True if the strategy is in training mode. 
 
 
+   .. attribute:: current_eval_stream
+      
+
+      User-provided evaluation stream on `eval` call
+
+
    .. method:: is_eval(self)
       :property:
 

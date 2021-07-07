@@ -354,15 +354,15 @@ Classes
       Called after `eval` by the `BaseStrategy`. 
 
 
-   .. method:: before_eval_iteration(self, strategy: BaseStrategy)
-
-      Called before the start of a training iteration by the
-      `BaseStrategy`. 
-
-
    .. method:: after_eval_iteration(self, strategy: BaseStrategy)
 
       Called after the end of an iteration by the
+      `BaseStrategy`. 
+
+
+   .. method:: before_eval_iteration(self, strategy: BaseStrategy)
+
+      Called before the start of a training iteration by the
       `BaseStrategy`. 
 
 

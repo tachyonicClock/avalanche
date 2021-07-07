@@ -358,6 +358,9 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">is_training</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span>
         <span class="sd">&quot;&quot;&quot; True if the strategy is in training mode. &quot;&quot;&quot;</span>
 
+        <span class="bp">self</span><span class="o">.</span><span class="n">current_eval_stream</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="sd">&quot;&quot;&quot;User-provided evaluation stream on `eval` call&quot;&quot;&quot;</span>
+
         <span class="bp">self</span><span class="o">.</span><span class="n">_stop_training</span> <span class="o">=</span> <span class="kc">False</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">_warn_for_disabled_plugins_callbacks</span><span class="p">()</span>
@@ -527,6 +530,7 @@
 
         <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">exp_list</span><span class="p">,</span> <span class="n">Sequence</span><span class="p">):</span>
             <span class="n">exp_list</span> <span class="o">=</span> <span class="p">[</span><span class="n">exp_list</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">current_eval_stream</span> <span class="o">=</span> <span class="n">exp_list</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">before_eval</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
         <span class="k">for</span> <span class="bp">self</span><span class="o">.</span><span class="n">experience</span> <span class="ow">in</span> <span class="n">exp_list</span><span class="p">:</span>

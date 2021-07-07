@@ -212,7 +212,9 @@
                  <span class="o">*</span><span class="n">metrics</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="s1">&#39;PluginMetric&#39;</span><span class="p">,</span> <span class="n">Sequence</span><span class="p">[</span><span class="s1">&#39;PluginMetric&#39;</span><span class="p">]],</span>
                  <span class="n">loggers</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="s1">&#39;StrategyLogger&#39;</span><span class="p">,</span>
                                 <span class="n">Sequence</span><span class="p">[</span><span class="s1">&#39;StrategyLogger&#39;</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-                 <span class="n">collect_all</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+                 <span class="n">collect_all</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+                 <span class="n">benchmark</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                 <span class="n">strict_checks</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Creates an instance of the evaluation plugin.</span>
 
@@ -221,9 +223,19 @@
 <span class="sd">        :param collect_all: if True, collect in a separate dictionary all</span>
 <span class="sd">            metric curves values. This dictionary is accessible with</span>
 <span class="sd">            `get_all_metrics` method.</span>
+<span class="sd">        :param benchmark: continual learning benchmark needed to check stream</span>
+<span class="sd">            completeness during evaluation or other kind of properties. If</span>
+<span class="sd">            None, no check will be conducted and the plugin will emit a</span>
+<span class="sd">            warning to signal this fact.</span>
+<span class="sd">        :param strict_checks: if True, `benchmark` has to be provided.</span>
+<span class="sd">            In this case, only full evaluation streams are admitted when</span>
+<span class="sd">            calling `eval`. An error will be raised otherwise. When False,</span>
+<span class="sd">            `benchmark` can be `None` and only warnings will be raised.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">collect_all</span> <span class="o">=</span> <span class="n">collect_all</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">benchmark</span> <span class="o">=</span> <span class="n">benchmark</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">strict_checks</span> <span class="o">=</span> <span class="n">strict_checks</span>
         <span class="n">flat_metrics_list</span> <span class="o">=</span> <span class="p">[]</span>
         <span class="k">for</span> <span class="n">metric</span> <span class="ow">in</span> <span class="n">metrics</span><span class="p">:</span>
             <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">metric</span><span class="p">,</span> <span class="n">Sequence</span><span class="p">):</span>
@@ -236,6 +248,18 @@
             <span class="n">loggers</span> <span class="o">=</span> <span class="p">[]</span>
         <span class="k">elif</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">loggers</span><span class="p">,</span> <span class="n">Sequence</span><span class="p">):</span>
             <span class="n">loggers</span> <span class="o">=</span> <span class="p">[</span><span class="n">loggers</span><span class="p">]</span>
+
+        <span class="k">if</span> <span class="n">benchmark</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">strict_checks</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Benchmark cannot be None in strict mode.&quot;</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">warnings</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span>
+                    <span class="s2">&quot;No benchmark provided to the evaluation plugin. &quot;</span>
+                    <span class="s2">&quot;Metrics may be computed on inconsistent portion &quot;</span>
+                    <span class="s2">&quot;of streams, use at your own risk.&quot;</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">complete_test_stream</span> <span class="o">=</span> <span class="n">benchmark</span><span class="o">.</span><span class="n">test_stream</span>
+
         <span class="bp">self</span><span class="o">.</span><span class="n">loggers</span><span class="p">:</span> <span class="n">Sequence</span><span class="p">[</span><span class="s1">&#39;StrategyLogger&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">loggers</span>
 
         <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">loggers</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
@@ -255,7 +279,23 @@
         <span class="c1"># metric value.</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">last_metric_results</span> <span class="o">=</span> <span class="p">{}</span>
 
+        <span class="bp">self</span><span class="o">.</span><span class="n">_active</span> <span class="o">=</span> <span class="kc">True</span>
+        <span class="sd">&quot;&quot;&quot;If True, no metrics will be collected.&quot;&quot;&quot;</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">active</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_active</span>
+
+    <span class="nd">@active</span><span class="o">.</span><span class="n">setter</span>
+    <span class="k">def</span> <span class="nf">active</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+        <span class="k">assert</span> <span class="n">value</span> <span class="ow">is</span> <span class="kc">True</span> <span class="ow">or</span> <span class="n">value</span> <span class="ow">is</span> <span class="kc">False</span><span class="p">,</span> \
+            <span class="s2">&quot;Active must be set as either True or False&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_active</span> <span class="o">=</span> <span class="n">value</span>
+
     <span class="k">def</span> <span class="nf">_update_metrics</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">strategy</span><span class="p">:</span> <span class="s1">&#39;BaseStrategy&#39;</span><span class="p">,</span> <span class="n">callback</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">_active</span><span class="p">:</span>
+            <span class="k">return</span> <span class="p">[]</span>
+
         <span class="n">metric_values</span> <span class="o">=</span> <span class="p">[]</span>
         <span class="k">for</span> <span class="n">metric</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">metrics</span><span class="p">:</span>
             <span class="n">metric_result</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">metric</span><span class="p">,</span> <span class="n">callback</span><span class="p">)(</span><span class="n">strategy</span><span class="p">)</span>
@@ -340,7 +380,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">_update_metrics</span><span class="p">(</span><span class="n">strategy</span><span class="p">,</span> <span class="s1">&#39;after_forward&#39;</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="EvaluationPlugin.before_backward"><a class="viewcode-back" href="../../../../../autoapi/avalanche/training/plugins/#avalanche.training.plugins.evaluation.EvaluationPlugin.before_backward">[docs]</a>    <span class="k">def</span> <span class="nf">before_backward</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">strategy</span><span class="p">:</span> <span class="s1">&#39;BaseStrategy&#39;</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_update_metrics</span><span class="p">(</span><span class="n">strategy</span><span class="p">,</span> <span class="s1">&#39;before_backward&#39;</span><span class="p">)</span></div>
+        <span class="bp">self</span><span class="o">.</span><span class="n">update_metrics</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_update_metrics</span><span class="p">(</span><span class="n">strategy</span><span class="p">,</span> <span class="s1">&#39;before_backward&#39;</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="EvaluationPlugin.after_backward"><a class="viewcode-back" href="../../../../../autoapi/avalanche/training/plugins/#avalanche.training.plugins.evaluation.EvaluationPlugin.after_backward">[docs]</a>    <span class="k">def</span> <span class="nf">after_backward</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">strategy</span><span class="p">:</span> <span class="s1">&#39;BaseStrategy&#39;</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_update_metrics</span><span class="p">(</span><span class="n">strategy</span><span class="p">,</span> <span class="s1">&#39;after_backward&#39;</span><span class="p">)</span></div>
@@ -364,7 +404,25 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">_update_metrics</span><span class="p">(</span><span class="n">strategy</span><span class="p">,</span> <span class="s1">&#39;after_training&#39;</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="EvaluationPlugin.before_eval"><a class="viewcode-back" href="../../../../../autoapi/avalanche/training/plugins/#avalanche.training.plugins.evaluation.EvaluationPlugin.before_eval">[docs]</a>    <span class="k">def</span> <span class="nf">before_eval</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">strategy</span><span class="p">:</span> <span class="s1">&#39;BaseStrategy&#39;</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_update_metrics</span><span class="p">(</span><span class="n">strategy</span><span class="p">,</span> <span class="s1">&#39;before_eval&#39;</span><span class="p">)</span></div>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_update_metrics</span><span class="p">(</span><span class="n">strategy</span><span class="p">,</span> <span class="s1">&#39;before_eval&#39;</span><span class="p">)</span>
+        <span class="n">msgw</span> <span class="o">=</span> <span class="s2">&quot;Evaluation stream is not equal to the complete test stream. &quot;</span> \
+               <span class="s2">&quot;This may result in inconsistent metrics. Use at your own risk.&quot;</span>
+        <span class="n">msge</span> <span class="o">=</span> <span class="s2">&quot;Stream provided to `eval` must be the same of the entire &quot;</span> \
+               <span class="s2">&quot;evaluation stream.&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">benchmark</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">exp</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">complete_test_stream</span><span class="p">):</span>
+                <span class="k">try</span><span class="p">:</span>
+                    <span class="n">current_exp</span> <span class="o">=</span> <span class="n">strategy</span><span class="o">.</span><span class="n">current_eval_stream</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+                    <span class="k">if</span> <span class="n">exp</span><span class="o">.</span><span class="n">current_experience</span> <span class="o">!=</span> <span class="n">current_exp</span><span class="o">.</span><span class="n">current_experience</span><span class="p">:</span>
+                        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">strict_checks</span><span class="p">:</span>
+                            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="n">msge</span><span class="p">)</span>
+                        <span class="k">else</span><span class="p">:</span>
+                            <span class="n">warnings</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span><span class="n">msgw</span><span class="p">)</span>
+                <span class="k">except</span> <span class="ne">IndexError</span><span class="p">:</span>
+                    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">strict_checks</span><span class="p">:</span>
+                        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="n">msge</span><span class="p">)</span>
+                    <span class="k">else</span><span class="p">:</span>
+                        <span class="n">warnings</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span><span class="n">msgw</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="EvaluationPlugin.before_eval_dataset_adaptation"><a class="viewcode-back" href="../../../../../autoapi/avalanche/training/plugins/#avalanche.training.plugins.evaluation.EvaluationPlugin.before_eval_dataset_adaptation">[docs]</a>    <span class="k">def</span> <span class="nf">before_eval_dataset_adaptation</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">strategy</span><span class="p">:</span> <span class="s1">&#39;BaseStrategy&#39;</span><span class="p">,</span>
                                        <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
@@ -395,10 +453,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">_update_metrics</span><span class="p">(</span><span class="n">strategy</span><span class="p">,</span> <span class="s1">&#39;after_eval_iteration&#39;</span><span class="p">)</span></div></div>
 
 
-<span class="n">default_logger</span> <span class="o">=</span> <span class="n">EvaluationPlugin</span><span class="p">(</span>
-    <span class="n">accuracy_metrics</span><span class="p">(</span><span class="n">minibatch</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">epoch</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">experience</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">stream</span><span class="o">=</span><span class="kc">True</span><span class="p">),</span>
-    <span class="n">loss_metrics</span><span class="p">(</span><span class="n">minibatch</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">epoch</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">experience</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">stream</span><span class="o">=</span><span class="kc">True</span><span class="p">),</span>
-    <span class="n">loggers</span><span class="o">=</span><span class="p">[</span><span class="n">InteractiveLogger</span><span class="p">()])</span>
+<span class="n">default_logger</span> <span class="o">=</span> <span class="kc">None</span>
 
 
 <span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span>

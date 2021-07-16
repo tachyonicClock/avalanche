@@ -89,7 +89,7 @@
               
             
             
-              <p class="caption"><span class="caption-text">Avalanche API:</span></p>
+              <p class="caption" role="heading"><span class="caption-text">Avalanche API:</span></p>
 <ul class="current">
 <li class="toctree-l1 current"><a class="reference internal" href="../../../../">API Reference</a><ul class="current">
 <li class="toctree-l2 current"><a class="reference internal" href="../../../"><code class="xref py py-mod docutils literal notranslate"><span class="pre">avalanche</span></code></a><ul class="current">
@@ -213,7 +213,7 @@ The metric can be updated by using the <cite>update</cite> method while the mean
 can be retrieved using the <cite>result</cite> method.</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="avalanche.evaluation.metrics.mean.Mean.update">
-<span class="sig-name descname"><span class="pre">update</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">value</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">SupportsFloat</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">weight</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">SupportsFloat</span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">1.0</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">None</span><a class="reference internal" href="../../../../../_modules/avalanche/evaluation/metrics/mean/#Mean.update"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.evaluation.metrics.mean.Mean.update" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">update</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">value</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">SupportsFloat</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">weight</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">SupportsFloat</span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">1.0</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="../../../../../_modules/avalanche/evaluation/metrics/mean/#Mean.update"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.evaluation.metrics.mean.Mean.update" title="Permalink to this definition">¶</a></dt>
 <dd><p>Update the running mean given the value.</p>
 <p>The value can be weighted with a custom value, defined by the <cite>weight</cite>
 parameter.</p>
@@ -232,7 +232,7 @@ parameter.</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="avalanche.evaluation.metrics.mean.Mean.result">
-<span class="sig-name descname"><span class="pre">result</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">float</span><a class="reference internal" href="../../../../../_modules/avalanche/evaluation/metrics/mean/#Mean.result"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.evaluation.metrics.mean.Mean.result" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">result</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">float</span></span></span><a class="reference internal" href="../../../../../_modules/avalanche/evaluation/metrics/mean/#Mean.result"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.evaluation.metrics.mean.Mean.result" title="Permalink to this definition">¶</a></dt>
 <dd><p>Retrieves the mean.</p>
 <p>Calling this method will not change the internal state of the metric.</p>
 <dl class="field-list simple">
@@ -244,7 +244,7 @@ parameter.</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="avalanche.evaluation.metrics.mean.Mean.reset">
-<span class="sig-name descname"><span class="pre">reset</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">None</span><a class="reference internal" href="../../../../../_modules/avalanche/evaluation/metrics/mean/#Mean.reset"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.evaluation.metrics.mean.Mean.reset" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">reset</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="../../../../../_modules/avalanche/evaluation/metrics/mean/#Mean.reset"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.evaluation.metrics.mean.Mean.reset" title="Permalink to this definition">¶</a></dt>
 <dd><p>Resets the metric.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Returns</dt>
@@ -255,7 +255,7 @@ parameter.</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="avalanche.evaluation.metrics.mean.Mean.__add__">
-<span class="sig-name descname"><span class="pre">__add__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">other</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><a class="reference internal" href="#avalanche.evaluation.metrics.mean.Mean" title="avalanche.evaluation.metrics.mean.Mean"><span class="pre">Mean</span></a></span></em><span class="sig-paren">)</span> &#x2192; <a class="reference internal" href="#avalanche.evaluation.metrics.mean.Mean" title="avalanche.evaluation.metrics.mean.Mean"><span class="pre">Mean</span></a><a class="reference internal" href="../../../../../_modules/avalanche/evaluation/metrics/mean/#Mean.__add__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.evaluation.metrics.mean.Mean.__add__" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">__add__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">other</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><a class="reference internal" href="#avalanche.evaluation.metrics.mean.Mean" title="avalanche.evaluation.metrics.mean.Mean"><span class="pre">Mean</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#avalanche.evaluation.metrics.mean.Mean" title="avalanche.evaluation.metrics.mean.Mean"><span class="pre">Mean</span></a></span></span><a class="reference internal" href="../../../../../_modules/avalanche/evaluation/metrics/mean/#Mean.__add__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.evaluation.metrics.mean.Mean.__add__" title="Permalink to this definition">¶</a></dt>
 <dd><p>Return a metric representing the weighted mean of the 2 means.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -284,7 +284,7 @@ The metric can be updated by using the <cite>update</cite> method while the sum
 can be retrieved using the <cite>result</cite> method.</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="avalanche.evaluation.metrics.mean.Sum.update">
-<span class="sig-name descname"><span class="pre">update</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">value</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">SupportsFloat</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">None</span><a class="reference internal" href="../../../../../_modules/avalanche/evaluation/metrics/mean/#Sum.update"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.evaluation.metrics.mean.Sum.update" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">update</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">value</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">SupportsFloat</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="../../../../../_modules/avalanche/evaluation/metrics/mean/#Sum.update"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.evaluation.metrics.mean.Sum.update" title="Permalink to this definition">¶</a></dt>
 <dd><p>Update the running sum given the value.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -298,7 +298,7 @@ can be retrieved using the <cite>result</cite> method.</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="avalanche.evaluation.metrics.mean.Sum.result">
-<span class="sig-name descname"><span class="pre">result</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">float</span><a class="reference internal" href="../../../../../_modules/avalanche/evaluation/metrics/mean/#Sum.result"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.evaluation.metrics.mean.Sum.result" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">result</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">float</span></span></span><a class="reference internal" href="../../../../../_modules/avalanche/evaluation/metrics/mean/#Sum.result"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.evaluation.metrics.mean.Sum.result" title="Permalink to this definition">¶</a></dt>
 <dd><p>Retrieves the sum.</p>
 <p>Calling this method will not change the internal state of the metric.</p>
 <dl class="field-list simple">
@@ -310,7 +310,7 @@ can be retrieved using the <cite>result</cite> method.</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="avalanche.evaluation.metrics.mean.Sum.reset">
-<span class="sig-name descname"><span class="pre">reset</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">None</span><a class="reference internal" href="../../../../../_modules/avalanche/evaluation/metrics/mean/#Sum.reset"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.evaluation.metrics.mean.Sum.reset" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">reset</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="../../../../../_modules/avalanche/evaluation/metrics/mean/#Sum.reset"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.evaluation.metrics.mean.Sum.reset" title="Permalink to this definition">¶</a></dt>
 <dd><p>Resets the metric.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Returns</dt>

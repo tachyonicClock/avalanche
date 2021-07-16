@@ -89,7 +89,7 @@
               
             
             
-              <p class="caption"><span class="caption-text">Avalanche API:</span></p>
+              <p class="caption" role="heading"><span class="caption-text">Avalanche API:</span></p>
 <ul class="current">
 <li class="toctree-l1 current"><a class="reference internal" href="../../../">API Reference</a><ul class="current">
 <li class="toctree-l2 current"><a class="reference internal" href="../../"><code class="xref py py-mod docutils literal notranslate"><span class="pre">avalanche</span></code></a><ul class="current">
@@ -306,7 +306,7 @@ each label is used here.</p></li>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="avalanche.evaluation.metric_utils.stream_type">
-<span class="sig-prename descclassname"><span class="pre">avalanche.evaluation.metric_utils.</span></span><span class="sig-name descname"><span class="pre">stream_type</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">experience</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Experience</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">str</span><a class="reference internal" href="../../../../_modules/avalanche/evaluation/metric_utils/#stream_type"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.evaluation.metric_utils.stream_type" title="Permalink to this definition">¶</a></dt>
+<span class="sig-prename descclassname"><span class="pre">avalanche.evaluation.metric_utils.</span></span><span class="sig-name descname"><span class="pre">stream_type</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">experience</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Experience</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">str</span></span></span><a class="reference internal" href="../../../../_modules/avalanche/evaluation/metric_utils/#stream_type"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.evaluation.metric_utils.stream_type" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns the stream name from which the experience belongs to.
 e.g. the experience can be part of train or test stream.</p>
 <dl class="field-list simple">
@@ -318,7 +318,7 @@ e.g. the experience can be part of train or test stream.</p>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="avalanche.evaluation.metric_utils.phase_and_task">
-<span class="sig-prename descclassname"><span class="pre">avalanche.evaluation.metric_utils.</span></span><span class="sig-name descname"><span class="pre">phase_and_task</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">strategy</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">BaseStrategy</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">Tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span> </span><span class="pre">int</span><span class="p"><span class="pre">]</span></span><a class="reference internal" href="../../../../_modules/avalanche/evaluation/metric_utils/#phase_and_task"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.evaluation.metric_utils.phase_and_task" title="Permalink to this definition">¶</a></dt>
+<span class="sig-prename descclassname"><span class="pre">avalanche.evaluation.metric_utils.</span></span><span class="sig-name descname"><span class="pre">phase_and_task</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">strategy</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">BaseStrategy</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span> </span><span class="pre">int</span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../../../../_modules/avalanche/evaluation/metric_utils/#phase_and_task"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.evaluation.metric_utils.phase_and_task" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns the current phase name and the associated task label.</p>
 <p>The current task label depends on the phase. During the training
 phase, the task label is the one defined in the “train_task_label”

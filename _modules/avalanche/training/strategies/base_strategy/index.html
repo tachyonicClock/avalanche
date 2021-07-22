@@ -419,9 +419,6 @@
             <span class="n">experiences</span> <span class="o">=</span> <span class="p">[</span><span class="n">experiences</span><span class="p">]</span>
         <span class="k">if</span> <span class="n">eval_streams</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
             <span class="n">eval_streams</span> <span class="o">=</span> <span class="p">[</span><span class="n">experiences</span><span class="p">]</span>
-        <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">exp</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">eval_streams</span><span class="p">):</span>
-            <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">exp</span><span class="p">,</span> <span class="n">Sequence</span><span class="p">):</span>
-                <span class="n">eval_streams</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="n">exp</span><span class="p">]</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">before_training</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
         <span class="k">for</span> <span class="bp">self</span><span class="o">.</span><span class="n">experience</span> <span class="ow">in</span> <span class="n">experiences</span><span class="p">:</span>
@@ -431,18 +428,24 @@
         <span class="n">res</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">evaluator</span><span class="o">.</span><span class="n">get_last_metrics</span><span class="p">()</span>
         <span class="k">return</span> <span class="n">res</span></div>
 
-<div class="viewcode-block" id="BaseStrategy.train_exp"><a class="viewcode-back" href="../../../../../autoapi/avalanche/training/strategies/#avalanche.training.BaseStrategy.train_exp">[docs]</a>    <span class="k">def</span> <span class="nf">train_exp</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">experience</span><span class="p">:</span> <span class="n">Experience</span><span class="p">,</span> <span class="n">eval_streams</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+<div class="viewcode-block" id="BaseStrategy.train_exp"><a class="viewcode-back" href="../../../../../autoapi/avalanche/training/strategies/#avalanche.training.BaseStrategy.train_exp">[docs]</a>    <span class="k">def</span> <span class="nf">train_exp</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">experience</span><span class="p">:</span> <span class="n">Experience</span><span class="p">,</span> <span class="n">eval_streams</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Training loop over a single Experience object.</span>
 
 <span class="sd">        :param experience: CL experience information.</span>
 <span class="sd">        :param eval_streams: list of streams for evaluation.</span>
-<span class="sd">            If None: use training experiences for evaluation.</span>
+<span class="sd">            If None: use the training experience for evaluation.</span>
 <span class="sd">            Use [] if you do not want to evaluate during training.</span>
 <span class="sd">        :param kwargs: custom arguments.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">experience</span> <span class="o">=</span> <span class="n">experience</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">train</span><span class="p">()</span>
+
+        <span class="k">if</span> <span class="n">eval_streams</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">eval_streams</span> <span class="o">=</span> <span class="p">[</span><span class="n">experience</span><span class="p">]</span>
+        <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">exp</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">eval_streams</span><span class="p">):</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">exp</span><span class="p">,</span> <span class="n">Sequence</span><span class="p">):</span>
+                <span class="n">eval_streams</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="n">exp</span><span class="p">]</span>
 
         <span class="c1"># Data Adaptation (e.g. add new samples/data augmentation)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">before_train_dataset_adaptation</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>

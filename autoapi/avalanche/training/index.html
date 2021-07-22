@@ -706,14 +706,14 @@ each metric name.</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="avalanche.training.BaseStrategy.train_exp">
-<span class="sig-name descname"><span class="pre">train_exp</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">experience</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Experience</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">eval_streams</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../_modules/avalanche/training/strategies/base_strategy/#BaseStrategy.train_exp"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.training.BaseStrategy.train_exp" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">train_exp</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">experience</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Experience</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">eval_streams</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../_modules/avalanche/training/strategies/base_strategy/#BaseStrategy.train_exp"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.training.BaseStrategy.train_exp" title="Permalink to this definition">¶</a></dt>
 <dd><p>Training loop over a single Experience object.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>experience</strong> – CL experience information.</p></li>
 <li><p><strong>eval_streams</strong> – list of streams for evaluation.
-If None: use training experiences for evaluation.
+If None: use the training experience for evaluation.
 Use [] if you do not want to evaluate during training.</p></li>
 <li><p><strong>kwargs</strong> – custom arguments.</p></li>
 </ul>

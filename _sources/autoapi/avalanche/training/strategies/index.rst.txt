@@ -287,13 +287,13 @@ Classes
           each metric name.
 
 
-   .. method:: train_exp(self, experience: Experience, eval_streams, **kwargs)
+   .. method:: train_exp(self, experience: Experience, eval_streams=None, **kwargs)
 
       Training loop over a single Experience object.
 
       :param experience: CL experience information.
       :param eval_streams: list of streams for evaluation.
-          If None: use training experiences for evaluation.
+          If None: use the training experience for evaluation.
           Use [] if you do not want to evaluate during training.
       :param kwargs: custom arguments.
 

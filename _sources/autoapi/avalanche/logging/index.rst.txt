@@ -254,7 +254,7 @@ Classes
 
 
 
-.. py:class:: WandBLogger(project_name: str = 'Avalanche', run_name: str = 'Avalanche Test', params: dict = None)
+.. py:class:: WandBLogger(project_name: str = 'Avalanche', run_name: str = 'Test', log_artifacts: bool = False, path: Union[str, Path] = 'Checkpoints', uri: str = None, sync_tfboard: bool = False, save_code: bool = True, config: object = None, dir: Union[str, Path] = None, params: dict = None)
 
    Bases: :class:`avalanche.logging.StrategyLogger`
 
@@ -262,13 +262,27 @@ Classes
    Weights & Biases logging. Each monitored metric is automatically
    logged to a dedicated Weights & Biases project dashboard.
 
-   Creates an instance of the `WandBLogger`.
+   External storage for W&B Artifacts (for instance - AWS S3 and GCS
+   buckets) uri are supported.
 
-   :param project_name: Name of the W&B project.:
-   :param run_name: Name of the W&B run.:
+   The wandb log files are placed by default in "./wandb/" unless specified.
+
+   .. note::
+       TensorBoard can be synced on to the W&B dedicated dashboard.
+
+   Creates an instance of the `WandBLogger`.
+   :param project_name: Name of the W&B project.
+   :param run_name: Name of the W&B run.
+   :param log_artifacts: Option to log model weights as W&B Artifacts.
+   :param path: Path to locally save the model checkpoints.
+   :param uri: URI identifier for external storage buckets (GCS, S3).
+   :param sync_tfboard: Syncs TensorBoard to the W&B dashboard UI.
+   :param save_code: Saves the main training script to W&B. 
+   :param config: Syncs hyper-parameters and config values used to W&B.
+   :param dir: Path to the local log directory for W&B logs to be saved at.
    :param params: All arguments for wandb.init() function call. 
     Visit https://docs.wandb.ai/ref/python/init to learn about all 
-    wand.init() parameters.:
+    wand.init() parameters.
 
    .. method:: import_wandb(self)
 

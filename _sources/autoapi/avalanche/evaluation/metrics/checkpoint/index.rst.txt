@@ -1,0 +1,73 @@
+:mod:`avalanche.evaluation.metrics.checkpoint`
+==============================================
+
+.. py:module:: avalanche.evaluation.metrics.checkpoint
+
+
+Module Contents
+---------------
+
+Classes
+~~~~~~~
+
+.. autoapisummary::
+
+   avalanche.evaluation.metrics.checkpoint.WeightCheckpoint
+
+
+
+.. py:class:: WeightCheckpoint
+
+   Bases: :class:`PluginMetric[Tensor]`
+
+   The WeightCheckpoint Metric. This is a standalone metric.
+
+   Instances of this metric keeps the weight checkpoint tensor of the
+   model at each experience. 
+
+   Each time `result` is called, this metric emits the latest experience's
+   weight checkpoint tensor since the last `reset`.
+
+   The reset method will bring the metric to its initial state. By default
+   this metric in its initial state will return None.
+
+   Creates an instance of the WeightCheckpoint Metric.
+
+   By default this metric in its initial state will return None.
+   The metric can be updated by using the `update` method
+   while the current experience's weight checkpoint tensor can be 
+   retrieved using the `result` method.
+
+   .. method:: update(self, weights) -> Tensor
+
+      Update the weight checkpoint at the current experience.
+
+      :param weights: the weight tensor at current experience
+      :return: None.
+
+
+   .. method:: result(self) -> Tensor
+
+      Retrieves the weight checkpoint at the current experience.
+
+      :return: The weight checkpoint as a tensor.
+
+
+   .. method:: reset(self) -> None
+
+      Resets the metric.
+
+      :return: None.
+
+
+   .. method:: after_eval_exp(self, strategy: BaseStrategy) -> 'MetricResult'
+
+      Called after `eval_exp` by the `BaseStrategy`. 
+
+
+   .. method:: __str__(self)
+
+      Return str(self).
+
+
+

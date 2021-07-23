@@ -484,23 +484,33 @@ metric value was obtained.</p></li>
 
 <dl class="py class">
 <dt class="sig sig-object py" id="avalanche.logging.WandBLogger">
-<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">avalanche.logging.</span></span><span class="sig-name descname"><span class="pre">WandBLogger</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">project_name</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">'Avalanche'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">run_name</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">'Avalanche</span> <span class="pre">Test'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">params</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">dict</span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../_modules/avalanche/logging/wandb_logger/#WandBLogger"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.logging.WandBLogger" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">avalanche.logging.</span></span><span class="sig-name descname"><span class="pre">WandBLogger</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">project_name</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">'Avalanche'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">run_name</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">'Test'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">log_artifacts</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">bool</span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">path</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span> </span><span class="pre">Path</span><span class="p"><span class="pre">]</span></span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">'Checkpoints'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">uri</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sync_tfboard</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">bool</span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">save_code</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">bool</span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">config</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">object</span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dir</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span> </span><span class="pre">Path</span><span class="p"><span class="pre">]</span></span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">params</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">dict</span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../_modules/avalanche/logging/wandb_logger/#WandBLogger"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.logging.WandBLogger" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="#avalanche.logging.StrategyLogger" title="avalanche.logging.StrategyLogger"><code class="xref py py-class docutils literal notranslate"><span class="pre">avalanche.logging.StrategyLogger</span></code></a></p>
 <p>The <cite>WandBLogger</cite> provides an easy integration with
 Weights &amp; Biases logging. Each monitored metric is automatically
 logged to a dedicated Weights &amp; Biases project dashboard.</p>
-<p>Creates an instance of the <cite>WandBLogger</cite>.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>project_name</strong> – Name of the W&amp;B project.:</p></li>
-<li><p><strong>run_name</strong> – Name of the W&amp;B run.:</p></li>
-<li><p><strong>params</strong> – All arguments for wandb.init() function call.
-Visit <a class="reference external" href="https://docs.wandb.ai/ref/python/init">https://docs.wandb.ai/ref/python/init</a> to learn about all
-wand.init() parameters.:</p></li>
-</ul>
-</dd>
-</dl>
+<p>External storage for W&amp;B Artifacts (for instance - AWS S3 and GCS
+buckets) uri are supported.</p>
+<p>The wandb log files are placed by default in “./wandb/” unless specified.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>TensorBoard can be synced on to the W&amp;B dedicated dashboard.</p>
+</div>
+<p>Creates an instance of the <cite>WandBLogger</cite>.
+:param project_name: Name of the W&amp;B project.
+:param run_name: Name of the W&amp;B run.
+:param log_artifacts: Option to log model weights as W&amp;B Artifacts.
+:param path: Path to locally save the model checkpoints.
+:param uri: URI identifier for external storage buckets (GCS, S3).
+:param sync_tfboard: Syncs TensorBoard to the W&amp;B dashboard UI.
+:param save_code: Saves the main training script to W&amp;B.
+:param config: Syncs hyper-parameters and config values used to W&amp;B.
+:param dir: Path to the local log directory for W&amp;B logs to be saved at.
+:param params: All arguments for wandb.init() function call.</p>
+<blockquote>
+<div><p>Visit <a class="reference external" href="https://docs.wandb.ai/ref/python/init">https://docs.wandb.ai/ref/python/init</a> to learn about all
+wand.init() parameters.</p>
+</div></blockquote>
 <dl class="py method">
 <dt class="sig sig-object py" id="avalanche.logging.WandBLogger.import_wandb">
 <span class="sig-name descname"><span class="pre">import_wandb</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../_modules/avalanche/logging/wandb_logger/#WandBLogger.import_wandb"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.logging.WandBLogger.import_wandb" title="Permalink to this definition">¶</a></dt>

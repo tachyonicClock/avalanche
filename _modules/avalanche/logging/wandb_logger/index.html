@@ -185,22 +185,30 @@
 <span class="c1"># See the accompanying LICENSE file for terms.                                 #</span>
 <span class="c1">#                                                                              #</span>
 <span class="c1"># Date: 25-11-2020                                                             #</span>
-<span class="c1"># Author(s): Vincenzo Lomonaco, Lorenzo Pellegrini                             #</span>
+<span class="c1"># Author(s): Diganta Misra, Andrea Cossu                                       #</span>
 <span class="c1"># E-mail: contact@continualai.org                                              #</span>
 <span class="c1"># Website: www.continualai.org                                                 #</span>
 <span class="c1">################################################################################</span>
-
 <span class="sd">&quot;&quot;&quot; This module handles all the functionalities related to the logging of</span>
 <span class="sd">Avalanche experiments using Weights &amp; Biases. &quot;&quot;&quot;</span>
-<span class="kn">from</span> <span class="nn">PIL.Image</span> <span class="kn">import</span> <span class="n">Image</span>
+
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Union</span>
+<span class="kn">from</span> <span class="nn">pathlib</span> <span class="kn">import</span> <span class="n">Path</span>
+<span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">import</span> <span class="nn">errno</span>
+
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 <span class="kn">from</span> <span class="nn">numpy</span> <span class="kn">import</span> <span class="n">array</span>
 <span class="kn">from</span> <span class="nn">torch</span> <span class="kn">import</span> <span class="n">Tensor</span>
+<span class="kn">import</span> <span class="nn">torch</span>
+<span class="kn">from</span> <span class="nn">torch</span> <span class="kn">import</span> <span class="n">Tensor</span>
+
+<span class="kn">from</span> <span class="nn">PIL.Image</span> <span class="kn">import</span> <span class="n">Image</span>
 <span class="kn">from</span> <span class="nn">matplotlib.pyplot</span> <span class="kn">import</span> <span class="n">Figure</span>
 
 <span class="kn">from</span> <span class="nn">avalanche.evaluation.metric_results</span> <span class="kn">import</span> <span class="n">AlternativeValues</span><span class="p">,</span> \
     <span class="n">MetricValue</span><span class="p">,</span> <span class="n">TensorImage</span>
 <span class="kn">from</span> <span class="nn">avalanche.logging</span> <span class="kn">import</span> <span class="n">StrategyLogger</span>
-<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 
 
 <div class="viewcode-block" id="WandBLogger"><a class="viewcode-back" href="../../../../autoapi/avalanche/logging/wandb_logger/#avalanche.logging.WandBLogger">[docs]</a><span class="k">class</span> <span class="nc">WandBLogger</span><span class="p">(</span><span class="n">StrategyLogger</span><span class="p">):</span>
@@ -208,25 +216,49 @@
 <span class="sd">    The `WandBLogger` provides an easy integration with</span>
 <span class="sd">    Weights &amp; Biases logging. Each monitored metric is automatically</span>
 <span class="sd">    logged to a dedicated Weights &amp; Biases project dashboard.</span>
+
+<span class="sd">    External storage for W&amp;B Artifacts (for instance - AWS S3 and GCS</span>
+<span class="sd">    buckets) uri are supported.</span>
+
+<span class="sd">    The wandb log files are placed by default in &quot;./wandb/&quot; unless specified.</span>
+
+<span class="sd">    .. note::</span>
+<span class="sd">        TensorBoard can be synced on to the W&amp;B dedicated dashboard.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">project_name</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;Avalanche&quot;</span><span class="p">,</span> 
-                 <span class="n">run_name</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;Avalanche Test&quot;</span><span class="p">,</span> <span class="n">params</span><span class="p">:</span> <span class="nb">dict</span> <span class="o">=</span> <span class="kc">None</span><span class="p">):</span>
+                 <span class="n">run_name</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;Test&quot;</span><span class="p">,</span> <span class="n">log_artifacts</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
+                 <span class="n">path</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Path</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;Checkpoints&quot;</span><span class="p">,</span> 
+                 <span class="n">uri</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">sync_tfboard</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span> 
+                 <span class="n">save_code</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span> <span class="n">config</span><span class="p">:</span> <span class="nb">object</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> 
+                 <span class="nb">dir</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Path</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">params</span><span class="p">:</span> <span class="nb">dict</span> <span class="o">=</span> <span class="kc">None</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Creates an instance of the `WandBLogger`.</span>
-
-<span class="sd">        :param project_name: Name of the W&amp;B project.:</span>
-<span class="sd">        :param run_name: Name of the W&amp;B run.:</span>
+<span class="sd">        :param project_name: Name of the W&amp;B project.</span>
+<span class="sd">        :param run_name: Name of the W&amp;B run.</span>
+<span class="sd">        :param log_artifacts: Option to log model weights as W&amp;B Artifacts.</span>
+<span class="sd">        :param path: Path to locally save the model checkpoints.</span>
+<span class="sd">        :param uri: URI identifier for external storage buckets (GCS, S3).</span>
+<span class="sd">        :param sync_tfboard: Syncs TensorBoard to the W&amp;B dashboard UI.</span>
+<span class="sd">        :param save_code: Saves the main training script to W&amp;B. </span>
+<span class="sd">        :param config: Syncs hyper-parameters and config values used to W&amp;B.</span>
+<span class="sd">        :param dir: Path to the local log directory for W&amp;B logs to be saved at.</span>
 <span class="sd">        :param params: All arguments for wandb.init() function call. </span>
 <span class="sd">         Visit https://docs.wandb.ai/ref/python/init to learn about all </span>
-<span class="sd">         wand.init() parameters.:</span>
+<span class="sd">         wand.init() parameters.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-
         <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">import_wandb</span><span class="p">()</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">params</span> <span class="o">=</span> <span class="n">params</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">project_name</span> <span class="o">=</span> <span class="n">project_name</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">run_name</span> <span class="o">=</span> <span class="n">run_name</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">log_artifacts</span> <span class="o">=</span> <span class="n">log_artifacts</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">path</span> <span class="o">=</span> <span class="n">path</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">uri</span> <span class="o">=</span> <span class="n">uri</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">sync_tfboard</span> <span class="o">=</span> <span class="n">sync_tfboard</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">save_code</span> <span class="o">=</span> <span class="n">save_code</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">config</span> <span class="o">=</span> <span class="n">config</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">dir</span> <span class="o">=</span> <span class="nb">dir</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">params</span> <span class="o">=</span> <span class="n">params</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">args_parse</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">before_run</span><span class="p">()</span>
 
@@ -239,7 +271,10 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">wandb</span> <span class="o">=</span> <span class="n">wandb</span></div>
 
 <div class="viewcode-block" id="WandBLogger.args_parse"><a class="viewcode-back" href="../../../../autoapi/avalanche/logging/wandb_logger/#avalanche.logging.WandBLogger.args_parse">[docs]</a>    <span class="k">def</span> <span class="nf">args_parse</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">init_kwargs</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;project&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">project_name</span><span class="p">,</span> <span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">run_name</span><span class="p">}</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">init_kwargs</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;project&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">project_name</span><span class="p">,</span> <span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">run_name</span><span class="p">,</span> 
+                            <span class="s2">&quot;sync_tensorboard&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">sync_tfboard</span><span class="p">,</span> 
+                            <span class="s2">&quot;dir&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">dir</span><span class="p">,</span> <span class="s2">&quot;save_code&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">save_code</span><span class="p">,</span> 
+                            <span class="s2">&quot;config&quot;</span><span class="p">:</span> <span class="nb">vars</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="p">)}</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">params</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">init_kwargs</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">params</span><span class="p">)</span></div>
 
@@ -249,7 +284,8 @@
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">init_kwargs</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">wandb</span><span class="o">.</span><span class="n">init</span><span class="p">(</span><span class="o">**</span><span class="bp">self</span><span class="o">.</span><span class="n">init_kwargs</span><span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">wandb</span><span class="o">.</span><span class="n">init</span><span class="p">()</span></div>
+            <span class="bp">self</span><span class="o">.</span><span class="n">wandb</span><span class="o">.</span><span class="n">init</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">wandb</span><span class="o">.</span><span class="n">run</span><span class="o">.</span><span class="n">_label</span><span class="p">(</span><span class="n">repo</span><span class="o">=</span><span class="s2">&quot;Avalanche&quot;</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="WandBLogger.log_metric"><a class="viewcode-back" href="../../../../autoapi/avalanche/logging/wandb_logger/#avalanche.logging.WandBLogger.log_metric">[docs]</a>    <span class="k">def</span> <span class="nf">log_metric</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">metric_value</span><span class="p">:</span> <span class="n">MetricValue</span><span class="p">,</span> <span class="n">callback</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
         <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">log_metric</span><span class="p">(</span><span class="n">metric_value</span><span class="p">,</span> <span class="n">callback</span><span class="p">)</span>
@@ -265,20 +301,41 @@
                                   <span class="bp">self</span><span class="o">.</span><span class="n">wandb</span><span class="o">.</span><span class="n">viz</span><span class="o">.</span><span class="n">CustomChart</span><span class="p">)):</span>
             <span class="c1"># Unsupported type</span>
             <span class="k">return</span>
-
+        
         <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="n">Image</span><span class="p">):</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">wandb</span><span class="o">.</span><span class="n">log</span><span class="p">({</span><span class="n">name</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">wandb</span><span class="o">.</span><span class="n">Image</span><span class="p">(</span><span class="n">value</span><span class="p">)})</span>
-
+        
         <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="n">Tensor</span><span class="p">):</span>
             <span class="n">value</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">histogram</span><span class="p">(</span><span class="n">value</span><span class="o">.</span><span class="n">view</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">numpy</span><span class="p">())</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">wandb</span><span class="o">.</span><span class="n">log</span><span class="p">({</span><span class="n">name</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">wandb</span><span class="o">.</span><span class="n">Histogram</span><span class="p">(</span><span class="n">np_histogram</span><span class="o">=</span><span class="n">value</span><span class="p">)})</span>
-
+        
         <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="p">(</span><span class="nb">float</span><span class="p">,</span> <span class="nb">int</span><span class="p">,</span> <span class="n">Figure</span><span class="p">,</span>
                                 <span class="bp">self</span><span class="o">.</span><span class="n">wandb</span><span class="o">.</span><span class="n">viz</span><span class="o">.</span><span class="n">CustomChart</span><span class="p">)):</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">wandb</span><span class="o">.</span><span class="n">log</span><span class="p">({</span><span class="n">name</span><span class="p">:</span> <span class="n">value</span><span class="p">})</span>
 
-        <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="n">TensorImage</span><span class="p">):</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">wandb</span><span class="o">.</span><span class="n">log</span><span class="p">({</span><span class="n">name</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">wandb</span><span class="o">.</span><span class="n">Image</span><span class="p">(</span><span class="n">array</span><span class="p">(</span><span class="n">value</span><span class="p">))})</span></div></div>
+        <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="n">TensorImage</span><span class="p">):</span>	
+            <span class="bp">self</span><span class="o">.</span><span class="n">wandb</span><span class="o">.</span><span class="n">log</span><span class="p">({</span><span class="n">name</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">wandb</span><span class="o">.</span><span class="n">Image</span><span class="p">(</span><span class="n">array</span><span class="p">(</span><span class="n">value</span><span class="p">))})</span>
+
+        <span class="k">elif</span> <span class="n">name</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s2">&quot;WeightCheckpoint&quot;</span><span class="p">):</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">log_artifacts</span><span class="p">:</span>
+                <span class="n">cwd</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">getcwd</span><span class="p">()</span>
+                <span class="n">ckpt</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">cwd</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">path</span><span class="p">)</span>
+                <span class="k">try</span><span class="p">:</span>
+                    <span class="n">os</span><span class="o">.</span><span class="n">makedirs</span><span class="p">(</span><span class="n">ckpt</span><span class="p">)</span>
+                <span class="k">except</span> <span class="ne">OSError</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+                    <span class="k">if</span> <span class="n">e</span><span class="o">.</span><span class="n">errno</span> <span class="o">!=</span> <span class="n">errno</span><span class="o">.</span><span class="n">EEXIST</span><span class="p">:</span>
+                        <span class="k">raise</span>
+                <span class="n">suffix</span> <span class="o">=</span> <span class="s1">&#39;.pth&#39;</span>
+                <span class="n">dir_name</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">ckpt</span><span class="p">,</span> <span class="n">name</span><span class="o">+</span><span class="n">suffix</span><span class="p">)</span>
+                <span class="n">artifact_name</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="s1">&#39;Models&#39;</span><span class="p">,</span> <span class="n">name</span><span class="o">+</span><span class="n">suffix</span><span class="p">)</span>
+                <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="n">Tensor</span><span class="p">):</span>
+                    <span class="n">torch</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="n">dir_name</span><span class="p">)</span>
+                    <span class="n">name</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">splittext</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">checkpoint</span><span class="p">)</span>
+                    <span class="n">artifact</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">wandb</span><span class="o">.</span><span class="n">Artifact</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="s1">&#39;model&#39;</span><span class="p">)</span>
+                    <span class="n">artifact</span><span class="o">.</span><span class="n">add_file</span><span class="p">(</span><span class="n">dir_name</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="n">artifact_name</span><span class="p">)</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">wandb</span><span class="o">.</span><span class="n">run</span><span class="o">.</span><span class="n">log_artifact</span><span class="p">(</span><span class="n">artifact</span><span class="p">)</span>
+                    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">uri</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                        <span class="n">artifact</span><span class="o">.</span><span class="n">add_reference</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">uri</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="n">artifact_name</span><span class="p">)</span></div></div>
 
 
 <span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span>

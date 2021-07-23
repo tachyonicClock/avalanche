@@ -199,6 +199,7 @@
 <span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Dict</span><span class="p">,</span> <span class="n">Sequence</span>
 
 <span class="kn">import</span> <span class="nn">torch</span>
+<span class="kn">from</span> <span class="nn">torch.utils.data</span> <span class="kn">import</span> <span class="n">RandomSampler</span>
 <span class="kn">from</span> <span class="nn">torch.utils.data.dataloader</span> <span class="kn">import</span> <span class="n">DataLoader</span>
 
 <span class="kn">from</span> <span class="nn">avalanche.benchmarks.utils</span> <span class="kn">import</span> <span class="n">AvalancheDataset</span>
@@ -343,6 +344,54 @@
 
 <div class="viewcode-block" id="GroupBalancedDataLoader.__len__"><a class="viewcode-back" href="../../../../../autoapi/avalanche/benchmarks/utils/data_loader/#avalanche.benchmarks.utils.data_loader.GroupBalancedDataLoader.__len__">[docs]</a>    <span class="k">def</span> <span class="fm">__len__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">max_len</span></div></div>
+
+
+<span class="k">class</span> <span class="nc">GroupBalancedInfiniteDataLoader</span><span class="p">:</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">datasets</span><span class="p">:</span> <span class="n">Sequence</span><span class="p">[</span><span class="n">AvalancheDataset</span><span class="p">],</span>
+                 <span class="n">collate_mbatches</span><span class="o">=</span><span class="n">_default_collate_mbatches_fn</span><span class="p">,</span>
+                 <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Data loader that balances data from multiple datasets emitting an</span>
+<span class="sd">        infinite stream.</span>
+
+<span class="sd">        Mini-batches emitted by this dataloader are created by collating</span>
+<span class="sd">        together mini-batches from each group. It may be used to balance data</span>
+<span class="sd">        among classes, experiences, tasks, and so on.</span>
+
+<span class="sd">        :param datasets: an instance of `AvalancheDataset`.</span>
+<span class="sd">        :param collate_mbatches: function that given a sequence of mini-batches</span>
+<span class="sd">            (one for each task) combines them into a single mini-batch. Used to</span>
+<span class="sd">            combine the mini-batches obtained separately from each task.</span>
+<span class="sd">        :param kwargs: data loader arguments used to instantiate the loader for</span>
+<span class="sd">            each group separately. See pytorch :class:`DataLoader`.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">datasets</span> <span class="o">=</span> <span class="n">datasets</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">dataloaders</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">collate_mbatches</span> <span class="o">=</span> <span class="n">collate_mbatches</span>
+
+        <span class="k">for</span> <span class="n">data</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">datasets</span><span class="p">:</span>
+            <span class="n">infinite_sampler</span> <span class="o">=</span> <span class="n">RandomSampler</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">replacement</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+                                             <span class="n">num_samples</span><span class="o">=</span><span class="mi">10</span> <span class="o">**</span> <span class="mi">10</span><span class="p">)</span>
+            <span class="n">dl</span> <span class="o">=</span> <span class="n">DataLoader</span><span class="p">(</span>
+                <span class="n">data</span><span class="p">,</span>
+                <span class="n">sampler</span><span class="o">=</span><span class="n">infinite_sampler</span><span class="p">,</span>
+                <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">dataloaders</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">dl</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">max_len</span> <span class="o">=</span> <span class="nb">max</span><span class="p">([</span><span class="nb">len</span><span class="p">(</span><span class="n">d</span><span class="p">)</span> <span class="k">for</span> <span class="n">d</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">dataloaders</span><span class="p">])</span>
+
+    <span class="k">def</span> <span class="fm">__iter__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">iter_dataloaders</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">dl</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">dataloaders</span><span class="p">:</span>
+            <span class="n">iter_dataloaders</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="nb">iter</span><span class="p">(</span><span class="n">dl</span><span class="p">))</span>
+
+        <span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
+            <span class="n">mb_curr</span> <span class="o">=</span> <span class="p">[]</span>
+            <span class="k">for</span> <span class="n">tid</span><span class="p">,</span> <span class="n">t_loader</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">iter_dataloaders</span><span class="p">):</span>
+                <span class="n">batch</span> <span class="o">=</span> <span class="nb">next</span><span class="p">(</span><span class="n">t_loader</span><span class="p">)</span>
+                <span class="n">mb_curr</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">batch</span><span class="p">)</span>
+            <span class="k">yield</span> <span class="bp">self</span><span class="o">.</span><span class="n">collate_mbatches</span><span class="p">(</span><span class="n">mb_curr</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="fm">__len__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">max_len</span>
 
 
 <div class="viewcode-block" id="ReplayDataLoader"><a class="viewcode-back" href="../../../../../autoapi/avalanche/benchmarks/utils/data_loader/#avalanche.benchmarks.utils.data_loader.ReplayDataLoader">[docs]</a><span class="k">class</span> <span class="nc">ReplayDataLoader</span><span class="p">:</span>

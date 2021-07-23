@@ -232,19 +232,19 @@ reference gradient.</p></li>
 <dl class="py method">
 <dt class="sig sig-object py" id="avalanche.training.plugins.agem.AGEMPlugin.after_training_exp">
 <span class="sig-name descname"><span class="pre">after_training_exp</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">strategy</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../_modules/avalanche/training/plugins/agem/#AGEMPlugin.after_training_exp"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.training.plugins.agem.AGEMPlugin.after_training_exp" title="Permalink to this definition">¶</a></dt>
-<dd><p>Save a copy of the model after each experience</p>
+<dd><p>Update replay memory with patterns from current experience.</p>
 </dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="avalanche.training.plugins.agem.AGEMPlugin.sample_from_memory">
-<span class="sig-name descname"><span class="pre">sample_from_memory</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sample_size</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../_modules/avalanche/training/plugins/agem/#AGEMPlugin.sample_from_memory"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.training.plugins.agem.AGEMPlugin.sample_from_memory" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">sample_from_memory</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../_modules/avalanche/training/plugins/agem/#AGEMPlugin.sample_from_memory"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.training.plugins.agem.AGEMPlugin.sample_from_memory" title="Permalink to this definition">¶</a></dt>
 <dd><p>Sample a minibatch from memory.
 Return a tuple of patterns (tensor), targets (tensor).</p>
 </dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="avalanche.training.plugins.agem.AGEMPlugin.update_memory">
-<span class="sig-name descname"><span class="pre">update_memory</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dataloader</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../_modules/avalanche/training/plugins/agem/#AGEMPlugin.update_memory"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.training.plugins.agem.AGEMPlugin.update_memory" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">update_memory</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dataset</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../_modules/avalanche/training/plugins/agem/#AGEMPlugin.update_memory"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.training.plugins.agem.AGEMPlugin.update_memory" title="Permalink to this definition">¶</a></dt>
 <dd><p>Update replay memory with patterns from current experience.</p>
 </dd></dl>
 

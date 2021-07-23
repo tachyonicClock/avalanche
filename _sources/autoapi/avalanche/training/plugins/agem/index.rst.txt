@@ -44,16 +44,16 @@ Classes
 
    .. method:: after_training_exp(self, strategy, **kwargs)
 
-      Save a copy of the model after each experience
+      Update replay memory with patterns from current experience. 
 
 
-   .. method:: sample_from_memory(self, sample_size)
+   .. method:: sample_from_memory(self)
 
       Sample a minibatch from memory.
       Return a tuple of patterns (tensor), targets (tensor).
 
 
-   .. method:: update_memory(self, dataloader)
+   .. method:: update_memory(self, dataset)
 
       Update replay memory with patterns from current experience.
 

@@ -17,7 +17,7 @@ Classes
 
 
 
-.. py:class:: SimpleMLP(num_classes=10, input_size=28 * 28, hidden_size=512, hidden_layers=1)
+.. py:class:: SimpleMLP(num_classes=10, input_size=28 * 28, hidden_size=512, hidden_layers=1, drop_rate=0.5)
 
    Bases: :class:`torch.nn.Module`
 

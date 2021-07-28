@@ -399,6 +399,7 @@
                  <span class="n">oversample_small_tasks</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
                  <span class="n">collate_mbatches</span><span class="o">=</span><span class="n">_default_collate_mbatches_fn</span><span class="p">,</span>
                  <span class="n">batch_size</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">32</span><span class="p">,</span>
+                 <span class="n">force_data_batch_size</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
                  <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot; Custom data loader for rehearsal strategies.</span>
 
@@ -420,6 +421,7 @@
 <span class="sd">            combine the mini-batches obtained separately from each task.</span>
 <span class="sd">        :param batch_size: the size of the batch. It must be greater than or</span>
 <span class="sd">            equal to the number of tasks.</span>
+<span class="sd">        :param ratio_data_mem: How many of the samples should be from</span>
 <span class="sd">        :param kwargs: data loader arguments used to instantiate the loader for</span>
 <span class="sd">            each task separately. See pytorch :class:`DataLoader`.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
@@ -431,20 +433,40 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">oversample_small_tasks</span> <span class="o">=</span> <span class="n">oversample_small_tasks</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">collate_mbatches</span> <span class="o">=</span> <span class="n">collate_mbatches</span>
 
-        <span class="n">num_keys</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">task_set</span><span class="p">)</span> <span class="o">+</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">memory</span><span class="o">.</span><span class="n">task_set</span><span class="p">)</span>
-        <span class="k">assert</span> <span class="n">batch_size</span> <span class="o">&gt;=</span> <span class="n">num_keys</span><span class="p">,</span> <span class="s2">&quot;Batch size must be greator or equal &quot;</span>\
-                                       <span class="s2">&quot;to the number of tasks in the memory &quot;</span> \
-                                       <span class="s2">&quot;and current data.&quot;</span>
+        <span class="k">if</span> <span class="n">force_data_batch_size</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">assert</span> <span class="n">force_data_batch_size</span> <span class="o">&lt;=</span> <span class="n">batch_size</span><span class="p">,</span> \
+                <span class="s2">&quot;Forced batch size of data must be &lt;= entire batch size&quot;</span>
 
-        <span class="n">single_group_batch_size</span> <span class="o">=</span> <span class="n">batch_size</span> <span class="o">//</span> <span class="n">num_keys</span>
-        <span class="n">remaining_example</span> <span class="o">=</span> <span class="n">batch_size</span> <span class="o">%</span> <span class="n">num_keys</span>
+            <span class="n">mem_batch_size</span> <span class="o">=</span> <span class="n">batch_size</span> <span class="o">-</span> <span class="n">force_data_batch_size</span>
+            <span class="n">remaining_example</span> <span class="o">=</span> <span class="mi">0</span>
+            <span class="n">mem_keys</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">memory</span><span class="o">.</span><span class="n">task_set</span><span class="p">)</span>
+            <span class="k">assert</span> <span class="n">mem_batch_size</span> <span class="o">&gt;=</span> <span class="n">mem_keys</span><span class="p">,</span> \
+                <span class="s2">&quot;Batch size must be greator or equal &quot;</span> \
+                <span class="s2">&quot;to the number of tasks in the memory.&quot;</span>
 
-        <span class="bp">self</span><span class="o">.</span><span class="n">loader_data</span><span class="p">,</span> <span class="n">remaining_example</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_create_dataloaders</span><span class="p">(</span>
-            <span class="n">data</span><span class="p">,</span> <span class="n">single_group_batch_size</span><span class="p">,</span>
-            <span class="n">remaining_example</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">loader_memory</span><span class="p">,</span> <span class="n">remaining_example</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_create_dataloaders</span><span class="p">(</span>
-            <span class="n">memory</span><span class="p">,</span> <span class="n">single_group_batch_size</span><span class="p">,</span>
-            <span class="n">remaining_example</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">loader_data</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_create_dataloaders</span><span class="p">(</span>
+                <span class="n">data</span><span class="p">,</span> <span class="n">force_data_batch_size</span><span class="p">,</span>
+                <span class="n">remaining_example</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">loader_memory</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_create_dataloaders</span><span class="p">(</span>
+                <span class="n">memory</span><span class="p">,</span> <span class="n">mem_batch_size</span><span class="p">,</span>
+                <span class="n">remaining_example</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">num_keys</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">task_set</span><span class="p">)</span> <span class="o">+</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">memory</span><span class="o">.</span><span class="n">task_set</span><span class="p">)</span>
+            <span class="k">assert</span> <span class="n">batch_size</span> <span class="o">&gt;=</span> <span class="n">num_keys</span><span class="p">,</span> \
+                <span class="s2">&quot;Batch size must be greator or equal &quot;</span> \
+                <span class="s2">&quot;to the number of tasks in the memory &quot;</span> \
+                <span class="s2">&quot;and current data.&quot;</span>
+
+            <span class="n">single_group_batch_size</span> <span class="o">=</span> <span class="n">batch_size</span> <span class="o">//</span> <span class="n">num_keys</span>
+            <span class="n">remaining_example</span> <span class="o">=</span> <span class="n">batch_size</span> <span class="o">%</span> <span class="n">num_keys</span>
+
+            <span class="bp">self</span><span class="o">.</span><span class="n">loader_data</span><span class="p">,</span> <span class="n">remaining_example</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_create_dataloaders</span><span class="p">(</span>
+                <span class="n">data</span><span class="p">,</span> <span class="n">single_group_batch_size</span><span class="p">,</span>
+                <span class="n">remaining_example</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">loader_memory</span><span class="p">,</span> <span class="n">remaining_example</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_create_dataloaders</span><span class="p">(</span>
+                <span class="n">memory</span><span class="p">,</span> <span class="n">single_group_batch_size</span><span class="p">,</span>
+                <span class="n">remaining_example</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+
         <span class="bp">self</span><span class="o">.</span><span class="n">max_len</span> <span class="o">=</span> <span class="nb">max</span><span class="p">([</span><span class="nb">len</span><span class="p">(</span><span class="n">d</span><span class="p">)</span> <span class="k">for</span> <span class="n">d</span> <span class="ow">in</span> <span class="n">chain</span><span class="p">(</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">loader_data</span><span class="o">.</span><span class="n">values</span><span class="p">(),</span> <span class="bp">self</span><span class="o">.</span><span class="n">loader_memory</span><span class="o">.</span><span class="n">values</span><span class="p">())]</span>
                            <span class="p">)</span>

@@ -18,7 +18,7 @@ Classes
 
 
 
-.. py:class:: CoPEPlugin(mem_size=200, n_classes=10, p_size=100, alpha=0.99, T=0.1)
+.. py:class:: CoPEPlugin(mem_size=200, n_classes=10, p_size=100, alpha=0.99, T=0.1, max_it_cnt=1)
 
    Bases: :class:`avalanche.training.plugins.strategy_plugin.StrategyPlugin`
 
@@ -41,6 +41,7 @@ Classes
    :param alpha: The momentum for the exponentially moving average of the
    prototypes.
    :param T: The softmax temperature, used as a concentration parameter.
+   :param max_it_cnt: How many processing iterations per batch (experience)
 
    .. method:: before_training(self, strategy, **kwargs)
 
@@ -52,6 +53,17 @@ Classes
       Random retrieval from a class-balanced memory.
       Dataloader builds batches containing examples from both memories and
       the training dataset.
+      This implementation requires the use of early stopping, otherwise the
+      entire memory will be iterated.
+
+
+   .. method:: after_training_iteration(self, strategy, **kwargs)
+
+      Implements early stopping, determining how many subsequent times a
+      batch can be used for updates. The dataloader contains only data for
+      the current experience (batch) and the entire memory.
+      Multiple iterations will hence result in the original batch with new
+      exemplars sampled from the memory for each iteration.
 
 
    .. method:: after_forward(self, strategy, **kwargs)

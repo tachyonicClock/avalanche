@@ -1189,7 +1189,7 @@ added.</p>
 
 <dl class="py class">
 <dt class="sig sig-object py" id="avalanche.training.plugins.CoPEPlugin">
-<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">avalanche.training.plugins.</span></span><span class="sig-name descname"><span class="pre">CoPEPlugin</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">mem_size</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">200</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n_classes</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">10</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">p_size</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">100</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">alpha</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.99</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">T</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.1</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/avalanche/training/plugins/cope/#CoPEPlugin"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.training.plugins.CoPEPlugin" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">avalanche.training.plugins.</span></span><span class="sig-name descname"><span class="pre">CoPEPlugin</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">mem_size</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">200</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n_classes</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">10</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">p_size</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">100</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">alpha</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.99</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">T</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">max_it_cnt</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/avalanche/training/plugins/cope/#CoPEPlugin"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.training.plugins.CoPEPlugin" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="strategy_plugin/#avalanche.training.plugins.strategy_plugin.StrategyPlugin" title="avalanche.training.plugins.strategy_plugin.StrategyPlugin"><code class="xref py py-class docutils literal notranslate"><span class="pre">avalanche.training.plugins.strategy_plugin.StrategyPlugin</span></code></a></p>
 <p>Continual Prototype Evolution plugin.
 Each class has a prototype for nearest-neighbor classification.
@@ -1213,7 +1213,8 @@ for unseen classes.
 last layer.
 :param alpha: The momentum for the exponentially moving average of the
 prototypes.
-:param T: The softmax temperature, used as a concentration parameter.</p>
+:param T: The softmax temperature, used as a concentration parameter.
+:param max_it_cnt: How many processing iterations per batch (experience)</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="avalanche.training.plugins.CoPEPlugin.before_training">
 <span class="sig-name descname"><span class="pre">before_training</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">strategy</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/avalanche/training/plugins/cope/#CoPEPlugin.before_training"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.training.plugins.CoPEPlugin.before_training" title="Permalink to this definition">¶</a></dt>
@@ -1225,7 +1226,19 @@ prototypes.
 <span class="sig-name descname"><span class="pre">before_training_exp</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">strategy</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">num_workers</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">shuffle</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/avalanche/training/plugins/cope/#CoPEPlugin.before_training_exp"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.training.plugins.CoPEPlugin.before_training_exp" title="Permalink to this definition">¶</a></dt>
 <dd><p>Random retrieval from a class-balanced memory.
 Dataloader builds batches containing examples from both memories and
-the training dataset.</p>
+the training dataset.
+This implementation requires the use of early stopping, otherwise the
+entire memory will be iterated.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="avalanche.training.plugins.CoPEPlugin.after_training_iteration">
+<span class="sig-name descname"><span class="pre">after_training_iteration</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">strategy</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/avalanche/training/plugins/cope/#CoPEPlugin.after_training_iteration"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#avalanche.training.plugins.CoPEPlugin.after_training_iteration" title="Permalink to this definition">¶</a></dt>
+<dd><p>Implements early stopping, determining how many subsequent times a
+batch can be used for updates. The dataloader contains only data for
+the current experience (batch) and the entire memory.
+Multiple iterations will hence result in the original batch with new
+exemplars sampled from the memory for each iteration.</p>
 </dd></dl>
 
 <dl class="py method">

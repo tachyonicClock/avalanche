@@ -83,7 +83,7 @@ Classes
 
 
 
-.. py:class:: ReplayDataLoader(data: AvalancheDataset, memory: AvalancheDataset = None, oversample_small_tasks: bool = False, collate_mbatches=_default_collate_mbatches_fn, batch_size: int = 32, **kwargs)
+.. py:class:: ReplayDataLoader(data: AvalancheDataset, memory: AvalancheDataset = None, oversample_small_tasks: bool = False, collate_mbatches=_default_collate_mbatches_fn, batch_size: int = 32, force_data_batch_size: int = None, **kwargs)
 
    Custom data loader for rehearsal strategies.
 
@@ -105,6 +105,7 @@ Classes
        combine the mini-batches obtained separately from each task.
    :param batch_size: the size of the batch. It must be greater than or
        equal to the number of tasks.
+   :param ratio_data_mem: How many of the samples should be from
    :param kwargs: data loader arguments used to instantiate the loader for
        each task separately. See pytorch :class:`DataLoader`.
 

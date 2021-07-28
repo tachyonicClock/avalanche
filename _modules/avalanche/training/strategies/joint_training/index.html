@@ -205,6 +205,10 @@
     <span class="kn">from</span> <span class="nn">avalanche.training.plugins</span> <span class="kn">import</span> <span class="n">StrategyPlugin</span>
 
 
+<span class="k">class</span> <span class="nc">AlreadyTrainedError</span><span class="p">(</span><span class="ne">Exception</span><span class="p">):</span>
+    <span class="k">pass</span>
+
+
 <div class="viewcode-block" id="JointTraining"><a class="viewcode-back" href="../../../../../autoapi/avalanche/training/strategies/joint_training/#avalanche.training.JointTraining">[docs]</a><span class="k">class</span> <span class="nc">JointTraining</span><span class="p">(</span><span class="n">BaseStrategy</span><span class="p">):</span>
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">model</span><span class="p">:</span> <span class="n">Module</span><span class="p">,</span> <span class="n">optimizer</span><span class="p">:</span> <span class="n">Optimizer</span><span class="p">,</span> <span class="n">criterion</span><span class="p">,</span>
                  <span class="n">train_mb_size</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span> <span class="n">train_epochs</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span>
@@ -236,6 +240,8 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">optimizer</span><span class="p">,</span> <span class="n">criterion</span><span class="p">,</span> <span class="n">train_mb_size</span><span class="p">,</span>
                          <span class="n">train_epochs</span><span class="p">,</span> <span class="n">eval_mb_size</span><span class="p">,</span> <span class="n">device</span><span class="p">,</span> <span class="n">plugins</span><span class="p">,</span> <span class="n">evaluator</span><span class="p">)</span>
+        <span class="c1"># JointTraining can be trained only once.</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_is_fitted</span> <span class="o">=</span> <span class="kc">False</span>
 
 <div class="viewcode-block" id="JointTraining.train"><a class="viewcode-back" href="../../../../../autoapi/avalanche/training/strategies/joint_training/#avalanche.training.JointTraining.train">[docs]</a>    <span class="k">def</span> <span class="nf">train</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">experiences</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">Experience</span><span class="p">,</span> <span class="n">Sequence</span><span class="p">[</span><span class="n">Experience</span><span class="p">]],</span>
               <span class="n">eval_streams</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Sequence</span><span class="p">[</span><span class="n">Union</span><span class="p">[</span><span class="n">Experience</span><span class="p">,</span>
@@ -259,6 +265,12 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">train</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">device</span><span class="p">)</span>
 
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_is_fitted</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">AlreadyTrainedError</span><span class="p">(</span>
+                <span class="s2">&quot;JointTraining can be trained only once. &quot;</span>
+                <span class="s2">&quot;Please call the train method once on the entire stream.&quot;</span>
+            <span class="p">)</span>
+
         <span class="c1"># Normalize training and eval data.</span>
         <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">experiences</span><span class="p">,</span> <span class="n">Experience</span><span class="p">):</span>
             <span class="n">experiences</span> <span class="o">=</span> <span class="p">[</span><span class="n">experiences</span><span class="p">]</span>
@@ -278,12 +290,13 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">after_training</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
 
         <span class="n">res</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">evaluator</span><span class="o">.</span><span class="n">get_last_metrics</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_is_fitted</span> <span class="o">=</span> <span class="kc">True</span>
         <span class="k">return</span> <span class="n">res</span></div>
 
 <div class="viewcode-block" id="JointTraining.train_dataset_adaptation"><a class="viewcode-back" href="../../../../../autoapi/avalanche/training/strategies/joint_training/#avalanche.training.JointTraining.train_dataset_adaptation">[docs]</a>    <span class="k">def</span> <span class="nf">train_dataset_adaptation</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot; Concatenates all the datastream. &quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">adapted_dataset</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_experiences</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">dataset</span>
-        <span class="k">for</span> <span class="n">exp</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_experiences</span><span class="p">:</span>
+        <span class="k">for</span> <span class="n">exp</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_experiences</span><span class="p">[</span><span class="mi">1</span><span class="p">:]:</span>
             <span class="n">cat_data</span> <span class="o">=</span> <span class="n">AvalancheConcatDataset</span><span class="p">([</span><span class="bp">self</span><span class="o">.</span><span class="n">adapted_dataset</span><span class="p">,</span>
                                                <span class="n">exp</span><span class="o">.</span><span class="n">dataset</span><span class="p">])</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">adapted_dataset</span> <span class="o">=</span> <span class="n">cat_data</span>

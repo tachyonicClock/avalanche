@@ -72,9 +72,10 @@ Classes
        training loop.
            if -1: no evaluation during training.
            if  0: calls `eval` after the final epoch of each training
-               experience.
-           if >0: calls `eval` every `eval_every` epochs and at the end
-               of all the epochs for a single experience.
+               experience and before training on the first experience.
+           if >0: calls `eval` every `eval_every` epochs, at the end
+               of all the epochs for a single experience and before
+               training on the first experience.
 
    .. attribute:: DISABLED_CALLBACKS
       :annotation: :Sequence[str] = []

@@ -16,7 +16,7 @@ Classes
 
 
 
-.. py:class:: EvaluationPlugin(*metrics: Union['PluginMetric', Sequence['PluginMetric']], loggers: Union['StrategyLogger', Sequence['StrategyLogger']] = None, collect_all=True, benchmark=None, strict_checks=False)
+.. py:class:: EvaluationPlugin(*metrics: Union['PluginMetric', Sequence['PluginMetric']], loggers: Union['StrategyLogger', Sequence['StrategyLogger']] = None, collect_all=True, benchmark=None, strict_checks=False, suppress_warnings=False)
 
    Bases: :class:`avalanche.training.plugins.strategy_plugin.StrategyPlugin`
 
@@ -46,6 +46,10 @@ Classes
        In this case, only full evaluation streams are admitted when
        calling `eval`. An error will be raised otherwise. When False,
        `benchmark` can be `None` and only warnings will be raised.
+   :param suppress_warnings: if True, warnings and errors will never be
+       raised from the plugin.
+       If False, warnings and errors will be raised following
+       `benchmark` and `strict_checks` behavior.
 
    .. method:: active(self)
       :property:

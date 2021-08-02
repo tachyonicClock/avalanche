@@ -280,9 +280,10 @@
 <span class="sd">            training loop.</span>
 <span class="sd">                if -1: no evaluation during training.</span>
 <span class="sd">                if  0: calls `eval` after the final epoch of each training</span>
-<span class="sd">                    experience.</span>
-<span class="sd">                if &gt;0: calls `eval` every `eval_every` epochs and at the end</span>
-<span class="sd">                    of all the epochs for a single experience.</span>
+<span class="sd">                    experience and before training on the first experience.</span>
+<span class="sd">                if &gt;0: calls `eval` every `eval_every` epochs, at the end</span>
+<span class="sd">                    of all the epochs for a single experience and before</span>
+<span class="sd">                    training on the first experience.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_criterion</span> <span class="o">=</span> <span class="n">criterion</span>
 
@@ -421,6 +422,9 @@
             <span class="n">eval_streams</span> <span class="o">=</span> <span class="p">[</span><span class="n">experiences</span><span class="p">]</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">before_training</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">_periodic_eval</span><span class="p">(</span><span class="n">eval_streams</span><span class="p">,</span> <span class="n">do_final</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">do_initial</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
         <span class="k">for</span> <span class="bp">self</span><span class="o">.</span><span class="n">experience</span> <span class="ow">in</span> <span class="n">experiences</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">train_exp</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">experience</span><span class="p">,</span> <span class="n">eval_streams</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">after_training</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
@@ -480,7 +484,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">_periodic_eval</span><span class="p">(</span><span class="n">eval_streams</span><span class="p">,</span> <span class="n">do_final</span><span class="o">=</span><span class="n">do_final</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">after_training_exp</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></div>
 
-    <span class="k">def</span> <span class="nf">_periodic_eval</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">eval_streams</span><span class="p">,</span> <span class="n">do_final</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">_periodic_eval</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">eval_streams</span><span class="p">,</span> <span class="n">do_final</span><span class="p">,</span> <span class="n">do_initial</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot; Periodic eval controlled by `self.eval_every`. &quot;&quot;&quot;</span>
         <span class="c1"># Since we are switching from train to eval model inside the training</span>
         <span class="c1"># loop, we need to save the training state, and restore it after the</span>
@@ -492,8 +496,9 @@
             <span class="bp">self</span><span class="o">.</span><span class="n">dataloader</span><span class="p">,</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">is_training</span><span class="p">)</span>
 
-        <span class="k">if</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">eval_every</span> <span class="o">==</span> <span class="mi">0</span> <span class="ow">and</span> <span class="n">do_final</span><span class="p">)</span> <span class="ow">or</span> \
-           <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">eval_every</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">epoch</span> <span class="o">%</span> <span class="bp">self</span><span class="o">.</span><span class="n">eval_every</span> <span class="o">==</span> <span class="mi">0</span><span class="p">):</span>
+        <span class="k">if</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">eval_every</span> <span class="o">==</span> <span class="mi">0</span> <span class="ow">and</span> <span class="p">(</span><span class="n">do_final</span> <span class="ow">or</span> <span class="n">do_initial</span><span class="p">))</span> <span class="ow">or</span> \
+           <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">eval_every</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="ow">and</span> <span class="n">do_initial</span><span class="p">)</span> <span class="ow">or</span> \
+                <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">eval_every</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">epoch</span> <span class="o">%</span> <span class="bp">self</span><span class="o">.</span><span class="n">eval_every</span> <span class="o">==</span> <span class="mi">0</span><span class="p">):</span>
             <span class="c1"># in the first case we are outside epoch loop</span>
             <span class="c1"># in the second case we are within epoch loop</span>
             <span class="k">for</span> <span class="n">exp</span> <span class="ow">in</span> <span class="n">eval_streams</span><span class="p">:</span>

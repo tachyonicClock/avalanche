@@ -1,0 +1,648 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>avalanche.evaluation.metrics.forward_transfer &mdash; Avalanche 0.1 documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="../../../../../_static/css/mystyle.css" type="text/css" />
+  <link rel="stylesheet" href="../../../../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../../../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../../../../_static/css/mystyle.css" type="text/css" />
+  <link rel="stylesheet" href="../../../../../_static/graphviz.css" type="text/css" />
+
+  
+  
+
+  
+  
+
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../../../../" src="../../../../../_static/documentation_options.js"></script>
+        <script data-url_root="../../../../../" id="documentation_options" src="../../../../../_static/documentation_options.js"></script>
+        <script src="../../../../../_static/jquery.js"></script>
+        <script src="../../../../../_static/underscore.js"></script>
+        <script src="../../../../../_static/doctools.js"></script>
+    
+    <script type="text/javascript" src="../../../../../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="../../../../../genindex/" />
+    <link rel="search" title="Search" href="../../../../../search/" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../../../../">
+          
+
+          
+            
+            <img src="../../../../../_static/avalanche_logo.png" class="logo" alt="Logo"/>
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../../../search/" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption" role="heading"><span class="caption-text">Avalanche API:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../autoapi/">API Reference</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../autoapi/avalanche/"><code class="xref py py-mod docutils literal notranslate"><span class="pre">avalanche</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../../../autoapi/avalanche/#subpackages">Subpackages</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../../../autoapi/avalanche/benchmarks/"><code class="xref py py-mod docutils literal notranslate"><span class="pre">avalanche.benchmarks</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../../autoapi/avalanche/evaluation/"><code class="xref py py-mod docutils literal notranslate"><span class="pre">avalanche.evaluation</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../../autoapi/avalanche/logging/"><code class="xref py py-mod docutils literal notranslate"><span class="pre">avalanche.logging</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../../autoapi/avalanche/models/"><code class="xref py py-mod docutils literal notranslate"><span class="pre">avalanche.models</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../../autoapi/avalanche/training/"><code class="xref py py-mod docutils literal notranslate"><span class="pre">avalanche.training</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../../autoapi/avalanche/#submodules">Submodules</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../../../autoapi/avalanche/core/"><code class="xref py py-mod docutils literal notranslate"><span class="pre">avalanche.core</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../../autoapi/avalanche/#package-contents">Package Contents</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../../../autoapi/avalanche/#avalanche.__version__">__version__</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../../../">Avalanche</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../../../../" class="icon icon-home"></a> &raquo;</li>
+        
+          <li><a href="../../../../">Module code</a> &raquo;</li>
+        
+      <li>avalanche.evaluation.metrics.forward_transfer</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for avalanche.evaluation.metrics.forward_transfer</h1><div class="highlight"><pre>
+<span></span><span class="c1">################################################################################</span>
+<span class="c1"># Copyright (c) 2021 ContinualAI.                                              #</span>
+<span class="c1"># Copyrights licensed under the MIT License.                                   #</span>
+<span class="c1"># See the accompanying LICENSE file for terms.                                 #</span>
+<span class="c1">#                                                                              #</span>
+<span class="c1"># Date: 4-02-2021                                                              #</span>
+<span class="c1"># Author(s): Ryan Lindeborg, Andrea Cossu                                      #</span>
+<span class="c1"># E-mail: contact@continualai.org                                              #</span>
+<span class="c1"># Website: avalanche.continualai.org                                           #</span>
+<span class="c1">################################################################################</span>
+
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Dict</span><span class="p">,</span> <span class="n">TYPE_CHECKING</span><span class="p">,</span> <span class="n">Union</span>
+
+<span class="kn">from</span> <span class="nn">avalanche.evaluation.metric_definitions</span> <span class="kn">import</span> <span class="n">Metric</span><span class="p">,</span> <span class="n">PluginMetric</span>
+<span class="kn">from</span> <span class="nn">avalanche.evaluation.metric_results</span> <span class="kn">import</span> <span class="n">MetricValue</span><span class="p">,</span> <span class="n">MetricResult</span>
+<span class="kn">from</span> <span class="nn">avalanche.evaluation.metrics</span> <span class="kn">import</span> <span class="n">Accuracy</span><span class="p">,</span> <span class="n">Mean</span>
+<span class="kn">from</span> <span class="nn">avalanche.evaluation.metric_utils</span> <span class="kn">import</span> <span class="n">get_metric_name</span><span class="p">,</span> \
+    <span class="n">phase_and_task</span><span class="p">,</span> <span class="n">stream_type</span>
+
+<span class="k">if</span> <span class="n">TYPE_CHECKING</span><span class="p">:</span>
+    <span class="kn">from</span> <span class="nn">avalanche.training</span> <span class="kn">import</span> <span class="n">BaseStrategy</span>
+
+
+<div class="viewcode-block" id="ForwardTransfer"><a class="viewcode-back" href="../../../../../autoapi/avalanche/evaluation/metrics/forward_transfer/#avalanche.evaluation.metrics.forward_transfer.ForwardTransfer">[docs]</a><span class="k">class</span> <span class="nc">ForwardTransfer</span><span class="p">(</span><span class="n">Metric</span><span class="p">[</span><span class="n">Union</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">float</span><span class="p">]]]):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        The standalone Forward Transfer metric.</span>
+<span class="sd">        This metric returns the forward transfer relative to a specific key.</span>
+<span class="sd">        Alternatively, this metric returns a dict in which each key is</span>
+<span class="sd">        associated to the forward transfer.</span>
+<span class="sd">        Forward transfer is computed as the difference between the value</span>
+<span class="sd">        recorded for a specific key after the previous experience has</span>
+<span class="sd">        been trained on, and random initialization before training.</span>
+<span class="sd">        The value associated to a key can be updated with the `update` method.</span>
+
+<span class="sd">        At initialization, this metric returns an empty dictionary.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Creates an instance of the standalone Forward Transfer metric</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">initial</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">float</span><span class="p">]</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">()</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        The initial value for each key. This is the accuracy at </span>
+<span class="sd">        random initialization.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">previous</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">float</span><span class="p">]</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">()</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        The previous experience value detected for each key</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+<div class="viewcode-block" id="ForwardTransfer.update_initial"><a class="viewcode-back" href="../../../../../autoapi/avalanche/evaluation/metrics/forward_transfer/#avalanche.evaluation.metrics.forward_transfer.ForwardTransfer.update_initial">[docs]</a>    <span class="k">def</span> <span class="nf">update_initial</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">initial</span><span class="p">[</span><span class="n">k</span><span class="p">]</span> <span class="o">=</span> <span class="n">v</span></div>
+
+<div class="viewcode-block" id="ForwardTransfer.update_previous"><a class="viewcode-back" href="../../../../../autoapi/avalanche/evaluation/metrics/forward_transfer/#avalanche.evaluation.metrics.forward_transfer.ForwardTransfer.update_previous">[docs]</a>    <span class="k">def</span> <span class="nf">update_previous</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">previous</span><span class="p">[</span><span class="n">k</span><span class="p">]</span> <span class="o">=</span> <span class="n">v</span></div>
+
+<div class="viewcode-block" id="ForwardTransfer.update"><a class="viewcode-back" href="../../../../../autoapi/avalanche/evaluation/metrics/forward_transfer/#avalanche.evaluation.metrics.forward_transfer.ForwardTransfer.update">[docs]</a>    <span class="k">def</span> <span class="nf">update</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span><span class="p">,</span> <span class="n">initial</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">initial</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">update_initial</span><span class="p">(</span><span class="n">k</span><span class="p">,</span> <span class="n">v</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">update_previous</span><span class="p">(</span><span class="n">k</span><span class="p">,</span> <span class="n">v</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="ForwardTransfer.result"><a class="viewcode-back" href="../../../../../autoapi/avalanche/evaluation/metrics/forward_transfer/#avalanche.evaluation.metrics.forward_transfer.ForwardTransfer.result">[docs]</a>    <span class="k">def</span> <span class="nf">result</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">k</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Union</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">float</span><span class="p">]]:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        :param k: the key for which returning forward transfer. If k is None,</span>
+<span class="sd">            forward transfer will be returned for all keys</span>
+<span class="sd">            where the previous experience has been trained on.</span>
+
+<span class="sd">        :return: the difference between the key value after training on the</span>
+<span class="sd">            previous experience, and the key at random initialization.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="n">forward_transfer</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="k">if</span> <span class="n">k</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">k</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">previous</span><span class="p">:</span>
+                <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">previous</span><span class="p">[</span><span class="n">k</span><span class="p">]</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">initial</span><span class="p">[</span><span class="n">k</span><span class="p">]</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">return</span> <span class="kc">None</span>
+
+        <span class="n">previous_keys</span> <span class="o">=</span> <span class="nb">set</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">previous</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span>
+        <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="n">previous_keys</span><span class="p">:</span>
+            <span class="n">forward_transfer</span><span class="p">[</span><span class="n">k</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">previous</span><span class="p">[</span><span class="n">k</span><span class="p">]</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">initial</span><span class="p">[</span><span class="n">k</span><span class="p">]</span>
+
+        <span class="k">return</span> <span class="n">forward_transfer</span></div>
+
+<div class="viewcode-block" id="ForwardTransfer.reset"><a class="viewcode-back" href="../../../../../autoapi/avalanche/evaluation/metrics/forward_transfer/#avalanche.evaluation.metrics.forward_transfer.ForwardTransfer.reset">[docs]</a>    <span class="k">def</span> <span class="nf">reset</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">previous</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">float</span><span class="p">]</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">()</span></div></div>
+
+
+<div class="viewcode-block" id="GenericExperienceForwardTransfer"><a class="viewcode-back" href="../../../../../autoapi/avalanche/evaluation/metrics/forward_transfer/#avalanche.evaluation.metrics.forward_transfer.GenericExperienceForwardTransfer">[docs]</a><span class="k">class</span> <span class="nc">GenericExperienceForwardTransfer</span><span class="p">(</span><span class="n">PluginMetric</span><span class="p">[</span><span class="n">Dict</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">float</span><span class="p">]]):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    The GenericExperienceForwardMetric metric, describing the forward transfer</span>
+<span class="sd">    detected after a certain experience. The user should</span>
+<span class="sd">    subclass this and provide the desired metric.</span>
+
+<span class="sd">    In particular, the user should override:</span>
+<span class="sd">    * __init__ by calling `super` and instantiating the `self.current_metric`</span>
+<span class="sd">    property as a valid avalanche metric</span>
+<span class="sd">    * `metric_update`, to update `current_metric`</span>
+<span class="sd">    * `metric_result` to get the result from `current_metric`.</span>
+<span class="sd">    * `__str__` to define the experience forward transfer  name.</span>
+
+<span class="sd">    This metric is computed during the eval phase only.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Creates an instance of the GenericExperienceForwardTransfer metric.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">forward_transfer</span> <span class="o">=</span> <span class="n">ForwardTransfer</span><span class="p">()</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        The general metric to compute forward transfer</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">_current_metric</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        The metric the user should override</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">eval_exp_id</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        The current evaluation experience id</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">train_exp_id</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        The last encountered training experience id</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">at_init</span> <span class="o">=</span> <span class="kc">True</span>
+
+<div class="viewcode-block" id="GenericExperienceForwardTransfer.reset"><a class="viewcode-back" href="../../../../../autoapi/avalanche/evaluation/metrics/forward_transfer/#avalanche.evaluation.metrics.forward_transfer.GenericExperienceForwardTransfer.reset">[docs]</a>    <span class="k">def</span> <span class="nf">reset</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Resets the metric.</span>
+
+<span class="sd">        Note that this will reset the previous and initial accuracy of each</span>
+<span class="sd">        experience.</span>
+
+<span class="sd">        :return: None.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">forward_transfer</span><span class="o">.</span><span class="n">reset</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="GenericExperienceForwardTransfer.update"><a class="viewcode-back" href="../../../../../autoapi/avalanche/evaluation/metrics/forward_transfer/#avalanche.evaluation.metrics.forward_transfer.GenericExperienceForwardTransfer.update">[docs]</a>    <span class="k">def</span> <span class="nf">update</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span><span class="p">,</span> <span class="n">initial</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Update forward transfer metric.</span>
+<span class="sd">        See `ForwardTransfer` for more detailed information.</span>
+
+<span class="sd">        :param k: key to update</span>
+<span class="sd">        :param v: value associated to k</span>
+<span class="sd">        :param initial: update initial value. If False, update</span>
+<span class="sd">            previous value.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">forward_transfer</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">k</span><span class="p">,</span> <span class="n">v</span><span class="p">,</span> <span class="n">initial</span><span class="o">=</span><span class="n">initial</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="GenericExperienceForwardTransfer.result"><a class="viewcode-back" href="../../../../../autoapi/avalanche/evaluation/metrics/forward_transfer/#avalanche.evaluation.metrics.forward_transfer.GenericExperienceForwardTransfer.result">[docs]</a>    <span class="k">def</span> <span class="nf">result</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">k</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Union</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">float</span><span class="p">]]:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Result for experience defined by a key.</span>
+<span class="sd">        See `ForwardTransfer` documentation for more detailed information.</span>
+
+<span class="sd">        k: optional key from which to compute forward transfer.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">forward_transfer</span><span class="o">.</span><span class="n">result</span><span class="p">(</span><span class="n">k</span><span class="o">=</span><span class="n">k</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="GenericExperienceForwardTransfer.before_training_exp"><a class="viewcode-back" href="../../../../../autoapi/avalanche/evaluation/metrics/forward_transfer/#avalanche.evaluation.metrics.forward_transfer.GenericExperienceForwardTransfer.before_training_exp">[docs]</a>    <span class="k">def</span> <span class="nf">before_training_exp</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">strategy</span><span class="p">:</span> <span class="s1">&#39;BaseStrategy&#39;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">train_exp_id</span> <span class="o">=</span> <span class="n">strategy</span><span class="o">.</span><span class="n">experience</span><span class="o">.</span><span class="n">current_experience</span></div>
+
+<div class="viewcode-block" id="GenericExperienceForwardTransfer.after_eval"><a class="viewcode-back" href="../../../../../autoapi/avalanche/evaluation/metrics/forward_transfer/#avalanche.evaluation.metrics.forward_transfer.GenericExperienceForwardTransfer.after_eval">[docs]</a>    <span class="k">def</span> <span class="nf">after_eval</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">strategy</span><span class="p">):</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">at_init</span><span class="p">:</span>
+            <span class="k">assert</span> <span class="n">strategy</span><span class="o">.</span><span class="n">eval_every</span> <span class="o">&gt;</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> \
+                <span class="s2">&quot;eval every &gt; -1 to compute forward transfer&quot;</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">at_init</span> <span class="o">=</span> <span class="kc">False</span></div>
+
+<div class="viewcode-block" id="GenericExperienceForwardTransfer.before_eval_exp"><a class="viewcode-back" href="../../../../../autoapi/avalanche/evaluation/metrics/forward_transfer/#avalanche.evaluation.metrics.forward_transfer.GenericExperienceForwardTransfer.before_eval_exp">[docs]</a>    <span class="k">def</span> <span class="nf">before_eval_exp</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">strategy</span><span class="p">:</span> <span class="s1">&#39;BaseStrategy&#39;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_current_metric</span><span class="o">.</span><span class="n">reset</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="GenericExperienceForwardTransfer.after_eval_iteration"><a class="viewcode-back" href="../../../../../autoapi/avalanche/evaluation/metrics/forward_transfer/#avalanche.evaluation.metrics.forward_transfer.GenericExperienceForwardTransfer.after_eval_iteration">[docs]</a>    <span class="k">def</span> <span class="nf">after_eval_iteration</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">strategy</span><span class="p">:</span> <span class="s1">&#39;BaseStrategy&#39;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">after_eval_iteration</span><span class="p">(</span><span class="n">strategy</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">eval_exp_id</span> <span class="o">=</span> <span class="n">strategy</span><span class="o">.</span><span class="n">experience</span><span class="o">.</span><span class="n">current_experience</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">metric_update</span><span class="p">(</span><span class="n">strategy</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="GenericExperienceForwardTransfer.after_eval_exp"><a class="viewcode-back" href="../../../../../autoapi/avalanche/evaluation/metrics/forward_transfer/#avalanche.evaluation.metrics.forward_transfer.GenericExperienceForwardTransfer.after_eval_exp">[docs]</a>    <span class="k">def</span> <span class="nf">after_eval_exp</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">strategy</span><span class="p">:</span> <span class="s1">&#39;BaseStrategy&#39;</span><span class="p">)</span> \
+            <span class="o">-&gt;</span> <span class="n">MetricResult</span><span class="p">:</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">at_init</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">eval_exp_id</span><span class="p">,</span>
+                        <span class="bp">self</span><span class="o">.</span><span class="n">metric_result</span><span class="p">(</span><span class="n">strategy</span><span class="p">),</span> <span class="n">initial</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">train_exp_id</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">eval_exp_id</span> <span class="o">-</span> <span class="mi">1</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">eval_exp_id</span><span class="p">,</span>
+                            <span class="bp">self</span><span class="o">.</span><span class="n">metric_result</span><span class="p">(</span><span class="n">strategy</span><span class="p">))</span>
+
+                <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_package_result</span><span class="p">(</span><span class="n">strategy</span><span class="p">)</span></div>
+
+    <span class="k">def</span> <span class="nf">_package_result</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">strategy</span><span class="p">:</span> <span class="s1">&#39;BaseStrategy&#39;</span><span class="p">)</span> \
+            <span class="o">-&gt;</span> <span class="n">MetricResult</span><span class="p">:</span>
+        <span class="c1"># Only after the previous experience was trained on can we return the</span>
+        <span class="c1"># forward transfer metric for this experience.</span>
+        <span class="n">result</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">result</span><span class="p">(</span><span class="n">k</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">eval_exp_id</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">result</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">metric_name</span> <span class="o">=</span> <span class="n">get_metric_name</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">strategy</span><span class="p">,</span> <span class="n">add_experience</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+            <span class="n">plot_x_position</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_global_counter</span><span class="p">()</span>
+
+            <span class="n">metric_values</span> <span class="o">=</span> <span class="p">[</span><span class="n">MetricValue</span><span class="p">(</span>
+                <span class="bp">self</span><span class="p">,</span> <span class="n">metric_name</span><span class="p">,</span> <span class="n">result</span><span class="p">,</span> <span class="n">plot_x_position</span><span class="p">)]</span>
+            <span class="k">return</span> <span class="n">metric_values</span>
+
+<div class="viewcode-block" id="GenericExperienceForwardTransfer.metric_update"><a class="viewcode-back" href="../../../../../autoapi/avalanche/evaluation/metrics/forward_transfer/#avalanche.evaluation.metrics.forward_transfer.GenericExperienceForwardTransfer.metric_update">[docs]</a>    <span class="k">def</span> <span class="nf">metric_update</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">strategy</span><span class="p">):</span>
+        <span class="k">raise</span> <span class="ne">NotImplementedError</span></div>
+
+<div class="viewcode-block" id="GenericExperienceForwardTransfer.metric_result"><a class="viewcode-back" href="../../../../../autoapi/avalanche/evaluation/metrics/forward_transfer/#avalanche.evaluation.metrics.forward_transfer.GenericExperienceForwardTransfer.metric_result">[docs]</a>    <span class="k">def</span> <span class="nf">metric_result</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">strategy</span><span class="p">):</span>
+        <span class="k">raise</span> <span class="ne">NotImplementedError</span></div>
+
+<div class="viewcode-block" id="GenericExperienceForwardTransfer.__str__"><a class="viewcode-back" href="../../../../../autoapi/avalanche/evaluation/metrics/forward_transfer/#avalanche.evaluation.metrics.forward_transfer.GenericExperienceForwardTransfer.__str__">[docs]</a>    <span class="k">def</span> <span class="fm">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">raise</span> <span class="ne">NotImplementedError</span></div></div>
+
+
+<div class="viewcode-block" id="ExperienceForwardTransfer"><a class="viewcode-back" href="../../../../../autoapi/avalanche/evaluation/metrics/forward_transfer/#avalanche.evaluation.metrics.forward_transfer.ExperienceForwardTransfer">[docs]</a><span class="k">class</span> <span class="nc">ExperienceForwardTransfer</span><span class="p">(</span><span class="n">GenericExperienceForwardTransfer</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    The Forward Transfer computed on each experience separately.</span>
+<span class="sd">    The transfer is computed based on the accuracy metric.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">_current_metric</span> <span class="o">=</span> <span class="n">Accuracy</span><span class="p">()</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        The average accuracy over the current evaluation experience</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+<div class="viewcode-block" id="ExperienceForwardTransfer.metric_update"><a class="viewcode-back" href="../../../../../autoapi/avalanche/evaluation/metrics/forward_transfer/#avalanche.evaluation.metrics.forward_transfer.ExperienceForwardTransfer.metric_update">[docs]</a>    <span class="k">def</span> <span class="nf">metric_update</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">strategy</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_current_metric</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">strategy</span><span class="o">.</span><span class="n">mb_y</span><span class="p">,</span>
+                                    <span class="n">strategy</span><span class="o">.</span><span class="n">mb_output</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="ExperienceForwardTransfer.metric_result"><a class="viewcode-back" href="../../../../../autoapi/avalanche/evaluation/metrics/forward_transfer/#avalanche.evaluation.metrics.forward_transfer.ExperienceForwardTransfer.metric_result">[docs]</a>    <span class="k">def</span> <span class="nf">metric_result</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">strategy</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_current_metric</span><span class="o">.</span><span class="n">result</span><span class="p">(</span><span class="mi">0</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span></div>
+
+<div class="viewcode-block" id="ExperienceForwardTransfer.__str__"><a class="viewcode-back" href="../../../../../autoapi/avalanche/evaluation/metrics/forward_transfer/#avalanche.evaluation.metrics.forward_transfer.ExperienceForwardTransfer.__str__">[docs]</a>    <span class="k">def</span> <span class="fm">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="s2">&quot;ExperienceForwardTransfer&quot;</span></div></div>
+
+
+<div class="viewcode-block" id="GenericStreamForwardTransfer"><a class="viewcode-back" href="../../../../../autoapi/avalanche/evaluation/metrics/forward_transfer/#avalanche.evaluation.metrics.forward_transfer.GenericStreamForwardTransfer">[docs]</a><span class="k">class</span> <span class="nc">GenericStreamForwardTransfer</span><span class="p">(</span><span class="n">GenericExperienceForwardTransfer</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    The GenericStreamForwardTransfer metric, describing the average evaluation</span>
+<span class="sd">    forward transfer detected over all experiences observed during training.</span>
+
+<span class="sd">    In particular, the user should override:</span>
+<span class="sd">    * __init__ by calling `super` and instantiating the `self.current_metric`</span>
+<span class="sd">    property as a valid avalanche metric</span>
+<span class="sd">    * `metric_update`, to update `current_metric`</span>
+<span class="sd">    * `metric_result` to get the result from `current_metric`.</span>
+<span class="sd">    * `__str__` to define the experience forgetting  name.</span>
+
+<span class="sd">    This metric is computed during the eval phase only.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Creates an instance of the GenericStreamForwardTransfer metric.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">stream_forward_transfer</span> <span class="o">=</span> <span class="n">Mean</span><span class="p">()</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        The average forward transfer over all experiences</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+<div class="viewcode-block" id="GenericStreamForwardTransfer.reset"><a class="viewcode-back" href="../../../../../autoapi/avalanche/evaluation/metrics/forward_transfer/#avalanche.evaluation.metrics.forward_transfer.GenericStreamForwardTransfer.reset">[docs]</a>    <span class="k">def</span> <span class="nf">reset</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Resets the forward transfer metrics.</span>
+
+<span class="sd">        Note that this will reset the previous and initial accuracy of each</span>
+<span class="sd">        experience.</span>
+
+<span class="sd">        :return: None.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">reset</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">stream_forward_transfer</span><span class="o">.</span><span class="n">reset</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="GenericStreamForwardTransfer.exp_update"><a class="viewcode-back" href="../../../../../autoapi/avalanche/evaluation/metrics/forward_transfer/#avalanche.evaluation.metrics.forward_transfer.GenericStreamForwardTransfer.exp_update">[docs]</a>    <span class="k">def</span> <span class="nf">exp_update</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span><span class="p">,</span> <span class="n">initial</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Update forward transfer metric.</span>
+<span class="sd">        See `Forward Transfer` for more detailed information.</span>
+
+<span class="sd">        :param k: key to update</span>
+<span class="sd">        :param v: value associated to k</span>
+<span class="sd">        :param initial: update initial value. If False, update</span>
+<span class="sd">            previous value.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">k</span><span class="p">,</span> <span class="n">v</span><span class="p">,</span> <span class="n">initial</span><span class="o">=</span><span class="n">initial</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="GenericStreamForwardTransfer.exp_result"><a class="viewcode-back" href="../../../../../autoapi/avalanche/evaluation/metrics/forward_transfer/#avalanche.evaluation.metrics.forward_transfer.GenericStreamForwardTransfer.exp_result">[docs]</a>    <span class="k">def</span> <span class="nf">exp_result</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">k</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Union</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">float</span><span class="p">]]:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Result for experience defined by a key.</span>
+<span class="sd">        See `ForwardTransfer` documentation for more detailed information.</span>
+
+<span class="sd">        k: optional key from which to compute forward transfer.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">result</span><span class="p">(</span><span class="n">k</span><span class="o">=</span><span class="n">k</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="GenericStreamForwardTransfer.result"><a class="viewcode-back" href="../../../../../autoapi/avalanche/evaluation/metrics/forward_transfer/#avalanche.evaluation.metrics.forward_transfer.GenericStreamForwardTransfer.result">[docs]</a>    <span class="k">def</span> <span class="nf">result</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">k</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Union</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">float</span><span class="p">]]:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        The average forward transfer over all experiences.</span>
+
+<span class="sd">        k: optional key from which to compute forward transfer.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">stream_forward_transfer</span><span class="o">.</span><span class="n">result</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="GenericStreamForwardTransfer.before_eval"><a class="viewcode-back" href="../../../../../autoapi/avalanche/evaluation/metrics/forward_transfer/#avalanche.evaluation.metrics.forward_transfer.GenericStreamForwardTransfer.before_eval">[docs]</a>    <span class="k">def</span> <span class="nf">before_eval</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">strategy</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">before_eval</span><span class="p">(</span><span class="n">strategy</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">stream_forward_transfer</span><span class="o">.</span><span class="n">reset</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="GenericStreamForwardTransfer.after_eval_exp"><a class="viewcode-back" href="../../../../../autoapi/avalanche/evaluation/metrics/forward_transfer/#avalanche.evaluation.metrics.forward_transfer.GenericStreamForwardTransfer.after_eval_exp">[docs]</a>    <span class="k">def</span> <span class="nf">after_eval_exp</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">strategy</span><span class="p">:</span> <span class="s1">&#39;BaseStrategy&#39;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">at_init</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">eval_exp_id</span><span class="p">,</span>
+                        <span class="bp">self</span><span class="o">.</span><span class="n">metric_result</span><span class="p">(</span><span class="n">strategy</span><span class="p">),</span> <span class="n">initial</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">train_exp_id</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">eval_exp_id</span> <span class="o">-</span> <span class="mi">1</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">eval_exp_id</span><span class="p">,</span>
+                            <span class="bp">self</span><span class="o">.</span><span class="n">metric_result</span><span class="p">(</span><span class="n">strategy</span><span class="p">))</span>
+            <span class="n">exp_forward_transfer</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">exp_result</span><span class="p">(</span><span class="n">k</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">eval_exp_id</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">exp_forward_transfer</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">stream_forward_transfer</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">exp_forward_transfer</span><span class="p">,</span>
+                                                    <span class="n">weight</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="GenericStreamForwardTransfer.after_eval"><a class="viewcode-back" href="../../../../../autoapi/avalanche/evaluation/metrics/forward_transfer/#avalanche.evaluation.metrics.forward_transfer.GenericStreamForwardTransfer.after_eval">[docs]</a>    <span class="k">def</span> <span class="nf">after_eval</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">strategy</span><span class="p">:</span> <span class="s1">&#39;BaseStrategy&#39;</span><span class="p">)</span> <span class="o">-&gt;</span> \
+            <span class="s1">&#39;MetricResult&#39;</span><span class="p">:</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">after_eval</span><span class="p">(</span><span class="n">strategy</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_package_result</span><span class="p">(</span><span class="n">strategy</span><span class="p">)</span></div>
+
+    <span class="k">def</span> <span class="nf">_package_result</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">strategy</span><span class="p">:</span> <span class="s1">&#39;BaseStrategy&#39;</span><span class="p">)</span> <span class="o">-&gt;</span> \
+            <span class="n">MetricResult</span><span class="p">:</span>
+        <span class="n">metric_value</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">result</span><span class="p">()</span>
+
+        <span class="n">phase_name</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">phase_and_task</span><span class="p">(</span><span class="n">strategy</span><span class="p">)</span>
+        <span class="n">stream</span> <span class="o">=</span> <span class="n">stream_type</span><span class="p">(</span><span class="n">strategy</span><span class="o">.</span><span class="n">experience</span><span class="p">)</span>
+        <span class="n">metric_name</span> <span class="o">=</span> <span class="s1">&#39;</span><span class="si">{}</span><span class="s1">/</span><span class="si">{}</span><span class="s1">_phase/</span><span class="si">{}</span><span class="s1">_stream&#39;</span> \
+            <span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="p">),</span>
+                    <span class="n">phase_name</span><span class="p">,</span>
+                    <span class="n">stream</span><span class="p">)</span>
+        <span class="n">plot_x_position</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_global_counter</span><span class="p">()</span>
+
+        <span class="k">return</span> <span class="p">[</span><span class="n">MetricValue</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">metric_name</span><span class="p">,</span> <span class="n">metric_value</span><span class="p">,</span> <span class="n">plot_x_position</span><span class="p">)]</span>
+
+<div class="viewcode-block" id="GenericStreamForwardTransfer.metric_update"><a class="viewcode-back" href="../../../../../autoapi/avalanche/evaluation/metrics/forward_transfer/#avalanche.evaluation.metrics.forward_transfer.GenericStreamForwardTransfer.metric_update">[docs]</a>    <span class="k">def</span> <span class="nf">metric_update</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">strategy</span><span class="p">):</span>
+        <span class="k">raise</span> <span class="ne">NotImplementedError</span></div>
+
+<div class="viewcode-block" id="GenericStreamForwardTransfer.metric_result"><a class="viewcode-back" href="../../../../../autoapi/avalanche/evaluation/metrics/forward_transfer/#avalanche.evaluation.metrics.forward_transfer.GenericStreamForwardTransfer.metric_result">[docs]</a>    <span class="k">def</span> <span class="nf">metric_result</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">strategy</span><span class="p">):</span>
+        <span class="k">raise</span> <span class="ne">NotImplementedError</span></div>
+
+<div class="viewcode-block" id="GenericStreamForwardTransfer.__str__"><a class="viewcode-back" href="../../../../../autoapi/avalanche/evaluation/metrics/forward_transfer/#avalanche.evaluation.metrics.forward_transfer.GenericStreamForwardTransfer.__str__">[docs]</a>    <span class="k">def</span> <span class="fm">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">raise</span> <span class="ne">NotImplementedError</span></div></div>
+
+
+<div class="viewcode-block" id="StreamForwardTransfer"><a class="viewcode-back" href="../../../../../autoapi/avalanche/evaluation/metrics/forward_transfer/#avalanche.evaluation.metrics.forward_transfer.StreamForwardTransfer">[docs]</a><span class="k">class</span> <span class="nc">StreamForwardTransfer</span><span class="p">(</span><span class="n">GenericStreamForwardTransfer</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    The Forward Transfer averaged over all the evaluation experiences.</span>
+
+<span class="sd">    This plugin metric, computed over all observed experiences during training,</span>
+<span class="sd">    is the average over the difference between the accuracy result obtained</span>
+<span class="sd">    after the previous experience and the accuracy result obtained</span>
+<span class="sd">    on random initialization.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_current_metric</span> <span class="o">=</span> <span class="n">Accuracy</span><span class="p">()</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        The average accuracy over the current evaluation experience</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+<div class="viewcode-block" id="StreamForwardTransfer.metric_update"><a class="viewcode-back" href="../../../../../autoapi/avalanche/evaluation/metrics/forward_transfer/#avalanche.evaluation.metrics.forward_transfer.StreamForwardTransfer.metric_update">[docs]</a>    <span class="k">def</span> <span class="nf">metric_update</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">strategy</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_current_metric</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">strategy</span><span class="o">.</span><span class="n">mb_y</span><span class="p">,</span>
+                                    <span class="n">strategy</span><span class="o">.</span><span class="n">mb_output</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="StreamForwardTransfer.metric_result"><a class="viewcode-back" href="../../../../../autoapi/avalanche/evaluation/metrics/forward_transfer/#avalanche.evaluation.metrics.forward_transfer.StreamForwardTransfer.metric_result">[docs]</a>    <span class="k">def</span> <span class="nf">metric_result</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">strategy</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_current_metric</span><span class="o">.</span><span class="n">result</span><span class="p">(</span><span class="mi">0</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span></div>
+
+<div class="viewcode-block" id="StreamForwardTransfer.__str__"><a class="viewcode-back" href="../../../../../autoapi/avalanche/evaluation/metrics/forward_transfer/#avalanche.evaluation.metrics.forward_transfer.StreamForwardTransfer.__str__">[docs]</a>    <span class="k">def</span> <span class="fm">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="s2">&quot;StreamForwardTransfer&quot;</span></div></div>
+
+
+<div class="viewcode-block" id="forward_transfer_metrics"><a class="viewcode-back" href="../../../../../autoapi/avalanche/evaluation/metrics/forward_transfer/#avalanche.evaluation.metrics.forward_transfer.forward_transfer_metrics">[docs]</a><span class="k">def</span> <span class="nf">forward_transfer_metrics</span><span class="p">(</span><span class="o">*</span><span class="p">,</span> <span class="n">experience</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">stream</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Helper method that can be used to obtain the desired set of</span>
+<span class="sd">    plugin metrics.</span>
+
+<span class="sd">    :param experience: If True, will return a metric able to log</span>
+<span class="sd">        the forward transfer on each evaluation experience.</span>
+<span class="sd">    :param stream: If True, will return a metric able to log</span>
+<span class="sd">        the forward transfer averaged over the evaluation stream experiences,</span>
+<span class="sd">        which have been observed during training.</span>
+
+<span class="sd">    :return: A list of plugin metrics.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">metrics</span> <span class="o">=</span> <span class="p">[]</span>
+
+    <span class="k">if</span> <span class="n">experience</span><span class="p">:</span>
+        <span class="n">metrics</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">ExperienceForwardTransfer</span><span class="p">())</span>
+
+    <span class="k">if</span> <span class="n">stream</span><span class="p">:</span>
+        <span class="n">metrics</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">StreamForwardTransfer</span><span class="p">())</span>
+
+    <span class="k">return</span> <span class="n">metrics</span></div>
+
+
+<span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="s1">&#39;ForwardTransfer&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;GenericExperienceForwardTransfer&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;ExperienceForwardTransfer&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;GenericStreamForwardTransfer&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;StreamForwardTransfer&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;forward_transfer_metrics&#39;</span>
+<span class="p">]</span>
+</pre></div>
+
+           </div>
+           
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &#169; Copyright 2021, ContinualAI.
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

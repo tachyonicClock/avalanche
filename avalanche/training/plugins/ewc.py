@@ -2,6 +2,7 @@ from collections import defaultdict
 from typing import Dict, Tuple
 import warnings
 
+import math
 import torch
 from torch import Tensor
 from torch.utils.data import DataLoader
@@ -22,7 +23,7 @@ class EWCPlugin(StrategyPlugin):
     training set. This plugin does not use task identities.
     """
 
-    def __init__(self, ewc_lambda, mode='separate', decay_factor=None,
+    def __init__(self, ewc_lambda, mode='separate', clipping_threshold=None, decay_factor=None,
                  keep_importance_data=False):
         """
         :param ewc_lambda: hyperparameter to weigh the penalty inside the total
@@ -31,6 +32,16 @@ class EWCPlugin(StrategyPlugin):
                experience.
                `online` to keep a single penalty summed with a decay factor
                over all previous tasks.
+        :param clipping_threshold: Use huber loss for the regularization to be 
+            more resilient to exploding gradients. 
+            Typically this number should be low such as 1e-6.
+            Implemented as described in:
+            Liu, L., Kuang, Z., Chen, Y., Xue, J.-H., Yang, W., & Zhang, W. (2021). 
+                IncDet: In Defense of Elastic Weight Consolidation for 
+                Incremental Object Detection. IEEE Transactions on Neural
+                Networks and Learning Systems, 32(6), 2306–2319.
+                https://doi.org/10.1109/TNNLS.2020.3002583
+            None means huber loss is not used.
         :param decay_factor: used only if mode is `online`.
                It specifies the decay term of the importance matrix.
         :param keep_importance_data: if True, keep in memory both parameter
@@ -51,6 +62,8 @@ class EWCPlugin(StrategyPlugin):
         self.ewc_lambda = ewc_lambda
         self.mode = mode
         self.decay_factor = decay_factor
+        self.use_huber_loss = clipping_threshold != None
+        self.huber_beta = clipping_threshold
 
         if self.mode == 'separate':
             self.keep_importance_data = True
@@ -59,6 +72,25 @@ class EWCPlugin(StrategyPlugin):
 
         self.saved_params = defaultdict(list)
         self.importances = defaultdict(list)
+
+    def huber_loss(self, theta_new: torch.Tensor, theta_old: torch.Tensor, weight: torch.Tensor, beta: torch.Tensor) -> torch.Tensor:
+        """Implement huber_loss function https://en.wikipedia.org/wiki/Huber_loss"""
+        delta_theta = (theta_new-theta_old).abs()
+        sqrt_weight = weight.sqrt()
+
+        # cond is a tensor of 1s and 0s used to mask the parameters. Used to 
+        # achieve the piecewise function definition with tensors
+        cond = sqrt_weight * delta_theta <= beta
+        squared_loss = (0.5 * weight*delta_theta**2)
+        linear_loss = (beta*(sqrt_weight*delta_theta-beta/2))
+        return  torch.where(cond, squared_loss, linear_loss)
+
+
+    def regularization_loss(self, imp, cur_param, saved_param):
+        """Apply a loss function to get the regularization term"""
+        if self.use_huber_loss:
+            return self.huber_loss(cur_param, saved_param, imp, self.huber_beta).sum()
+        return (imp * (cur_param - saved_param).pow(2)).sum()
 
     def before_backward(self, strategy, **kwargs):
         """
@@ -76,17 +108,18 @@ class EWCPlugin(StrategyPlugin):
                         strategy.model.named_parameters(),
                         self.saved_params[experience],
                         self.importances[experience]):
-                    penalty += (imp * (cur_param - saved_param).pow(2)).sum()
+                    penalty += self.regularization_loss(imp, cur_param, saved_param)
         elif self.mode == 'online':
             prev_exp = exp_counter - 1
             for (_, cur_param), (_, saved_param), (_, imp) in zip(
                     strategy.model.named_parameters(),
                     self.saved_params[prev_exp],
                     self.importances[prev_exp]):
-                penalty += (imp * (cur_param - saved_param).pow(2)).sum()
+                penalty += self.regularization_loss(imp, cur_param, saved_param)
         else:
             raise ValueError('Wrong EWC mode.')
 
+        # print(penalty)
         strategy.loss += self.ewc_lambda * penalty
 
     def after_training_exp(self, strategy, **kwargs):

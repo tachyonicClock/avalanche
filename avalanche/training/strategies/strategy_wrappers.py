@@ -452,6 +452,7 @@ class EWC(BaseStrategy):
 
     def __init__(self, model: Module, optimizer: Optimizer, criterion,
                  ewc_lambda: float, mode: str = 'separate',
+                 clipping_threshold: Optional[float]=None,
                  decay_factor: Optional[float] = None,
                  keep_importance_data: bool = False,
                  train_mb_size: int = 1, train_epochs: int = 1,
@@ -471,6 +472,16 @@ class EWC(BaseStrategy):
                experience. `onlinesum` to keep a single penalty summed over all
                previous tasks. `onlineweightedsum` to keep a single penalty
                summed with a decay factor over all previous tasks.
+        :param clipping_threshold: Use huber loss for the regularization to be 
+            more resilient to exploding gradients. 
+            Typically this number should be low such as 1e-6.
+            Implemented as described in:
+            Liu, L., Kuang, Z., Chen, Y., Xue, J.-H., Yang, W., & Zhang, W. (2021). 
+                IncDet: In Defense of Elastic Weight Consolidation for 
+                Incremental Object Detection. IEEE Transactions on Neural
+                Networks and Learning Systems, 32(6), 2306–2319.
+                https://doi.org/10.1109/TNNLS.2020.3002583
+            None means huber loss is not used.
         :param decay_factor: used only if mode is `onlineweightedsum`.
                It specify the decay term of the importance matrix.
         :param keep_importance_data: if True, keep in memory both parameter
@@ -493,7 +504,7 @@ class EWC(BaseStrategy):
                 if >0: calls `eval` every `eval_every` epochs and at the end
                     of all the epochs for a single experience.
         """
-        ewc = EWCPlugin(ewc_lambda, mode, decay_factor, keep_importance_data)
+        ewc = EWCPlugin(ewc_lambda, mode, clipping_threshold, decay_factor, keep_importance_data)
         if plugins is None:
             plugins = [ewc]
         else:
